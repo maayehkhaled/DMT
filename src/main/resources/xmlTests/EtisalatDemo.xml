@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+
+
+<suite name=" Account settings Test Suite">
+
+    <listeners>
+        <listener class-name="com.qpros.common.LogManger" />
+    </listeners>
+
+
+    <test name="Explore_HomePage" thread-count="10">
+        <classes>
+            <class name="com.qpros.test.TS_1_ExploreHomePage"/>
+        </classes>
+    </test>
+    <test name="Order" thread-count="10">
+        <classes>
+            <class name="com.qpros.test.TS_2_Order"/>
+        </classes>
+    </test>
+    <test name="Payment" thread-count="10">
+        <classes>
+            <class name="com.qpros.test.TS_3_Payment"/>
+        </classes>
+    </test>
+    <test name="AccountSettings" thread-count="10">
+        <classes>
+            <class name="com.qpros.test.TS_4_AccountSettings"/>
+        </classes>
+    </test>
+</suite>
