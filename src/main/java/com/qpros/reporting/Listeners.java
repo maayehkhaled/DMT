@@ -1,15 +1,15 @@
 package com.qpros.reporting;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
+import com.qpros.quanta.QuantaReports;
+import com.qpros.quanta.QuantaTest;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
 public class Listeners extends TestListenerAdapter{
 
-    private static ExtentReports extent = ExtentManager.createInstance();
-    public static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+    private static QuantaReports extent = QuantaManager.createInstance();
+    public static ThreadLocal<QuantaTest> test = new ThreadLocal<>();
     ExceptionListner exceptionListener = new ExceptionListner();
     public static boolean CONSOLE;
 
@@ -37,9 +37,9 @@ public class Listeners extends TestListenerAdapter{
             System.out.println((result.getMethod().getMethodName() + " started!"));
 
         }
-        ExtentTest extentTest = extent.createTest(result.getMethod().getDescription(),
+        QuantaTest QuantaTest = extent.createTest(result.getMethod().getDescription(),
                 result.getMethod().getMethodName());
-        test.set(extentTest);
+        test.set(QuantaTest);
     }
 
     @Override

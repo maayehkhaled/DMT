@@ -1,7 +1,9 @@
 package com.qpros.common;
 
 
+import com.qpros.common.annotation.STEP;
 import com.qpros.helpers.ReadWriteHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -9,8 +11,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
+import sun.rmi.runtime.Log;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,16 +23,30 @@ public class Base {
 
     public static WebDriver driver;
     public OsValidator OsValidator;
+    public LogManger logManger= new LogManger(getClass().getSimpleName());
 
 
 
+    @BeforeMethod(enabled = true)
+    public void setUpBrowser() {
+        String OsType = OsValidator.getDeviceOs();
+        DriverType browser = getBrowser();
+        initiateDriver(OsType, browser);
+        driver.navigate().to(ReadWriteHelper.ReadData("BaseURL"));
+    }
+//
 //    @BeforeMethod(enabled = true)
-//    public void setUpBrowser() {
-//        String OsType = OsValidator.getDeviceOs();
-//        DriverType browser = getBrowser();
-//        initiateDriver(OsType, browser);
-//        driver.navigate().to(ReadWriteHelper.ReadData("BaseURL"));
-//    }
+//     public void setupStep(ITestResult result) {
+//        try {
+//            Method method = result.getMethod().getConstructorOrMethod().getMethod();
+//            STEP step = method.getAnnotation(STEP.class);
+//            if (StringUtils.isNotEmpty(step.value())) {
+//                logManger.STEP( step.value());
+//            }
+//        } catch (Exception e) {
+//            logManger.ERROR(e.getMessage());
+//        }
+//     }
 
 
 
@@ -137,13 +156,13 @@ public class Base {
     }
 
 
-//    @AfterMethod(enabled = true)
-//    public void stopDriver() {
-//        try {
-//            driver.quit();
-//        } catch (Throwable e) {
-//            e.getStackTrace();
-//        }
-//    }
+    @AfterMethod(enabled = true)
+    public void stopDriver() {
+        try {
+            driver.quit();
+        } catch (Throwable e) {
+            e.getStackTrace();
+        }
+    }
 
 }

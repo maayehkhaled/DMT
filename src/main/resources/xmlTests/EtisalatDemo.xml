@@ -7,7 +7,7 @@
 <suite name=" Account settings Test Suite">
 
     <listeners>
-        <listener class-name="com.qpros.common.LogManger" />
+        <listener class-name="com.qpros.reporting.Listeners" />
     </listeners>
 
 

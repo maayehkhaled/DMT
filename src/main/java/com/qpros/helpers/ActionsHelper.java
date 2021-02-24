@@ -464,7 +464,7 @@ public class ActionsHelper extends Base {
      * @param by used to find the element
      * @return the WebElement once it is located
      */
-    public static boolean isElementPresent(final By by) throws Exception {
+    public static boolean isElementPresent(final By by)  {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
 
         try {
@@ -473,7 +473,7 @@ public class ActionsHelper extends Base {
             new WebDriverWait(driver, 5000).until(ExpectedConditions.presenceOfElementLocated(by));
 
         } catch (TimeoutException | org.openqa.selenium.NoSuchElementException exception) {
-            //jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
+            jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
             //System.out.println(exception.getMessage());
             return false;
         }
@@ -497,6 +497,8 @@ public class ActionsHelper extends Base {
             new WebDriverWait(driver, 5000).until(ExpectedConditions.presenceOfElementLocated(by));
 
         } catch (TimeoutException | org.openqa.selenium.NoSuchElementException exception) {
+            logManger.ERROR("The expected element is not Present with Value " + element(by,driver).getText());
+
             //jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
             //System.out.println(exception.getMessage());
             return false;
