@@ -40,20 +40,19 @@ public class LogManger implements ITestListener {
     public void INFO(String message) {
         logger.info(ConsoleColors.BLUE + message + ConsoleColors.RESET);
         try {
-            QuantaTestManager.getTestNode();
-            //QuantaTestManager.getTestNode().getModel().getNodeContext().getLast()..info(message,MediaEntityBuilder.createScreenCaptureFromBase64String(ActionsHelper.takeScreenShot()).build());
-            QuantaTestManager.getTest().info(message,MediaEntityBuilder.createScreenCaptureFromBase64String(ActionsHelper.takeScreenShot()).build());
+            QuantaTestManager.getTestNode().log(Status.PASS,message,MediaEntityBuilder.createScreenCaptureFromBase64String(ActionsHelper.takeScreenShot()).build());
+            QuantaTestManager.getTestNode().log(Status.PASS,message,MediaEntityBuilder.createScreenCaptureFromBase64String(ActionsHelper.takeScreenShot()).build());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-    public void STEP(String message) {
+    public void STEP(String message,String description) {
 
         if(StringUtils.isNotEmpty(message)) {
             logger.info(ConsoleColors.GREEN + message + ConsoleColors.RESET);
-            QuantaTestManager.stepTest(QuantaTestManager.getTest(),message);
-            //QuantaTestManager.getTest().log(Status.PASS, message);
+            QuantaTestManager.stepTest(QuantaTestManager.getTest(),message,description);
+            QuantaTestManager.getTest().info(message);
         }
     }
 
@@ -84,7 +83,7 @@ public class LogManger implements ITestListener {
 
     public void ERROR(String message) {
 //        logger.info(ConsoleColors.RED + message + ConsoleColors.RESET);
-//        QuantaTestManager.getTest().log(Status.ERROR, message);
+       // QuantaTestManager.getTest().log(Status.ERROR, message);
 
     }
 
@@ -118,15 +117,14 @@ public class LogManger implements ITestListener {
     }
 
     public void ERROR(String message, Exception exception) {
-//        logger.error(ConsoleColors.RED + message + ConsoleColors.RESET, exception);
-//        QuantaTestManager.getTest().log(Status.ERROR, message);
+        logger.error(ConsoleColors.RED + message + ConsoleColors.RESET, exception);
+        QuantaTestManager.getTestNode().log(Status.FAIL, message+" : "+exception.getLocalizedMessage());
 
     }
 
-    public void ERROR(String message, String base64ImgString) throws Exception {
-//        logger.error(ConsoleColors.RED + message + ConsoleColors.RESET);
-//        Capture();
-//        QuantaTestManager.getTest().log(Status.ERROR, message);
+    public void ERROR(String message, String base64ImgString) {
+        logger.error(ConsoleColors.RED + message + ConsoleColors.RESET);
+        QuantaTestManager.getTestNode().log(Status.ERROR, message);
 
     }
 

@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface STEP {
-    public String value() default "";
+    public String name() default "";
+    public String description() default "";
 
 }

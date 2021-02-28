@@ -477,7 +477,7 @@ public class ActionsHelper extends Base {
             //System.out.println(exception.getMessage());
             return false;
         }
-        logManger.INFO("The expected element is Present with Value " + element(by).getText());
+        logManger.INFO("The expected element is Present with Value \"" + element(by).getText()+"\"");
         return true;
     }
 
@@ -503,7 +503,7 @@ public class ActionsHelper extends Base {
             //System.out.println(exception.getMessage());
             return false;
         }
-        logManger.INFO("The expected element is Present with Value " + element(by,driver).getText());
+        logManger.INFO("The expected element is Present with Value \"" + element(by,driver).getText()+"\"");
         return true;
     }
 
@@ -607,7 +607,7 @@ public class ActionsHelper extends Base {
      * @param myelement  WebElement to click
      * @param maxSeconds When to Timeout
      */
-    public static void retryClick(By myelement, int maxSeconds) {
+    public static void retryClick(By myelement, int maxSeconds){
         int i = 0;
         JavascriptExecutor jse = (JavascriptExecutor) driver;
 
@@ -630,8 +630,13 @@ public class ActionsHelper extends Base {
             }
         }
         if (!result) {
-            jse.executeScript("arguments[0].style.border='3px solid red'", element(myelement));
-            Assert.fail("Failed to click element: " + myelement.toString());
+            try {
+                jse.executeScript("arguments[0].style.border='3px solid red'", element(myelement));
+                Assert.fail("Failed to click element: " + myelement.toString());
+            }catch (NoSuchElementException exception){
+                logManger.ERROR("Element not Found ",exception);
+            }
+
         } else {
             logManger.INFO("User Clicks on <" + myelement.toString() + "> ");
         }

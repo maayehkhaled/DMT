@@ -7,6 +7,25 @@
     <groupId>QPros</groupId>
     <artifactId>QPros</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <repositories>
+        <repository>
+            <id>QuantaReports</id>
+            <url>https://pkgs.dev.azure.com/QProsAutomationFramework/aae4c54c-9a59-441c-8e36-57f024201af4/_packaging/QuantaReports/maven/v1</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <repository>
+            <id>QuantaReports</id>
+            <url>https://pkgs.dev.azure.com/QProsAutomationFramework/aae4c54c-9a59-441c-8e36-57f024201af4/_packaging/QuantaReports/maven/v1</url>
+        </repository>
+    </distributionManagement>
     <build>
         <plugins>
             <plugin>
@@ -92,6 +111,31 @@
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.5.0-b01</version>
+        </dependency>
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.11.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlbeans</groupId>
+            <artifactId>xmlbeans</artifactId>
+            <version>3.1.0</version>
         </dependency>
 
 
