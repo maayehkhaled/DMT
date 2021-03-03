@@ -4,5 +4,6 @@ public enum DriverType {
     FIREFOX,
     CHROME,
     INTERNETEXPLORER,
-    Safari
+    Safari,
+    appium
 }

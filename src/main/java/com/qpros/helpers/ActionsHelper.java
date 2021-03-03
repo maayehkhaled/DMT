@@ -1,9 +1,8 @@
 package com.qpros.helpers;
 
-import com.qpros.common.Base;
-import com.qpros.common.LogManger;
+import com.qpros.common.LogManager;
+import com.qpros.common.web.Base;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -14,18 +13,15 @@ import org.testng.Assert;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 public class ActionsHelper extends Base {
-    LogManger LOGGER = new LogManger();
+    LogManager LOGGER = new LogManager();
     //protected static Logger LOGGER = Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName());
     public static WebDriverWait wait;
-    public static final LogManger logManger= new LogManger(ActionsHelper.class.getSimpleName());
+    public static final LogManager LOG_MANAGER = new LogManager(ActionsHelper.class.getSimpleName());
 
 
     public static void waitForSeconds(Integer timeWait) {
@@ -85,14 +81,14 @@ public class ActionsHelper extends Base {
 
                 ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
             } else {
-                LOGGER.INFO("Unable to click on element");
+                LOGGER.INFO("Unable to click on element",false);
             }
         } catch (StaleElementReferenceException e) {
-            LOGGER.INFO("Element is not attached to the page document " + e.getStackTrace());
+            LOGGER.INFO("Element is not attached to the page document " + e.getStackTrace(),false);
         } catch (NoSuchElementException e) {
-            LOGGER.INFO("Element was not found in DOM " + e.getStackTrace());
+            LOGGER.INFO("Element was not found in DOM " + e.getStackTrace(),false);
         } catch (Exception e) {
-            LOGGER.INFO("Unable to click on element " + e.getStackTrace());
+            LOGGER.INFO("Unable to click on element " + e.getStackTrace(),false);
         }
     }
 
@@ -212,7 +208,7 @@ public class ActionsHelper extends Base {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                logManger.ERROR(e.getMessage());
+                LOG_MANAGER.ERROR(e.getMessage());
             }
             WebElement element = driver.findElement(by);
             return element.isDisplayed() ? element : null;
@@ -477,7 +473,7 @@ public class ActionsHelper extends Base {
             //System.out.println(exception.getMessage());
             return false;
         }
-        logManger.INFO("The expected element is Present with Value \"" + element(by).getText()+"\"");
+        LOG_MANAGER.INFO("The expected element is Present with Value \"" + element(by).getText()+"\"",false);
         return true;
     }
 
@@ -497,13 +493,13 @@ public class ActionsHelper extends Base {
             new WebDriverWait(driver, 5000).until(ExpectedConditions.presenceOfElementLocated(by));
 
         } catch (TimeoutException | org.openqa.selenium.NoSuchElementException exception) {
-            logManger.ERROR("The expected element is not Present with Value " + element(by,driver).getText());
+            LOG_MANAGER.ERROR("The expected element is not Present with Value " + element(by,driver).getText());
 
             //jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
             //System.out.println(exception.getMessage());
             return false;
         }
-        logManger.INFO("The expected element is Present with Value \"" + element(by,driver).getText()+"\"");
+        LOG_MANAGER.INFO("The expected element is Present with Value \"" + element(by,driver).getText()+"\"",false);
         return true;
     }
 
@@ -531,7 +527,7 @@ public class ActionsHelper extends Base {
             } catch (Exception ex) {
                 //jse.executeScript("arguments[0].style.border='3px solid red'", dropDownElement);
 
-                logManger.ERROR("Unable to make Option : [" + Option + "] where element is < " + dropDownElement.toString() + "> ");
+                LOG_MANAGER.ERROR("Unable to make Option : [" + Option + "] where element is < " + dropDownElement.toString() + "> ");
             }
         }
 
@@ -582,7 +578,7 @@ public class ActionsHelper extends Base {
 
     protected void clearEnterText(By by, String inputText) {
         element(by).clear();
-        logManger.INFO("The User Enter : [" + inputText + "] inside Text Box <" + element(by).getAttribute("placeholder") + ">");
+        LOG_MANAGER.INFO("The User Enter : [" + inputText + "] inside Text Box <" + element(by).getAttribute("placeholder") + ">",false);
         element(by).sendKeys(inputText);
     }
 
@@ -593,13 +589,13 @@ public class ActionsHelper extends Base {
      **/
 
     protected void clickElement(By by) {
-        logManger.INFO("The User Click on : " + element(by).getText());
+        LOG_MANAGER.INFO("The User Click on : " + element(by).getText(),false);
         element(by).click();
     }
 
     protected void moveToAndClickElement(By by) {
         scrollTo(element(by));
-        logManger.INFO("The User Click on : " + element(by).getText());
+        LOG_MANAGER.INFO("The User Click on : " + element(by).getText(),false);
         element(by).click();
     }
 
@@ -625,7 +621,7 @@ public class ActionsHelper extends Base {
                 Thread.sleep(1000);
             } catch (Exception e) {
 
-                logManger.ERROR("Element : <" + myelement.toString() + "> is not being able to click on",e);
+                LOG_MANAGER.ERROR("Element : <" + myelement.toString() + "> is not being able to click on",e);
 
             }
         }
@@ -634,11 +630,11 @@ public class ActionsHelper extends Base {
                 jse.executeScript("arguments[0].style.border='3px solid red'", element(myelement));
                 Assert.fail("Failed to click element: " + myelement.toString());
             }catch (NoSuchElementException exception){
-                logManger.ERROR("Element not Found ",exception);
+                LOG_MANAGER.ERROR("Element not Found ",exception);
             }
 
         } else {
-            logManger.INFO("User Clicks on <" + myelement.toString() + "> ");
+            LOG_MANAGER.INFO("User Clicks on <" + myelement.toString() + "> ",false);
         }
 
 
@@ -670,7 +666,7 @@ public class ActionsHelper extends Base {
         } catch (Exception ex) {
             //jse.executeScript("arguments[0].style.border='3px solid red'", dropDownElement);
 
-            logManger.ERROR("Unable to make Option : [" + textOption + "] where element is < " + dropDownElement.toString() + "> ");
+            LOG_MANAGER.ERROR("Unable to make Option : [" + textOption + "] where element is < " + dropDownElement.toString() + "> ");
         }
 
     }
@@ -694,10 +690,10 @@ public class ActionsHelper extends Base {
             // highlight the element with green border 3px width
             jse.executeScript("arguments[0].style.border='3px solid green'", element);
             // added sleep to give little time for browser to respond
-            logManger.INFO("User Clicks on " + element.getText());
+            LOG_MANAGER.INFO("User Clicks on " + element.getText(),false);
         } catch (Exception ex) {
             jse.executeScript("arguments[0].style.border='3px solid red'", element);
-            logManger.ERROR(ex.getMessage());
+            LOG_MANAGER.ERROR(ex.getMessage());
         }
     }
 
@@ -712,10 +708,10 @@ public class ActionsHelper extends Base {
             // highlight the element with green border 3px width
             jse.executeScript("arguments[0].style.border='3px solid green'", element(by));
             // added sleep to give little time for browser to respond
-            logManger.INFO("User Clicks on " + element(by).getText());
+            LOG_MANAGER.INFO("User Clicks on " + element(by).getText(),false);
         } catch (Exception ex) {
             jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
-            logManger.ERROR(ex.getMessage());
+            LOG_MANAGER.ERROR(ex.getMessage());
         }
     }
 
@@ -730,10 +726,10 @@ public class ActionsHelper extends Base {
             // highlight the element with green border 3px width
             jse.executeScript("arguments[0].style.border='3px solid green'", element(by));
             // added sleep to give little time for browser to respond
-            logManger.INFO("User Clicks on " + textMessage);
+            LOG_MANAGER.INFO("User Clicks on " + textMessage,false);
         } catch (Exception ex) {
             jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
-            logManger.ERROR(ex.getMessage());
+            LOG_MANAGER.ERROR(ex.getMessage());
         }
     }
 
@@ -751,10 +747,10 @@ public class ActionsHelper extends Base {
             // ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", wElement);
             wElement.clear();
             wElement.sendKeys(text);
-            logManger.INFO("Send keys with Clear [" + text + "] inside element <" + text + ">");
+            LOG_MANAGER.INFO("Send keys with Clear [" + text + "] inside element <" + text + ">",false);
         } catch (Exception ex) {
             jse.executeScript("arguments[0].style.border='3px solid red'", wElement);
-            logManger.ERROR(ex.getMessage());
+            LOG_MANAGER.ERROR(ex.getMessage());
             throw ex;
         }
     }
@@ -773,10 +769,10 @@ public class ActionsHelper extends Base {
             // ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", wElement);
             element(by).clear();
             element(by).sendKeys(text);
-            logManger.INFO("Send keys with Clear [" + text + "] inside element [" + element(by).toString().substring(element(by).toString().lastIndexOf(":") + 2));
+            LOG_MANAGER.INFO("Send keys with Clear [" + text + "] inside element [" + element(by).toString().substring(element(by).toString().lastIndexOf(":") + 2),false);
         } catch (Exception ex) {
             jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
-            logManger.ERROR(ex.getMessage());
+            LOG_MANAGER.ERROR(ex.getMessage());
             throw ex;
         }
     }
@@ -787,7 +783,7 @@ public class ActionsHelper extends Base {
         try {
             Thread.sleep(millSecond);
         } catch (InterruptedException e) {
-            logManger.ERROR("an issue has been initiated with following error : " + e.getMessage());
+            LOG_MANAGER.ERROR("an issue has been initiated with following error : " + e.getMessage());
         }
     }
 

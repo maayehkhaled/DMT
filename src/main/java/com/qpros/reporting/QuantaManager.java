@@ -4,7 +4,7 @@ import com.qpros.quanta.AnalysisStrategy;
 import com.qpros.quanta.QuantaReports;
 import com.qpros.quanta.reporter.*;
 import com.qpros.quanta.reporter.configuration.Theme;
-import com.qpros.common.Base;
+import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 
 public class QuantaManager extends Base {
@@ -28,6 +28,11 @@ public class QuantaManager extends Base {
         htmlReporter.config().setTheme( Theme.STANDARD);
         htmlReporter.config().setEncoding("utf-8");
         extent = new QuantaReports();
+        extent.setSystemInfo("Operating System",System.getProperty("os.name"));
+        extent.setSystemInfo("Operating System Version",System.getProperty("os.version"));
+        extent.setSystemInfo("Operating system architecture",System.getProperty("os.arch"));
+        extent.setSystemInfo("Run User",System.getProperty("user.name"));
+        extent.setSystemInfo("Java runtime",System.getProperty("java.runtime.version"));
         extent.setAnalysisStrategy(AnalysisStrategy.TEST);
         extent.attachReporter(htmlReporter);
 

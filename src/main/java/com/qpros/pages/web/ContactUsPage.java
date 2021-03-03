@@ -1,6 +1,6 @@
-package com.qpros.pages;
+package com.qpros.pages.web;
 
-import com.qpros.common.Base;
+import com.qpros.common.web.Base;
 import com.qpros.common.annotation.STEP;
 import com.qpros.helpers.ActionsHelper;
 import org.openqa.selenium.By;
@@ -25,7 +25,7 @@ public class ContactUsPage  extends Base {
         try {
             ActionsHelper.isElementPresent(contactMenuItem);
         } catch (Exception e) {
-            logManger.ERROR("The User is not able to detect the Contact Element");
+            logManager.ERROR("The User is not able to detect the Contact Element");
         }
         ActionsHelper.retryClick(contactMenuItem, 30);
     }

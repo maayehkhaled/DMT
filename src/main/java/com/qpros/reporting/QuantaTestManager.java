@@ -2,8 +2,8 @@ package com.qpros.reporting;
 
 import com.qpros.quanta.QuantaReports;
 import com.qpros.quanta.QuantaTest;
-import com.qpros.quanta.model.Test;
 
+import java.lang.management.OperatingSystemMXBean;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,10 +11,10 @@ public class QuantaTestManager {
 
     static Map<Integer, QuantaTest> QuantaTestMap = new HashMap<Integer, QuantaTest>();
     static Map<Integer, QuantaTest> QuantaTestNodeMap = new HashMap<>();
-    static QuantaReports extent;
+    static QuantaReports quantaReports;
 
     static {
-        extent = QuantaManager.getInstance();
+        quantaReports = QuantaManager.getInstance();
     }
 
     public static synchronized QuantaTest getTest() {
@@ -25,11 +25,15 @@ public class QuantaTestManager {
     }
 
     public static synchronized void endTest() {
-        extent.flush();
+        quantaReports.flush();
     }
 
     public static synchronized QuantaTest startTest(String testName) {
-        QuantaTest test = extent.createTest(testName);
+        QuantaTest test = quantaReports.createTest(testName);
+        test.assignAuthor("Run User");
+        test.assignAuthor(System.getProperty("user.name"));
+        test.assignDevice("Operating System");
+        test.assignDevice(System.getProperty("os.name"));
         QuantaTestMap.put((int) Thread.currentThread().getId(), test);
         return test;
     }

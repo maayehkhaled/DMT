@@ -64,6 +64,12 @@
             <artifactId>testng</artifactId>
             <version>6.9.10</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.appium/java-client -->
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>7.4.1</version>
+        </dependency>
 
 
         <dependency>
