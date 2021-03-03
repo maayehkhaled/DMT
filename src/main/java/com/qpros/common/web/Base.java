@@ -4,7 +4,6 @@ package com.qpros.common.web;
 import com.qpros.common.DriverType;
 import com.qpros.common.LogManager;
 import com.qpros.helpers.ReadWriteHelper;
-import com.qpros.reporting.QuantaTestManager;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
