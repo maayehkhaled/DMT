@@ -25,7 +25,7 @@ public class ContactUsPage  extends Base {
         try {
             ActionsHelper.isElementPresent(contactMenuItem);
         } catch (Exception e) {
-            logManager.ERROR("The User is not able to detect the Contact Element");
+            logManager.ERROR("The User is not able to detect the Contact Element", false);
         }
         ActionsHelper.retryClick(contactMenuItem, 30);
     }

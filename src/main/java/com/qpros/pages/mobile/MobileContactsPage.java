@@ -28,7 +28,7 @@ public class MobileContactsPage extends MobileBase {
         MobileActionHelper.clickElement(addContactButton);
     }
 
-    @STEP(name = "The User Fill Contact Us Form", description = "The User Should be able to fill the contact Form") public void fillForm() throws InterruptedException {
+    @STEP(name = "The User Fill Contact Us Form", description = "The User Should be able to fill the contact Form") public void fillForm()  {
         logManager.DEBUG("The User Fill the contact form to be saved");
         MobileActionHelper.waitForSeconds(10);
         MobileActionHelper.sendKeys(contactName,"QProsAutomation");
@@ -41,7 +41,7 @@ public class MobileContactsPage extends MobileBase {
 
     }
 
-    @STEP(name = "The User Click on Save Button", description = "The User Click on Save Button") public void saveContact() throws InterruptedException {
+    @STEP(name = "The User Click on Save Button", description = "The User Click on Save Button") public void saveContact()  {
         MobileActionHelper.waitForSeconds(10);
         logManager.DEBUG("The User click on Save  button");
         MobileActionHelper.clickElement(saveButton);

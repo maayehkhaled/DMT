@@ -6,8 +6,7 @@ import io.appium.java_client.MobileElement;
 import org.apache.commons.codec.binary.Base64;
 import org.openqa.selenium.*;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.util.concurrent.TimeUnit;
 
 public class MobileActionHelper extends MobileBase {
@@ -50,22 +49,33 @@ public class MobileActionHelper extends MobileBase {
             element(by).sendKeys(text);
             logManager.INFO("Send keys with Clear [" + text + "] inside element [" + element(by).toString().substring(element(by).toString().lastIndexOf(":") + 2),true);
         } catch (Exception ex) {
-            logManager.ERROR(ex.getMessage());
+            logManager.ERROR(ex.getMessage(), false);
             throw ex;
         }
     }
 
-    public static String takeScreenShot() throws Exception {
+    public static String takeScreenShot() throws UnsupportedEncodingException {
         File file=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         return encodeFileToBase64Binary(file);
 
     }
 
-    private static String encodeFileToBase64Binary(File file) throws Exception{
-        FileInputStream fileInputStreamReader = new FileInputStream(file);
-        byte[] bytes = new byte[(int)file.length()];
-        fileInputStreamReader.read(bytes);
-        return new String(Base64.encodeBase64(bytes), "UTF-8");
+    private static String encodeFileToBase64Binary(File file) throws UnsupportedEncodingException {
+        FileInputStream fileInputStreamReader = null;
+        byte[] bytes = new byte[0];
+        try {
+            fileInputStreamReader = new FileInputStream(file);
+
+         bytes = new byte[(int)file.length()];
+
+            fileInputStreamReader.read(bytes);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+            return new String(Base64.encodeBase64(bytes), "UTF-8");
+
     }
 
 }

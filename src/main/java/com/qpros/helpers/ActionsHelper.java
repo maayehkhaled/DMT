@@ -2,26 +2,25 @@ package com.qpros.helpers;
 
 import com.qpros.common.LogManager;
 import com.qpros.common.web.Base;
+import com.qpros.reporting.QuantaTestManager;
 import org.apache.commons.codec.binary.Base64;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.json.JsonException;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class ActionsHelper extends Base {
-    LogManager LOGGER = new LogManager();
-    //protected static Logger LOGGER = Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName());
     public static WebDriverWait wait;
-    public static final LogManager LOG_MANAGER = new LogManager(ActionsHelper.class.getSimpleName());
+    public static final LogManager logManger = new LogManager(ActionsHelper.class.getSimpleName());
 
 
     public static void waitForSeconds(Integer timeWait) {
@@ -29,8 +28,11 @@ public class ActionsHelper extends Base {
     }
 
     public static void navigate(String url) {
-       driver.navigate().to(url);
+        logManger.STEP("Navigation to Page with URL : " + url, "");
+        logManger.INFO("Navigation to Page with URL : " + url, false);
+        driver.navigate().to(url);
     }
+
     public static boolean waitVisibility(WebElement element, int time) {
         boolean isElementPresent = false;
         try {
@@ -38,7 +40,9 @@ public class ActionsHelper extends Base {
             wait.until(ExpectedConditions.visibilityOf(element));
             isElementPresent = element.isDisplayed();
         } catch (Exception e) {
+            logManger.ERROR("Expected Element is not Visiable",false);
         }
+
         return isElementPresent;
 
     }
@@ -64,48 +68,45 @@ public class ActionsHelper extends Base {
     }
 
     public static void scrollTo(WebElement element) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(false);", element);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     public static void scrollTo(By by) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element(by));
+    }
+
+    public static void scrollTo(By by, WebDriver driver) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(false);", element(by));
     }
 
-    public static void scrollTo(By by,WebDriver driver) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(false);", element(by));
-    }
-
-    public void safeJavaScriptClick(WebElement element) throws Exception {
+    public void safeJavaScriptClick(WebElement element) {
         try {
             if (element.isEnabled() && element.isDisplayed()) {
 
                 ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
             } else {
-                LOGGER.INFO("Unable to click on element",false);
+                logManger.INFO("Unable to click on element", false);
             }
         } catch (StaleElementReferenceException e) {
-            LOGGER.INFO("Element is not attached to the page document " + e.getStackTrace(),false);
+            logManger.INFO("Element is not attached to the page document " + e.getLocalizedMessage(), false);
         } catch (NoSuchElementException e) {
-            LOGGER.INFO("Element was not found in DOM " + e.getStackTrace(),false);
+            logManger.INFO("Element was not found in DOM " + e.getLocalizedMessage(), false);
         } catch (Exception e) {
-            LOGGER.INFO("Unable to click on element " + e.getStackTrace(),false);
+            logManger.INFO("Unable to click on element " + e.getLocalizedMessage(), false);
         }
     }
 
     public String getImagePath(String imageName) {
-        String path = System.getProperty("user.dir") + "/src/main/resources/images/" + imageName;
-        return path;
+        return System.getProperty("user.dir") + "/src/main/resources/images/" + imageName;
     }
 
     public String getXMLPath(String xmlFileName) {
-        String path = System.getProperty("user.dir") + "/src/main/resources/xmlfiles/" + xmlFileName;
-        return path;
+        return System.getProperty("user.dir") + "/src/main/resources/xmlfiles/" + xmlFileName;
     }
 
     public static String getTodayDate() {
         LocalDate localDate = LocalDate.now();
-        String GetTodayDate = localDate.toString();
-        return GetTodayDate;
+        return localDate.toString();
     }
 
     public static String getCurrentUrl() {
@@ -203,14 +204,10 @@ public class ActionsHelper extends Base {
         }
     }
 
-    private static ExpectedCondition<WebElement> visibilityOfElementLocated(final By by) throws NoSuchElementException {
+    private static ExpectedCondition<WebElement> visibilityOfElementLocated(final By by) {
         return driver -> {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                LOG_MANAGER.ERROR(e.getMessage());
-            }
-            WebElement element = driver.findElement(by);
+            driverWait(500);
+            WebElement element = Objects.requireNonNull(driver).findElement(by);
             return element.isDisplayed() ? element : null;
         };
     }
@@ -460,7 +457,7 @@ public class ActionsHelper extends Base {
      * @param by used to find the element
      * @return the WebElement once it is located
      */
-    public static boolean isElementPresent(final By by)  {
+    public static boolean isElementPresent(final By by) {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
 
         try {
@@ -469,11 +466,11 @@ public class ActionsHelper extends Base {
             new WebDriverWait(driver, 5000).until(ExpectedConditions.presenceOfElementLocated(by));
 
         } catch (TimeoutException | org.openqa.selenium.NoSuchElementException exception) {
-            jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
+            //jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
             //System.out.println(exception.getMessage());
+            //QuantaTestManager.getTestNode().error("The expected Element is not present");
             return false;
         }
-        LOG_MANAGER.INFO("The expected element is Present with Value \"" + element(by).getText()+"\"",false);
         return true;
     }
 
@@ -484,22 +481,47 @@ public class ActionsHelper extends Base {
      * @param by used to find the element
      * @return the WebElement once it is located
      */
-    public static boolean isElementPresent(final By by,WebDriver driver) {
+    public static boolean isElementPresent(final WebElement by) {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
 
         try {
-            jse.executeScript("arguments[0].style.border='3px solid green'", element(by,driver));
+            jse.executeScript("arguments[0].style.border='3px solid green'", by);
+
+            new WebDriverWait(driver, 5000).until(ExpectedConditions.visibilityOfAllElements(by));
+
+        } catch (TimeoutException | org.openqa.selenium.NoSuchElementException exception) {
+            //jse.executeScript("arguments[0].style.border='3px solid red'", by);
+            QuantaTestManager.getTestNode().error("The expected Element is not present "+ by);
+            return false;
+        }
+        //TODO :  handle elements
+
+        return true;
+    }
+
+    /**
+     * An expectation for checking that an element is present on the DOM of a
+     * page. This does not necessarily mean that the element is visible.
+     *
+     * @param by used to find the element
+     * @return the WebElement once it is located
+     */
+    public static boolean isElementPresent(final By by, WebDriver driver) {
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+
+        try {
+            jse.executeScript("arguments[0].style.border='3px solid green'", element(by, driver));
 
             new WebDriverWait(driver, 5000).until(ExpectedConditions.presenceOfElementLocated(by));
 
         } catch (TimeoutException | org.openqa.selenium.NoSuchElementException exception) {
-            LOG_MANAGER.ERROR("The expected element is not Present with Value " + element(by,driver).getText());
+            logManger.ERROR("The expected element is not Present with Value " + element(by, driver).getText(), false);
 
             //jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
             //System.out.println(exception.getMessage());
             return false;
         }
-        LOG_MANAGER.INFO("The expected element is Present with Value \"" + element(by,driver).getText()+"\"",false);
+        logManger.INFO("The expected element is Present with Value \"" + element(by, driver).getText() + "\"", false);
         return true;
     }
 
@@ -518,16 +540,14 @@ public class ActionsHelper extends Base {
      * perform Select operation from drop down list
      */
     public static void selectOption(By dropDownElement, String Option) {
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
         if (!Option.isEmpty()) {
             try {
                 Select s = new Select(driver.findElement(dropDownElement));
                 s.selectByValue(Option);
 
             } catch (Exception ex) {
-                //jse.executeScript("arguments[0].style.border='3px solid red'", dropDownElement);
 
-                LOG_MANAGER.ERROR("Unable to make Option : [" + Option + "] where element is < " + dropDownElement.toString() + "> ");
+                logManger.ERROR("Unable to make Option : [" + Option + "] where element is < " + dropDownElement.toString() + "> ", false);
             }
         }
 
@@ -566,9 +586,10 @@ public class ActionsHelper extends Base {
      *
      * @param by Element location found by css, xpath, id etc...
      **/
-    public static WebElement element(final By by,WebDriver driver) {
+    public static WebElement element(final By by, WebDriver driver) {
         return driver.findElement(by);
     }
+
     /**
      * Wrapper for clear data and sendKeys in Input Text box
      *
@@ -578,7 +599,7 @@ public class ActionsHelper extends Base {
 
     protected void clearEnterText(By by, String inputText) {
         element(by).clear();
-        LOG_MANAGER.INFO("The User Enter : [" + inputText + "] inside Text Box <" + element(by).getAttribute("placeholder") + ">",false);
+        logManger.INFO("The User Enter : [" + inputText + "] inside Text Box <" + element(by).getAttribute("placeholder") + ">", false);
         element(by).sendKeys(inputText);
     }
 
@@ -589,13 +610,13 @@ public class ActionsHelper extends Base {
      **/
 
     protected void clickElement(By by) {
-        LOG_MANAGER.INFO("The User Click on : " + element(by).getText(),false);
+        logManger.INFO("The User Click on : " + element(by).getText(), false);
         element(by).click();
     }
 
     protected void moveToAndClickElement(By by) {
         scrollTo(element(by));
-        LOG_MANAGER.INFO("The User Click on : " + element(by).getText(),false);
+        logManger.INFO("The User Click on : " + element(by).getText(), false);
         element(by).click();
     }
 
@@ -603,9 +624,8 @@ public class ActionsHelper extends Base {
      * @param myelement  WebElement to click
      * @param maxSeconds When to Timeout
      */
-    public static void retryClick(By myelement, int maxSeconds){
+    public static void retryClick(By myelement, int maxSeconds) {
         int i = 0;
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
 
         boolean result = false;
         while (i <= maxSeconds) {
@@ -618,27 +638,59 @@ public class ActionsHelper extends Base {
             }
             i++;
             try {
-                Thread.sleep(1000);
+                driverWait(1000);
             } catch (Exception e) {
 
-                LOG_MANAGER.ERROR("Element : <" + myelement.toString() + "> is not being able to click on",e);
+                logManger.ERROR("Element : <" + myelement.toString() + "> is not being able to click on", e);
 
             }
         }
         if (!result) {
             try {
-                jse.executeScript("arguments[0].style.border='3px solid red'", element(myelement));
-                Assert.fail("Failed to click element: " + myelement.toString());
-            }catch (NoSuchElementException exception){
-                LOG_MANAGER.ERROR("Element not Found ",exception);
+                logManger.ERROR("Failed to click element: " + myelement.toString(), false);
+                //QuantaTestManager.getTest().fail("Failed to click element: " + myelement.toString());
+            } catch (NoSuchElementException exception) {
+                logManger.ERROR("Element not Found ", exception);
+                QuantaTestManager.getTest().skip("Failed to click element: " + myelement.toString() + " Because " + exception.getLocalizedMessage());
+
             }
 
         } else {
-            LOG_MANAGER.INFO("User Clicks on <" + myelement.toString() + "> ",false);
+            //LOG_MANAGER.INFO("User Clicks on <" + myelement.toString() + "> ", false);
         }
 
 
     }
+
+
+    /**
+     * @param myelement  WebElement to click
+     * @param maxSeconds When to Timeout
+     */
+    public static void retryClick(WebElement myelement, int maxSeconds) {
+        int i = 0;
+        boolean result = false;
+        while (i <= maxSeconds) {
+            try {
+                myelement.click();
+                result = true;
+                break;
+            } catch (Exception e) {
+                result = false;
+            }
+            i++;
+            try {
+                driverWait(1000);
+            } catch (Exception e) {
+
+            }
+        }
+        if (!result) {
+        }
+
+
+    }
+
 
     /**
      * Wrapper for wait, clear data and sendKeys in Input Text box
@@ -647,7 +699,7 @@ public class ActionsHelper extends Base {
      *
      * @param inputText text to be entered
      **/
-    protected void waitClearEnterText(By by, String inputText) throws InterruptedException {
+    protected void waitClearEnterText(By by, String inputText) {
         waitForExpectedElement(by).clear();
         element(by).sendKeys(inputText);
 
@@ -657,16 +709,14 @@ public class ActionsHelper extends Base {
      * perform Select operation from drop down list
      */
     public void selectOption(By dropDownElement, By searchBox, String textOption) {
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
 
         try {
             clickAction(element(dropDownElement));
             sendKeysWithClear(element(searchBox), textOption + Keys.ENTER);
 
         } catch (Exception ex) {
-            //jse.executeScript("arguments[0].style.border='3px solid red'", dropDownElement);
 
-            LOG_MANAGER.ERROR("Unable to make Option : [" + textOption + "] where element is < " + dropDownElement.toString() + "> ");
+            logManger.ERROR("Unable to make Option : [" + textOption + "] where element is < " + dropDownElement.toString() + "> ", false);
         }
 
     }
@@ -674,8 +724,7 @@ public class ActionsHelper extends Base {
     /**
      * perform click action on accordion or clickable elements
      *
-     * @param element
-     * @throws Exception
+     * @param element web element
      */
 
     public static void clickAction(WebElement element) {
@@ -683,17 +732,17 @@ public class ActionsHelper extends Base {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
 
         try {
-            Thread.sleep(300);
+            driverWait(300);
             Actions action = new Actions(driver);
             //action.moveToElement(element);
             action.click(element).perform();
             // highlight the element with green border 3px width
             jse.executeScript("arguments[0].style.border='3px solid green'", element);
             // added sleep to give little time for browser to respond
-            LOG_MANAGER.INFO("User Clicks on " + element.getText(),false);
+            logManger.INFO("User Clicks on " + element.getText(), false);
         } catch (Exception ex) {
             jse.executeScript("arguments[0].style.border='3px solid red'", element);
-            LOG_MANAGER.ERROR(ex.getMessage());
+            logManger.ERROR(ex.getMessage(), false);
         }
     }
 
@@ -702,16 +751,16 @@ public class ActionsHelper extends Base {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
 
         try {
-            Thread.sleep(300);
+            driverWait(300);
             Actions action = new Actions(driver);
             action.click(element(by)).perform();
             // highlight the element with green border 3px width
             jse.executeScript("arguments[0].style.border='3px solid green'", element(by));
             // added sleep to give little time for browser to respond
-            LOG_MANAGER.INFO("User Clicks on " + element(by).getText(),false);
+            logManger.INFO("User Clicks on " + element(by).getText(), false);
         } catch (Exception ex) {
             jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
-            LOG_MANAGER.ERROR(ex.getMessage());
+            logManger.ERROR(ex.getMessage(), false);
         }
     }
 
@@ -720,37 +769,35 @@ public class ActionsHelper extends Base {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
 
         try {
-            Thread.sleep(300);
+            driverWait(300);
             Actions action = new Actions(driver);
             action.click(element(by)).perform();
             // highlight the element with green border 3px width
             jse.executeScript("arguments[0].style.border='3px solid green'", element(by));
             // added sleep to give little time for browser to respond
-            LOG_MANAGER.INFO("User Clicks on " + textMessage,false);
+            logManger.INFO("User Clicks on " + textMessage, false);
         } catch (Exception ex) {
             jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
-            LOG_MANAGER.ERROR(ex.getMessage());
+            logManger.ERROR(ex.getMessage(), false);
         }
     }
 
     /**
      * send keys in specific test box with clearing original value
      *
-     * @param wElement
-     * @param text
-     * @throws Exception
+     * @param wElement webElement
+     * @param text text to be sent
      */
     public static void sendKeysWithClear(WebElement wElement, String text) {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         try {
             clickAction(wElement);
-            // ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", wElement);
             wElement.clear();
             wElement.sendKeys(text);
-            LOG_MANAGER.INFO("Send keys with Clear [" + text + "] inside element <" + text + ">",false);
+            logManger.INFO("Send keys with Clear [" + text + "] inside element <" + text + ">", false);
         } catch (Exception ex) {
-            jse.executeScript("arguments[0].style.border='3px solid red'", wElement);
-            LOG_MANAGER.ERROR(ex.getMessage());
+            //jse.executeScript("arguments[0].style.border='3px solid red'", wElement);
+            logManger.ERROR(ex.getLocalizedMessage(), false);
             throw ex;
         }
     }
@@ -758,9 +805,8 @@ public class ActionsHelper extends Base {
     /**
      * send keys in specific test box with clearing original value
      *
-     * @param by
-     * @param text
-     * @throws Exception
+     * @param by element locator
+     * @param text text to be used
      */
     public static void sendKeysWithClear(By by, String text) {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
@@ -769,10 +815,10 @@ public class ActionsHelper extends Base {
             // ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", wElement);
             element(by).clear();
             element(by).sendKeys(text);
-            LOG_MANAGER.INFO("Send keys with Clear [" + text + "] inside element [" + element(by).toString().substring(element(by).toString().lastIndexOf(":") + 2),false);
+            logManger.INFO("Send keys with Clear [" + text + "] inside element [" + element(by).toString().substring(element(by).toString().lastIndexOf(":") + 2), false);
         } catch (Exception ex) {
             jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
-            LOG_MANAGER.ERROR(ex.getMessage());
+            logManger.ERROR(ex.getMessage(), false);
             throw ex;
         }
     }
@@ -783,11 +829,12 @@ public class ActionsHelper extends Base {
         try {
             Thread.sleep(millSecond);
         } catch (InterruptedException e) {
-            LOG_MANAGER.ERROR("an issue has been initiated with following error : " + e.getMessage());
+            logManger.ERROR("an issue has been initiated with following error : " + e.getMessage(),false);
         }
     }
 
-    public void actionsClick(WebElement element, String EnterText) {
+
+    public static void actionsClick(WebElement element, String EnterText) {
         Actions actions = new Actions(driver);
         actions.moveToElement(element);
         actions.click();
@@ -796,17 +843,130 @@ public class ActionsHelper extends Base {
 
     }
 
-    public static String takeScreenShot() throws Exception {
-        File file=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+
+    public static boolean waitToBeClickable(WebElement element, int time) {
+        boolean isElementClickable;
+        wait = new WebDriverWait(driver, time);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+        isElementClickable = element.isEnabled();
+        return isElementClickable;
+
+    }
+
+    public static String takeScreenShot() throws UnsupportedEncodingException {
+        File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         return encodeFileToBase64Binary(file);
 
     }
 
-    private static String encodeFileToBase64Binary(File file) throws Exception{
-        FileInputStream fileInputStreamReader = new FileInputStream(file);
-        byte[] bytes = new byte[(int)file.length()];
-        fileInputStreamReader.read(bytes);
+    private static String encodeFileToBase64Binary(File file) throws UnsupportedEncodingException {
+        FileInputStream fileInputStreamReader = null;
+        try {
+            fileInputStreamReader = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        byte[] bytes = new byte[(int) file.length()];
+        try {
+            fileInputStreamReader.read(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new String(Base64.encodeBase64(bytes), "UTF-8");
     }
+
+    public static void moveToElementByActions(WebElement wElement) {
+        try {
+            Actions actions = new Actions(driver);
+            actions.moveToElement(wElement);
+            actions.perform();
+        } catch (JsonException ex) {
+            logManger.ERROR(ex.getLocalizedMessage(), false);
+        }
+    }
+
+
+    public static void moveToElement(WebElement wElement){
+        try {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", wElement);
+        } catch (Exception ex) {
+            //
+            logManger.ERROR(ex.getMessage(), false);
+            throw ex;
+        }
+    }
+
+
+    public static void clickElementActions(WebElement element)  {
+        try {
+            Actions action = new Actions(driver);
+            action.click(element).perform();
+        } catch (Exception ex) {
+            logManger.ERROR(ex.getMessage(), false);
+            //
+            throw ex;
+        }
+    }
+
+    public static void waitUntilElementIsDisplayed(By elementlocator) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 30);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(elementlocator));
+        } catch (Exception e) {
+            //
+            logManger.ERROR("Class ActionHelper| Method waitForInvisibilityOfElementLocated | Exception occurred while waiting for invisibility of an element: "
+                    + elementlocator.toString() + ". ERROR: " + e.getMessage(), false);
+            throw e;
+        }
+    }
+
+    public static void waitUntilElementIsDisplayed(By elementlocator, int waitTimeSec) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, waitTimeSec);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(elementlocator));
+        } catch (Exception e) {
+            //
+            logManger.ERROR("Class ActionHelper| Method waitForInvisibilityOfElementLocated | Exception occurred while waiting for invisibility of an element: "
+                    + elementlocator.toString() + ". ERROR: " + e.getMessage(), false);
+            throw e;
+        }
+    }
+
+    public static void sendKeys(By locator, String text) {
+        try {
+            WebElement wElement = element(locator);
+            if (wElement != null) {
+                wElement.sendKeys(text);
+                logManger.INFO("The User Enter in   " + text, false);
+            } else
+                throw new Exception("Can't find the Element, Locator: " + locator.toString());
+        } catch (Exception ex) {
+            logManger.ERROR(ex.getMessage(), false);
+        }
+    }
+
+    public static void sendKeys(WebElement wElement, String text)  {
+        try {
+            wElement.sendKeys(text);
+            logManger.INFO("The User Enter in  " + text, false);
+        } catch (Exception ex) {
+            logManger.ERROR(ex.getMessage(), false);
+
+            throw ex;
+        }
+    }
+
+
+    public static void scrollupTo(WebElement element){
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(false);", element);
+        driverWait(500);
+    }
+
+
+    public static void scrollToEndOfPage() {
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        driverWait(1000);
+    }
+
 
 }

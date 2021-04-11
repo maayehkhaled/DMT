@@ -1,12 +1,13 @@
 package com.qpros.common;
 
 import com.qpros.helpers.MobileActionHelper;
-import com.qpros.helpers.ReadWriteHelper;
 import com.qpros.quanta.QuantaReports;
 import com.qpros.quanta.QuantaTest;
 import com.qpros.quanta.MediaEntityBuilder;
 import com.qpros.quanta.Status;
 import com.qpros.helpers.ActionsHelper;
+import com.qpros.quanta.markuputils.Markup;
+import com.qpros.quanta.markuputils.MarkupHelper;
 import com.qpros.reporting.ExceptionListner;
 import com.qpros.reporting.QuantaManager;
 import com.qpros.reporting.QuantaTestManager;
@@ -19,6 +20,7 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 public class LogManager implements ITestListener {
 
@@ -39,14 +41,14 @@ public class LogManager implements ITestListener {
         logger = Logger.getLogger(classObjName);
     }
 
-    public void INFO(String message,Boolean isMobile) {
+    public void INFO(String message, Boolean isMobile) {
         logger.info(ConsoleColors.BLUE + message + ConsoleColors.RESET);
         try {
-           if (isMobile) {
-               QuantaTestManager.getTestNode().log(Status.PASS, message, MediaEntityBuilder.createScreenCaptureFromBase64String(MobileActionHelper.takeScreenShot()).build());
-           }else {
-               QuantaTestManager.getTestNode().log(Status.PASS, message, MediaEntityBuilder.createScreenCaptureFromBase64String(ActionsHelper.takeScreenShot()).build());
-           }
+            if (isMobile) {
+                QuantaTestManager.getTestNode().log(Status.PASS, message, MediaEntityBuilder.createScreenCaptureFromBase64String(MobileActionHelper.takeScreenShot()).build());
+            } else {
+                QuantaTestManager.getTestNode().log(Status.PASS, message, MediaEntityBuilder.createScreenCaptureFromBase64String(ActionsHelper.takeScreenShot()).build());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,13 +64,21 @@ public class LogManager implements ITestListener {
         }
     }
 
-    public void Capture() throws Exception {
-        logger.info(ConsoleColors.BLUE + ActionsHelper.takeScreenShot() + ConsoleColors.RESET);
+    public void Capture() {
+        try {
+            logger.info(ConsoleColors.BLUE + ActionsHelper.takeScreenShot() + ConsoleColors.RESET);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
-        QuantaTestManager.getTestNode().addScreenCaptureFromBase64String(ActionsHelper.takeScreenShot());
+        try {
+            QuantaTestManager.getTestNode().addScreenCaptureFromBase64String(ActionsHelper.takeScreenShot());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void INFO(Integer message) throws Exception {
+    public void INFO(Integer message) {
         logger.info(ConsoleColors.BLUE + message + ConsoleColors.RESET);
 
         QuantaTestManager.getTestNode().log(Status.INFO, String.valueOf(message));
@@ -82,14 +92,22 @@ public class LogManager implements ITestListener {
     }
 
     public void WARN(String message) {
-        //        logger.warn(ConsoleColors.YELLOW + message + ConsoleColors.RESET);
-        //        QuantaTestManager.getTest().log(Status.WARNING, message);
+        logger.warn(ConsoleColors.YELLOW + message + ConsoleColors.RESET);
+        QuantaTestManager.getTestNode().log(Status.WARNING, message);
 
     }
 
-    public void ERROR(String message) {
-        //        logger.info(ConsoleColors.RED + message + ConsoleColors.RESET);
-        // QuantaTestManager.getTest().log(Status.ERROR, message);
+    public void ERROR(String message, boolean isMobile) {
+//        logger.info(ConsoleColors.RED + message + ConsoleColors.RESET);
+//        try {
+//            if (isMobile) {
+//                QuantaTestManager.getTestNode().log(Status.ERROR, message, MediaEntityBuilder.createScreenCaptureFromBase64String(MobileActionHelper.takeScreenShot()).build());
+//            } else {
+//                QuantaTestManager.getTestNode().log(Status.ERROR, message, MediaEntityBuilder.createScreenCaptureFromBase64String(ActionsHelper.takeScreenShot()).build());
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -106,7 +124,7 @@ public class LogManager implements ITestListener {
 
     public void INFO(String message, Exception exception) {
         logger.info(ConsoleColors.BLUE + message + ConsoleColors.RESET, exception);
-        QuantaTestManager.getTest().log(Status.INFO, message);
+        QuantaTestManager.getTestNode().log(Status.INFO, message);
 
     }
 
@@ -123,20 +141,22 @@ public class LogManager implements ITestListener {
     }
 
     public void ERROR(String message, Exception exception) {
-        logger.error(ConsoleColors.RED + message + ConsoleColors.RESET, exception);
-        QuantaTestManager.getTestNode().log(Status.FAIL, message + " : " + exception.getLocalizedMessage());
+//        logger.error(ConsoleColors.RED + message + ConsoleColors.RESET, exception);
+//        QuantaTestManager.getTestNode().error(MarkupHelper.createCodeBlock(exception.getLocalizedMessage()));
+//        QuantaTestManager.getTestNode().log(Status.ERROR, message + " : " + exception.getLocalizedMessage());
 
     }
 
     public void ERROR(String message, String base64ImgString) {
-        logger.error(ConsoleColors.RED + message + ConsoleColors.RESET);
-        QuantaTestManager.getTestNode().log(Status.ERROR, message);
+//        logger.error(ConsoleColors.RED + message + ConsoleColors.RESET);
+//        QuantaTestManager.getTestNode().log(Status.ERROR, message);
 
     }
 
     public void ERROR(String message, Throwable exception) {
-        //        logger.error(ConsoleColors.RED + message + ConsoleColors.RESET, exception);
-        //        QuantaTestManager.getTest().log(Status.ERROR, exception.getLocalizedMessage());
+//        logger.error(ConsoleColors.RED + message + ConsoleColors.RESET, exception);
+//        QuantaTestManager.getTestNode().error(MarkupHelper.createCodeBlock(exception.getLocalizedMessage()));
+//        QuantaTestManager.getTestNode().log(Status.ERROR, exception.getLocalizedMessage());
 
     }
 
@@ -161,7 +181,6 @@ public class LogManager implements ITestListener {
 
     public void FAIL(ExceptionListner exceptionListener, ITestResult result, ThreadLocal<QuantaTest> test) throws IOException {
         test.get().fail(exceptionListener.checkException(result.getThrowable().toString()));
-        test.get().fail("details", MediaEntityBuilder.createScreenCaptureFromPath("1.png").build());
         QuantaTestManager.getTest().log(Status.FAIL, result.getMethod().getMethodName());
 
     }
@@ -173,35 +192,49 @@ public class LogManager implements ITestListener {
     }
 
 
-    @Override public void onTestStart(ITestResult result) {
+    @Override
+    public void onTestStart(ITestResult result) {
         QuantaTestManager.startTest(result.getMethod().getDescription());
-        logger.info("****************************************************************");
-        logger.info("$$$$$$$$$$$$$$$$$$$$$ " + result.getMethod().getDescription() + "  $$$$$$$$$$$$$$$$$$$$$$$$$");
-        logger.info("******************************************************************");
+        StringBuilder builder = new StringBuilder();
+        builder.append("**********************");
+        for (int i = 0; i < result.getMethod().getDescription().length(); i++) {
+            builder.append("*");
+        }
+        builder.append("**********************");
+        logger.info(builder.toString());
+        logger.info("*$$$$$$$$$$$$$$$$$$$$ " + result.getMethod().getDescription() + " $$$$$$$$$$$$$$$$$$$$*");
+        logger.info(builder.toString());
     }
 
-    @Override public void onTestSuccess(ITestResult result) {
+    @Override
+    public void onTestSuccess(ITestResult result) {
         //QuantaTestManager.getTest().log(Status.PASS, "Test passed");
     }
 
-    @Override public void onTestFailure(ITestResult result) {
+    @Override
+    public void onTestFailure(ITestResult result) {
         //QuantaTestManager.getTest().log(Status.FAIL, "Test Failed on method :" + result.getThrowable());
 
     }
 
-    @Override public void onTestSkipped(ITestResult result) {
+    @Override
+    public void onTestSkipped(ITestResult result) {
         //QuantaTestManager.getTest().log(Status.SKIP, "Test Skipped");
     }
 
-    @Override public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+    @Override
+    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
         System.out.println("*** Test failed but within percentage % " + result.getMethod().getMethodName());
     }
 
-    @Override public void onStart(ITestContext context) {
+    @Override
+    public void onStart(ITestContext context) {
         System.out.println("*** Test Suite " + context.getName() + " started ***");
     }
 
-    @SneakyThrows @Override public void onFinish(ITestContext context) {
+    @SneakyThrows
+    @Override
+    public void onFinish(ITestContext context) {
         System.out.println(("*** Test Suite " + context.getName() + " ending ***"));
         QuantaTestManager.endTest();
         QuantaManager.getInstance().flush();

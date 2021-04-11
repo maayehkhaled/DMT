@@ -7,6 +7,11 @@
       <option name="url" value="https://repo.maven.apache.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="QuantaReports" />
+      <option name="name" value="QuantaReports" />
+      <option name="url" value="https://pkgs.dev.azure.com/QProsAutomationFramework/aae4c54c-9a59-441c-8e36-57f024201af4/_packaging/QuantaReports/maven/v1" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Maven Central repository" />
       <option name="url" value="https://repo1.maven.org/maven2" />
