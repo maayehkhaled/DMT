@@ -21,7 +21,7 @@ public class HomePlansPage extends Base {
     public long DRIVER_WAIT = 1000;
 
     public HomePlansPage(WebDriver driver) {
-        PageFactory.initElements(Base.driver, this);
+        PageFactory.initElements(Base.driver.get(), this);
     }
 
     @FindBy(id = "search-home")
@@ -111,11 +111,11 @@ public class HomePlansPage extends Base {
         ActionsHelper.moveToElementByActions(selectbutton);
         selectbutton.click();
 
-        if (driver.findElements(By.id("search-home")).size() == 1) {
+        if (driver.get().findElements(By.id("search-home")).size() == 1) {
             searchHome(TestData.INZONE_LOCATION);
         }
-        if (driver.findElements(By.className("shop-optimization-reveal")).size() == 1) {
-            driver.findElement(By.className("close-button")).click();
+        if (driver.get().findElements(By.className("shop-optimization-reveal")).size() == 1) {
+            driver.get().findElement(By.className("close-button")).click();
         }
         retryClick(free, 60);
 
@@ -138,15 +138,15 @@ public class HomePlansPage extends Base {
         moveToElementByActions(selectbutton);
         retryClick(selectbutton, 30);
 
-        if (driver.findElements(By.id("search-home")).size() == 1) {
+        if (driver.get().findElements(By.id("search-home")).size() == 1) {
             locationtextbox.sendKeys(TestData.OUTZONE_LOCATION);
             locationtextbox.sendKeys(Keys.RETURN);
             waitVisibility(confirmlocation, 30);
             confirmlocation.click();
         }
 
-        if (driver.findElements(By.className("shop-optimization-reveal")).size() == 1)
-            driver.findElement(By.className("close-button")).click();
+        if (driver.get().findElements(By.className("shop-optimization-reveal")).size() == 1)
+            driver.get().findElement(By.className("close-button")).click();
 
         waitVisibility(selectbutton, 30);
         moveToElementByActions(selectbutton);
@@ -169,26 +169,26 @@ public class HomePlansPage extends Base {
     }
 
     public void continuetofillform() {
-        WebElement contbtn = driver.findElement(By.className("js-sticky-ctrl"));
-        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + contbtn.getLocation().x + ")");
+        WebElement contbtn = driver.get().findElement(By.className("js-sticky-ctrl"));
+        ((JavascriptExecutor) driver.get()).executeScript("window.scrollTo(0," + contbtn.getLocation().x + ")");
         retryClick(contbtn, 30);
         waitVisibility(element(By.className("step2FormSubmit")), 30);
 
-        WebElement continueToFillForm = driver.findElement(By.className("step2FormSubmit"));
-        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        WebElement continueToFillForm = driver.get().findElement(By.className("step2FormSubmit"));
+        ((JavascriptExecutor) driver.get()).executeScript("window.scrollTo(0, document.body.scrollHeight)");
         waitVisibility(continueToFillForm, 60);
 
         continueToFillForm.click();
 
         waitVisibility(checkoutcontainer, 20);
         isElementPresent(checkoutcontainer);
-        Forms form = new Forms(driver);
-        form.fillZoneForm(driver);
+        Forms form = new Forms(driver.get());
+        form.fillZoneForm();
 
-        ((JavascriptExecutor) driver).executeScript("document.getElementsByClassName(\"du-sticky\")[0].style.zIndex=99;");
+        ((JavascriptExecutor) driver.get()).executeScript("document.getElementsByClassName(\"du-sticky\")[0].style.zIndex=99;");
         driverWait(30);
 
-        WebElement SubmitButton = driver.findElement(By.className("js-form-ctrl2"));
+        WebElement SubmitButton = driver.get().findElement(By.className("js-form-ctrl2"));
         waitVisibility(SubmitButton, 60);
         ActionsHelper.waitToBeClickable(SubmitButton, 60);
         isElementPresent(SubmitButton);

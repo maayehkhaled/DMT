@@ -17,7 +17,7 @@ import static com.qpros.helpers.ActionsHelper.*;
 //@Getter
 public class DuPage extends  Base {
     public DuPage(WebDriver driver){
-        PageFactory.initElements(Base.driver, this);
+        PageFactory.initElements(Base.driver.get(), this);
     }
 
     @FindBy(css=".slick-current .carousel-thumb-title")
@@ -109,13 +109,13 @@ public class DuPage extends  Base {
         if(CarouselItemTitle.getText().contains("Samsung"))
             carousalText = carousalText.replaceAll( "Samsung" , "Galaxy" );
         retryClick(buyOrLearnButtonOnCarousel,60);
-        ItemUrlTitle = driver.getTitle();
+        ItemUrlTitle = driver.get().getTitle();
         driverWait(10000);
-        if(driver.findElements(By.className("no-gutters")).size()>0){
-            DIV=driver.findElement(By.className("no-gutters")).getText();//postedpowerplan
+        if(driver.get().findElements(By.className("no-gutters")).size()>0){
+            DIV=driver.get().findElement(By.className("no-gutters")).getText();//postedpowerplan
             System.out.println(DIV);
-        }else if(driver.findElements(By.className("spotlight__header")).size()>0){
-             DIV=driver.findElement(By.className("spotlight__header")).getText();//prepaid + homeplan +raoming
+        }else if(driver.get().findElements(By.className("spotlight__header")).size()>0){
+             DIV=driver.get().findElement(By.className("spotlight__header")).getText();//prepaid + homeplan +raoming
             System.out.println(DIV);
         }else {
             DIV=ItemUrlTitle;
@@ -129,7 +129,7 @@ public class DuPage extends  Base {
     @STEP(name = "Verify the latest Offers",description = "Verify the latest offers ")
     public boolean LatestOffers() {//cardsList-list
         boolean IsCorrect= true;
-        List<WebElement> LatestOfferCardsList = driver.findElements(By.className("cardsList-list"));
+        List<WebElement> LatestOfferCardsList = driver.get().findElements(By.className("cardsList-list"));
         List<WebElement> ListOfOfferCards = LatestOfferCardsList.get(0).findElements(By.className("slick-slide"));
         String deviceName,deviceNameInDetailsPage;
         int index=0;
@@ -138,13 +138,13 @@ public class DuPage extends  Base {
             System.out.println(deviceName);
             retryClick(ListOfOfferCards.get(i).findElement(By.className("btn")),60);
             driverWait(5000);
-            deviceNameInDetailsPage = driver.findElement(By.cssSelector(".text-h3 > span")).getText();
+            deviceNameInDetailsPage = driver.get().findElement(By.cssSelector(".text-h3 > span")).getText();
             System.out.println(deviceNameInDetailsPage);
             if(deviceName.replaceAll("\\s+","").contains(deviceNameInDetailsPage.replaceAll("\\s+","")))  // if(DeviceName != DeviceNameIndetailsPage)
             {
                 index++;
                 navigate(URL.DU_HOME_PAGE_URL);
-                LatestOfferCardsList = driver.findElements(By.className("cardsList-list"));
+                LatestOfferCardsList = driver.get().findElements(By.className("cardsList-list"));
                 ListOfOfferCards = LatestOfferCardsList.get(0).findElements(By.className("slick-slide"));
             }
             else{
@@ -162,13 +162,13 @@ public class DuPage extends  Base {
     @STEP(name = "Latest Offers Shop PostPaid Plan",description = "Latest Offers Shop PostPaid Plan")
     public   boolean LatestOffersShopPostPaidPlan() {
         navigate(URL.DU_HOME_PAGE_URL);
-        List<WebElement> SliderButtons = driver.findElements(By.xpath("//button[contains(@id,'slick-slide-control')]"));
+        List<WebElement> SliderButtons = driver.get().findElements(By.xpath("//button[contains(@id,'slick-slide-control')]"));
         moveToElement(SliderButtons.get(1));
         retryClick(SliderButtons.get(1),60);
         retryClick(shopPostpaidPlansButtonOnLatestOffers,60);
-        System.out.println(driver.getTitle());
+        System.out.println(driver.get().getTitle());
         // if(DeviceName != DeviceNameindetailspage)
-        return driver.getTitle().replaceAll("\\s+", "").contains("12 Months / No Contract".replaceAll("\\s+", ""));
+        return driver.get().getTitle().replaceAll("\\s+", "").contains("12 Months / No Contract".replaceAll("\\s+", ""));
 
     }
 
@@ -178,7 +178,7 @@ public class DuPage extends  Base {
         ScrollToTheEndOfThePage();
         retryClick(loginLinkText,60);
         driverWait(1000);
-        return   driver.getCurrentUrl();
+        return   driver.get().getCurrentUrl();
 
     }
 
@@ -188,7 +188,7 @@ public class DuPage extends  Base {
         ScrollToTheEndOfThePage();
         retryClick(contactUsLinkText,60);
         driverWait(1000);
-        return driver.getCurrentUrl();
+        return driver.get().getCurrentUrl();
     }
 
     @STEP(name = "click Careers link text",description = "click Careers link text ")
@@ -197,7 +197,7 @@ public class DuPage extends  Base {
         ScrollToTheEndOfThePage();
         retryClick(careersLinkText,60);
         driverWait(1000);
-        return driver.getCurrentUrl();
+        return driver.get().getCurrentUrl();
 
     }
 
@@ -207,7 +207,7 @@ public class DuPage extends  Base {
         ScrollToTheEndOfThePage();
         retryClick(storesLinkText,60);
         driverWait(1000);
-        return driver.getCurrentUrl();
+        return driver.get().getCurrentUrl();
 
     }
 
@@ -217,16 +217,16 @@ public class DuPage extends  Base {
         ScrollToTheEndOfThePage();
         retryClick(supportLinkText,60);
         driverWait(1000);
-        return driver.getCurrentUrl();
+        return driver.get().getCurrentUrl();
 
     }
 
     @STEP(name = "Home Page Personal to Business",description = "Home Page Personal to Business")
     public  String HomePagePersonaltoBusiness(){
         navigate(URL.DU_HOME_PAGE_URL);
-        driver.navigate().to(URL.BUSINESS_URL);
-        String title=driver.getTitle();
-        driver.navigate().to(URL.DU_HOME_PAGE_URL);
+        driver.get().navigate().to(URL.BUSINESS_URL);
+        String title=driver.get().getTitle();
+        driver.get().navigate().to(URL.DU_HOME_PAGE_URL);
         return title;
     }
 
@@ -246,7 +246,7 @@ public class DuPage extends  Base {
 
     @STEP(name = "Scroll To The End Of The Page",description = "Scroll To The End Of The Page")
     public void ScrollToTheEndOfThePage()  {
-        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        ((JavascriptExecutor) driver.get()).executeScript("window.scrollTo(0, document.body.scrollHeight)");
         driverWait(1000);
     }
 
@@ -259,13 +259,13 @@ public class DuPage extends  Base {
         mainsearchinputTextBox.sendKeys(SearchText);
         retryClick(mainSearchBtn,60);
         driverWait(1000);
-        System.out.println(driver.findElements(By.xpath("//h6")).size());
-        if(driver.findElements(By.xpath("//h6")).size()>0)
+        System.out.println(driver.get().findElements(By.xpath("//h6")).size());
+        if(driver.get().findElements(By.xpath("//h6")).size()>0)
         {
-            String SearchResult= driver.findElements(By.xpath("//h6")).get(0).getText().toLowerCase();
+            String SearchResult= driver.get().findElements(By.xpath("//h6")).get(0).getText().toLowerCase();
             Result= SearchResult.contains(SearchText.toLowerCase());
           //  if(SearchResult.replaceAll("\\s+","").equalsIgnoreCase(SearchText.replaceAll("\\s+","")))
-           // Result =  driver.findElements(By.xpath("//h6")).get(0).getText().contains(SearchText);
+           // Result =  driver.get().findElements(By.xpath("//h6")).get(0).getText().contains(SearchText);
             System.out.println(SearchResult);
            // Result = SearchResult.replaceAll("\\s+","").contains(SearchText.replaceAll("\\s+",""));
 
@@ -286,8 +286,8 @@ public class DuPage extends  Base {
         retryClick(continueButton,60);//Continue button take alot of time to be enabled
         waitVisibility(confirmButton,90);
         retryClick(confirmButton,60);
-        Forms form=  new Forms(driver);
-        Forms.fillForm(driver);
+        Forms form=  new Forms(driver.get());
+        form.fillForm();
         waitVisibility(yesMatch, 60);
         yesMatch.click();
         waitToBeClickable(continueBtn, 60);

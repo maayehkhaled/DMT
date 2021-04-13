@@ -21,7 +21,7 @@ import static com.qpros.helpers.ActionsHelper.*;
 public class DevicesPage extends Base {
 
     public DevicesPage(WebDriver driver) {
-        PageFactory.initElements(Base.driver, this);
+        PageFactory.initElements(Base.driver.get(), this);
     }
 
     @FindBy(xpath = "//span[contains(.,'Add to cart')]")
@@ -89,7 +89,7 @@ public class DevicesPage extends Base {
                     break;
                 } else {
                     navigate(URL.MOBILE_PHONES_DEVICE_ONLY_URL);
-                    allMobilesCardsList = driver.findElements(By.className("device-card-container"));
+                    allMobilesCardsList = driver.get().findElements(By.className("device-card-container"));
                     Index++;
                 }
 
@@ -98,7 +98,7 @@ public class DevicesPage extends Base {
                 break;
         }
 
-        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        ((JavascriptExecutor) driver.get()).executeScript("window.scrollTo(0, document.body.scrollHeight)");
 
         waitVisibility(addtocartbtn, 30);
         isElementPresent(addtocartbtn);
@@ -110,12 +110,12 @@ public class DevicesPage extends Base {
         logManager.STEP("Verify Details and Click the \"Confirm\" button", "");
         retryClick(confirmButton, 60);
         waitVisibility(checkoutcontainer, 60);
-        Forms forms = new Forms(driver);
+        Forms forms = new Forms(driver.get());
         forms.fillFormWithUploaders();
         scrollTo(continueBtn);
         waitToBeClickable(continueBtn, 30);
         retryClick(continueBtn, 60);
-        System.out.println(driver.getCurrentUrl());
+        System.out.println(driver.get().getCurrentUrl());
 
     }
 
@@ -135,12 +135,12 @@ public class DevicesPage extends Base {
             if (Plan.contains("+ Postpaid plan")) {
                 MobileCard.findElement(By.className("secondary-btn--primary-color")).click(); // choose
                 waitVisibility(inStockLabel, 90);
-                if (driver.findElement(By.className("v-size--x-small")).getText().contains("In stock")) {
+                if (driver.get().findElement(By.className("v-size--x-small")).getText().contains("In stock")) {
                     ISInStock = true;
                     break;
                 } else {
                     navigate(URL.MOBILE_PHONES_DEVICE_ONLY_URL);
-                    allMobilesCardsList = driver.findElements(By.className("device-card-container"));
+                    allMobilesCardsList = driver.get().findElements(By.className("device-card-container"));
                     Index++;
                 }
 
@@ -149,20 +149,20 @@ public class DevicesPage extends Base {
                 break;
         }
 
-        if (driver.findElements(By.className("v-dialog--active")).size() > 0) {
+        if (driver.get().findElements(By.className("v-dialog--active")).size() > 0) {
             //were sorry popup
-            retryClick(driver.findElement(By.className("v-btn")), 60); // press okay
+            retryClick(driver.get().findElement(By.className("v-btn")), 60); // press okay
             System.out.println("This option is temporarily unavailable for this specific model.\n" +
                     "\n" +
                     "Please proceed with a new mobile plan, or explore other models which allow purchases with an existing plan.");
             return true;
         } else {
             retryClick(existingduPlanBtn, 60);
-            driver.findElements(By.xpath("//input[contains(@id,'input-')]")).get(2).sendKeys("0514993124");
+            driver.get().findElements(By.xpath("//input[contains(@id,'input-')]")).get(2).sendKeys("0514993124");
             waitToBeClickable(sendPINBtn, 60);
             retryClick(sendPINBtn, 60);
             waitVisibility(PINNumberDiv, 60);
-            return PINNumberDiv.isDisplayed();
+            return isElementPresent(PINNumberDiv);
         }
 
 
@@ -171,9 +171,9 @@ public class DevicesPage extends Base {
     @STEP(name = "Mobile Phones Device Only ", description = "Mobile Phones Device Only")
     public void MobilePhonesDeviceOnly() {
         navigate(URL.MOBILE_PHONES_DEVICE_ONLY_URL);
-        List<WebElement> casts = driver.findElements(By.id("csat_container"));// survey
+        List<WebElement> casts = driver.get().findElements(By.id("csat_container"));// survey
         if (casts.size() == 1)
-            driver.findElement(By.linkText("No thanks")).click();
+            driver.get().findElement(By.linkText("No thanks")).click();
         int Index = 0;
         WebElement Device;
         if (mobiledevicesList.size() > 0) {
@@ -194,14 +194,14 @@ public class DevicesPage extends Base {
                     driverWait(8000);
                     retryClick(confirmButton, 60);
                     waitVisibility(checkoutcontainer, 60);
-                    Forms forms = new Forms(driver);
-                    Forms.fillForm(driver);
+                    Forms forms = new Forms(driver.get());
+                    forms.fillForm();
                     waitVisibility(yesMatch, 60);
                     retryClick(yesMatch, 60);
                     waitToBeClickable(continueBtn, 60);
                     retryClick(continueBtn, 60);
                     driverWait(1000);
-                    waitVisibility(driver.findElement(By.name("MasterCard")), 90);
+                    waitVisibility(driver.get().findElement(By.name("MasterCard")), 90);
                     isElementPresent(By.cssSelector("body > center > center:nth-child(6) > table > tbody > tr > td"));
                     isElementPresent(By.cssSelector("/html/body/center/table[5]/tbody/tr[1]/td/table/tbody/tr/td/a"));
                     retryClick(By.xpath("/html/body/center/table[5]/tbody/tr[1]/td/table/tbody/tr/td/a"), 30);
@@ -212,7 +212,7 @@ public class DevicesPage extends Base {
                 }
                 System.out.println("the first one is out stock !!!");
                 navigate(URL.MOBILE_PHONES_DEVICE_ONLY_URL);
-                // mobiledevicesList = driver.findElements(By.className("AED0"));
+                // mobiledevicesList = driver.get().findElements(By.className("AED0"));
                 System.out.println(Device);
                 Index++;
             }

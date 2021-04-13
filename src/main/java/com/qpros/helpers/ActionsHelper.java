@@ -24,19 +24,19 @@ public class ActionsHelper extends Base {
 
 
     public static void waitForSeconds(Integer timeWait) {
-        driver.manage().timeouts().implicitlyWait(timeWait, TimeUnit.SECONDS);
+        driver.get().manage().timeouts().implicitlyWait(timeWait, TimeUnit.SECONDS);
     }
 
     public static void navigate(String url) {
         logManger.STEP("Navigation to Page with URL : " + url, "");
         logManger.INFO("Navigation to Page with URL : " + url, false);
-        driver.navigate().to(url);
+        driver.get().navigate().to(url);
     }
 
     public static boolean waitVisibility(WebElement element, int time) {
         boolean isElementPresent = false;
         try {
-            wait = new WebDriverWait(driver, time);
+            wait = new WebDriverWait(driver.get(), time);
             wait.until(ExpectedConditions.visibilityOf(element));
             isElementPresent = element.isDisplayed();
         } catch (Exception e) {
@@ -68,11 +68,11 @@ public class ActionsHelper extends Base {
     }
 
     public static void scrollTo(WebElement element) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        ((JavascriptExecutor) driver.get()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     public static void scrollTo(By by) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element(by));
+        ((JavascriptExecutor) driver.get()).executeScript("arguments[0].scrollIntoView(true);", element(by));
     }
 
     public static void scrollTo(By by, WebDriver driver) {
@@ -83,7 +83,7 @@ public class ActionsHelper extends Base {
         try {
             if (element.isEnabled() && element.isDisplayed()) {
 
-                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+                ((JavascriptExecutor) driver.get()).executeScript("arguments[0].click();", element);
             } else {
                 logManger.INFO("Unable to click on element", false);
             }
@@ -110,14 +110,14 @@ public class ActionsHelper extends Base {
     }
 
     public static String getCurrentUrl() {
-        return driver.getCurrentUrl();
+        return driver.get().getCurrentUrl();
     }
 
     /**
      * Returns the current page title from page
      */
     public String getCurrentPageTitle() {
-        return driver.getTitle();
+        return driver.get().getTitle();
     }
 
     /**
@@ -127,7 +127,7 @@ public class ActionsHelper extends Base {
      * @return true when the title matches, false otherwise
      */
     public boolean checkPageTitle(String title) {
-        return new WebDriverWait(driver, 5000).until(ExpectedConditions.titleIs(title));
+        return new WebDriverWait(driver.get(), 5000).until(ExpectedConditions.titleIs(title));
     }
 
     /**
@@ -138,7 +138,7 @@ public class ActionsHelper extends Base {
      * @return true when the title matches, false otherwise
      */
     public boolean checkPageTitleContains(String title) {
-        return new WebDriverWait(driver, 5000).until(ExpectedConditions.titleContains(title));
+        return new WebDriverWait(driver.get(), 5000).until(ExpectedConditions.titleContains(title));
     }
 
     /**
@@ -148,7 +148,7 @@ public class ActionsHelper extends Base {
      * @return <code>true</code> when the URL is what it should be
      */
     public boolean checkPageUrlToBe(String url) {
-        return new WebDriverWait(driver, 5000).until(ExpectedConditions.urlToBe(url));
+        return new WebDriverWait(driver.get(), 5000).until(ExpectedConditions.urlToBe(url));
     }
 
     /**
@@ -158,7 +158,7 @@ public class ActionsHelper extends Base {
      * @return <code>true</code> when the URL contains the text
      */
     public boolean checkPageUrlContains(String fraction) {
-        return new WebDriverWait(driver, 5000).until(ExpectedConditions.urlContains(fraction));
+        return new WebDriverWait(driver.get(), 5000).until(ExpectedConditions.urlContains(fraction));
     }
 
     /**
@@ -169,7 +169,7 @@ public class ActionsHelper extends Base {
      */
 
     public boolean checkPageUrlMatches(String regex) {
-        return new WebDriverWait(driver, 5000).until(ExpectedConditions.urlMatches(regex));
+        return new WebDriverWait(driver.get(), 5000).until(ExpectedConditions.urlMatches(regex));
     }
 
     /**
@@ -179,10 +179,10 @@ public class ActionsHelper extends Base {
      **/
     public static WebElement waitForExpectedElement(final By by) {
 
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        JavascriptExecutor jse = (JavascriptExecutor) driver.get();
         jse.executeScript("arguments[0].style.border='3px solid green'", element(by));
         driverWait(3000);
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver.get(), 10);
         return wait.until(visibilityOfElementLocated(by));
 
     }
@@ -196,7 +196,7 @@ public class ActionsHelper extends Base {
 
     public static WebElement waitForExpectedElement(final By by, long waitTimeInSeconds) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, waitTimeInSeconds);
+            WebDriverWait wait = new WebDriverWait(driver.get(), waitTimeInSeconds);
             return wait.until(visibilityOfElementLocated(by));
         } catch (NoSuchElementException | TimeoutException e) {
             System.out.println(e.getMessage());
@@ -221,7 +221,7 @@ public class ActionsHelper extends Base {
      * @return true once the element contains the given text
      */
     public boolean textToBePresentInElement(WebElement element, String text) {
-        return new WebDriverWait(driver, 5000).until(ExpectedConditions.textToBePresentInElement(element, text));
+        return new WebDriverWait(driver.get(), 5000).until(ExpectedConditions.textToBePresentInElement(element, text));
     }
 
 
@@ -234,7 +234,7 @@ public class ActionsHelper extends Base {
      * @return true once the first element located by locator contains the given text
      */
     public boolean textToBePresentInElementLocated(final By by, final String text) {
-        return new WebDriverWait(driver, 5000).until(ExpectedConditions.textToBePresentInElementLocated(by, text));
+        return new WebDriverWait(driver.get(), 5000).until(ExpectedConditions.textToBePresentInElementLocated(by, text));
     }
 
 
@@ -247,7 +247,7 @@ public class ActionsHelper extends Base {
      * @return true once the element's value attribute contains the given text
      */
     public boolean textToBePresentInElementValue(final WebElement element, final String text) {
-        return new WebDriverWait(driver, 5000).until(ExpectedConditions.textToBePresentInElementValue(element, text));
+        return new WebDriverWait(driver.get(), 5000).until(ExpectedConditions.textToBePresentInElementValue(element, text));
     }
 
 
@@ -261,7 +261,7 @@ public class ActionsHelper extends Base {
      * the given text
      */
     public boolean textToBePresentInElementValue(final By by, final String text) {
-        return new WebDriverWait(driver, 5000).until(ExpectedConditions.textToBePresentInElementValue(by, text));
+        return new WebDriverWait(driver.get(), 5000).until(ExpectedConditions.textToBePresentInElementValue(by, text));
     }
 
 
@@ -273,7 +273,7 @@ public class ActionsHelper extends Base {
      * @param frameLocator used to find the frame (id or name)
      */
     public WebDriver frameToBeAvailableAndSwitchToIt(final String frameLocator) {
-        return new WebDriverWait(driver, 5000).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
+        return new WebDriverWait(driver.get(), 5000).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
     }
 
 
@@ -285,7 +285,7 @@ public class ActionsHelper extends Base {
      * @param by used to find the frame
      */
     public WebDriver frameToBeAvailableAndSwitchToIt(final By by) {
-        return new WebDriverWait(driver, 5000).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by));
+        return new WebDriverWait(driver.get(), 5000).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by));
     }
 
 
@@ -296,7 +296,7 @@ public class ActionsHelper extends Base {
      * @param by used to find the element
      */
     public boolean invisibilityOfElementLocated(By by) {
-        return (new WebDriverWait(driver, 5000)).until(ExpectedConditions.invisibilityOfElementLocated(by));
+        return (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
 
     /**
@@ -307,7 +307,7 @@ public class ActionsHelper extends Base {
      * @param text of the element
      */
     public boolean invisibilityOfElementWithText(final By by, final String text) {
-        return (new WebDriverWait(driver, 5000)).until(ExpectedConditions.invisibilityOfElementWithText(by, text));
+        return (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.invisibilityOfElementWithText(by, text));
     }
 
 
@@ -319,7 +319,7 @@ public class ActionsHelper extends Base {
      * @return the WebElement once it is located and clickable (visible and enabled)
      */
     public WebElement elementToBeClickable(By by) {
-        return (new WebDriverWait(driver, 5000)).until(ExpectedConditions.elementToBeClickable(by));
+        return (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.elementToBeClickable(by));
     }
 
 
@@ -332,7 +332,7 @@ public class ActionsHelper extends Base {
      */
 
     public WebElement elementToBeClickable(final WebElement element) {
-        return (new WebDriverWait(driver, 5000)).until(ExpectedConditions.elementToBeClickable(element));
+        return (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.elementToBeClickable(element));
     }
 
 
@@ -344,28 +344,28 @@ public class ActionsHelper extends Base {
      * otherwise.
      */
     public boolean stalenessOf(final WebElement element) {
-        return (new WebDriverWait(driver, 5000)).until(ExpectedConditions.stalenessOf(element));
+        return (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.stalenessOf(element));
     }
 
     /**
      * An expectation for checking if the given element is selected.
      */
     public boolean elementToBeSelected(final By by) {
-        return (new WebDriverWait(driver, 5000)).until(ExpectedConditions.elementToBeSelected(by));
+        return (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.elementToBeSelected(by));
     }
 
     /**
      * An expectation for checking if the given element is selected.
      */
     public boolean elementToBeSelected(final WebElement element) {
-        return (new WebDriverWait(driver, 5000)).until(ExpectedConditions.elementToBeSelected(element));
+        return (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.elementToBeSelected(element));
     }
 
     /**
      * An expectation for checking if the given element is selected.
      */
     public boolean elementSelectionStateToBe(final WebElement element, final boolean selected) {
-        return (new WebDriverWait(driver, 5000)).until(ExpectedConditions.elementSelectionStateToBe(element, selected));
+        return (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.elementSelectionStateToBe(element, selected));
     }
 
     /**
@@ -373,11 +373,11 @@ public class ActionsHelper extends Base {
      */
     public boolean elementSelectionStateToBe(final By by,
                                              final boolean selected) {
-        return (new WebDriverWait(driver, 5000)).until(ExpectedConditions.elementSelectionStateToBe(by, selected));
+        return (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.elementSelectionStateToBe(by, selected));
     }
 
     public void waitForAlert() {
-        (new WebDriverWait(driver, 5000)).until(ExpectedConditions.alertIsPresent());
+        (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.alertIsPresent());
     }
 
     /**
@@ -389,7 +389,7 @@ public class ActionsHelper extends Base {
      * @return the list of WebElements once they are located
      */
     public List<WebElement> visibilityOfAllElementsLocatedBy(final By by) {
-        return (new WebDriverWait(driver, 5000)).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+        return (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
     }
 
 
@@ -402,7 +402,7 @@ public class ActionsHelper extends Base {
      * @return the list of WebElements once they are located
      */
     public List<WebElement> visibilityOfAllElements(final List<WebElement> elements) {
-        return (new WebDriverWait(driver, 5000)).until(ExpectedConditions.visibilityOfAllElements(elements));
+        return (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.visibilityOfAllElements(elements));
     }
 
 
@@ -414,7 +414,7 @@ public class ActionsHelper extends Base {
      * @return the list of WebElements once they are located
      */
     public List<WebElement> presenceOfAllElementsLocatedBy(final By by) {
-        return (new WebDriverWait(driver, 5000)).until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
+        return (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
     }
 
 //    /**
@@ -427,7 +427,7 @@ public class ActionsHelper extends Base {
 //     */
 //
 //    public WebElement visibilityOf(final WebElement element) {
-//        return (new WebDriverWait(driver, 5000)).until(ExpectedConditions.visibilityOf(element));
+//        return (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.visibilityOf(element));
 //    }
 
     /**
@@ -441,7 +441,7 @@ public class ActionsHelper extends Base {
 
     public boolean visibilityOf(final WebElement element) {
         try {
-            (new WebDriverWait(driver, 5000)).until(ExpectedConditions.visibilityOf(element));
+            (new WebDriverWait(driver.get(), 5000)).until(ExpectedConditions.visibilityOf(element));
         } catch (TimeoutException exception) {
             System.out.println(exception.getMessage());
             return false;
@@ -458,12 +458,12 @@ public class ActionsHelper extends Base {
      * @return the WebElement once it is located
      */
     public static boolean isElementPresent(final By by) {
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        JavascriptExecutor jse = (JavascriptExecutor) driver.get();
 
         try {
             jse.executeScript("arguments[0].style.border='3px solid green'", element(by));
 
-            new WebDriverWait(driver, 5000).until(ExpectedConditions.presenceOfElementLocated(by));
+            new WebDriverWait(driver.get(), 5000).until(ExpectedConditions.presenceOfElementLocated(by));
 
         } catch (TimeoutException | org.openqa.selenium.NoSuchElementException exception) {
             //jse.executeScript("arguments[0].style.border='3px solid red'", element(by));
@@ -482,12 +482,12 @@ public class ActionsHelper extends Base {
      * @return the WebElement once it is located
      */
     public static boolean isElementPresent(final WebElement by) {
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        JavascriptExecutor jse = (JavascriptExecutor) driver.get();
 
         try {
-            jse.executeScript("arguments[0].style.border='3px solid green'", by);
+           jse.executeScript("arguments[0].style.border='3px solid green'", by);
 
-            new WebDriverWait(driver, 5000).until(ExpectedConditions.visibilityOfAllElements(by));
+            new WebDriverWait(driver.get(), 5000).until(ExpectedConditions.visibilityOfAllElements(by));
 
         } catch (TimeoutException | org.openqa.selenium.NoSuchElementException exception) {
             //jse.executeScript("arguments[0].style.border='3px solid red'", by);
@@ -527,10 +527,10 @@ public class ActionsHelper extends Base {
 
 
     public WebDriver getBrowserByPageTitle(String pageTitle) {
-        for (String windowHandle : driver.getWindowHandles()) {
-            driver = driver.switchTo().window(windowHandle);
-            if (pageTitle.equalsIgnoreCase(driver.getTitle())) {
-                return driver;
+        for (String windowHandle : driver.get().getWindowHandles()) {
+            driver.set( driver.get().switchTo().window(windowHandle));
+            if (pageTitle.equalsIgnoreCase(driver.get().getTitle())) {
+                return driver.get();
             }
         }
         return null;
@@ -542,7 +542,7 @@ public class ActionsHelper extends Base {
     public static void selectOption(By dropDownElement, String Option) {
         if (!Option.isEmpty()) {
             try {
-                Select s = new Select(driver.findElement(dropDownElement));
+                Select s = new Select(driver.get().findElement(dropDownElement));
                 s.selectByValue(Option);
 
             } catch (Exception ex) {
@@ -554,35 +554,35 @@ public class ActionsHelper extends Base {
     }
 
     public void navigateToPreviousPageUsingBrowserBackButton() {
-        driver.navigate().back();
+        driver.get().navigate().back();
     }
 
     public void clickWithinElementWithXYCoordinates(WebElement webElement, int x, int y) {
-        Actions builder = new Actions(driver);
+        Actions builder = new Actions(driver.get());
         builder.moveToElement(webElement, x, y);
         builder.click();
         builder.perform();
     }
 
     public String getElementByTagNameWithJSExecutor(String tagName) {
-        return ((JavascriptExecutor) driver).executeScript("return window.getComputedStyle(document.getElementsByTagName('" + tagName + "')").toString();
+        return ((JavascriptExecutor) driver.get()).executeScript("return window.getComputedStyle(document.getElementsByTagName('" + tagName + "')").toString();
     }
 
     public String getElementByQueryJSExecutor(String cssSelector) {
-        return ((JavascriptExecutor) driver).executeScript("return window.getComputedStyle(document.querySelector('" + cssSelector + "')").toString();
+        return ((JavascriptExecutor) driver.get()).executeScript("return window.getComputedStyle(document.querySelector('" + cssSelector + "')").toString();
     }
 
     /**
-     * Wrapper for driver.findElement
+     * Wrapper for driver.get().findElement
      *
      * @param by Element location found by css, xpath, id etc...
      **/
     public static WebElement element(final By by) {
-        return driver.findElement(by);
+        return driver.get().findElement(by);
     }
 
     /**
-     * Wrapper for driver.findElement
+     * Wrapper for driver.get().findElement
      *
      * @param by Element location found by css, xpath, id etc...
      **/
@@ -729,11 +729,11 @@ public class ActionsHelper extends Base {
 
     public static void clickAction(WebElement element) {
 
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        JavascriptExecutor jse = (JavascriptExecutor) driver.get();
 
         try {
             driverWait(300);
-            Actions action = new Actions(driver);
+            Actions action = new Actions(driver.get());
             //action.moveToElement(element);
             action.click(element).perform();
             // highlight the element with green border 3px width
@@ -752,7 +752,7 @@ public class ActionsHelper extends Base {
 
         try {
             driverWait(300);
-            Actions action = new Actions(driver);
+            Actions action = new Actions(driver.get());
             action.click(element(by)).perform();
             // highlight the element with green border 3px width
             jse.executeScript("arguments[0].style.border='3px solid green'", element(by));
@@ -770,7 +770,7 @@ public class ActionsHelper extends Base {
 
         try {
             driverWait(300);
-            Actions action = new Actions(driver);
+            Actions action = new Actions(driver.get());
             action.click(element(by)).perform();
             // highlight the element with green border 3px width
             jse.executeScript("arguments[0].style.border='3px solid green'", element(by));
@@ -789,7 +789,7 @@ public class ActionsHelper extends Base {
      * @param text text to be sent
      */
     public static void sendKeysWithClear(WebElement wElement, String text) {
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        JavascriptExecutor jse = (JavascriptExecutor) driver.get();
         try {
             clickAction(wElement);
             wElement.clear();
@@ -812,7 +812,7 @@ public class ActionsHelper extends Base {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         try {
             clickAction(by);
-            // ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", wElement);
+            // ((JavascriptExecutor) driver.get()).executeScript("arguments[0].scrollIntoView(true);", wElement);
             element(by).clear();
             element(by).sendKeys(text);
             logManger.INFO("Send keys with Clear [" + text + "] inside element [" + element(by).toString().substring(element(by).toString().lastIndexOf(":") + 2), false);
@@ -835,7 +835,7 @@ public class ActionsHelper extends Base {
 
 
     public static void actionsClick(WebElement element, String EnterText) {
-        Actions actions = new Actions(driver);
+        Actions actions = new Actions(driver.get());
         actions.moveToElement(element);
         actions.click();
         actions.sendKeys(EnterText, Keys.ENTER);
@@ -846,7 +846,7 @@ public class ActionsHelper extends Base {
 
     public static boolean waitToBeClickable(WebElement element, int time) {
         boolean isElementClickable;
-        wait = new WebDriverWait(driver, time);
+        wait = new WebDriverWait(driver.get(), time);
         wait.until(ExpectedConditions.elementToBeClickable(element));
         isElementClickable = element.isEnabled();
         return isElementClickable;
@@ -854,7 +854,7 @@ public class ActionsHelper extends Base {
     }
 
     public static String takeScreenShot() throws UnsupportedEncodingException {
-        File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File file = ((TakesScreenshot) driver.get()).getScreenshotAs(OutputType.FILE);
         return encodeFileToBase64Binary(file);
 
     }
@@ -877,7 +877,7 @@ public class ActionsHelper extends Base {
 
     public static void moveToElementByActions(WebElement wElement) {
         try {
-            Actions actions = new Actions(driver);
+            Actions actions = new Actions(driver.get());
             actions.moveToElement(wElement);
             actions.perform();
         } catch (JsonException ex) {
@@ -888,7 +888,7 @@ public class ActionsHelper extends Base {
 
     public static void moveToElement(WebElement wElement){
         try {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", wElement);
+            ((JavascriptExecutor) driver.get()).executeScript("arguments[0].click();", wElement);
         } catch (Exception ex) {
             //
             logManger.ERROR(ex.getMessage(), false);
@@ -899,7 +899,7 @@ public class ActionsHelper extends Base {
 
     public static void clickElementActions(WebElement element)  {
         try {
-            Actions action = new Actions(driver);
+            Actions action = new Actions(driver.get());
             action.click(element).perform();
         } catch (Exception ex) {
             logManger.ERROR(ex.getMessage(), false);
@@ -910,7 +910,7 @@ public class ActionsHelper extends Base {
 
     public static void waitUntilElementIsDisplayed(By elementlocator) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, 30);
+            WebDriverWait wait = new WebDriverWait(driver.get(), 30);
             wait.until(ExpectedConditions.visibilityOfElementLocated(elementlocator));
         } catch (Exception e) {
             //
@@ -922,7 +922,7 @@ public class ActionsHelper extends Base {
 
     public static void waitUntilElementIsDisplayed(By elementlocator, int waitTimeSec) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, waitTimeSec);
+            WebDriverWait wait = new WebDriverWait(driver.get(), waitTimeSec);
             wait.until(ExpectedConditions.visibilityOfElementLocated(elementlocator));
         } catch (Exception e) {
             //
@@ -958,13 +958,13 @@ public class ActionsHelper extends Base {
 
 
     public static void scrollupTo(WebElement element){
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(false);", element);
+        ((JavascriptExecutor) driver.get()).executeScript("arguments[0].scrollIntoView(false);", element);
         driverWait(500);
     }
 
 
     public static void scrollToEndOfPage() {
-        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        ((JavascriptExecutor) driver.get()).executeScript("window.scrollTo(0, document.body.scrollHeight)");
         driverWait(1000);
     }
 

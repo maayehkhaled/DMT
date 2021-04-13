@@ -103,19 +103,19 @@ public class PrePaidPage extends Base {
 
 
     @STEP(name = "prepaid flexi", description = "prepaid flexi")
-    public void prepaidflexi() {
+    public synchronized void prepaidflexi() {
         navigate(URL.PREPAID_FLEXI_PLAN_URL);
         waitToBeClickable(buybutton, 120);
         moveToElementByActions(buybutton);
         clickElementActions(buybutton);
 
-        List<WebElement> orderSummary = driver.findElements(By.className(".order-confirmation-page"));
+        List<WebElement> orderSummary = driver.get().findElements(By.className(".order-confirmation-page"));
         System.out.println(orderSummary.size());
         if (orderSummary.size() == 0)
-            driver.navigate().refresh();
+            driver.get().navigate().refresh();
         // ctrl+F5
         driverWait(5000);
-        Actions actionObject = new Actions(driver);
+        Actions actionObject = new Actions(driver.get());
         actionObject.keyDown(Keys.CONTROL).sendKeys(Keys.F5).keyUp(Keys.CONTROL).perform();
         driverWait(5000);
         actionObject.keyDown(Keys.CONTROL).sendKeys(Keys.F5).keyUp(Keys.CONTROL).perform();
@@ -129,7 +129,7 @@ public class PrePaidPage extends Base {
     }
 
     @STEP(name = "Pay as you go", description = "Pay as you go")
-    public void Payasyougo() {//prepaid
+    public synchronized void Payasyougo() {//prepaid
         isElementPresent(By.xpath("//section[@class='quickLinks text-center']//a[@href='https://www.du.ae/personal/mobile/prepaid-plans']"));
         logManager.STEP("The User Click on PrePaid Icon","");
         logManager.INFO("Click on Prepaid icon",false);
@@ -166,7 +166,7 @@ public class PrePaidPage extends Base {
     }
 
     @STEP(name = "Easy Plan", description = "Easy Plan")
-    public void EasyPlan() {
+    public synchronized void EasyPlan() {
         navigate(URL.EASY_PLAN_URL);
         retryClick(buybutton,30);
         waitVisibility(ordersummary, 60);
@@ -180,8 +180,8 @@ public class PrePaidPage extends Base {
 
 
     public void yesMatchOperation() {
-        Forms forms = new Forms(driver);
-        Forms.fillForm(driver);
+        Forms forms = new Forms(driver.get());
+        forms.fillForm();
         waitVisibility(yesMatch, 60);
         isElementPresent(yesMatch);
         retryClick(yesMatch, 30);

@@ -31,7 +31,7 @@ public class Forms extends Base {
     private static WebElement phoneTextBox;
 
     @FindBy(id = "address.idNumber")
-    private static WebElement addressidNumberTextBox;
+    private static WebElement addressedNumberTextBox;
 
     @FindBy(id = "inputFullAddress")
     private static WebElement inputFullAddressTextBox;
@@ -153,13 +153,13 @@ public class Forms extends Base {
 
 
     @STEP(name = "fill Form ", description = "fill Form ")
-    public synchronized static void fillForm(WebDriver driver) { // 971551499312 postpaid
+    public synchronized  void fillForm() { // 971551499312 postpaid
         logManger.STEP("Enter all mandatory details on the personal details page", "");
         driverWait(6000);
         logManger.INFO("The User Enter Order Details on checkOut", false);
         sendKeys(customerEmailTextBox, TestData.CUSTOMER_EMAIL);
         sendKeys(phoneTextBox, TestData.PHONE_NUMBER);
-        addressidNumberTextBox.sendKeys("784-1991-4063247-4");
+        addressedNumberTextBox.sendKeys("784-1991-4063247-4");
         scrollTo(customerEmailTextBox);
         ActionsHelper.sendKeys(addressfirstName, TestData.ADDRESS_FIRST_NAME);
         Select nationalities = new Select(nationality);
@@ -179,7 +179,7 @@ public class Forms extends Base {
         driverWait(1000);
         ActionsHelper.waitToBeClickable(element(By.xpath("//*[@id=\"personalDetailsForm\"]/div[1]/fieldset[6]/div")), 5000);
         isElementPresent(By.cssSelector("label:nth-child(2)"));
-        retryClick(driver.findElement(By.cssSelector("label:nth-child(2)")), 60);
+        retryClick(driver.get().findElement(By.cssSelector("label:nth-child(2)")), 60);
 
 
     }
@@ -196,18 +196,18 @@ public class Forms extends Base {
         Select cities = new Select(citiesSelect);
         cities.selectByVisibleText(TestData.CITY);
         scrollTo(openImageFrontOcrBtn);
-        uploadfile(driver, "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s1.jpg", openImageFrontOcrBtn);
-        uploadfile(driver, "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s2.jpg", openImageBackOcrBtn);
+        uploadfile(driver.get(), "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s1.jpg", openImageFrontOcrBtn);
+        uploadfile(driver.get(), "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s2.jpg", openImageBackOcrBtn);
         driverWait(5000);
         moveToElement(checkValidate);
-        moveToElement(driver.findElement(By.id("checkInvoice")));
-        //moveToElement(driver.findElement(By.id("checkDqFlag")));
+        moveToElement(driver.get().findElement(By.id("checkInvoice")));
+        //moveToElement(driver.get().findElement(By.id("checkDqFlag")));
 
 
     }
 
     @STEP(name = "fill Zone Form", description = "fill Zone Form")
-    public synchronized void fillZoneForm(WebDriver driver) {
+    public synchronized void fillZoneForm() {
         sendKeys(By.name("email"), TestData.CUSTOMER_EMAIL);
         sendKeys(By.name("contact"), TestData.PHONE_NUMBER);
         sendKeys(By.id("emiratesId"), TestData.ID_NUMBER);
@@ -222,28 +222,28 @@ public class Forms extends Base {
         dateOfBirthDatePicker.sendKeys(TestData.BIRTHDAY);
         floorNumberTxtBox.sendKeys(TestData.FLOOR_NUMBER);
         departmentNumberTextBox.sendKeys(TestData.DEPARTMENT_NUMBER);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", bookTechnicianVisitGroupBox);
+        ((JavascriptExecutor) driver.get()).executeScript("arguments[0].scrollIntoView(true);", bookTechnicianVisitGroupBox);
         ActionsHelper.driverWait(1000);
         retryClick(TechnicalVisitTimeSlot1, 30);
         retryClick(TechnicalVisitTimeSlot2, 30);
-        List<WebElement> uploader = driver.findElements(By.className("file-drop-single"));
+        List<WebElement> uploader = driver.get().findElements(By.className("file-drop-single"));
         moveToElement(uploader.get(0));
         AtomicInteger indexOfElement= new AtomicInteger();
-        uploader.parallelStream().forEachOrdered(webElement -> {
+        uploader.stream().forEachOrdered(webElement -> {
             indexOfElement.getAndIncrement();
             scrollTo(webElement);
-            uploadfile(driver,"E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\" + indexOfElement + ".PNG",webElement);
+            uploadfile(driver.get(),"E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\" + indexOfElement + ".PNG",webElement);
             driverWait(3000);
         });
 
 //        for (int i = 0; i < uploader.size(); i++) {
 //            int k = i + 1;
 //            scrollupTo(uploader.get(i));// manditory
-//            uploadfile(driver, "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\resources\\images\\" + k + ".PNG", uploader.get(i));
+//            uploadfile(driver.get(), "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\resources\\images\\" + k + ".PNG", uploader.get(i));
 //            driverWait(3000);
 //        }
 
-        ((JavascriptExecutor) driver).executeScript("document.getElementsByClassName(\"du-new-nav\")[0].style.zIndex=0;");
+        ((JavascriptExecutor) driver.get()).executeScript("document.getElementsByClassName(\"du-new-nav\")[0].style.zIndex=0;");
         driverWait(1000);
         scrollTo(agreeCheckBox);
         retryClick(agreeCheckBox, 30);

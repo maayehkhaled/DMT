@@ -26,7 +26,7 @@ public class LoginPage extends Base {
     public long DRIVER_WAIT = 1000;
 
     public LoginPage(WebDriver driver) {
-        PageFactory.initElements(Base.driver, this);
+        PageFactory.initElements(Base.driver.get(), this);
     }
 
     @FindBy(xpath = "//a[@id='nonlogin']")
@@ -191,7 +191,7 @@ public class LoginPage extends Base {
     }
 
     public synchronized String getURL() {
-        return driver.getCurrentUrl();
+        return driver.get().getCurrentUrl();
     }
 
     public synchronized void clickOnLoginButton(){

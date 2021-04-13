@@ -24,7 +24,7 @@ public class MobileBase {
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "ANDROID");
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
         capabilities.setCapability(MobileCapabilityType.APP, "C:\\Users\\RanaIbrahim\\Desktop\\Q-Pros Automation Framework\\src\\main\\resources\\apk\\ContactManager.apk");
-        driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver= new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         return driver;
     }
 

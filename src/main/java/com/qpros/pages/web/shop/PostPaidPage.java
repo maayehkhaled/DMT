@@ -22,7 +22,7 @@ import static com.qpros.helpers.ActionsHelper.*;
 public class PostPaidPage extends Base {
 
     public PostPaidPage(WebDriver driver) {
-        PageFactory.initElements(Base.driver, this);
+        PageFactory.initElements(Base.driver.get(), this);
     }
 
     @FindBy(linkText = "Postpaid plans")
@@ -214,8 +214,8 @@ public class PostPaidPage extends Base {
         driverWait(5000);
         isElementPresent(confirmButton);
         retryClick(confirmButton, 60);
-        Forms form = new Forms(driver);
-        Forms.fillForm(driver);
+        Forms form = new Forms(driver.get());
+        form.fillForm();
 
         waitVisibility(yesMatch, 60);
         yesMatch.click();
@@ -243,10 +243,10 @@ public class PostPaidPage extends Base {
 
         waitVisibility(postpaidDiv, 40);
 
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        JavascriptExecutor js = (JavascriptExecutor) driver.get();
         js.executeScript("document.getElementsByClassName(\"du-new-nav\")[0].style.zIndex=0;");
 
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", moreOptions);
+        ((JavascriptExecutor) driver.get()).executeScript("arguments[0].scrollIntoView(true);", moreOptions);
         driverWait(10);
 
         waitVisibility(moreOptions, 60);
@@ -271,8 +271,8 @@ public class PostPaidPage extends Base {
         clickElementActions(confirmBtn);
 
         waitVisibility(personalDetailsForm, 60);
-        Forms form = new Forms(driver);
-        Forms.fillForm(driver);
+        Forms form = new Forms(driver.get());
+        form.fillForm();
 
         waitVisibility(yesMatch, 60);
         yesMatch.click();
@@ -320,19 +320,19 @@ public class PostPaidPage extends Base {
 
         Select cities = new Select(citiesSelect);
         cities.selectByVisibleText(TestData.CITY);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", openImageFrontOcrBtn);
+        ((JavascriptExecutor) driver.get()).executeScript("arguments[0].scrollIntoView(true);", openImageFrontOcrBtn);
         logManager.INFO("the User enter city in the customer City Drop Down", false);
 
         driverWait(60);
 
-        uploadfile(driver, "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s1.jpg", openImageFrontOcrBtn);
-        uploadfile(driver, "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s2.jpg", openImageBackOcrBtn);
+        uploadfile(driver.get(), "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s1.jpg", openImageFrontOcrBtn);
+        uploadfile(driver.get(), "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s2.jpg", openImageBackOcrBtn);
         logManager.INFO("the User upload Required Documents", false);
 
         driverWait(10000);
 
 
-//        List<WebElement> invalidEditors = driver.findElements(By.className("parsley-error"));
+//        List<WebElement> invalidEditors = driver.get().findElements(By.className("parsley-error"));
 //        if (invalidEditors.size() > 0) {
 //            waitUntilElementIsDisplayed(By.id("enableOCREditButton"));
 //            scrollTo(enableOCREditButton);
@@ -341,12 +341,12 @@ public class PostPaidPage extends Base {
 //            invalidEditors.get(0).sendKeys("11/11/2024");
 //        }
 
-        WebElement x = driver.findElement(By.className("checkbox-group"));
+        WebElement x = driver.get().findElement(By.className("checkbox-group"));
         scrollTo(x);
         retryClick(x, 30);
 
         driverWait(10000); // wait  for opecity
-        WebElement checkInvoice = driver.findElement(By.xpath("//*[@id=\"personalDetailsForm\"]/div[1]/fieldset[6]/div"));
+        WebElement checkInvoice = driver.get().findElement(By.xpath("//*[@id=\"personalDetailsForm\"]/div[1]/fieldset[6]/div"));
         scrollTo(checkInvoice);
         retryClick(checkInvoice, 60);
         isElementPresent(By.xpath("//label[contains(.,'I consent to list my number in the directory enquiry database')]"));
@@ -358,7 +358,7 @@ public class PostPaidPage extends Base {
 
         driverWait(1000);
 
-        if (driver.findElements(By.className("callout")).size() > 0) {
+        if (driver.get().findElements(By.className("callout")).size() > 0) {
 
             System.out.println(" We can see you have already reached the limit of permitted rate plans with this Emirates ID. Please go to your nearest retail store for more support with this request.");
         } else {
@@ -366,8 +366,8 @@ public class PostPaidPage extends Base {
             nameOnCardTextBox.sendKeys(TestData.NAME_ON_CARD);
             cardNumberCardTextBox.sendKeys(TestData.CARD_NUMBER);
             cardExpiryTextBox.sendKeys(TestData.CARD_EXPIRY);
-            waitToBeClickable(driver.findElement(By.className("sticky-button")), 60);
-            retryClick(driver.findElement(By.className("sticky-button")), 60);
+            waitToBeClickable(driver.get().findElement(By.className("sticky-button")), 60);
+            retryClick(driver.get().findElement(By.className("sticky-button")), 60);
         }
 
     }
@@ -394,8 +394,8 @@ public class PostPaidPage extends Base {
         driverWait(5000);
         retryClick(confirmButton, 60);
         logManager.STEP("Post verification reach your details page enter all necessary details", "the User Post verification reach your details page enter all necessary details");
-
-        Forms.fillForm(driver);
+        Forms forms = new Forms(driver.get());
+        forms.fillForm();
 
         waitVisibility(yesMatch, 60);
         yesMatch.click();
@@ -407,7 +407,7 @@ public class PostPaidPage extends Base {
     @STEP(name = "Postpaid New Emarati Plan", description = "Postpaid New Emarati Plan")
     public void PostpaidNewEmaratiPlan() {
         navigate(URL.POSTPAID_NEW_EMIRATI_PLANS_URL);
-        retryClick(driver.findElement(By.className("js-card-info-relay")), 60);
+        retryClick(driver.get().findElement(By.className("js-card-info-relay")), 60);
         retryClick(SkipGetplanonlyLink, 60);
 
     }
@@ -415,32 +415,32 @@ public class PostPaidPage extends Base {
     @STEP(name = "Postpaid Control Plan I want a new one", description = "Postpaid Control Plan I want anew one")
     public boolean PostpaidControlPlanIwantanewone() {
         navigate(URL.POSTPAID_CONTROL_PLANS_URL);
-        if (driver.findElements(By.className("csat_container")).size() > 0)
-            driver.findElement(By.linkText("No thanks")).click();
+        if (driver.get().findElements(By.className("csat_container")).size() > 0)
+            driver.get().findElement(By.linkText("No thanks")).click();
 
         retryClick(buyPlanButton, 60);
         retryClick(IwantanewoneButton, 60);
 
-        if (driver.findElements(By.xpath("//button[contains(text(),'Add')]")).size() > 0) {
+        if (driver.get().findElements(By.xpath("//button[contains(text(),'Add')]")).size() > 0) {
             // Additional add ones
-            scrollTo(driver.findElements(By.xpath("//button[contains(text(),'Add')]")).get(0));
-            retryClick(driver.findElements(By.xpath("//button[contains(text(),'Add')]")).get(0), 30);
+            scrollTo(driver.get().findElements(By.xpath("//button[contains(text(),'Add')]")).get(0));
+            retryClick(driver.get().findElements(By.xpath("//button[contains(text(),'Add')]")).get(0), 30);
         }
 
 
         retryClick(orderButton, 60);
 
-        Forms form = new Forms(driver);
-        form.fillForm2(driver);
+        Forms form = new Forms(driver.get());
+        form.fillForm2(driver.get());
 
-        waitToBeClickable(driver.findElement(By.className("js-form-ctrl-secondary")), 60);
-        retryClick(driver.findElement(By.className("js-form-ctrl-secondary")), 60);// continue button
+        waitToBeClickable(driver.get().findElement(By.className("js-form-ctrl-secondary")), 60);
+        retryClick(driver.get().findElement(By.className("js-form-ctrl-secondary")), 60);// continue button
 
         driverWait(1000);
-        waitVisibility(driver.findElement(By.className("icon-filled-green")), 60);//Success icon in thank you div
-        return driver.findElement(By.className("icon-filled-green")).isDisplayed();
+        waitVisibility(driver.get().findElement(By.className("icon-filled-green")), 60);//Success icon in thank you div
+        return driver.get().findElement(By.className("icon-filled-green")).isDisplayed();
 
-        // waitVisibility(driver.findElement(By.className("mnmi-wrap")),60);//thank you div
+        // waitVisibility(driver.get().findElement(By.className("mnmi-wrap")),60);//thank you div
 
 
     }
@@ -449,31 +449,31 @@ public class PostPaidPage extends Base {
     public boolean PostpaidControlPlanModifymyexistingduplan() {
         navigate(URL.POSTPAID_CONTROL_PLANS_URL);
 
-        if (driver.findElements(By.className("csat_container")).size() > 0)
-            driver.findElement(By.linkText("No thanks")).click();
+        if (driver.get().findElements(By.className("csat_container")).size() > 0)
+            driver.get().findElement(By.linkText("No thanks")).click();
 
         retryClick(buyPlanButton, 60);
 
         retryClick(ModifymyexistingduplanButton, 60);
         //  retryClick(ChangeexistingnumbertoduButton,60);
 
-        waitVisibility(driver.findElement(By.cssSelector("button.btn")), 60);
-        scrollTo(driver.findElement(By.cssSelector("button.btn")));
+        waitVisibility(driver.get().findElement(By.cssSelector("button.btn")), 60);
+        scrollTo(driver.get().findElement(By.cssSelector("button.btn")));
 
-        retryClick(driver.findElement(By.cssSelector("button.btn")), 30);
+        retryClick(driver.get().findElement(By.cssSelector("button.btn")), 30);
 
         retryClick(orderButton, 60);
-        waitVisibility(driver.findElement(By.className("checkout-content")), 60);
-        Forms form = new Forms(driver);
-        form.fillForm2(driver);
+        waitVisibility(driver.get().findElement(By.className("checkout-content")), 60);
+        Forms form = new Forms(driver.get());
+        form.fillForm2(driver.get());
 
-        waitToBeClickable(driver.findElement(By.className("js-form-ctrl-secondary")), 60);
-        retryClick(driver.findElement(By.className("js-form-ctrl-secondary")), 60);// continue button
+        waitToBeClickable(driver.get().findElement(By.className("js-form-ctrl-secondary")), 60);
+        retryClick(driver.get().findElement(By.className("js-form-ctrl-secondary")), 60);// continue button
         driverWait(1000);
-        waitVisibility(driver.findElement(By.className("icon-filled-green")), 60);//Success icon in thank you div
-        return driver.findElement(By.className("icon-filled-green")).isDisplayed();
+        waitVisibility(driver.get().findElement(By.className("icon-filled-green")), 60);//Success icon in thank you div
+        return driver.get().findElement(By.className("icon-filled-green")).isDisplayed();
 
-        // waitVisibility(driver.findElement(By.className("mnmi-wrap")),60);//thank you div
+        // waitVisibility(driver.get().findElement(By.className("mnmi-wrap")),60);//thank you div
 
 
     }
@@ -482,31 +482,31 @@ public class PostPaidPage extends Base {
     public boolean PostpaidControlPlanChangeexistingnumbertodu() {
         navigate(URL.POSTPAID_CONTROL_PLANS_URL);
 
-        if (driver.findElements(By.className("csat_container")).size() > 0)
-            driver.findElement(By.linkText("No thanks")).click();
+        if (driver.get().findElements(By.className("csat_container")).size() > 0)
+            driver.get().findElement(By.linkText("No thanks")).click();
 
         retryClick(buyPlanButton, 60);
 
         retryClick(ChangeexistingnumbertoduButton, 60);
 
-        waitVisibility(driver.findElement(By.cssSelector("button.btn")), 60);
-        scrollTo(driver.findElement(By.cssSelector("button.btn")));
+        waitVisibility(driver.get().findElement(By.cssSelector("button.btn")), 60);
+        scrollTo(driver.get().findElement(By.cssSelector("button.btn")));
 
-        retryClick(driver.findElement(By.cssSelector("button.btn")), 30);
+        retryClick(driver.get().findElement(By.cssSelector("button.btn")), 30);
 
         retryClick(orderButton, 60);
-        waitVisibility(driver.findElement(By.className("checkout-content")), 60);
+        waitVisibility(driver.get().findElement(By.className("checkout-content")), 60);
 
-        Forms form = new Forms(driver);
-        form.fillForm2(driver);
+        Forms form = new Forms(driver.get());
+        form.fillForm2(driver.get());
 
-        waitToBeClickable(driver.findElement(By.className("js-form-ctrl-secondary")), 60);
-        retryClick(driver.findElement(By.className("js-form-ctrl-secondary")), 60);// continue button
+        waitToBeClickable(driver.get().findElement(By.className("js-form-ctrl-secondary")), 60);
+        retryClick(driver.get().findElement(By.className("js-form-ctrl-secondary")), 60);// continue button
         driverWait(1000);
-        waitVisibility(driver.findElement(By.className("icon-filled-green")), 60);//Success icon in thank you div
-        return driver.findElement(By.className("icon-filled-green")).isDisplayed();
+        waitVisibility(driver.get().findElement(By.className("icon-filled-green")), 60);//Success icon in thank you div
+        return driver.get().findElement(By.className("icon-filled-green")).isDisplayed();
 
-        // waitVisibility(driver.findElement(By.className("mnmi-wrap")),60);//thank you div
+        // waitVisibility(driver.get().findElement(By.className("mnmi-wrap")),60);//thank you div
 
 
     }
@@ -521,10 +521,12 @@ public class PostPaidPage extends Base {
         driverWait(2000);
         actionClickStepClick("click on \"small business\" icon", By.xpath("//div[@class='sub-nav__inner']//a[@href='/smallbusiness']/span[@class='btn-icon spin circle animate']"));
     }
+
     public void navigateToLargeBusiness() {
         driverWait(2000);
         actionClickStepClick("click on \"Large business\" icon", By.xpath("//div[@class='sub-nav__inner']//a[@href='/enterprise']/span[@class='btn-icon spin circle animate']"));
     }
+
     public void navigateToGovernment() {
         driverWait(2000);
         actionClickStepClick("click on \"Government\" icon", By.xpath("//div[@class='sub-nav__inner']//a[@href='/government']/span[@class='btn-icon spin circle animate']"));
@@ -532,11 +534,12 @@ public class PostPaidPage extends Base {
 
     public void navigateToSmallBusinessMobilePlan() {
         actionClickStepClick("Click on \" Mobile Plans\"", By.xpath("//span[.='Mobile Plans']"));
-        retryClick(By.xpath("//a[.='Executive Plan']"),30);
+        retryClick(By.xpath("//a[.='Executive Plan']"), 30);
     }
+
     public void navigateToLargeBusinessMobilePlan() {
         actionClickStepClick("Click on \" Mobile Plans\"", By.xpath("//span[.='Mobile Plans']"));
-        retryClick(By.xpath("//li[@class='is-active']/a[.='Business Mobile Plan']"),30);
+        retryClick(By.xpath("//li[@class='is-active']/a[.='Business Mobile Plan']"), 30);
     }
 
 
@@ -547,6 +550,7 @@ public class PostPaidPage extends Base {
     public void navigateToDevicesTabPhones() {
         actionClickStepClick("Click on \" Phones\"", By.xpath("//a[@id='Phones-linktabs']"));
     }
+
     public void navigateToDevicesTabTablets() {
         actionClickStepClick("Click on \" Phones\"", By.xpath("//a[@id='Tablets-linktabs']"));
     }
@@ -555,6 +559,7 @@ public class PostPaidPage extends Base {
         actionClickStepClick("Click on \" Routers\"", By.xpath("//li[contains(.,'Routers')]"));
 
     }
+
     public void navigateToDevicesTabWatches() {
         actionClickStepClick("Click on \" Watches\"", By.xpath("//a[@id='Watches-linktabs']"));
 
@@ -595,7 +600,7 @@ public class PostPaidPage extends Base {
     }
 
     public void navigateToSmallBusinessMobilePlanInternationalLocalSelectPlanAddToCart() {
-        actionClickScrollStepClick("Click \"add to cart \"button",By.xpath("//a[contains(.,'Add to cart')]"));
+        actionClickScrollStepClick("Click \"add to cart \"button", By.xpath("//a[contains(.,'Add to cart')]"));
     }
 
     public void navigateToSmallBusinessMobilePlanInternationalLocalSelectPlanAddToCartDevices() {
@@ -660,9 +665,9 @@ public class PostPaidPage extends Base {
         isElementPresent(powerPlanElement);
         logManager.STEP("Select the SIM only plan and click on \"Order\"", "the User Select the SIM only plan and click on \"Order\"");
         logManager.INFO("the User Select the SIM only plan and click on \"Order\"", false);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        JavascriptExecutor js = (JavascriptExecutor) driver.get();
         js.executeScript("document.getElementsByClassName(\"du-new-nav\")[0].style.zIndex=0;");
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", moreOptions);
+        ((JavascriptExecutor) driver.get()).executeScript("arguments[0].scrollIntoView(true);", moreOptions);
 
     }
 

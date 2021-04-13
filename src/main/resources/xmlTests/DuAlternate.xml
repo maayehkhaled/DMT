@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+
+<suite name=" Du Alternate Test's" parallel="methods" thread-count="2" >
+
+    <listeners>
+        <listener class-name="com.qpros.common.LogManager"/>
+    </listeners>
+
+
+    <test name="Daily Run">
+        <classes>
+            <class name="com.qpros.test.TC_01_Daily"/>
+            <class name="com.qpros.test.TC_02_Alternate"/>
+        </classes>
+    </test>
+</suite>
+

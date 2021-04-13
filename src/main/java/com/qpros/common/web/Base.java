@@ -23,28 +23,28 @@ import java.util.Map;
 
 public class Base {
 
-    public static WebDriver driver;
+    public static ThreadLocal<WebDriver> driver= new ThreadLocal<>();
     public com.qpros.common.OsValidator OsValidator;
     public LogManager logManager = new LogManager(getClass().getSimpleName());
 
 
 
-    @BeforeMethod(enabled = true) public void setUpBrowser() {
+    @BeforeTest(enabled = false) public synchronized void setUpBrowser() {
         String OsType = OsValidator.getDeviceOs();
         DriverType browser = getBrowser();
         initiateDriver(OsType, browser);
-        driver.navigate().to(ReadWriteHelper.ReadData("BaseURL"));
+        driver.get().navigate().to(ReadWriteHelper.ReadData("BaseURL"));
     }
 
 
-    public WebDriver initiateDriver(String deviceOsType, DriverType driverType) {
+    public synchronized WebDriver initiateDriver(String deviceOsType, DriverType driverType) {
 
         switch (driverType) {
             case FIREFOX:
                 try {
 
                     setFireFoxBrowser(deviceOsType);
-                    driver = new FirefoxDriver();
+                    driver.set( new FirefoxDriver());
                 } catch (Throwable e) {
                     e.printStackTrace(System.out);
                     Assert.fail("Please check Browser is exist Browser Unable to start");
@@ -61,9 +61,9 @@ public class Base {
                     options.setExperimentalOption("prefs", prefs);
                     options.addArguments("--disable-web-security");
                     options.addArguments("--allow-running-insecure-content");
-                    driver = new ChromeDriver(options);
+                    driver.set(new ChromeDriver(options));
                     //Dimension targetSize = new Dimension(1920, 1080); //your screen resolution here
-                    //driver.manage().window().setSize(targetSize);
+                    //driver.get().manage().window().setSize(targetSize);
 
                 } catch (Throwable e) {
                     e.printStackTrace(System.out);
@@ -73,7 +73,7 @@ public class Base {
             case INTERNETEXPLORER: {
                 try {
                     System.setProperty(ReadWriteHelper.ReadData("IEDriverPath"), ReadWriteHelper.ReadData("IEBrowserPathWindows"));
-                    driver = new InternetExplorerDriver();
+                    driver.set( new InternetExplorerDriver());
                 } catch (Throwable e) {
                     e.printStackTrace(System.out);
                     Assert.fail("Please check Browser is exist Browser Unable to start");
@@ -84,7 +84,7 @@ public class Base {
                 try {
                     System.setProperty(ReadWriteHelper.ReadData("SafariDriverPath"), ReadWriteHelper.ReadData("SafariBrowserPath"));
 
-                    driver = new SafariDriver();
+                    driver.set( new SafariDriver());
                 } catch (Throwable e) {
                     e.printStackTrace(System.out);
                     Assert.fail("Please check Browser is exist Browser Unable to start");
@@ -95,12 +95,12 @@ public class Base {
                 break;
         }
         if (!driverType.equals(DriverType.appium)) {
-            driver.manage().window().maximize();
+            driver.get().manage().window().maximize();
         }
-        return driver;
+        return driver.get();
     }
 
-    public DriverType getBrowser() {
+    public synchronized DriverType getBrowser() {
         String browserName = ReadWriteHelper.ReadData("browser");
 
         if (browserName == null || browserName.equalsIgnoreCase("chrome"))
@@ -118,7 +118,7 @@ public class Base {
     }
 
 
-    private void setChromeBrowser(String deviceOsType) {
+    private synchronized void setChromeBrowser(String deviceOsType) {
         if (deviceOsType.equalsIgnoreCase("mac")) {
             System.setProperty(ReadWriteHelper.ReadData("ChromeDriverPath"), ReadWriteHelper.ReadData("ChromeDriverLinkMac"));
         } else if (deviceOsType.equalsIgnoreCase("windows")) {
@@ -128,7 +128,7 @@ public class Base {
         }
     }
 
-    private void setFireFoxBrowser(String deviceOsType) {
+    private synchronized void setFireFoxBrowser(String deviceOsType) {
         if (deviceOsType.equalsIgnoreCase("mac")) {
             System.setProperty(ReadWriteHelper.ReadData("FireFoxDriverPath"), ReadWriteHelper.ReadData("FireFoxBrowserPathMac"));
         } else if (deviceOsType.equalsIgnoreCase("windows")) {
@@ -139,7 +139,7 @@ public class Base {
     public void setAppiumDriver() {
         DesiredCapabilities capabilities = getAppiumDesiredCapabilities();
         try {
-            driver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+            driver.set( new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities));
         } catch (MalformedURLException e) {
             e.getMessage();
         }
@@ -154,9 +154,10 @@ public class Base {
         return capabilities;
     }
 
-    @AfterMethod(enabled = true) public void stopDriver() {
+    @AfterMethod(enabled = true) public synchronized void stopDriver() {
         try {
-            driver.quit();
+            System.out.println(Thread.currentThread().getId()+ "killed");
+            driver.get().quit();
         } catch (Throwable e) {
             e.getStackTrace();
         }

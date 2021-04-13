@@ -6,7 +6,6 @@ import com.qpros.quanta.reporter.*;
 import com.qpros.quanta.reporter.configuration.Theme;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
-import sun.rmi.runtime.Log;
 
 public class QuantaManager extends Base {
 
@@ -21,7 +20,7 @@ public class QuantaManager extends Base {
         return extent;
     }
 
-    public static QuantaReports createInstance() {
+    public static synchronized QuantaReports createInstance() {
         StateHelper.setStepState("reportName", reportFileName);
         QuantaHtmlReporter htmlReporter= new QuantaHtmlReporter(path + reportFileName);
         htmlReporter.config().setReportName("QPros-Test");

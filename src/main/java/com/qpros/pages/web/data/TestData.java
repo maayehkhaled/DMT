@@ -19,7 +19,7 @@ public interface TestData {
     public String PAY_AMOUNT_1_AED = "1";
     public String CC_NUMBER = "4261 0660 0080 3152";
     public String CARD_TYPE = "Visa Card";
-    public String CC_EXPIRY ="25/01";
+    public String CC_EXPIRY ="06/25";
     public String CC_CODE ="568";
     public String COMPANY_NAME ="TEST";
     public String ACCOUNT_NUMBER ="3232314432";

@@ -27,7 +27,7 @@ public class MyaccountPage extends Base {
 
     public MyaccountPage(WebDriver driver) {
         //
-        PageFactory.initElements(Base.driver, this);
+        PageFactory.initElements(Base.driver.get(), this);
     }
 
     @FindBy(xpath = "//*[@id=\"MSISDN\"]")
@@ -339,7 +339,7 @@ public class MyaccountPage extends Base {
         }
 
         driverWait(10000);
-        return driver.getTitle();
+        return driver.get().getTitle();
 
     }
 
@@ -376,7 +376,7 @@ public class MyaccountPage extends Base {
         retryClick(renewId, 60);
         logManager.INFO("The User Perform Login", false);
         String[][] credentials = ReadWriteHelper.readCSVFile("C:\\Users\\Khaled Maayeh\\OneDrive - Quality Professionals",Files.Login_Credentials, 1, 2);
-        LoginPage login = new LoginPage(driver);
+        LoginPage login = new LoginPage(driver.get());
         login.FillUserName(UserType.LoginUser.getUserName());
         login.FillPassword(UserType.LoginUser.getPassword());
         retryClick(requestOTPButton, 60);//login button //TODO : Change to dynamic locator
@@ -384,11 +384,11 @@ public class MyaccountPage extends Base {
         // the run stop here: Please contact your company administrator or account manager for renewal !!
 
         //TODO : add While condition with counted waits
-        if (driver.findElements(By.className("popup-reveal")).size() > 0) {
+        if (driver.get().findElements(By.className("popup-reveal")).size() > 0) {
             return true;
             // the run stop here: Please contact your company administrator or account manager for renewal !!
         } else {
-            retryClick(driver.findElements(By.className("du-custom-radio")).get(0), 60);// Choose the first phone number
+            retryClick(driver.get().findElements(By.className("du-custom-radio")).get(0), 60);// Choose the first phone number
             retryClick(requestOTPButton, 60);
             waitVisibility(OTPDiv, 60);
             return OTPDiv.isDisplayed();
@@ -407,12 +407,12 @@ public class MyaccountPage extends Base {
 
             retryClick(homePlanMenu, 90);
             retryClick(MovingtoanewHomeLink, 90);
-            List<WebElement> casts = driver.findElements(By.id("csat_container"));// survey
+            List<WebElement> casts = driver.get().findElements(By.id("csat_container"));// survey
 
             if (casts.size() > 0)
-                driver.findElement(By.linkText("No thanks")).click();
-            Forms form = new Forms(driver);
-            form.fillNewAddressForm(driver, "IN");
+                driver.get().findElement(By.linkText("No thanks")).click();
+            Forms form = new Forms(driver.get());
+            form.fillNewAddressForm(driver.get(), "IN");
         } else {
             logManger.WARN("there isnt any Home Plan");
             System.out.println("there isnt any Home Plan");
@@ -431,11 +431,11 @@ public class MyaccountPage extends Base {
             driverWait(1000);
             retryClick(homePlanMenu, 90);
             retryClick(MovingtoanewHomeLink, 90);
-            List<WebElement> casts = driver.findElements(By.id("csat_container"));// survey
+            List<WebElement> casts = driver.get().findElements(By.id("csat_container"));// survey
             if (casts.size() > 0)
-                driver.findElement(By.linkText("No thanks")).click();
-            Forms form = new Forms(driver);
-            form.fillNewAddressForm(driver, "OUT");
+                driver.get().findElement(By.linkText("No thanks")).click();
+            Forms form = new Forms(driver.get());
+            form.fillNewAddressForm(driver.get(), "OUT");
         } else {
             logManger.INFO("there isn't any Home Plan",false);
             System.out.println("there isnt any Home Plan");
@@ -449,7 +449,7 @@ public class MyaccountPage extends Base {
         retryClick(settingsTab, 60);
         retryClick(paymentsButton, 60);
         ActionsHelper.scrollToEndOfPage();
-        if (driver.findElements(By.linkText("Recharge")).size() > 0) {
+        if (driver.get().findElements(By.linkText("Recharge")).size() > 0) {
             waitVisibility(RechargeButton, 90);
             retryClick(RechargeButton, 90);
         } else { // adding new friend
@@ -464,12 +464,12 @@ public class MyaccountPage extends Base {
             retryClick(otherCheckBox, 90);
             break;
         }
-        waitVisibility(driver.findElement(By.id("myInput")), 90);
-        driver.findElement(By.id("myInput")).sendKeys("1");
-        driver.findElement(By.id("myInput")).sendKeys(Keys.TAB);
+        waitVisibility(driver.get().findElement(By.id("myInput")), 90);
+        driver.get().findElement(By.id("myInput")).sendKeys("1");
+        driver.get().findElement(By.id("myInput")).sendKeys(Keys.TAB);
 
 
-//        if (driver.findElements(By.name("cc_number")).size() > 0) {
+//        if (driver.get().findElements(By.name("cc_number")).size() > 0) {
 //            retryClick(duTextField, 30);
 //            // cc_numberTextBx.click();
 //            retryClick(cc_numberTextBoxByName, 30);
@@ -479,8 +479,8 @@ public class MyaccountPage extends Base {
 //        }
 
         cccodeTextBox.sendKeys("114");
-        moveToElement(driver.findElement(By.id("checkTnC")));
-        // retryClick( driver.findElement(By.className("action-button")),90);// recharge button
+        moveToElement(driver.get().findElement(By.id("checkTnC")));
+        // retryClick( driver.get().findElement(By.className("action-button")),90);// recharge button
 
 
     }
@@ -491,8 +491,8 @@ public class MyaccountPage extends Base {
         retryClick(settingsTab, 60);
         retryClick(paymentsButton, 60);
         ActionsHelper.scrollToEndOfPage();
-        System.out.println(driver.findElements(By.linkText("Make a payment")).size());
-        if (driver.findElements(By.linkText("Make a payment")).size() > 0) {
+        System.out.println(driver.get().findElements(By.linkText("Make a payment")).size());
+        if (driver.get().findElements(By.linkText("Make a payment")).size() > 0) {
             waitVisibility(makeAPaymentButton, 90);
             retryClick(makeAPaymentButton, 90);
         } else {
@@ -505,16 +505,16 @@ public class MyaccountPage extends Base {
 
         }
 
-        driver.findElement(By.name("pay_amt")).sendKeys("1");
-        if (driver.findElements(By.name("cc_number")).size() > 0) {
-            driver.findElement(By.name("cc_number")).sendKeys(TestData.CC_NUMBER);
+        driver.get().findElement(By.name("pay_amt")).sendKeys("1");
+        if (driver.get().findElements(By.name("cc_number")).size() > 0) {
+            driver.get().findElement(By.name("cc_number")).sendKeys(TestData.CC_NUMBER);
             fullnameTextBox.sendKeys(TestData.NAME_ON_CARD);
-            driver.findElement(By.name("cc_expiry")).sendKeys(TestData.CC_EXPIRY);
+            driver.get().findElement(By.name("cc_expiry")).sendKeys(TestData.CC_EXPIRY);
         }
 
         cccodeTextBox.sendKeys("114");
-        moveToElement(driver.findElement(By.id("checkTnC")));
-        // retryClick( driver.findElement(By.className("action-button")),90);// recharge button
+        moveToElement(driver.get().findElement(By.id("checkTnC")));
+        // retryClick( driver.get().findElement(By.className("action-button")),90);// recharge button
 
     }
 
@@ -532,7 +532,7 @@ public class MyaccountPage extends Base {
 
         driverWait(1000);
         retryClick(PayRechargeorafriendShortcutLinkText, 60);
-        if (driver.findElements(By.className("js-account-select")).size() > 1) {
+        if (driver.get().findElements(By.className("js-account-select")).size() > 1) {
             // There is at least one friend
             // so you can select one
             waitVisibility(friendsDropDownlist, 60);
@@ -555,18 +555,18 @@ public class MyaccountPage extends Base {
 
         driverWait(2000);
         ActionsHelper.scrollToEndOfPage();
-        if (driver.findElements(By.xpath("//input[@name='recharge-card']")).get(6).isDisplayed()) //  postpaid Number
+        if (driver.get().findElements(By.xpath("//input[@name='recharge-card']")).get(6).isDisplayed()) //  postpaid Number
         {
             // Postpaid Number
             System.out.println("Postpaid # ");
-            driver.findElements(By.xpath("//input[@name='recharge-card']")).get(6).sendKeys("1" + Keys.TAB);
+            driver.get().findElements(By.xpath("//input[@name='recharge-card']")).get(6).sendKeys("1" + Keys.TAB);
 
         } else {
 
             // prepaid Number
             System.out.println("PrePaid # ");
             otherCheckBox.click();
-            driver.findElement(By.id("recharge-amount")).sendKeys("1" + Keys.TAB);
+            driver.get().findElement(By.id("recharge-amount")).sendKeys("1" + Keys.TAB);
 
         }
 
@@ -575,7 +575,7 @@ public class MyaccountPage extends Base {
         fullnameTextBox.sendKeys(TestData.NAME_ON_CARD);
         ccexpiryTextBox.sendKeys(TestData.CC_EXPIRY);
         cccodeTextBox.sendKeys("114");
-        moveToElement(driver.findElement(By.id("checkTnC")));
+        moveToElement(driver.get().findElement(By.id("checkTnC")));
 
 
     }
@@ -583,48 +583,48 @@ public class MyaccountPage extends Base {
 
     @STEP(name = "Home Fixed Journey (Internet & TV)-Login to upgrade ", description = "Home Fixed Journey (Internet & TV)-Login to upgrade ")
     public synchronized void HomeFixedJourneyInternetandTVLogintoupgrade() throws Exception { // alternate
-        while (isElementPresent(driver.findElement(By.xpath("//a[.='Internet & TV']")))) {
-            retryClick(driver.findElement(By.xpath("//a[.='Internet & TV']")), 60);
+        while (isElementPresent(driver.get().findElement(By.xpath("//a[.='Internet & TV']")))) {
+            retryClick(driver.get().findElement(By.xpath("//a[.='Internet & TV']")), 60);
             break;
         }
         driverWait(1000);
-        while (isElementPresent(driver.findElement(By.xpath("//a[@href='/personal/at-home/packages']")))) {
-            retryClick(driver.findElement(By.xpath("//a[@href='/personal/at-home/packages']")), 60);
+        while (isElementPresent(driver.get().findElement(By.xpath("//a[@href='/personal/at-home/packages']")))) {
+            retryClick(driver.get().findElement(By.xpath("//a[@href='/personal/at-home/packages']")), 60);
             break;
         }
         driverWait(3000);
         retryClick(LogintoupgradeLinkText, 60);
         driverWait(2000);
-        List tabs = new ArrayList(driver.getWindowHandles());
+        List tabs = new ArrayList(driver.get().getWindowHandles());
         System.out.println(tabs.get(1));
-        driver.switchTo().window(tabs.get(1).toString());
+        driver.get().switchTo().window(tabs.get(1).toString());
         driverWait(5000);
-        System.out.println(driver.getCurrentUrl());
+        System.out.println(driver.get().getCurrentUrl());
         String[][] Credentials = {{"dutest123456@gmail.com", "Dubai@12345"}};
-        LoginPage login = new LoginPage(driver);
+        LoginPage login = new LoginPage(driver.get());
         login.PerformLogin(UserType.User);
         driverWait(5000);
-        driver.findElement(By.id("search-home")).sendKeys("Dubai - United Arab Emirates" + Keys.RETURN);
+        driver.get().findElement(By.id("search-home")).sendKeys("Dubai - United Arab Emirates" + Keys.RETURN);
         retryClick(ConfirmlocationLinkText, 60);
         driverWait(2000);
-        System.out.println(driver.findElements(By.linkText("Select")).size());
-        retryClick(driver.findElements(By.linkText("Select")).get(0), 60);
-        if (driver.findElements(By.id("use-map")).size() > 0) {
-            driver.findElement(By.id("search-home")).sendKeys("Dubai - United Arab Emirates" + Keys.RETURN);
+        System.out.println(driver.get().findElements(By.linkText("Select")).size());
+        retryClick(driver.get().findElements(By.linkText("Select")).get(0), 60);
+        if (driver.get().findElements(By.id("use-map")).size() > 0) {
+            driver.get().findElement(By.id("search-home")).sendKeys("Dubai - United Arab Emirates" + Keys.RETURN);
             retryClick(ConfirmlocationLinkText, 60);
         }
         driverWait(2000);
-        //  retryClick(driver.findElement(By.xpath("//*[@id=\"step-1\"]/div[3]/div[3]/div[2]/div/label[1]")),60);
-        waitVisibility(driver.findElement(By.xpath("//*[@id=\"step-1\"]/div[3]/div[3]/div[2]/div/label[1]/div[3]")), 90);
-        retryClick(driver.findElement(By.xpath("//*[@id=\"step-1\"]/div[3]/div[3]/div[2]/div/label[1]/div[3]")), 60);
-        waitVisibility(driver.findElement(By.id("requestcallback")), 60);
-        retryClick(driver.findElement(By.id("requestcallback")), 60);
+        //  retryClick(driver.get().findElement(By.xpath("//*[@id=\"step-1\"]/div[3]/div[3]/div[2]/div/label[1]")),60);
+        waitVisibility(driver.get().findElement(By.xpath("//*[@id=\"step-1\"]/div[3]/div[3]/div[2]/div/label[1]/div[3]")), 90);
+        retryClick(driver.get().findElement(By.xpath("//*[@id=\"step-1\"]/div[3]/div[3]/div[2]/div/label[1]/div[3]")), 60);
+        waitVisibility(driver.get().findElement(By.id("requestcallback")), 60);
+        retryClick(driver.get().findElement(By.id("requestcallback")), 60);
 
         driverWait(2000);
-        waitVisibility(driver.findElement(By.name("contactNumberConfirm")), 60);
-        driver.findElement(By.name("contactNumberConfirm")).sendKeys("551499312");
-        driver.findElement(By.name("emailIDConfirm")).sendKeys("farahm@q-pros.com");
-        retryClick(driver.findElement(By.id("confirm-callback")), 60);
+        waitVisibility(driver.get().findElement(By.name("contactNumberConfirm")), 60);
+        driver.get().findElement(By.name("contactNumberConfirm")).sendKeys("551499312");
+        driver.get().findElement(By.name("emailIDConfirm")).sendKeys("farahm@q-pros.com");
+        retryClick(driver.get().findElement(By.id("confirm-callback")), 60);
 
 
     }

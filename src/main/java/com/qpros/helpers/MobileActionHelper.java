@@ -17,7 +17,7 @@ public class MobileActionHelper extends MobileBase {
     }
 
     /**
-     * Wrapper for driver.findElement
+     * Wrapper for driver.get().findElement
      *
      * @param by Element location found by css, xpath, id etc...
      **/
