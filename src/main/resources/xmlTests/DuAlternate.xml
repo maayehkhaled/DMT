@@ -3,7 +3,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 
-<suite name=" Du Alternate Test's" >
+<suite name=" Du Alternate Test's">
 
     <listeners>
         <listener class-name="com.qpros.common.LogManager"/>

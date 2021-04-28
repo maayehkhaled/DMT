@@ -130,12 +130,9 @@ public class PrePaidPage extends Base {
 
     @STEP(name = "Pay as you go", description = "Pay as you go")
     public synchronized void Payasyougo() {//prepaid
-        isElementPresent(By.xpath("//section[@class='quickLinks text-center']//a[@href='https://www.du.ae/personal/mobile/prepaid-plans']"));
-        logManager.STEP("The User Click on PrePaid Icon","");
-        logManager.INFO("Click on Prepaid icon",false);
-        retryClick(By.xpath("//section[@class='quickLinks text-center']//a[@href='https://www.du.ae/personal/mobile/prepaid-plans']"),30);
+        actionClickStepClick("Click on PrePaid Icon",By.cssSelector("[aria-label='Prepaid']"));
         int count =0;
-        while(!isElementPresent(By.xpath("//ul[@id='du-tabs']//a[.='Flexi']"))){
+        while(!isElementPresent(By.xpath("//div[@class='v-list-item__content secondary--text mb-2']"))){
             count++;
             driverWait(1000);
 
@@ -144,25 +141,23 @@ public class PrePaidPage extends Base {
             }
         }
 
-        logManager.STEP("The User Click on \"Pay as you Go Tab\" Icon","https://www.du.ae/prepaid/payg");
-        logManager.INFO("Click on Pay as you Go Tab",false);
-        retryClick(By.xpath("//ul[@id='du-tabs']//a[.='Flexi']"),30);
-        while (!isElementPresent(prepaidPAYGbutton)){
-            driverWait(1000);
-        }
-        scrollTo(By.xpath("//p[@class='du-black subtitle1']"));
-        logManager.STEP("The User Click on \"Buy Now\" button","");
-        logManager.INFO("Click on \"Buy Now\" button",false);
-        retryClick(prepaidPAYGbutton, 30);
-        waitVisibility(orderitems, 60);
-        while (!isElementPresent(By.className("cartSummaryGenerateOTPButton"))){
-            driverWait(1000);
-        }
-        scrollTo(confirmButton);
-        driverWait(5000);
-        retryClick(confirmButton, 60);
-        waitVisibility(personalDetailsForm, 60);
-        yesMatchOperation();
+        actionClickStepClick("The User Perfom Click on BuyNow",By.xpath("//span[.='Buy now']"));
+//        while (!isElementPresent(prepaidPAYGbutton)){
+//            driverWait(1000);
+//        }
+//        scrollTo(By.xpath("//p[@class='du-black subtitle1']"));
+//        logManager.STEP("The User Click on \"Buy Now\" button","");
+//        logManager.INFO("Click on \"Buy Now\" button",false);
+//        retryClick(prepaidPAYGbutton, 30);
+//        waitVisibility(orderitems, 60);
+      // while (!isElementPresent(By.className("cartSummaryGenerateOTPButton"))){
+      //     driverWait(1000);
+      // }
+//        scrollTo(confirmButton);
+//        driverWait(5000);
+//        retryClick(confirmButton, 60);
+//        waitVisibility(personalDetailsForm, 60);
+//        yesMatchOperation();
     }
 
     @STEP(name = "Easy Plan", description = "Easy Plan")

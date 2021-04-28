@@ -17,6 +17,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import com.qpros.pages.web.common.Forms;
+import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -227,28 +228,39 @@ public class MyaccountPage extends Base {
 
     @STEP(name = "Rate plan benefits", description = "Rate plan benefits ")
     public synchronized boolean Rateplanbenefits() {
+        logManager.STEP("Beside Postpaid Plan name click on menu (…) then click on \"My plan option", "the user perform Beside Postpaid Plan name click on menu (…) then click on \"My plan option");
+        isElementPresent(By.xpath("//li[@class='plans-accordion__item accordion-item is-active']/div[@class='plans-accordion__content']//i[1]"));
+        logManager.INFO("the user click on (...) menu", false);
+        retryClick(By.xpath("//li[@class='plans-accordion__item accordion-item is-active']/div[@class='plans-accordion__content']//i[1]"), 30);
+        driverWait(2000);
+        isElementPresent(By.xpath("//a[.='My plan']"));
+        logManager.INFO("the user click on my Plan", false);
+        retryClick(By.xpath("//a[.='My plan']"), 30);
+        driverWait(2000);
+        isElementPresent(By.xpath("//a[.='Change / upgrade my plan']"));
+        logManager.INFO("the user click change / upgrade plan", false);
+        retryClick(By.xpath("//a[.='Change / upgrade my plan']"), 30);
+        logManager.STEP("Validate the Page", "the user perform Page Validation");
         driverWait(10000);
-        waitVisibility(menuPostPaid, 60);
-        waitVisibility(SIMCardIcon, 60);
-        driverWait(1000);
+        if (isElementPresent(By.xpath("//div[@class='alert info active']"))) {
+            logManger.INFO(Messages.Rate_MY_PLAN_ALERT_MESSAGE, false);
+            Assert.assertEquals(driver.get().findElement(By.xpath("//div[@class='alert info active']")).getText(), Messages.Rate_MY_PLAN_ALERT_MESSAGE);
+        } else {
 
-//        retryClick(menuIcon, 120);
-//        waitVisibility(MyplanLinkText, 60);
-//        retryClick(MyplanLinkText, 60);
-//        driverWait(10000);
-//        int count=0;
-//            if (!isElementPresent(changeUpgradeMyPlanLinkText)) {
-//                QuantaTestManager.getTestNode().fail("Couldn't find the Expected Element to continue the test "+ changeUpgradeMyPlanLinkText);
-//
-//            }
-//        retryClick(changeUpgradeMyPlanLinkText, 30);
-//        driverWait(5000);
-//        String usedPlaninDetalisPage = "";
-//        if(isElementPresent(usedPlaninDetalisPageLable)) {
-//            QuantaTestManager.getTestNode().fail("Couldn't find the Expected Element to continue the test "+ changeUpgradeMyPlanLinkText);
-//
-//        }
-//        return planName.getText().replaceAll("\\s+", "").equalsIgnoreCase(usedPlaninDetalisPage.replaceAll("\\s+", ""));
+            int count = 0;
+            if (!isElementPresent(changeUpgradeMyPlanLinkText)) {
+                QuantaTestManager.getTestNode().fail("Couldn't find the Expected Element to continue the test " + changeUpgradeMyPlanLinkText);
+
+            }
+            retryClick(changeUpgradeMyPlanLinkText, 30);
+            driverWait(5000);
+            String usedPlaninDetalisPage = "";
+            if (isElementPresent(usedPlaninDetalisPageLable)) {
+                QuantaTestManager.getTestNode().fail("Couldn't find the Expected Element to continue the test " + changeUpgradeMyPlanLinkText);
+
+            }
+            return planName.getText().replaceAll("\\s+", "").equalsIgnoreCase(usedPlaninDetalisPage.replaceAll("\\s+", ""));
+        }
         return true;
     }
 
@@ -275,8 +287,8 @@ public class MyaccountPage extends Base {
         logManager.INFO("The User Enter/edit the amount (1 AED)", false);
         payAmountTextBox.sendKeys(TestData.PAY_AMOUNT_1_AED);
         enterCreditCardDetails();
-        // moveToElement(pay_now);
-        //  retryClick(pay_now,120);
+        moveToElement(pay_now);
+        retryClick(pay_now, 120);
         driverWait(8000);
     }
 
@@ -305,6 +317,7 @@ public class MyaccountPage extends Base {
         }
 
         moveToElement(PaynowButton);
+        //actionClickStepClick("The User click on pay now ",PaynowButton);
 
     }
 
@@ -365,7 +378,8 @@ public class MyaccountPage extends Base {
 
 
     }
-         //TODO : let farah review the steps
+
+    //TODO : let farah review the steps
     @STEP(name = "ID renewal", description = "ID renewal")
     public synchronized boolean IDrenewal() {
         logManager.STEP("Navigate to Homepage ", URL.DU_HOME_PAGE_URL);
@@ -375,7 +389,7 @@ public class MyaccountPage extends Base {
         isElementPresent(renewId);
         retryClick(renewId, 60);
         logManager.INFO("The User Perform Login", false);
-        String[][] credentials = ReadWriteHelper.readCSVFile("C:\\Users\\Khaled Maayeh\\OneDrive - Quality Professionals",Files.Login_Credentials, 1, 2);
+        String[][] credentials = ReadWriteHelper.readCSVFile("C:\\Users\\Khaled Maayeh\\OneDrive - Quality Professionals", Files.Login_Credentials, 1, 2);
         LoginPage login = new LoginPage(driver.get());
         login.FillUserName(UserType.LoginUser.getUserName());
         login.FillPassword(UserType.LoginUser.getPassword());
@@ -425,6 +439,7 @@ public class MyaccountPage extends Base {
     public synchronized void HomeRealocationoutzone() { //Alternate Ajman
         driverWait(4000);
         if (homePlanIcons.size() > 0) {
+            logManager.STEP("Beside Home Plan name [Home starter] click on menu (…) then click on \"Moving to a new Home?\" option", "the User Perform 3.Beside Home Plan name [Home starter] click on menu (…) then click on \"Moving to a new Home?\" option");
             // there are home plans
             waitVisibility(homePlanLink, 60);
             retryClick(homePlanLink, 90);
@@ -435,9 +450,10 @@ public class MyaccountPage extends Base {
             if (casts.size() > 0)
                 driver.get().findElement(By.linkText("No thanks")).click();
             Forms form = new Forms(driver.get());
+            logManger.STEP("Select Emirates Dubai", "The User Select Emirates Dubai");
             form.fillNewAddressForm(driver.get(), "OUT");
         } else {
-            logManger.INFO("there isn't any Home Plan",false);
+            logManger.INFO("there isn't any Home Plan", false);
             System.out.println("there isnt any Home Plan");
         }
 
@@ -464,7 +480,9 @@ public class MyaccountPage extends Base {
             retryClick(otherCheckBox, 90);
             break;
         }
+        driverWait(3000);
         waitVisibility(driver.get().findElement(By.id("myInput")), 90);
+        driverWait(3000);
         driver.get().findElement(By.id("myInput")).sendKeys("1");
         driver.get().findElement(By.id("myInput")).sendKeys(Keys.TAB);
 
@@ -480,8 +498,8 @@ public class MyaccountPage extends Base {
 
         cccodeTextBox.sendKeys("114");
         moveToElement(driver.get().findElement(By.id("checkTnC")));
-        // retryClick( driver.get().findElement(By.className("action-button")),90);// recharge button
-
+        retryClick(driver.get().findElement(By.className("action-button")), 90);// recharge button
+        driverWait(5000);
 
     }
 
@@ -514,8 +532,38 @@ public class MyaccountPage extends Base {
 
         cccodeTextBox.sendKeys("114");
         moveToElement(driver.get().findElement(By.id("checkTnC")));
-        // retryClick( driver.get().findElement(By.className("action-button")),90);// recharge button
+         retryClick( driver.get().findElement(By.className("action-button")),90);// recharge button
+        driverWait(10000);
 
+    }
+
+    @STEP(name = "Pay for friend with 1AED pay ShortCut", description = "Pay for friend with 1AED pay")
+    public synchronized void Payforfriendwith1AEDpayShortCut() { // Alternate postpaid
+        driverWait(4000);
+        actionClickScrollStepClick("Click on Pay Recharge for a friend", By.xpath("//a[.='Pay/ Recharge for a friend']"));
+        driverWait(10000);
+        actionClickStepClick("select Friend from List", By.xpath("//select[@class='js-account-select']"));
+        selectOption(By.xpath("//select[@class='js-account-select']"), "2");
+        retryClick(By.xpath("//select[@class='js-account-select']"), 30);
+        driverWait(2000);
+        if (isElementPresent(By.xpath("//label[6]/div[@class='du-radio-status2']"))) {
+            retryClick(By.xpath("//label[6]/div[@class='du-radio-status2']"), 30);
+        }
+        actionClickStepClick("set 1 AED Payment Amount", By.xpath("//input[@class='control txt1 prefix']"));
+        clickAction(By.xpath("//input[@class='control txt1 prefix']"));
+        sendKeys(By.xpath("//input[@class='control txt1 prefix parsley-success focus']"), "1");
+        retryClick(By.id("parsley-id-31"), 30);
+
+        if (driver.get().findElements(By.name("cc_number")).size() > 0) {
+            driver.get().findElement(By.name("cc_number")).sendKeys(TestData.CC_NUMBER);
+            fullnameTextBox.sendKeys(TestData.NAME_ON_CARD);
+            driver.get().findElement(By.name("cc_expiry")).sendKeys(TestData.CC_EXPIRY);
+        }
+
+        cccodeTextBox.sendKeys("568");
+        moveToElement(driver.get().findElement(By.id("checkTnC")));
+        retryClick(By.xpath("//div[@class='action-button']"), 90);// recharge button
+        driverWait(10000);
     }
 
 
@@ -543,7 +591,7 @@ public class MyaccountPage extends Base {
             // There is'nt any friend on the list
             //You must add one
             System.out.println("There is'nt any friend on the list");
-            waitVisibility(friendAccNumberTextBox, 60);
+            waitVisibility(friendAccNumberTextBox, 90);
             friendAccNumberTextBox.sendKeys(TestData.PRE_PAID_NUMBER);
             friendNicknameTextBox.sendKeys("PRE PAID NUMBER " + Keys.TAB);
 
@@ -630,19 +678,19 @@ public class MyaccountPage extends Base {
     }
 
     public synchronized void enterCreditCardDetails() {
-        logManager.STEP("enter the Card details and check \"I agree\" radio button","the User 5.enter the Crad details and check \"I agree\" radio button");
+        logManager.STEP("enter the Card details and check \"I agree\" radio button", "the User 5.enter the Crad details and check \"I agree\" radio button");
         isElementPresent(cc_numberTextBx);
         cc_numberTextBx.sendKeys(TestData.CC_NUMBER);
-        logManager.INFO("The User Enter enter Credit Card Number",false);
+        logManager.INFO("The User Enter enter Credit Card Number", false);
         isElementPresent(full_nameTextBox);
         full_nameTextBox.sendKeys(TestData.CARD_TYPE);
-        logManager.INFO("The User Enter enter Full Name",false);
+        logManager.INFO("The User Enter enter Full Name", false);
         isElementPresent(cc_expiryTextBox);
         cc_expiryTextBox.sendKeys(TestData.CC_EXPIRY);
-        logManager.INFO("The User Enter enter Credit Card expiry Date",false);
+        logManager.INFO("The User Enter enter Credit Card expiry Date", false);
         isElementPresent(cc_codeTextBox);
         cc_codeTextBox.sendKeys(TestData.CC_CODE);
-        logManager.INFO("The User Enter enter Credit Card CVV",false);
+        logManager.INFO("The User Enter enter Credit Card CVV", false);
         moveToElement(checkTnCCheckBox);
     }
 

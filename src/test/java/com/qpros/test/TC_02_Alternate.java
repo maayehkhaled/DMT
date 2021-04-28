@@ -2,12 +2,11 @@ package com.qpros.test;
 
 import com.qpros.common.UserType;
 import com.qpros.common.web.Base;
+import com.qpros.pages.web.DUAE.DuPage;
 import com.qpros.pages.web.common.LoginPage;
 import com.qpros.pages.web.myaccount.MyaccountPage;
 import com.qpros.pages.web.shop.PostPaidPage;
 import com.qpros.pages.web.shop.PrePaidPage;
-import com.qpros.quanta.model.Category;
-import com.qpros.quanta.model.SubCategory;
 import com.qpros.reporting.QuantaTestManager;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -30,12 +29,12 @@ public class TC_02_Alternate extends Base {
     MyaccountPage myAccountPage;
     PostPaidPage postPaidPage;
     PrePaidPage prePaidPage;
+    DuPage duPage;
 
 
-    @Test(description = " #6 Rate plan benefits", priority = 1, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"}, enabled = false)
+    @Test(description = " #6 Rate plan benefits", priority = 1, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"}, enabled = true)
     public void Rateplanbenefits() throws Exception { // there is an error 21/2/21
         QuantaTestManager.getTest().assignAuthor("My Account");
-        //QuantaTestManager.getTest().assignCategory("My Account");
         loginPage = new LoginPage(driver.get());
         loginPage.PerformLogin(UserType.LoginUser4);
         myAccountPage = new MyaccountPage(driver.get());
@@ -44,10 +43,17 @@ public class TC_02_Alternate extends Base {
 
     }
 
+    @Test(description = " #34.8 Data Sim Only", priority = 33, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"}, enabled = false)
+    public void DataSimOnly() {
+        QuantaTestManager.getTest().assignCategory("du.ae");
+        duPage = new DuPage(driver.get());
+        duPage.DataSimOnly();
+        // i removed the assertion" already reached the limit of permitted rate plans with this Emirates ID"
+    }
+
 
     @Test(description = " #35 Home Realocation  (inzone)", priority = 7, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"}, enabled = true)
     public void HomeRealocationinzone() throws Exception {
-        //QuantaTestManager.getTest().assignCategory("My Account");
 
         QuantaTestManager.getTest().assignAuthor("My Account");
 
@@ -76,7 +82,6 @@ public class TC_02_Alternate extends Base {
     public void Rechargeforfriendwith1AEDpay() throws Exception {  // alternate
         QuantaTestManager.getTest().assignAuthor("My Account");
 
-        //QuantaTestManager.getTest().assignCategory("My Account");
 
         loginPage = new LoginPage(driver.get());
 
@@ -90,7 +95,6 @@ public class TC_02_Alternate extends Base {
     @Test(description = " #38 Recharge for friend --(with 1 AED pay) >> Shortcuts", priority = 12, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void RechargeforfriendShortcut() throws Exception {  // alternate
         QuantaTestManager.getTest().assignAuthor("My Account");
-        //QuantaTestManager.getTest().assignCategory("My Account");
         loginPage = new LoginPage(driver.get());
         loginPage.PerformLogin(UserType.LoginUser);
         myAccountPage = new MyaccountPage(driver.get());
@@ -111,11 +115,22 @@ public class TC_02_Alternate extends Base {
         // make in your consideration to check if there friends or not and remove the exist one
     }
 
+    @Test(description = " #40 Pay for friend --(with 1 AED pay) ShortCut", priority = 10, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
+    public void Payforfriendwith1AEDpayShortCut() throws Exception {  // alternate
+        QuantaTestManager.getTest().assignAuthor("My Account");
+        loginPage = new LoginPage(driver.get());
+
+
+        loginPage.PerformLogin(UserType.LoginUser);
+        myAccountPage = new MyaccountPage(driver.get());
+
+        myAccountPage.Payforfriendwith1AEDpayShortCut();
+        // make in your consideration to check if there friends or not and remove the exist one
+    }
 
     @Test(description = " #41 Forgot your password", priority = 11, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void Forgotyourpassword() {  // alternate
         QuantaTestManager.getTest().assignAuthor("My Account");
-        //QuantaTestManager.getTest().assignCategory("My Account");
         myAccountPage = new MyaccountPage(driver.get());
         myAccountPage.Forgotyourpassword();
         // make in your consideration to check if there friends or not and remove the exist one
@@ -132,8 +147,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #44 Home Fixed Journey (Internet & TV)-Login to upgrade", priority = 13, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"}, enabled = false)
     public void HomeFixedJourneyInternetandTVLogintoupgrade() throws Exception { // alternate
-        QuantaTestManager.getTest().assignCategory(new String[]{"Alternate"}, new String[]{"du.ae"});
-        //QuantaTestManager.getTest().assignCategory("My Account");
+        QuantaTestManager.getTest().assignAuthor("My Account");
         myAccountPage = new MyaccountPage(driver.get());
         myAccountPage.HomeFixedJourneyInternetandTVLogintoupgrade();
     }
@@ -141,7 +155,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #46 Small business-12 Months/ Business Mobile Plans/Flexi or National (Postpaid Plans)", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void smallBusinessPostpaid12Months() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToSmallBusiness();
@@ -155,7 +169,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #47 Small business-24 Months/ Business Mobile Plans/Flexi or National (Postpaid Plans)", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void smallBusinessPostpaid24Months() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToSmallBusiness();
@@ -169,7 +183,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #48.1 Small business-Devices (New Customers)/Smartphones ", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void smallBusinessDevicesPhones() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToSmallBusiness();
@@ -186,7 +200,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #48.2 Small business-Devices (New Customers)/ Watches ", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void smallBusinessDevicesWatches() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToSmallBusiness();
@@ -203,7 +217,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #49 Small business-Devices (Pay in full )\\Smartphones or Routers ", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void smallBusinessDevicesPayInFull() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToSmallBusiness();
@@ -221,7 +235,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #50 Small business-Devices (new customer )\\Tablets ", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void smallBusinessDevicesTablets() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToSmallBusiness();
@@ -239,7 +253,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #51 Small business-Devices (Existing Customer )\\Tablets ", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void smallBusinessDevicesTabletsExistingCustomer() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToSmallBusiness();
@@ -257,7 +271,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #52 Large business-12 Months Business Mobile Plan ", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void LargeBusiness12MonthsBusinessMobilePlan() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToLargeBusiness();
@@ -275,7 +289,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #53 Large business-12 Months Business (new customer)\\ Smartphones  ", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void LargeBusinessnewCustomerSmartPhones() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToLargeBusiness();
@@ -293,7 +307,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #53.2 Large business-12 Months Business (new customer)\\ watches  ", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void LargeBusinessnewCustomerWatches() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToLargeBusiness();
@@ -312,7 +326,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #54 Large business Devices  ", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void LargeBusinessDevices() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToLargeBusiness();
@@ -330,7 +344,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #55 Government  business-12 Months/ Business Mobile Plan/Flexi or National  ", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void Governmentbusiness12Months() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToGovernment();
@@ -348,7 +362,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #56 Government  business-Devices (New Customers)\\Smartphones or Tablets or Watches  ", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void governmentBusinessDevices() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToGovernment();
@@ -366,7 +380,7 @@ public class TC_02_Alternate extends Base {
 
     @Test(description = " #57 Government  business-Devices (Existing Customers) ", enabled = true, priority = 16, retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Alternate"})
     public void governmentBusinessDevicesExistingCustomer() {
-        QuantaTestManager.getTest().assignAuthor("du.ae");
+        QuantaTestManager.getTest().assignAuthor("Eshop");
         postPaidPage = new PostPaidPage(driver.get());
         postPaidPage.navigateToBusinessPage();
         postPaidPage.navigateToGovernment();

@@ -280,7 +280,7 @@ public class DuPage extends  Base {
     public  void DataSimOnly() {
         waitVisibility(element(By.xpath("//a[@href='https://www.du.ae/personal/shop/postpaid']")),30);
         retryClick(By.xpath("//a[@href='https://www.du.ae/personal/shop/postpaid']"),30);
-
+//ToDO:Loop on all plans
         retryClick(selectButton,60);
         driverWait(1000);
         retryClick(continueButton,60);//Continue button take alot of time to be enabled

@@ -159,7 +159,8 @@ public class Forms extends Base {
         logManger.INFO("The User Enter Order Details on checkOut", false);
         sendKeys(customerEmailTextBox, TestData.CUSTOMER_EMAIL);
         sendKeys(phoneTextBox, TestData.PHONE_NUMBER);
-        addressedNumberTextBox.sendKeys("784-1991-4063247-4");
+        driverWait(300);
+        driver.get().findElement(By.id("phone")).sendKeys("784-1991-4063247-4");
         scrollTo(customerEmailTextBox);
         ActionsHelper.sendKeys(addressfirstName, TestData.ADDRESS_FIRST_NAME);
         Select nationalities = new Select(nationality);
@@ -281,9 +282,10 @@ public class Forms extends Base {
         System.out.println(CurrentAddress.substring(CurrentAddress.lastIndexOf(",") + 1));
         String CurrentCity = CurrentAddress.substring(CurrentAddress.lastIndexOf(",") + 1);
         emiratesDropdown.sendKeys(Location + Keys.RETURN);
+        logManager.INFO("The User Select "+Location,false);
         moveToElement(otherAreaTextBox);
-        if (Zone == "OUT") {
-            waitVisibility(otherAreaTextBox, 60);
+        if (Zone.equals("OUT")) {
+            waitVisibility(otherAreaTextBox, 30);
             otherAreaTextBox.sendKeys("TEST");
         } else {
             waitVisibility(inZoneDropDown, 60);

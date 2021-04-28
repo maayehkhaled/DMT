@@ -121,7 +121,7 @@ public class HomePlansPage extends Base {
 
         retryClick(free2, 60);
 
-        continuetofillform();
+        //continuetofillform();
 
 
     }
@@ -148,12 +148,12 @@ public class HomePlansPage extends Base {
         if (driver.get().findElements(By.className("shop-optimization-reveal")).size() == 1)
             driver.get().findElement(By.className("close-button")).click();
 
-        waitVisibility(selectbutton, 30);
-        moveToElementByActions(selectbutton);
-        retryClick(selectbutton, 60);
+//        waitVisibility(selectbutton, 30);
+//        moveToElementByActions(selectbutton);
+//        retryClick(selectbutton, 60);
 
 
-        continuetofillform();
+        //continuetofillform();
 
     }
 
@@ -172,7 +172,7 @@ public class HomePlansPage extends Base {
         WebElement contbtn = driver.get().findElement(By.className("js-sticky-ctrl"));
         ((JavascriptExecutor) driver.get()).executeScript("window.scrollTo(0," + contbtn.getLocation().x + ")");
         retryClick(contbtn, 30);
-        waitVisibility(element(By.className("step2FormSubmit")), 30);
+        waitVisibility(element(By.className("step2FormSubmit")), 60);
 
         WebElement continueToFillForm = driver.get().findElement(By.className("step2FormSubmit"));
         ((JavascriptExecutor) driver.get()).executeScript("window.scrollTo(0, document.body.scrollHeight)");

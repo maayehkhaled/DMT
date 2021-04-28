@@ -22,10 +22,11 @@ import org.testng.annotations.*;
 public class TC_01_Daily extends Base {
 
     @BeforeClass
-    public void initiSuite(){
+    public void initiSuite() {
         QuantaTestManager.startTestSuite(getClass().getSimpleName());
 
     }
+
     @BeforeMethod(enabled = true)
     public synchronized void setTestSuite() {
         this.setUpBrowser();

@@ -203,26 +203,25 @@ public class PostPaidPage extends Base {
     public void Postpaid12monthsFlexi() {
         navigateToPostPaidPowerPlans();
 
-        glideCheck(buyNowButton2);
-
-        waitVisibility(checkOutStepsList, 20);
-        isElementPresent(checkOutStepsList);
-
-        Select countries = new Select(countrySelect);
-        countries.selectByVisibleText("Egypt");
-        scrollTo(confirmButton);
-        driverWait(5000);
-        isElementPresent(confirmButton);
-        retryClick(confirmButton, 60);
-        Forms form = new Forms(driver.get());
-        form.fillForm();
-
-        waitVisibility(yesMatch, 60);
-        yesMatch.click();
-        waitToBeClickable(continueBtn, 40);
-        continueBtn.click();
-
-        //TODO : check if the Payment Page element is exist  get page title , unique element in this scenario (plan name , value )
+//        isElementPresent(By.id("customerEmail"));
+//        driver.get().findElement(By.id("customerEmail")).sendKeys(TestData.EMAIL_ADDRESS);
+//        driver.get().findElement(By.id("phone")).sendKeys(TestData.PHONE_NUMBER);
+//        driver.get().findElement(By.id("inputFullAddress")).sendKeys(TestData.FULL_ADDRESS);
+//        selectOption(By.id("emirates"), "AE-AZ");
+//
+//        scrollTo(openImageFrontOcrBtn);
+//        uploadfile(driver.get(), "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s1.jpg", openImageFrontOcrBtn);
+//        uploadfile(driver.get(), "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s2.jpg", openImageBackOcrBtn);
+//        driverWait(5000);
+//        moveToElement(checkValidate);
+//        moveToElement(driver.get().findElement(By.id("checkInvoice")));
+//
+//
+//        driverWait(5000);
+//        waitToBeClickable(continueBtn, 40);
+//        continueBtn.click();
+//
+//        //TODO : check if the Payment Page element is exist  get page title , unique element in this scenario (plan name , value )
 
     }
 
@@ -287,49 +286,49 @@ public class PostPaidPage extends Base {
     public void Postpaid1200NoContractNational() {
         navigateToPostPaidPowerPlans();
 
-        moreOptions(nationalOption, noContract);
-        glideCheck(buyNowButton5);
-
-        waitVisibility(checkOutStepsList, 60);
-        logManager.STEP("Navigate to the Order summary page and check details", "the System Navigate User to the Order summary page and check details");
-        logManager.INFO("the System Navigate User to the Order summary page and check details", false);
-        isElementPresent(By.xpath("//tbody[1]//strong[.='Power Plan 1200']"));
-        isElementPresent(By.xpath("//span[contains(.,'120 National Data,')]"));
-
-        isElementPresent(checkOutStepsList);
-        waitUntilElementIsDisplayed(By.className("cartSummaryGenerateOTPButton"));
-        logManager.STEP("Click on Confirm", "the User Click on Confirm");
-        isElementPresent(By.className("cartSummaryGenerateOTPButton"));
-        logManager.INFO("the User Click on Confirm", false);
-        scrollTo(confirmButton);
-        driverWait(5000);
-        isElementPresent(confirmButton);
-        retryClick(confirmButton, 60);
-        logManager.STEP("Post verification reach your details page enter all necessary details", "the User Post verification reach your details page enter all necessary details");
-        waitVisibility(personalDetailsForm, 60);
-        isElementPresent(customerEmailTextBox);
-        customerEmailTextBox.sendKeys(TestData.CUSTOMER_EMAIL);
-        logManager.INFO("the User enter Email in the customer Email Text Box", false);
-
-        isElementPresent(phoneTextBox);
-        phoneTextBox.sendKeys(TestData.PHONE_NUMBER);//"971508975431"
-        logManager.INFO("the User enter phone in the customer phone Text Box", false);
-
-        inputFullAddressTextBox.sendKeys(TestData.FULL_ADDRESS);
-        logManager.INFO("the User enter address in the customer address Text Box", false);
-
-        Select cities = new Select(citiesSelect);
-        cities.selectByVisibleText(TestData.CITY);
-        ((JavascriptExecutor) driver.get()).executeScript("arguments[0].scrollIntoView(true);", openImageFrontOcrBtn);
-        logManager.INFO("the User enter city in the customer City Drop Down", false);
-
-        driverWait(60);
-
-        uploadfile(driver.get(), "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s1.jpg", openImageFrontOcrBtn);
-        uploadfile(driver.get(), "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s2.jpg", openImageBackOcrBtn);
-        logManager.INFO("the User upload Required Documents", false);
-
-        driverWait(10000);
+//        moreOptions(nationalOption, noContract);
+//        glideCheck(buyNowButton5);
+//
+//        waitVisibility(checkOutStepsList, 60);
+//        logManager.STEP("Navigate to the Order summary page and check details", "the System Navigate User to the Order summary page and check details");
+//        logManager.INFO("the System Navigate User to the Order summary page and check details", false);
+//        isElementPresent(By.xpath("//tbody[1]//strong[.='Power Plan 1200']"));
+//        isElementPresent(By.xpath("//span[contains(.,'120 National Data,')]"));
+//
+//        isElementPresent(checkOutStepsList);
+//        waitUntilElementIsDisplayed(By.className("cartSummaryGenerateOTPButton"));
+//        logManager.STEP("Click on Confirm", "the User Click on Confirm");
+//        isElementPresent(By.className("cartSummaryGenerateOTPButton"));
+//        logManager.INFO("the User Click on Confirm", false);
+//        scrollTo(confirmButton);
+//        driverWait(5000);
+//        isElementPresent(confirmButton);
+//        retryClick(confirmButton, 60);
+//        logManager.STEP("Post verification reach your details page enter all necessary details", "the User Post verification reach your details page enter all necessary details");
+//        waitVisibility(personalDetailsForm, 60);
+//        isElementPresent(customerEmailTextBox);
+//        customerEmailTextBox.sendKeys(TestData.CUSTOMER_EMAIL);
+//        logManager.INFO("the User enter Email in the customer Email Text Box", false);
+//
+//        isElementPresent(phoneTextBox);
+//        phoneTextBox.sendKeys(TestData.PHONE_NUMBER);//"971508975431"
+//        logManager.INFO("the User enter phone in the customer phone Text Box", false);
+//
+//        inputFullAddressTextBox.sendKeys(TestData.FULL_ADDRESS);
+//        logManager.INFO("the User enter address in the customer address Text Box", false);
+//
+//        Select cities = new Select(citiesSelect);
+//        cities.selectByVisibleText(TestData.CITY);
+//        ((JavascriptExecutor) driver.get()).executeScript("arguments[0].scrollIntoView(true);", openImageFrontOcrBtn);
+//        logManager.INFO("the User enter city in the customer City Drop Down", false);
+//
+//        driverWait(60);
+//
+//        uploadfile(driver.get(), "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s1.jpg", openImageFrontOcrBtn);
+//        uploadfile(driver.get(), "E:\\workspace\\DU-Rana\\Q-Pros Automation Framework -Rana-The Latest one\\src\\main\\resources\\images\\s2.jpg", openImageBackOcrBtn);
+//        logManager.INFO("the User upload Required Documents", false);
+//
+//        driverWait(10000);
 
 
 //        List<WebElement> invalidEditors = driver.get().findElements(By.className("parsley-error"));
@@ -341,67 +340,67 @@ public class PostPaidPage extends Base {
 //            invalidEditors.get(0).sendKeys("11/11/2024");
 //        }
 
-        WebElement x = driver.get().findElement(By.className("checkbox-group"));
-        scrollTo(x);
-        retryClick(x, 30);
-
-        driverWait(10000); // wait  for opecity
-        WebElement checkInvoice = driver.get().findElement(By.xpath("//*[@id=\"personalDetailsForm\"]/div[1]/fieldset[6]/div"));
-        scrollTo(checkInvoice);
-        retryClick(checkInvoice, 60);
-        isElementPresent(By.xpath("//label[contains(.,'I consent to list my number in the directory enquiry database')]"));
-        retryClick(By.xpath("//label[contains(.,'I consent to list my number in the directory enquiry database')]"), 60);
-        waitToBeClickable(continueBtn, 90);
-        retryClick(continueBtn, 60);
-        logManager.STEP("6. Click on \"Continue\" and reach payment gateway page", "the User Click on \"Continue\" and reach payment gateway page");
-        logManager.INFO("the User Click on \"Continue\" and reach payment gateway page", false);
-
-        driverWait(1000);
-
-        if (driver.get().findElements(By.className("callout")).size() > 0) {
-
-            System.out.println(" We can see you have already reached the limit of permitted rate plans with this Emirates ID. Please go to your nearest retail store for more support with this request.");
-        } else {
-            waitVisibility(nameOnCard, 60);
-            nameOnCardTextBox.sendKeys(TestData.NAME_ON_CARD);
-            cardNumberCardTextBox.sendKeys(TestData.CARD_NUMBER);
-            cardExpiryTextBox.sendKeys(TestData.CARD_EXPIRY);
-            waitToBeClickable(driver.get().findElement(By.className("sticky-button")), 60);
-            retryClick(driver.get().findElement(By.className("sticky-button")), 60);
-        }
+//        WebElement x = driver.get().findElement(By.className("checkbox-group"));
+//        scrollTo(x);
+//        retryClick(x, 30);
+//
+//        driverWait(10000); // wait  for opecity
+//        WebElement checkInvoice = driver.get().findElement(By.xpath("//*[@id=\"personalDetailsForm\"]/div[1]/fieldset[6]/div"));
+//        scrollTo(checkInvoice);
+//        retryClick(checkInvoice, 60);
+//        isElementPresent(By.xpath("//label[contains(.,'I consent to list my number in the directory enquiry database')]"));
+//        retryClick(By.xpath("//label[contains(.,'I consent to list my number in the directory enquiry database')]"), 60);
+//        waitToBeClickable(continueBtn, 90);
+//        retryClick(continueBtn, 60);
+//        logManager.STEP("6. Click on \"Continue\" and reach payment gateway page", "the User Click on \"Continue\" and reach payment gateway page");
+//        logManager.INFO("the User Click on \"Continue\" and reach payment gateway page", false);
+//
+//        driverWait(1000);
+//
+//        if (driver.get().findElements(By.className("callout")).size() > 0) {
+//
+//            System.out.println(" We can see you have already reached the limit of permitted rate plans with this Emirates ID. Please go to your nearest retail store for more support with this request.");
+//        } else {
+//            waitVisibility(nameOnCard, 60);
+//            nameOnCardTextBox.sendKeys(TestData.NAME_ON_CARD);
+//            cardNumberCardTextBox.sendKeys(TestData.CARD_NUMBER);
+//            cardExpiryTextBox.sendKeys(TestData.CARD_EXPIRY);
+//            waitToBeClickable(driver.get().findElement(By.className("sticky-button")), 60);
+//            retryClick(driver.get().findElement(By.className("sticky-button")), 60);
+//        }
 
     }
 
     @STEP(name = "Postpaid No contract National", description = "Postpaid No contract National")
     public void PostpaidNoContractNational() {
         navigateToPostPaidPowerPlans();
-
-        moreOptions(nationalOption, noContract);
-        glideCheck(buyNowPlan600);
-
-        waitVisibility(checkOutStepsList, 60);
-        logManager.STEP("Navigate to the Order summary page and check details", "the System Navigate User to the Order summary page and check details");
-        logManager.INFO("the System Navigate User to the Order summary page and check details", false);
-        isElementPresent(By.xpath("//tbody[1]//strong[.='Power Plan 600']"));
-        isElementPresent(By.xpath("//span[contains(.,'50 GB National Data,')]"));
-        isElementPresent(checkOutStepsList);
-
-        waitUntilElementIsDisplayed(By.className("cartSummaryGenerateOTPButton"));
-        logManager.STEP("Click on Confirm", "the User Click on Confirm");
-        isElementPresent(By.className("cartSummaryGenerateOTPButton"));
-        logManager.INFO("the User Click on Confirm", false);
-        scrollTo(confirmButton);
-        driverWait(5000);
-        retryClick(confirmButton, 60);
-        logManager.STEP("Post verification reach your details page enter all necessary details", "the User Post verification reach your details page enter all necessary details");
-        Forms forms = new Forms(driver.get());
-        forms.fillForm();
-
-        waitVisibility(yesMatch, 60);
-        yesMatch.click();
-        waitToBeClickable(continueBtn, 40);
-        continueBtn.click();
-        // TODO Payment check () no contract and national , get title , offer name , value of price
+//
+//        moreOptions(nationalOption, noContract);
+//        glideCheck(buyNowPlan600);
+//
+//        waitVisibility(checkOutStepsList, 60);
+//        logManager.STEP("Navigate to the Order summary page and check details", "the System Navigate User to the Order summary page and check details");
+//        logManager.INFO("the System Navigate User to the Order summary page and check details", false);
+//        isElementPresent(By.xpath("//tbody[1]//strong[.='Power Plan 600']"));
+//        isElementPresent(By.xpath("//span[contains(.,'50 GB National Data,')]"));
+//        isElementPresent(checkOutStepsList);
+//
+//        waitUntilElementIsDisplayed(By.className("cartSummaryGenerateOTPButton"));
+//        logManager.STEP("Click on Confirm", "the User Click on Confirm");
+//        isElementPresent(By.className("cartSummaryGenerateOTPButton"));
+//        logManager.INFO("the User Click on Confirm", false);
+//        scrollTo(confirmButton);
+//        driverWait(5000);
+//        retryClick(confirmButton, 60);
+//        logManager.STEP("Post verification reach your details page enter all necessary details", "the User Post verification reach your details page enter all necessary details");
+//        Forms forms = new Forms(driver.get());
+//        forms.fillForm();
+//
+//        waitVisibility(yesMatch, 60);
+//        yesMatch.click();
+//        waitToBeClickable(continueBtn, 40);
+//        continueBtn.click();
+//        // TODO Payment check () no contract and national , get title , offer name , value of price
     }
 
     @STEP(name = "Postpaid New Emarati Plan", description = "Postpaid New Emarati Plan")
@@ -652,22 +651,17 @@ public class PostPaidPage extends Base {
     }
 
     public void navigateToPostPaidPowerPlans() {
-        logManager.STEP("Navigate to the postpaid power plan page", "the User Navigate to the postpaid power plan page");
-        isElementPresent(By.xpath("//div[@id='slick-thumb']//div[@class='slick-slide slick-active']//p[.='Postpaid Power Plans']"));
-        logManager.INFO("the User Navigate to the postpaid power plan page", false);
-        retryClick(By.xpath("//div[@id='slick-thumb']//div[@class='slick-slide slick-active']//p[.='Postpaid Power Plans']"), 30);
-        isElementPresent(By.xpath("//div[@id='slick-spotlight']//div[@class='slick-slide slick-current slick-active']//a[.='Buy online']"));
-        logManager.INFO("the User clicks on Buy Now Button in the Navigation Slider Panel", false);
-        retryClick(By.xpath("//div[@id='slick-spotlight']//div[@class='slick-slide slick-current slick-active']//a[.='Buy online']"), 30);
-        //TODO : change to element name
-        waitVisibility(postpaidDiv, 60);
-        isElementPresent(postpaidDiv);
-        isElementPresent(powerPlanElement);
-        logManager.STEP("Select the SIM only plan and click on \"Order\"", "the User Select the SIM only plan and click on \"Order\"");
-        logManager.INFO("the User Select the SIM only plan and click on \"Order\"", false);
-        JavascriptExecutor js = (JavascriptExecutor) driver.get();
-        js.executeScript("document.getElementsByClassName(\"du-new-nav\")[0].style.zIndex=0;");
-        ((JavascriptExecutor) driver.get()).executeScript("arguments[0].scrollIntoView(true);", moreOptions);
+        actionClickStepClick("Navigate to the postpaid page", By.xpath("//a[@href='https://www.du.ae/personal/shop/postpaid']"));
+        actionClickStepClick("Navigate to the postpaid power plan page", By.xpath("//span[contains(.,'Power Plans')]"));
+        actionClickStepClick("Select More Options", By.xpath("//span[.='More options']"));
+        isElementPresent(By.xpath("//label[.=\"Flexi minutes (national & int'l)\"]"));
+        isElementPresent(By.xpath("//label[.='12-month contract']"));
+        actionClickStepClick("Select Plan", By.cssSelector("[data-glide-index='0'] .v-form .v-btn__content"));
+        actionClickStepClick("Add to Cart", By.xpath("//span[contains(.,'Add to cart')]"),false);
+        driverWait(5000);
+        isElementPresent(By.className("detail"));
+        //actionClickStepClick("click on Confirm", By.xpath("//button[@class='primary-btn--action-color cartSummaryGenerateOTPButton addGtmOtpPopUp']"));
+
 
     }
 
@@ -675,6 +669,17 @@ public class PostPaidPage extends Base {
         logManager.STEP(step, "the user " + step);
         waitVisibility(element(locator), 30);
         isElementPresent(locator);
+        logManager.INFO("the user " + step, false);
+        retryClick(locator, 30);
+
+    }
+
+    public void actionClickStepClick(String step, By locator,boolean marked) {
+        logManager.STEP(step, "the user " + step);
+        waitVisibility(element(locator), 30);
+        if(marked) {
+            isElementPresent(locator);
+        }
         logManager.INFO("the user " + step, false);
         retryClick(locator, 30);
 

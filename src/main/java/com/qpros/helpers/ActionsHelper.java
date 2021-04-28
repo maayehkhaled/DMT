@@ -79,6 +79,8 @@ public class ActionsHelper extends Base {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(false);", element(by));
     }
 
+
+
     public void safeJavaScriptClick(WebElement element) {
         try {
             if (element.isEnabled() && element.isDisplayed()) {
@@ -748,7 +750,7 @@ public class ActionsHelper extends Base {
 
     public static void clickAction(By by) {
 
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        JavascriptExecutor jse = (JavascriptExecutor) driver.get();
 
         try {
             driverWait(300);
@@ -809,7 +811,7 @@ public class ActionsHelper extends Base {
      * @param text text to be used
      */
     public static void sendKeysWithClear(By by, String text) {
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        JavascriptExecutor jse = (JavascriptExecutor) driver.get();
         try {
             clickAction(by);
             // ((JavascriptExecutor) driver.get()).executeScript("arguments[0].scrollIntoView(true);", wElement);
@@ -968,5 +970,23 @@ public class ActionsHelper extends Base {
         driverWait(1000);
     }
 
+    public static void actionClickStepClick(String step, By locator) {
+        logManger.STEP(step, "the user " + step);
+        waitVisibility(element(locator), 30);
+        isElementPresent(locator);
+        logManger.INFO("the user " + step, false);
+        retryClick(locator, 30);
 
+    }
+
+    public static void actionClickScrollStepClick(String step, By locator) {
+        ActionsHelper.driverWait(3000);
+        logManger.STEP(step, "the user " + step);
+        scrollTo(locator);
+        waitVisibility(element(locator), 30);
+        isElementPresent(locator);
+        logManger.INFO("the user " + step, false);
+        retryClick(locator, 30);
+
+    }
 }
