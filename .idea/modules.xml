@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/QPros-master.iml" filepath="$PROJECT_DIR$/.idea/QPros-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/QPros.iml" filepath="$PROJECT_DIR$/QPros.iml" />
     </modules>
   </component>
 </project>
