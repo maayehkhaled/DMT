@@ -13,8 +13,20 @@
 
     <repositories>
         <repository>
+            <id>QPROS-Artifact</id>
+            <url>https://pkgs.dev.azure.com/QProsAutomationFramework/aae4c54c-9a59-441c-8e36-57f024201af4/_packaging/QPROS-Artifact/maven/v1</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
             <id>QuantaReports</id>
-            <url>https://pkgs.dev.azure.com/QProsAutomationFramework/aae4c54c-9a59-441c-8e36-57f024201af4/_packaging/QuantaReports/maven/v1</url>
+            <url>
+                https://pkgs.dev.azure.com/QProsAutomationFramework/aae4c54c-9a59-441c-8e36-57f024201af4/_packaging/QuantaReports/maven/v1
+            </url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -26,7 +38,9 @@
     <distributionManagement>
         <repository>
             <id>QuantaReports</id>
-            <url>https://pkgs.dev.azure.com/QProsAutomationFramework/aae4c54c-9a59-441c-8e36-57f024201af4/_packaging/QuantaReports/maven/v1</url>
+            <url>
+                https://pkgs.dev.azure.com/QProsAutomationFramework/aae4c54c-9a59-441c-8e36-57f024201af4/_packaging/QuantaReports/maven/v1
+            </url>
         </repository>
     </distributionManagement>
     <build>
@@ -48,7 +62,7 @@
                     <configuration>
 
                         <suiteXmlFiles>
-                            <file>src/main/resources/xmlTests/${file}</file>
+                            <file>src/main/resources/xmlTests/DuDaily.xml</file>
                         </suiteXmlFiles>
                     </configuration>
                 </plugin>
@@ -77,6 +91,11 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>QPros</groupId>
+            <artifactId>QPros</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.mashape.unirest/unirest-java -->
         <dependency>
             <groupId>com.mashape.unirest</groupId>
@@ -89,18 +108,16 @@
             <artifactId>jsoup</artifactId>
             <version>1.13.1</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.qpros</groupId>
+            <artifactId>quanta</artifactId>
+            <version>1.0.1</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.aventstack/klov-reporter -->
-        <dependency>
-            <groupId>com.aventstack</groupId>
-            <artifactId>klov-reporter</artifactId>
-            <version>5.0.7</version>
         </dependency>
 
         <dependency>
@@ -160,11 +177,7 @@
             <artifactId>webdrivermanager</artifactId>
             <version>3.1.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.qpros</groupId>
-            <artifactId>quanta</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
