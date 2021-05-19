@@ -26,5 +26,10 @@
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="QPROS-Artifact@Release" />
+      <option name="name" value="QPROS-Artifact@Release" />
+      <option name="url" value="https://pkgs.dev.azure.com/QProsAutomationFramework/aae4c54c-9a59-441c-8e36-57f024201af4/_packaging/QPROS-Artifact%40Release/maven/v1" />
+    </remote-repository>
   </component>
 </project>
