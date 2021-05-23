@@ -14,7 +14,7 @@ public class AuditorsManagementPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    private By selectSpecialist = By.cssSelector("=.select2-search__field");
+    private By selectSpecialist = By.cssSelector(".select2-search__field");
 
 
     private By inputRef = By.id("DCDAgentPortalTheme_wt15_block_wtMainContent_WebPatterns_wt44_block_wtContent_wt21");

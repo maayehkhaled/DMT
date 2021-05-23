@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.ssa.core.model.ResponseRoot;
+import com.ssa.core.model.Root;
 import com.ssa.core.model.VerifyEligibility;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
@@ -17,6 +18,7 @@ public class VerifyEligibilityService {
         response = Unirest.post("https://10.231.1.100/ApplicationWS/rest/SocialSupportSupportRequest/VerifyEligibility")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
+                .proxy("127.0.0.1",8888)
                 .body(requestBody())
                 .asString();
     }
@@ -31,16 +33,16 @@ public class VerifyEligibilityService {
         return verifyEligibility.toJson(verifyEligibility);
     }
 
-    public ResponseRoot getresponse(VerifyEligibilityService submitApplicationService) throws JsonProcessingException {
+    public Root getresponse(VerifyEligibilityService submitApplicationService) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
-        return om.readValue(submitApplicationService.response.getBody(), ResponseRoot.class);
+        return om.readValue(submitApplicationService.response.getBody(), Root.class);
 
     }
 
     public static void main(String[] args) throws JsonProcessingException {
         VerifyEligibilityService submitApplicationService = new VerifyEligibilityService();
         submitApplicationService.requestService();
-        System.out.print(submitApplicationService.getresponse(submitApplicationService).applicationSummary.referenceNumber);
+        System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
     }
 
 }

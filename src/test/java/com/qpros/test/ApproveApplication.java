@@ -1,10 +1,7 @@
 package com.qpros.test;
 
 import com.qpros.common.web.Base;
-import com.qpros.pages.web.SSA.AgentPage;
-import com.qpros.pages.web.SSA.AuditorsManagementPage;
-import com.qpros.pages.web.SSA.HomePage;
-import com.qpros.pages.web.SSA.LoginPage;
+import com.qpros.pages.web.SSA.*;
 import com.qpros.reporting.QuantaTestManager;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -37,11 +34,11 @@ public class ApproveApplication extends Base {
         driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme");
         String refCode = ""; //TODO: Get this from the response
         homePage.navigateToLogin();
-        loginPage.loginWithUser("superuser", "123456");
+        loginPage.loginWithUser(UserType.Superuser);
         auditorsManagementPage.selectSpecialist("Specalist2",refCode);
         agentPage.logOut();
 
-        loginPage.loginWithUser("Specalist2", "Specialist2");
+        loginPage.loginWithUser(UserType.Specialist2);
         String seniorSpecialist = agentPage.specialistApproval(refCode);
         agentPage.logOut();
 
@@ -54,7 +51,7 @@ public class ApproveApplication extends Base {
         agentPage.logOut();
 
         homePage.navigateToLogin();
-        loginPage.loginWithUser("superuser", "123456");
+        loginPage.loginWithUser(UserType.Superuser);
 
     }
 }

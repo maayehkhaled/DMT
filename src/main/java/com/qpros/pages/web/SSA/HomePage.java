@@ -18,17 +18,6 @@ public class HomePage extends Base {
 
     private By loginButton = By.id("DCDWebPortalTheme_wt59_block_wtMenu_wt54_wt24");
 
-
-/*@STEP(name = "The User Perform Login",description = "Perform Login")
-public synchronized void PerformLogin(UserType userType) throws Exception {
-    logManager.STEP("Navigate to "+URL.DU_LOGIN_URL,"");
-    clickOnLoginButton();
-    logManager.STEP("Enter username and password then click \"Login\" button","");
-    FillUserName(userType.getUserName());
-    FillPassword(userType.getPassword());
-    pressLogin();
-}*/
-
     public void navigateToLogin(){
         ActionsHelper.actionClickStepClick("Click agree",agreeButton);
         ActionsHelper.actionClickStepClick("Click on login page button",loginButton);
