@@ -14,7 +14,7 @@ public class QuantaTestManager {
     static QuantaReports quantaReports;
     private static ThreadLocal<QuantaTest> quantaTestThreadLocal= new ThreadLocal<>();
     private static ThreadLocal<QuantaTest> quantaNodeThreadLocal= new ThreadLocal<>();
-    private static ThreadLocal<QuantaTest>  suite= new ThreadLocal<QuantaTest>();
+    private static ThreadLocal<QuantaTest>  suite= new ThreadLocal<>();
 
     static {
         quantaReports = QuantaManager.getInstance();

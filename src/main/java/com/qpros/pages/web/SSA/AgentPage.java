@@ -1,7 +1,11 @@
 package com.qpros.pages.web.SSA;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
+import com.qpros.pages.web.SSA.applicationreview.PersonalInformation;
+import com.ssa.core.model.GetFamilyData;
+import com.ssa.core.service.GetFamilyDataService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -24,13 +28,15 @@ public class AgentPage extends Base {
 
     private By specalistSearchApplication = By.id("DCDAgentPortalTheme_wt79_block_wtFilterContainer_wtSearcFrom"); //Enter search text here (ref code)
 
-    private By firstElementAfterSearch = By.cssSelector(".ThemeGrid_Width4:nth-child(3) > span:nth-child(1)"); //Contains app ref number and clickable
+    private By firstElementAfterSearch = By.cssSelector("#DCDAgentPortalTheme_wt79_block_wtMainContent_wtListRecords1_ctl00_wt83 > div.FlexColContainer > div:nth-child(2) > div:nth-child(1)"); //Contains app ref number and clickable
 
-    private By agentApproveStep = By.id("DCDAgentPortalTheme_wt363_block_wtActions_wtApproveCurrentSection"); //Contains app ref number and clickable
+    private By agentApproveStep = By.id("DCDAgentPortalTheme_wt362_block_wtActions_wtApproveCurrentSection"); //Contains app ref number and clickable
 
-    private By agentClickNext = By.id("DCDAgentPortalTheme_wt363_block_wtActions_wtNext");
+    private By agentRejectStep = By.id("DCDAgentPortalTheme_wt362_block_wtActions_wtrbReject"); //Contains app ref number and clickable
 
-    private By agentClickNext56Step = By.id("DCDAgentPortalTheme_wt363_block_wtActions_wtNext6");
+    private By agentClickNext = By.id("DCDAgentPortalTheme_wt362_block_wtActions_wtNext");
+
+    private By agentClickNext56Step = By.id("DCDAgentPortalTheme_wt362_block_wtActions_wtNext6");
 
     private By applicationListSecondApplicationRefCode = By.cssSelector("tr:nth-child(2) > .TableRecords_EvenLine:nth-child(1)"); //Contains app ref number and clickable
 
@@ -42,33 +48,77 @@ public class AgentPage extends Base {
 
     private By supervisorQuickAgreeAll = By.id("DCDAgentPortalTheme_wt363_block_wtMainContent_wt148_WebPatterns_wt119_block_wtContent_wt227"); //click on next6 after (agentClickNext56Step)
 
-    private By clickNameToLogout = By.cssSelector(".HeaderUserName"); //click this before clickLogout button
+    private By clickNameToLogout = By.id("DCDAgentPortalTheme_wt15_block_wtHeader_DCDAgentPortalTheme_wt12_block_WebPatterns_wt13_block_wtIcon"); //click this before clickLogout button
 
-    private By clickLogout = By.id("DCDAgentPortalTheme_wt290_block_wtHeader_DCDAgentPortalTheme_wt54_block_WebPatterns_wt13_block_wtMenuLink_wt7"); //logout button
+    private By clickLogout = By.id("DCDAgentPortalTheme_wt15_block_wtHeader_DCDAgentPortalTheme_wt12_block_WebPatterns_wt13_block_wtMenuLink_wt7"); //logout button
 
     private By committeConfirmall = By.id("DCDAgentPortalTheme_wt230_block_wtMainContent_WebPatterns_wt158_block_wtContent1_WebPatterns_wt160_block_wtContent_wt292_WebPatterns_wt119_block_wtContent_wt227"); //Only one action was needed
 
     public String specialistApproval(String applicationRef){
+
         logManager.STEP("Search application","Inputs the reference number in the search field");
         ActionsHelper.sendKeys(specalistSearchApplication,applicationRef + Keys.ENTER);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click the application",firstElementAfterSearch);
-        ActionsHelper.actionClickStepClick("Approve step 1",agentApproveStep);
+
+        // Personal Information Check
+        GetFamilyDataService getFamilyDataService= new GetFamilyDataService();
+        GetFamilyData getFamilyData= new GetFamilyData();
+        try {
+            getFamilyDataService.requestService();
+            getFamilyData=getFamilyDataService.getresponse(getFamilyDataService);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        PersonalInformation personalInformation= new PersonalInformation();
+        personalInformation.checkPersonalInformation(getFamilyData);
+
+
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickScrollStepClick("Approve step 1",agentApproveStep);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickScrollStepClick("Approve step 1",agentRejectStep);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickScrollStepClick("Approve step 1",agentApproveStep);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click next Step 1",agentClickNext);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Approve step 2",agentApproveStep);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Approve step 2",agentRejectStep);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Approve step 2",agentApproveStep);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click next Step 2",agentClickNext);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Approve step 3",agentApproveStep);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Approve step 3",agentRejectStep);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Approve step 3",agentApproveStep);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click next Step 3",agentClickNext);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Approve step 4",agentApproveStep);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Approve step 4",agentRejectStep);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Approve step 4",agentApproveStep);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click next Step 4",agentClickNext);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Approve step 5",agentApproveStep);
-        ActionsHelper.actionClickStepClick("Click next Step 5",agentClickNext56Step);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Click next Step 5",agentClickNext);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Approve step 6",agentApproveStep);
+
+        ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click next Step 6",agentClickNext56Step);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("Approve step 7",agentApproveStep);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Click next Step 7",agentClickNext56Step);
         ActionsHelper.driverWait(5000);
 
         //TODO: Check is there is a save button
@@ -98,7 +148,8 @@ public class AgentPage extends Base {
     }
 
     public void logOut(){
-        ActionsHelper.actionClickStepClick("Click username before logging out", clickNameToLogout);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickScrollStepClick("Click username before logging out", clickNameToLogout);
         ActionsHelper.actionClickStepClick("Click logout", clickLogout);
     }
 
