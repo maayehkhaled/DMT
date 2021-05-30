@@ -3,6 +3,7 @@ package com.qpros.pages.web.SSA.applicationreview;
 import com.qpros.assertion.AssertService;
 import com.qpros.common.LogManager;
 import com.qpros.common.web.Base;
+import com.qpros.helpers.ActionsHelper;
 import com.ssa.core.model.GetFamilyData;
 import com.ssa.core.model.Household;
 import com.ssa.core.service.GetFamilyDataService;
@@ -27,32 +28,43 @@ public class PersonalInformation extends Base {
         ).findAny().get();
         try {
             Assert.assertEquals(driver.get().findElement(emiratesId).getText(), household.emiratesId);
+            ActionsHelper.isElementPresent(emiratesId);
         } catch (AssertionError ex) {
             this.logManager.ERROR("Emirates ID does not Match", ex);
         }
         try {
             Assert.assertEquals(driver.get().findElement(nameAR).getText(), household.fullNameAR);
+            ActionsHelper.isElementPresent(nameAR);
+
         } catch (AssertionError ex) {
             this.logManager.ERROR("Arabic Name  does not Match", ex);
         }
         try {
             Assert.assertEquals(driver.get().findElement(nameEN).getText(), household.fullNameEN);
+            ActionsHelper.isElementPresent(nameEN);
+
         } catch (AssertionError ex) {
 
             this.logManager.ERROR("English Name does not Match", ex);
         }
         try {
             Assert.assertEquals(driver.get().findElement(sex).getText(), household.genderAR);
+            ActionsHelper.isElementPresent(sex);
+
         } catch (AssertionError ex) {
             this.logManager.ERROR("Gender  does not Match", ex);
         }
         try {
             Assert.assertEquals(driver.get().findElement(socialCondition).getText(), household.maritalStatusAR);
+            ActionsHelper.isElementPresent(socialCondition);
+
         } catch (AssertionError ex) {
             this.logManager.ERROR("Martial Condition  does not Match", ex);
         }
         try {
             Assert.assertEquals(driver.get().findElement(nationality).getText(), household.nationalityAR);
+            ActionsHelper.isElementPresent(nationality);
+
         } catch (AssertionError ex) {
             this.logManager.ERROR("nationality does not Match", ex);
         }

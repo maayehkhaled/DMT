@@ -26,6 +26,8 @@ public class LoginPage extends Base {
         ActionsHelper.retryClick(usernameField, 30);
         ActionsHelper.sendKeys(usernameField, username);
         logManager.STEP("Input password", "Inputs the password: " + password);
+        ActionsHelper.waitForExpectedElement(passwordField);
+        ActionsHelper.retryClick(passwordField, 30);
         ActionsHelper.sendKeys(passwordField, password);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click the login button", loginButton);
@@ -39,6 +41,8 @@ public class LoginPage extends Base {
         ActionsHelper.retryClick(usernameField, 30);
         ActionsHelper.sendKeys(usernameField, usertype.getUserName());
         logManager.STEP("Input password", "Inputs the password: " + usertype.getPassword());
+        ActionsHelper.waitForExpectedElement(passwordField);
+        ActionsHelper.retryClick(passwordField, 30);
         ActionsHelper.sendKeys(passwordField, usertype.getPassword());
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click the login button", loginButton);
