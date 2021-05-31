@@ -2,6 +2,7 @@ package com.ssa.core.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssa.core.common.data.TestData;
 import com.ssa.core.model.GetFamilyData;
 import com.ssa.core.model.ResponseRoot;
 import com.ssa.core.model.VerifyEligibility;
@@ -12,6 +13,7 @@ public class GetFamilyDataService {
  public HttpResponse<String> response;
 
     public void requestService() throws JsonProcessingException {
+        Unirest.config().reset();
         Unirest.config().connectTimeout(0);
         Unirest.config().verifySsl(false);
          response = Unirest.post("https://10.231.1.100/ApplicationWS/rest/SocialSupportSupportRequest/GetFamilyData")
@@ -22,10 +24,12 @@ public class GetFamilyDataService {
     }
 
     public String requestBody() throws JsonProcessingException {
-        VerifyEligibility verifyEligibility = new VerifyEligibility();
-        verifyEligibility.setEmiratesId("784196505074045");
-        System.out.println(verifyEligibility.toJson(verifyEligibility));
-        return verifyEligibility.toJson(verifyEligibility);
+        return "{\n" +
+                "     \"EmiratesId\": \""+TestData.EID+"\"\n" +
+                " \n" +
+                "}";
+
+
     }
 
     public GetFamilyData getresponse(GetFamilyDataService submitApplicationService) throws JsonProcessingException {
@@ -40,4 +44,3 @@ public class GetFamilyDataService {
     }
 
 }
-

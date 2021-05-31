@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+
+<suite name=" SSA Test's">
+
+    <listeners>
+        <listener class-name="com.qpros.common.LogManager"/>
+    </listeners>
+
+
+    <test name="SSA Run">
+        <classes>
+            <class name="com.qpros.test.ApproveApplication"/>
+        </classes>
+    </test>
+</suite>
+

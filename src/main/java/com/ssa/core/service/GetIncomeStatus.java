@@ -2,6 +2,7 @@ package com.ssa.core.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssa.core.common.data.TestData;
 import com.ssa.core.model.ResponseRoot;
 import com.ssa.core.model.VerifyEligibility;
 import kong.unirest.HttpResponse;
@@ -22,7 +23,7 @@ public class GetIncomeStatus {
 
     public String requestBody() throws JsonProcessingException {
         VerifyEligibility verifyEligibility = new VerifyEligibility();
-        verifyEligibility.setEmiratesId("784197519436477");
+        verifyEligibility.setEmiratesId(TestData.EID);
         System.out.println(verifyEligibility.toJson(verifyEligibility));
         return verifyEligibility.toJson(verifyEligibility);
     }
@@ -39,4 +40,3 @@ public class GetIncomeStatus {
     }
 
 }
-

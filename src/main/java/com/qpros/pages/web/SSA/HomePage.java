@@ -19,8 +19,8 @@ public class HomePage extends Base {
     private By loginButton = By.id("DCDWebPortalTheme_wt59_block_wtMenu_wt54_wt24");
 
     public void navigateToLogin(){
-        ActionsHelper.actionClickStepClick("Click agree",agreeButton);
-        ActionsHelper.actionClickStepClick("Click on login page button",loginButton);
+        //ActionsHelper.actionClickStepClick("Click agree",agreeButton);
+        //ActionsHelper.actionClickStepClick("Click on login page button",loginButton);
 
     }
 }

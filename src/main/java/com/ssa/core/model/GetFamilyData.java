@@ -12,4 +12,3 @@ public class GetFamilyData {
     @JsonProperty("Household")
     public List<Household> household;
 }
-

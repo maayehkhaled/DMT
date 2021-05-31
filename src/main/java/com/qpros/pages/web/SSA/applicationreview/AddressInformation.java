@@ -8,4 +8,3 @@ public class AddressInformation {
     AddressInformation addressInformation = new AddressInformation();
     ContactInformation contactInformation = new ContactInformation();
 }
-

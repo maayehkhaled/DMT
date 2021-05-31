@@ -3,6 +3,7 @@ package com.ssa.core.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.ssa.core.common.data.TestData;
 import com.ssa.core.model.ResponseRoot;
 import com.ssa.core.model.Root;
 import com.ssa.core.model.VerifyEligibility;
@@ -13,19 +14,20 @@ public class VerifyEligibilityService {
     public HttpResponse<String> response;
 
     public void requestService() throws JsonProcessingException {
+        Unirest.config().reset();
         Unirest.config().connectTimeout(0);
         Unirest.config().verifySsl(false);
         response = Unirest.post("https://10.231.1.100/ApplicationWS/rest/SocialSupportSupportRequest/VerifyEligibility")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
-                .proxy("127.0.0.1",8888)
                 .body(requestBody())
                 .asString();
+        System.out.println(response.getBody());
     }
 
     public String requestBody() throws JsonProcessingException {
         VerifyEligibility verifyEligibility = new VerifyEligibility();
-        verifyEligibility.setEmiratesId("784197519436477");
+        verifyEligibility.setEmiratesId(TestData.EID);
         verifyEligibility.setUAEPassMobileNumber("0551499312");
         verifyEligibility.setUAEPassEmail("test@test.com");
         verifyEligibility.setApplicationType("1st assessment");

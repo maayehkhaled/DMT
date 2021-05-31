@@ -48,4 +48,3 @@ public class Household {
     @JsonProperty("NeedsRemovalReason")
     public String needsRemovalReason;
 }
-
