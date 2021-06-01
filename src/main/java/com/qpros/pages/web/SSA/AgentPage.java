@@ -54,6 +54,8 @@ public class AgentPage extends Base {
 
     private By committeConfirmall = By.id("DCDAgentPortalTheme_wt230_block_wtMainContent_WebPatterns_wt158_block_wtContent1_WebPatterns_wt160_block_wtContent_wt292_WebPatterns_wt119_block_wtContent_wt227"); //Only one action was needed
 
+    private By rejectApplication = By.id("DCDAgentPortalTheme_wt362_block_wtMainContent_wt149_WebPatterns_wt119_block_wtContent_wt227"); //Only one action was needed
+
     public String specialistApproval(String applicationRef){
 
         logManager.STEP("Search application","Inputs the reference number in the search field");
@@ -177,6 +179,47 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click username before logging out", By.xpath("//span[@class='HeaderUserName']"));
         ActionsHelper.actionClickStepClick("Click logout", By.xpath("//a[.='تسجيل خروج']"));
+    }
+
+
+    public String specialistRejectApplication(String applicationRef){
+
+        logManager.STEP("Search application","Inputs the reference number in the search field");
+        ActionsHelper.sendKeys(By.id("DCDAgentPortalTheme_wt79_block_wtFilterContainer_wtSearcFrom"),applicationRef + Keys.ENTER);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Click the application",firstElementAfterSearch);
+
+        ActionsHelper.actionClickScrollStepClick("Reject Application",rejectApplication);
+
+
+
+
+        driver.get().switchTo().alert().accept();
+
+
+        //TODO: Check is there is a save button
+        driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
+        ActionsHelper.driverWait(2000);
+        driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
+        ActionsHelper.sendKeys(specalistSearchApplication,applicationRef + Keys.ENTER);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.isElementPresent(applicationListFirstApplicationSupervisorName);
+        return driver.get().findElement(applicationListFirstApplicationSupervisorName).getText();
+
+    }
+
+    public String seniorSpecialistRejectApplication(String refCode){
+        ActionsHelper.sendKeys(specalistSearchApplication,refCode + Keys.ENTER);
+        ActionsHelper.actionClickScrollStepClick("Click the application",firstElementAfterSearch);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickScrollStepClick("Reject application",rejectApplication);
+        ActionsHelper.driverWait(5000);
+        driver.get().switchTo().alert().accept();
+        driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.retryClick(By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']"),30);
+        ActionsHelper.sendKeys(By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']"),refCode + Keys.ENTER);
+        return driver.get().findElement(applicationListFirstApplicationSupervisorName).getText();
     }
 
     // css="tr:nth-child(2) > .TableRecords_EvenLine:nth-child(1)" - second ref
