@@ -28,6 +28,10 @@ public class AgentPage extends Base {
 
     private By specalistSearchApplication = By.xpath("//div[@class='InputContainer FlexRowContainer ThemeGrid_Width4']/input[@class='OSFillParent']"); //Enter search text here (ref code)
 
+    private By seniorSpecialistSearchApplication = By.xpath("//div[@class='InputContainer FlexRowContainer ThemeGrid_Width5']/input[@class='OSFillParent']");
+
+    private By seniorSpecialistSearchApplication2 = By.xpath("//div[@class='InputContainer FlexRowContainer ThemeGrid_Width4']/input[@class='OSFillParent']");
+
     private By firstElementAfterSearch = By.cssSelector("#DCDAgentPortalTheme_wt79_block_wtMainContent_wtListRecords1_ctl00_wt83 > div.FlexColContainer > div:nth-child(2) > div:nth-child(1)"); //Contains app ref number and clickable
 
     private By agentApproveStep = By.id("DCDAgentPortalTheme_wt362_block_wtActions_wtApproveCurrentSection"); //Contains app ref number and clickable
@@ -139,7 +143,7 @@ public class AgentPage extends Base {
 
     public String seniorSpecialistApproval(String refCode){
         //driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
-        ActionsHelper.sendKeys(specalistSearchApplication,refCode + Keys.ENTER);
+        ActionsHelper.sendKeys(seniorSpecialistSearchApplication,refCode + Keys.ENTER);
         ActionsHelper.actionClickScrollStepClick("Click the application",firstElementAfterSearch);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click approve all",By.cssSelector("[value='مقبول - قبول']"));
@@ -150,11 +154,7 @@ public class AgentPage extends Base {
         ActionsHelper.retryClick(By.cssSelector("[value='الموافقة']"),30);
         ActionsHelper.driverWait(5000);
         driver.get().switchTo().alert().accept();
-        driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
-        ActionsHelper.driverWait(5000);
-        ActionsHelper.retryClick(By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']"),30);
-        ActionsHelper.sendKeys(By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']"),refCode + Keys.ENTER);
-        return driver.get().findElement(applicationListFirstApplicationSupervisorName).getText();
+        return getAssigneeNameFromAllApplications(refCode);
     }
     public String committeeSpecialistApproval(String refCode){
        // driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
@@ -168,11 +168,8 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(3000);
         ActionsHelper.retryClick(By.cssSelector("[value='الموافقة']"),30);
          driver.get().switchTo().alert().accept();
-        driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
-        ActionsHelper.driverWait(5000);
-        ActionsHelper.retryClick(By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']"),30);
-        ActionsHelper.sendKeys(By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']"),refCode + Keys.ENTER);
-        return driver.get().findElement(applicationListFirstApplicationSupervisorName).getText();
+        return getAssigneeNameFromAllApplications(refCode);
+
     }
 
     public void logOut(){
@@ -215,11 +212,7 @@ public class AgentPage extends Base {
         ActionsHelper.actionClickScrollStepClick("Reject application",rejectApplication);
         ActionsHelper.driverWait(5000);
         driver.get().switchTo().alert().accept();
-        driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
-        ActionsHelper.driverWait(5000);
-        ActionsHelper.retryClick(By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']"),30);
-        ActionsHelper.sendKeys(By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']"),refCode + Keys.ENTER);
-        return driver.get().findElement(applicationListFirstApplicationSupervisorName).getText();
+        return getAssigneeNameFromAllApplications(refCode);
     }
 
     // css="tr:nth-child(2) > .TableRecords_EvenLine:nth-child(1)" - second ref
@@ -228,6 +221,13 @@ public class AgentPage extends Base {
     // css="tr:nth-child(5) > .TableRecords_OddLine:nth-child(1)" - fifth ref
 
 
+    public String getAssigneeNameFromAllApplications(String refCode){
+        driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.retryClick(By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']"),30);
+        ActionsHelper.sendKeys(By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']"),refCode + Keys.ENTER);
+        return driver.get().findElement(applicationListFirstApplicationSupervisorName).getText();
+    }
 
 
 

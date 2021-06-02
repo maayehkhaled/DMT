@@ -7,6 +7,7 @@ import com.qpros.helpers.ActionsHelper;
 import com.ssa.core.model.GetFamilyData;
 import com.ssa.core.model.Household;
 import com.ssa.core.service.GetFamilyDataService;
+import com.ssa.core.utils.Helpers;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
@@ -28,20 +29,20 @@ public class PersonalInformation extends Base {
         ).findAny().get();
         try {
             Assert.assertEquals(driver.get().findElement(emiratesId).getText(), household.emiratesId);
-            ActionsHelper.isElementPresent(emiratesId);
+            Helpers.isElementPresent(emiratesId);
         } catch (AssertionError ex) {
             this.logManager.ERROR("Emirates ID does not Match", ex);
         }
         try {
             Assert.assertEquals(driver.get().findElement(nameAR).getText(), household.fullNameAR);
-            ActionsHelper.isElementPresent(nameAR);
+            Helpers.isElementPresent(nameAR);
 
         } catch (AssertionError ex) {
             this.logManager.ERROR("Arabic Name  does not Match", ex);
         }
         try {
             Assert.assertEquals(driver.get().findElement(nameEN).getText(), household.fullNameEN);
-            ActionsHelper.isElementPresent(nameEN);
+            Helpers.isElementPresent(nameEN);
 
         } catch (AssertionError ex) {
 
@@ -49,26 +50,85 @@ public class PersonalInformation extends Base {
         }
         try {
             Assert.assertEquals(driver.get().findElement(sex).getText(), household.genderAR);
-            ActionsHelper.isElementPresent(sex);
+            Helpers.isElementPresent(sex);
 
         } catch (AssertionError ex) {
             this.logManager.ERROR("Gender  does not Match", ex);
         }
         try {
             Assert.assertEquals(driver.get().findElement(socialCondition).getText(), household.maritalStatusAR);
-            ActionsHelper.isElementPresent(socialCondition);
+            Helpers.isElementPresent(socialCondition);
 
         } catch (AssertionError ex) {
             this.logManager.ERROR("Martial Condition  does not Match", ex);
         }
         try {
             Assert.assertEquals(driver.get().findElement(nationality).getText(), household.nationalityAR);
-            ActionsHelper.isElementPresent(nationality);
+            Helpers.isElementPresent(nationality);
 
         } catch (AssertionError ex) {
             this.logManager.ERROR("nationality does not Match", ex);
         }
     }
 
+    public void approvePersonalInformation(Household household){
+
+        if(personalInformationTab.findElement(Helpers.element(personalInformationTab)).getAttribute("data-validation").isEmpty()){
+            try {
+                Assert.assertEquals(driver.get().findElement(emiratesId).getText(), household.emiratesId);
+                Helpers.isElementPresent(emiratesId);
+            } catch (AssertionError ex) {
+                this.logManager.ERROR("Emirates ID does not Match", ex);
+            }
+            try {
+                Assert.assertEquals(driver.get().findElement(nameAR).getText(), household.fullNameAR);
+                Helpers.isElementPresent(nameAR);
+
+            } catch (AssertionError ex) {
+                this.logManager.ERROR("Arabic Name  does not Match", ex);
+            }
+            try {
+                Assert.assertEquals(driver.get().findElement(nameEN).getText(), household.fullNameEN);
+                Helpers.isElementPresent(nameEN);
+
+            } catch (AssertionError ex) {
+
+                this.logManager.ERROR("English Name does not Match", ex);
+            }
+            try {
+                Assert.assertEquals(driver.get().findElement(sex).getText(), household.genderAR);
+                Helpers.isElementPresent(sex);
+
+            } catch (AssertionError ex) {
+                this.logManager.ERROR("Gender  does not Match", ex);
+            }
+            try {
+                Assert.assertEquals(driver.get().findElement(socialCondition).getText(), household.maritalStatusAR);
+                Helpers.isElementPresent(socialCondition);
+
+            } catch (AssertionError ex) {
+                this.logManager.ERROR("Martial Condition  does not Match", ex);
+            }
+            try {
+                Assert.assertEquals(driver.get().findElement(nationality).getText(), household.nationalityAR);
+                Helpers.isElementPresent(nationality);
+
+            } catch (AssertionError ex) {
+                this.logManager.ERROR("nationality does not Match", ex);
+            }
+
+        }else if(personalInformationTab.findElement(Helpers.element(personalInformationTab)).getAttribute("data-validation").equalsIgnoreCase("Rejected")){
+            while(personalInformationTab.findElement(Helpers.element(personalInformationTab)).getAttribute("data-validation").equalsIgnoreCase("Rejected")) {
+                ActionsHelper.retryClick(By.id("DCDAgentPortalTheme_wt362_block_wtActions_wtrbReject"), 30);
+                ActionsHelper.retryClick(By.id("DCDAgentPortalTheme_wt362_block_wtActions_wtApproveCurrentSection"), 30);
+                ActionsHelper.driverWait(3000);
+            }
+        }else {
+
+            ActionsHelper.retryClick(By.xpath("//div[@class='Button ForwardButton']"),30);
+        }
+
+
+    }
 
 }

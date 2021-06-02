@@ -101,18 +101,14 @@ public class ReapplicationApprove extends Base {
                 this.logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
                 this.logManager.STEP(" Login by super user, and assign the application to specialist from ادارة المراجعين ", "");
 
-
                 auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), refsCode);
                 agentPage.logOut();
-
                 loginPage.loginWithUser(UserType.Specialist2);
                 String seniorsSpecialist = agentPage.specialistApproval(refsCode);
                 System.out.println(seniorsSpecialist);
                 seniorsSpecialist = seniorSpecialist.replace("Supervisor", "").replace("\n", "");
-
                 agentPage.logOut();
                 //String seniorSpecialist = UserType.SeniorSpecialist100.getUserName();
-
                 loginPage.loginWithUser(UserType.valueOf(seniorsSpecialist));
                 // loginPage.loginWithUser(UserType.SeniorSpecialist100);
                 String committeeName = agentPage.seniorSpecialistApproval(refsCode);
@@ -127,13 +123,11 @@ public class ReapplicationApprove extends Base {
                     driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
                     agentPage.logOut();
                 } else {
-
                     loginPage.loginWithUser(UserType.valueOf(committeeName));
                     agentPage.committeeSpecialistApproval(refsCode);
                     //driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
                     agentPage.logOut();
                 }
-
                 driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
                 //String refCode = "SSP-10679";
                 loginPage.loginWithUser(UserType.Superuser);
@@ -142,13 +136,9 @@ public class ReapplicationApprove extends Base {
                 agentPage.logOut();
                 loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
                 Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refsCode));
-
             }
         }
-
-
     }
-
 }
 
 
