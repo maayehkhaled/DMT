@@ -47,4 +47,6 @@ public class Household {
     public String removalReasonKey;
     @JsonProperty("NeedsRemovalReason")
     public String needsRemovalReason;
+    @JsonProperty("HeadOfFamilyBook")
+    public String headOfFamilyBook;
 }

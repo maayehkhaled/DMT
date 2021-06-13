@@ -45,6 +45,7 @@ public class SubmitApplicationService {
 
     public ResponseRoot getresponse(SubmitApplicationService submitApplicationService) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
+        System.out.println(submitApplicationService.response.getBody());
         return om.readValue(submitApplicationService.response.getBody(), ResponseRoot.class);
 
     }

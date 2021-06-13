@@ -13,8 +13,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
 //This page contains the applications list. Main agent page
 public class AgentPage extends Base {
+
 
     public AgentPage(WebDriver driver){
         PageFactory.initElements(Base.driver.get(), this);
@@ -27,6 +31,11 @@ public class AgentPage extends Base {
     private By specalistFirstApplication = By.cssSelector("#DCDAgentPortalTheme_wt79_block_wtMainContent_wtListRecords1_ctl00_wt83 .ThemeGrid_Width4:nth-child(3) > span:nth-child(1)"); //Contains app ref number and clickable
 
     private By specalistSearchApplication = By.xpath("//div[@class='InputContainer FlexRowContainer ThemeGrid_Width4']/input[@class='OSFillParent']"); //Enter search text here (ref code)
+
+    private By committeeSearchApplicationField = By.xpath("DCDAgentPortalTheme_wt79$block$wtFilterContainer$wtSearcFrom"); //Enter search text here (ref code)
+
+    private By committeeSearchApplicationButton = By.cssSelector("[value='بحث']"); //Enter search text here (ref code)
+
 
     private By seniorSpecialistSearchApplication = By.xpath("//div[@class='InputContainer FlexRowContainer ThemeGrid_Width5']/input[@class='OSFillParent']");
 
@@ -60,7 +69,25 @@ public class AgentPage extends Base {
 
     private By rejectApplication = By.id("DCDAgentPortalTheme_wt362_block_wtMainContent_wt149_WebPatterns_wt119_block_wtContent_wt227"); //Only one action was needed
 
-    public String specialistApproval(String applicationRef){
+    private By approveButton = By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']"); //Only one action was needed
+
+    private By nextButton = By.xpath("//input[@class='Button Button ForwardButton Button ForwardButton']"); //Only one action was needed
+
+    private By specalistSearchApplication2 = By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']");
+
+    private By nextButton2 = By.cssSelector("[value='التالي']"); //Only one action was needed
+
+    private By finalButtonApprove = By.cssSelector("[value='الموافقة']"); //Only one action was needed
+
+    private By approveRejectButton = By.xpath("//input[@class='Button Is_Default']"); //Only one action was needed
+
+    private By seniorApproveRejectButton = By.cssSelector("[value='مرفوض - رفض']"); //Only one action was needed
+
+
+    private By seniorApproveRejectButtonConfirmation = By.cssSelector("[value='مرفوض - رفض']"); //Only one action was needed
+
+
+    public String specialistApproval(String applicationRef) throws AWTException {
 
         logManager.STEP("Search application","Inputs the reference number in the search field");
         ActionsHelper.sendKeys(By.id("DCDAgentPortalTheme_wt79_block_wtFilterContainer_wtSearcFrom"),applicationRef + Keys.ENTER);
@@ -80,59 +107,59 @@ public class AgentPage extends Base {
       //  personalInformation.checkPersonalInformation(getFamilyData);
 
 
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickScrollStepClick("Approve step 1",agentApproveStep);
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickScrollStepClick("Approve step 1",agentRejectStep);
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.driverWait(15000);
         ActionsHelper.actionClickScrollStepClick("Approve step 1",agentApproveStep);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click next Step 1",agentClickNext);
-        ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickStepClick("Approve step 2",agentApproveStep);
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickStepClick("Approve step 2",agentRejectStep);
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.driverWait(15000);
         ActionsHelper.actionClickStepClick("Approve step 2",agentApproveStep);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click next Step 2",agentClickNext);
-        ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickStepClick("Approve step 3",agentApproveStep);
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickStepClick("Approve step 3",agentRejectStep);
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.driverWait(15000);
         ActionsHelper.actionClickStepClick("Approve step 3",agentApproveStep);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click next Step 3",agentClickNext);
-        ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickStepClick("Approve step 4",agentApproveStep);
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickStepClick("Approve step 4",agentRejectStep);
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.driverWait(15000);
+
         ActionsHelper.actionClickStepClick("Approve step 4",agentApproveStep);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click next Step 4",agentClickNext);
-        ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickStepClick("Approve step 5",agentApproveStep);
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickStepClick("Click next Step 5",agentClickNext);
-        ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickStepClick("Approve step 6",agentApproveStep);
+
+        ActionsHelper.driverWait(15000);
+        System.out.println("Attempting step 5");
+        ActionsHelper.retryClick(agentClickNext,4);
+        ActionsHelper.driverWait(15000);
+        System.out.println("Attempting step 6");
+        ActionsHelper.retryClick(agentClickNext56Step,3);
+
+        ActionsHelper.retryClick(nextButton,3);
 
         ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickStepClick("Click next Step 6",agentClickNext56Step);
-        ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickStepClick("Approve step 7",agentApproveStep);
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickStepClick("Click next Step 7",agentClickNext56Step);
-        ActionsHelper.driverWait(5000);
+        //ActionsHelper.retryClick(agentClickNext56Step,3);
+        //ActionsHelper.driverWait(5000);
+        //ActionsHelper.actionClickStepClick("Approve step 5",agentApproveStep);
+        //ActionsHelper.driverWait(3000);
+        //ActionsHelper.actionClickStepClick("Click next Step 5",agentClickNext);
+        //ActionsHelper.driverWait(5000);
+        //ActionsHelper.actionClickStepClick("Approve step 6",agentApproveStep);
 
-        driver.get().switchTo().alert().accept();
+        //ActionsHelper.driverWait(3000);
+        //ActionsHelper.actionClickStepClick("Click next Step 6",agentClickNext56Step);
+        //ActionsHelper.driverWait(5000);
+        //ActionsHelper.actionClickStepClick("Approve step 7",agentApproveStep);
+        System.out.println("Attempting approve");
+        ActionsHelper.retryClick(approveButton,4);
+        //ActionsHelper.retryClick(agentClickNext56Step,3);
+        ActionsHelper.retryClick(nextButton2,3);
+        ActionsHelper.retryClick(finalButtonApprove,3);
+        ActionsHelper.driverWait(1000);
+        try{driver.get().switchTo().alert().accept();}
+        catch (Exception e){}
 
 
         //TODO: Check is there is a save button
         driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(10000);
         driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
         ActionsHelper.sendKeys(specalistSearchApplication,applicationRef + Keys.ENTER);
         ActionsHelper.driverWait(3000);
@@ -153,21 +180,37 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(3000);
         ActionsHelper.retryClick(By.cssSelector("[value='الموافقة']"),30);
         ActionsHelper.driverWait(5000);
-        driver.get().switchTo().alert().accept();
         return getAssigneeNameFromAllApplications(refCode);
     }
     public String committeeSpecialistApproval(String refCode){
        // driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
-        ActionsHelper.sendKeys(specalistSearchApplication,refCode + Keys.ENTER);
+        ActionsHelper.sendKeys(committeeSearchApplicationField,refCode + Keys.ENTER);
         ActionsHelper.actionClickScrollStepClick("Click the application",firstElementAfterSearch);
+
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click approve all",By.cssSelector("[value='مقبول - قبول']"));
         ActionsHelper.driverWait(10000);
         //ActionsHelper.waitForExpectedElement(By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']"));
        // ActionsHelper.scrollTo(By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']"));
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.retryClick(By.cssSelector("[value='الموافقة']"),30);
-         driver.get().switchTo().alert().accept();
+        //ActionsHelper.driverWait(3000);
+        //ActionsHelper.retryClick(By.cssSelector("[value='الموافقة']"),30);
+
+        return getAssigneeNameFromAllApplications(refCode);
+
+    }
+    public String committeeSpecialistRejection(String refCode){
+       // driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
+        ActionsHelper.sendKeys(committeeSearchApplicationField,refCode + Keys.ENTER);
+        ActionsHelper.actionClickScrollStepClick("Click the application",firstElementAfterSearch);
+
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickScrollStepClick("Click reject all",By.cssSelector(".RejectButton"));
+        ActionsHelper.driverWait(10000);
+        //ActionsHelper.waitForExpectedElement(By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']"));
+       // ActionsHelper.scrollTo(By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']"));
+        //ActionsHelper.driverWait(3000);
+        //ActionsHelper.retryClick(By.cssSelector("[value='الموافقة']"),30);
+
         return getAssigneeNameFromAllApplications(refCode);
 
     }
@@ -186,17 +229,53 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click the application",firstElementAfterSearch);
 
-        ActionsHelper.actionClickScrollStepClick("Reject Application",rejectApplication);
 
+        ActionsHelper.driverWait(15000);
+        ActionsHelper.actionClickScrollStepClick("Reject step 1",agentRejectStep);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Click next Step 1",agentClickNext);
+        ActionsHelper.driverWait(15000);
+        ActionsHelper.actionClickStepClick("Reject step 2",agentRejectStep);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Click next Step 2",agentClickNext);
+        ActionsHelper.driverWait(15000);
+        ActionsHelper.actionClickStepClick("Reject step 3",agentRejectStep);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Click next Step 3",agentClickNext);
+        ActionsHelper.driverWait(15000);
 
+        ActionsHelper.actionClickStepClick("Reject step 4",agentRejectStep);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Click next Step 4",agentClickNext);
 
+        ActionsHelper.driverWait(15000);
+        System.out.println("Attempting step 5");
+        ActionsHelper.retryClick(agentClickNext,4);
+        ActionsHelper.driverWait(15000);
+        System.out.println("Attempting step 6");
+        ActionsHelper.retryClick(agentClickNext56Step,3);
 
-        driver.get().switchTo().alert().accept();
+        ActionsHelper.driverWait(3000);
 
-
+        ActionsHelper.driverWait(10000);
+        System.out.println("Attempting reject");
+        ActionsHelper.retryClick(approveButton,4);
+        ActionsHelper.retryClick(agentClickNext56Step,3);
+        ActionsHelper.driverWait(1000);
+        try{driver.get().switchTo().alert().accept();}
+        catch (Exception e){}
+        ActionsHelper.driverWait(3000);
+        driver.get().switchTo().frame(0);
+        System.out.println("Trying to hit save");
+        ActionsHelper.driverWait(1000);
+        ActionsHelper.retryClick(approveRejectButton,10);
+        ActionsHelper.driverWait(1000);
+        System.out.println("Save clicked");
+        driver.get().switchTo().defaultContent();
+        ActionsHelper.driverWait(3000);
         //TODO: Check is there is a save button
         driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(6000);
         driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
         ActionsHelper.sendKeys(specalistSearchApplication,applicationRef + Keys.ENTER);
         ActionsHelper.driverWait(3000);
@@ -206,12 +285,27 @@ public class AgentPage extends Base {
     }
 
     public String seniorSpecialistRejectApplication(String refCode){
-        ActionsHelper.sendKeys(specalistSearchApplication,refCode + Keys.ENTER);
+        ActionsHelper.sendKeys(specalistSearchApplication2,refCode + Keys.ENTER);
         ActionsHelper.actionClickScrollStepClick("Click the application",firstElementAfterSearch);
         ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickScrollStepClick("Reject application",rejectApplication);
+        ActionsHelper.actionClickScrollStepClick("Reject application",seniorApproveRejectButton);
         ActionsHelper.driverWait(5000);
-        driver.get().switchTo().alert().accept();
+        ActionsHelper.actionClickScrollStepClick("Confirm Rejection",seniorApproveRejectButtonConfirmation);
+        ActionsHelper.driverWait(1000);
+        try{ActionsHelper.actionClickScrollStepClick("Confirm Rejection",seniorApproveRejectButtonConfirmation);
+            ActionsHelper.driverWait(1000);}
+        catch (Exception e){}
+
+        try{driver.get().switchTo().alert().accept();}
+        catch (Exception e){}
+
+        ActionsHelper.driverWait(3000);
+        driver.get().switchTo().frame(0);
+        System.out.println("Trying to hit save");
+        ActionsHelper.retryClick(approveRejectButton,10);
+        ActionsHelper.driverWait(1000);
+        driver.get().switchTo().defaultContent();
+
         return getAssigneeNameFromAllApplications(refCode);
     }
 
@@ -222,11 +316,17 @@ public class AgentPage extends Base {
 
 
     public String getAssigneeNameFromAllApplications(String refCode){
+        ActionsHelper.driverWait(15000);
+        driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
+        ActionsHelper.driverWait(5000);
+        System.out.println("First refresh");
         driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
         ActionsHelper.driverWait(5000);
         ActionsHelper.retryClick(By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']"),30);
         ActionsHelper.sendKeys(By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']"),refCode + Keys.ENTER);
-        return driver.get().findElement(applicationListFirstApplicationSupervisorName).getText();
+        System.out.println("Assigned to name: " + driver.get().findElement(applicationListFirstApplicationSupervisorName).getText());
+        String person = driver.get().findElement(applicationListFirstApplicationSupervisorName).getText();
+        return person;
     }
 
 

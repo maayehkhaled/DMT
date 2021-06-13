@@ -15,6 +15,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.awt.*;
 import java.io.IOException;
 
 @Listeners(LogManager.class)
@@ -41,7 +42,7 @@ public class ReapplicationApprove extends Base {
 
     @Test(description = "reApplication-Approve", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
-    public void rejectApproveApplication() throws JsonProcessingException {
+    public void rejectApproveApplication() throws JsonProcessingException, AWTException {
         driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
 
         this.logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");

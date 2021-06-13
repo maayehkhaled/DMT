@@ -18,6 +18,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.awt.*;
 import java.io.IOException;
 
 @Listeners(LogManager.class)
@@ -46,7 +47,7 @@ public class ReassessmentReject extends Base {
 
     @Test(description = "Approve an application", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
-    public void approveApplication() throws JsonProcessingException {
+    public void approveApplication() throws JsonProcessingException, AWTException {
         //URL: https://10.231.1.100/DCDAgentPortalTheme/Login.aspx
         driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
 

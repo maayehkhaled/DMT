@@ -23,9 +23,9 @@ public class QuantaManager extends Base {
     public static synchronized QuantaReports createInstance() {
         StateHelper.setStepState("reportName", reportFileName);
         QuantaHtmlReporter htmlReporter= new QuantaHtmlReporter(path + reportFileName);
-        QuantaKlovReporter quantaKlovReporter= new QuantaKlovReporter("DU","Build");
-        quantaKlovReporter.initMongoDbConnection("localhost", 27017);
-        quantaKlovReporter.initKlovServerConnection("http://localhost");
+        //QuantaKlovReporter quantaKlovReporter= new QuantaKlovReporter("DU","Build");
+        //quantaKlovReporter.initMongoDbConnection("localhost", 27017);
+        //quantaKlovReporter.initKlovServerConnection("http://localhost");
         htmlReporter.config().setReportName("QPros-Test");
         htmlReporter.setAnalysisStrategy(AnalysisStrategy.SUITE);
         htmlReporter.config().setTheme(Theme.STANDARD);
@@ -35,7 +35,7 @@ public class QuantaManager extends Base {
         extent.setSystemInfo("Operating System Version", System.getProperty("os.version"));
         extent.setSystemInfo("Run User", System.getProperty("user.name"));
         extent.setSystemInfo("Java runtime", System.getProperty("java.runtime.version"));
-        extent.attachReporter(quantaKlovReporter,htmlReporter);
+        extent.attachReporter(htmlReporter,htmlReporter);
 
         return extent;
     }

@@ -21,6 +21,13 @@ public class PaymentSpecialistPage extends Base {
 
     private By firstResult = By.cssSelector("tbody > tr:nth-of-type(1) > td:nth-of-type(1)");
 
+
+    private By expandResults = By.xpath("//a[.='عرض موسع']");
+
+    private By countPayments = By.xpath("//div[@class='Counter_Message']");
+
+
+
     public boolean checkPaymentExistence(String refNo){
         driver.get().navigate().to(paymentSchedulesUrl);
         ActionsHelper.driverWait(1000);
@@ -30,6 +37,10 @@ public class PaymentSpecialistPage extends Base {
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Click search", searchButton);
         ActionsHelper.driverWait(1000);
+        ActionsHelper.actionClickStepClick("Expand results", expandResults);
+        ActionsHelper.driverWait(1000);
+        System.out.println(countPayments.toString());
+
         System.out.println(driver.get().findElement(firstResult).getText());
         if(driver.get().findElement(firstResult).getText().equals(refNo)) return true;
         return false;

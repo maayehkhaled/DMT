@@ -29,9 +29,9 @@ public class LoginPage extends Base {
         ActionsHelper.waitForExpectedElement(passwordField);
         ActionsHelper.retryClick(passwordField, 30);
         ActionsHelper.sendKeys(passwordField, password);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("Click the login button", loginButton);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(2000);
 
     }
 

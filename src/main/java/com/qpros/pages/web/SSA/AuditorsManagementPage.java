@@ -22,21 +22,20 @@ public class AuditorsManagementPage extends Base {
 
     private By inputRef = By.id("DCDAgentPortalTheme_wt15_block_wtMainContent_WebPatterns_wt44_block_wtContent_wt21");
 
-    private By clickSave = By.id("DCDAgentPortalTheme_wt15_block_wtMainContent_WebPatterns_wt44_block_wtContent_wtrunspecificcodes");
+    private By clickSave = By.xpath("//input[@class='Button ThemeGrid_MarginGutter']");
 
 
     @STEP(name = "Set Specialist", description = "Sets the case to a specific specialist")
     public void selectSpecialist(String specialistName, String refNumber) {
         logManager.STEP("Input Specialist", "Inputs the specialist: " + specialistName);
-        ActionsHelper.driverWait(5000);
-        ActionsHelper.retryClick(auditorsManagement, 30);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.navigate("https://10.231.1.100/DCDBusinessParameters/AgentManagement.aspx");
+        ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(selectspecid,30);
         ActionsHelper.sendKeys(selectSpecialist, specialistName+ Keys.ENTER);
         logManager.STEP("Input Ref", "Inputs the reference nubmer: " + refNumber);
         ActionsHelper.sendKeys(inputRef, refNumber);
         ActionsHelper.actionClickStepClick("Clicks the save button", clickSave);
         ActionsHelper.driverWait(2000);
-        driver.get().switchTo().alert().accept();
     }
 }

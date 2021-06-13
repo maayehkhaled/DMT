@@ -9,6 +9,7 @@ import com.qpros.quanta.markuputils.MarkupHelper;
 import com.qpros.reporting.QuantaTestManager;
 import com.ssa.core.service.SubmitApplicationService;
 import com.ssa.core.service.VerifyEligibilityService;
+import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -16,6 +17,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.awt.*;
 import java.io.IOException;
 
 @Listeners(com.qpros.common.LogManager.class)
@@ -42,7 +44,7 @@ public class ApproveApplication extends Base {
 
     @Test(description = "Approve an application", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
-    public void approveApplication() throws JsonProcessingException {
+    public void approveApplication() throws JsonProcessingException, AWTException {
         //URL: https://10.231.1.100/DCDAgentPortalTheme/Login.aspx
         driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
 
@@ -70,20 +72,22 @@ public class ApproveApplication extends Base {
             agentPage.logOut();
 
             loginPage.loginWithUser(UserType.Specialist2);
+            ActionsHelper.driverWait(5000);
             String seniorSpecialist = agentPage.specialistApproval(refCode);
             if(seniorSpecialist.contains("--")){
                 agentPage.getAssigneeNameFromAllApplications(refCode);
             }
-
+            ActionsHelper.driverWait(5000);
             System.out.println(seniorSpecialist);
             seniorSpecialist = seniorSpecialist.replace("Supervisor", "").replace("\n", "");
 
             agentPage.logOut();
             //String seniorSpecialist = UserType.SeniorSpecialist100.getUserName();
-
+            ActionsHelper.driverWait(5000);
             loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
             // loginPage.loginWithUser(UserType.SeniorSpecialist100);
             String committeeName = agentPage.seniorSpecialistApproval(refCode);
+
             System.out.println("Committee: " + committeeName);
             driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
             //committeeName = committeeName.replace("Committee", "").replace("\n", "");
@@ -95,8 +99,12 @@ public class ApproveApplication extends Base {
                 driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
                 agentPage.logOut();
             } else  {
-                committeeName = committeeName.replace("Committee", "").replace("\n", "");
-                loginPage.loginWithUser(UserType.valueOf(committeeName));
+                committeeName = committeeName.replace("\n", "");
+                if (committeeName.contains(UserType.Committee100.getUserName())) {
+                    loginPage.loginWithUser(UserType.Committee100);
+                }
+                else {loginPage.loginWithUser(UserType.Committee1);}
+
                 agentPage.committeeSpecialistApproval(refCode);
                 //driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
                 agentPage.logOut();

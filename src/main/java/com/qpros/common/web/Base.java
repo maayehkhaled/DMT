@@ -5,11 +5,13 @@ import com.qpros.common.DriverType;
 import com.qpros.common.LogManager;
 import com.qpros.helpers.ReadWriteHelper;
 import io.appium.java_client.remote.MobileCapabilityType;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -62,6 +64,7 @@ public class Base {
                     options.addArguments("--ignore-certificate-errors");
                     options.addArguments("--disable-web-security");
                     options.addArguments("--allow-running-insecure-content");
+                    options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
                     driver.set(new ChromeDriver(options));
                     //Dimension targetSize = new Dimension(1920, 1080); //your screen resolution here
                     //driver.get().manage().window().setSize(targetSize);
