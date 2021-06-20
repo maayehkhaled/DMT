@@ -5,6 +5,7 @@ import com.qpros.common.LogManager;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.qpros.pages.web.SSA.*;
+import com.qpros.pages.web.SSA.modules.ApproveApplicationModule;
 import com.qpros.pages.web.SSA.modules.RejectApplicationModule;
 import com.qpros.quanta.Status;
 import com.qpros.quanta.markuputils.MarkupHelper;
@@ -37,12 +38,13 @@ public class ReassessmentReject extends Base {
         this.setUpBrowser();
     }
     RejectApplicationModule rejectApplicationModule = new RejectApplicationModule(driver.get());
+    ApproveApplicationModule approveApplication = new ApproveApplicationModule(driver.get());
 
 
     @Test(description = "Approve an application", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void approveApplication() throws Exception {
-       rejectApplicationModule.RejectApplication();
-       rejectApplicationModule.RejectApplication();
+        approveApplication.approveApplication(false);
+        rejectApplicationModule.RejectApplication();
     }
 }
