@@ -34,11 +34,30 @@ public class ApproveApplication extends Base {
         this.setUpBrowser();
     }
     ApproveApplicationModule approveApplicationModule = new ApproveApplicationModule(driver.get());
-
+    ClaimantApplicationPage claimantApplicationPage = new ClaimantApplicationPage(driver.get());
+    ClaimantLogin claimantLogin = new ClaimantLogin(driver.get());
     @Test(description = "Approve an application", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void approveApplication() throws JsonProcessingException, AWTException {
 
         approveApplicationModule.approveApplication();
+    }
+
+
+    @Test(description = "Approve an testest", priority = 1,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+    public void test() throws JsonProcessingException, AWTException {
+        try {
+            driver.get().navigate().to("https://10.231.1.100/DCDClaimantFrontEnd/BenefitsApplication.aspx?GUID=ed345448-0069-4bc2-89ca-9318c9b701ea");
+            ActionsHelper.driverWait(1000);
+            //claimantLogin.claimantLogin("784194683719275");
+            //claimantLogin.navigateToUpdateFamilyInformation();
+            //claimantApplicationPage.uploadBill();
+            //claimantApplicationPage.doPensionCheckboxes();
+            claimantApplicationPage.doSalaryCertifications();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
