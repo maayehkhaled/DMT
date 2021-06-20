@@ -39,7 +39,7 @@ public class ReassessmentApprove extends Base {
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void reassessmentApprove() throws Exception {
         rejectApplicationModule.RejectApplication();
-        approveApplication.approveApplication();
+        approveApplication.approveApplication(false);
 
 
 

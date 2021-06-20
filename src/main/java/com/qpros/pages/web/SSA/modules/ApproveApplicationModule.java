@@ -14,11 +14,13 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 import java.awt.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ApproveApplicationModule extends Base {
 
 
-    public ApproveApplicationModule(WebDriver driver){
+    public ApproveApplicationModule(WebDriver driver) {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
@@ -30,9 +32,11 @@ public class ApproveApplicationModule extends Base {
     AuditorsManagementPage auditorsManagementPage = new AuditorsManagementPage(driver.get());
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
-
-
-    public void approveApplication() throws JsonProcessingException, AWTException {
+    private static final Pattern p = Pattern.compile("(^[^\\s]+)");
+    Matcher matcher;
+    public String committeeName;
+    public String refCode;
+    public void approveApplication(boolean incOrDecApp) throws JsonProcessingException, AWTException {
         //URL: https://10.231.1.100/DCDAgentPortalTheme/Login.aspx
         driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
 
@@ -47,7 +51,7 @@ public class ApproveApplicationModule extends Base {
             submitApplicationService.requestService();
             QuantaTestManager.getTest().log(Status.INFO, MarkupHelper.createCodeBlock(submitApplicationService.response.getBody()));
 
-            String refCode = submitApplicationService.getresponse(submitApplicationService).applicationSummary.referenceNumber;
+            refCode = submitApplicationService.getresponse(submitApplicationService).applicationSummary.referenceNumber;
             //String refCode = "SSP-10676";
             homePage.navigateToLogin();
 
@@ -61,20 +65,26 @@ public class ApproveApplicationModule extends Base {
 
             loginPage.loginWithUser(UserType.Specialist2);
             ActionsHelper.driverWait(5000);
-            String seniorSpecialist = agentPage.specialistApproval(refCode);
-            if (seniorSpecialist.contains("--")) {
+            String seniorSpecialist = agentPage.specialistApproval(refCode,incOrDecApp);
+            if (seniorSpecialist.contains("-")) {
                 agentPage.getAssigneeNameFromAllApplications(refCode);
             }
             ActionsHelper.driverWait(5000);
             System.out.println(seniorSpecialist);
-            seniorSpecialist = seniorSpecialist.replace("Supervisor", "").replace("\n", "");
+//            seniorSpecialist = seniorSpecialist.replace("Supervisor", "").replace("\n", "");
+            matcher = p.matcher(seniorSpecialist);
+            if (matcher.find()) {
+                System.out.println(matcher.group(0));
+                seniorSpecialist =matcher.group(0);
+            }
+            System.out.println(seniorSpecialist);
 
             agentPage.logOut();
             //String seniorSpecialist = UserType.SeniorSpecialist100.getUserName();
             ActionsHelper.driverWait(5000);
             loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
             // loginPage.loginWithUser(UserType.SeniorSpecialist100);
-            String committeeName = agentPage.seniorSpecialistApproval(refCode);
+            committeeName = agentPage.seniorSpecialistApproval(refCode);
 
             System.out.println("Committee: " + committeeName);
             driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
@@ -87,6 +97,7 @@ public class ApproveApplicationModule extends Base {
                 driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
                 agentPage.logOut();
             } else {
+                System.out.println("this is comettee nammeeee here plz " +committeeName);
                 committeeName = committeeName.replace("\n", "");
                 if (committeeName.contains(UserType.Committee100.getUserName())) {
                     loginPage.loginWithUser(UserType.Committee100);
@@ -107,6 +118,7 @@ public class ApproveApplicationModule extends Base {
             agentPage.logOut();
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
             Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
+            agentPage.logOut();
         }
-        }
+    }
 }

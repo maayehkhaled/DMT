@@ -40,7 +40,7 @@ public class ApproveApplication extends Base {
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void approveApplication() throws JsonProcessingException, AWTException {
 
-        approveApplicationModule.approveApplication();
+        approveApplicationModule.approveApplication(false);
     }
 
 
