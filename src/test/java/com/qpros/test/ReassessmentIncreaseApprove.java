@@ -48,13 +48,22 @@ public class ReassessmentIncreaseApprove extends Base {
     ApproveApplicationModule approveApplication = new ApproveApplicationModule(driver.get());
     private By reassessmentBtn = By.linkText("إعادة التقييم");
     private By committeeSearchApplicationField = By.cssSelector("[placeholder='SSP code or Emirates ID']");
-    private By applicationCheckBox = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_WebPatterns_wt14_block_wtContent_wtBenefitRequests_ctl03_wt75");
+    private By applicationCheckBox = By.xpath("//input[contains(@id,'wtBenefitRequests')]");
     private By dropdownMenuSelect = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtuseridIn");
     private By dropdownMenuReason = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtReasonIn");
     private By commentFieldTextBox = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtCommentIn");
     private By launchBtn = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wt97");
-    private By searchForApplication = By.cssSelector("[placeholder='رقم الطلب ,اسم مقدم الطلب او الرقم الموحد']");
-
+    private By searchForApplication = By.xpath("//input[contains(@id,'SearcFrom')]");
+    private By firstElementAfterSearch = By.cssSelector(".ThemeGrid_Width4:nth-child(1)"); //Contains app ref number and clickable
+    private By updateAmountBtn = By.xpath("//div[contains(@id,'UpdateAmount2')]"); //Contains app ref number and clickable
+    private By amountField = By.xpath("//input[contains(@id,'amount_mask')]"); //Contains app ref number and clickable
+    private By approveUpdate = By.xpath("//input[contains(@id,'Submit')]"); //Contains app ref number and clickable
+    private By amountText = By.xpath("//span[contains(@id,'wtColumn2_wtBenefitAmount')]"); //Contains app ref number and clickable
+    private By acceptedOrRejectedBtn = By.xpath("//input[contains(@id,'AcceptedOrRejected')]"); //Contains app ref number and clickable
+    private By superuserSearchApp = By.xpath("//input[contains(@id,'SearchFrom')]");
+    private By applicationLink = By.xpath("//a[contains(@id,'wtlnk_ApplicationReview')]");
+    private By backBtn = By.xpath("//div[contains(@id,'wtPrev2')]"); //Contains app ref number and clickable
+    private By benefitAmount = By.xpath("//span[contains(@id,'wtContent5_wtBenefitAmount')]"); //Contains app ref number and clickable
 
     @Test(description = "Approve an application", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
@@ -63,29 +72,36 @@ public class ReassessmentIncreaseApprove extends Base {
         System.out.println(approveApplication.committeeName);
         System.out.println(approveApplication.refCode);
         homePage.navigateToLogin();
-
         String committeeName =approveApplication.committeeName.replace("\n", "");
+//        String committeeName = "Committee100Committee".replace("\n", "");//delete
+        homePage.navigateToLogin();
         if (committeeName.contains(UserType.Committee100.getUserName())) {
             loginPage.loginWithUser(UserType.Committee100);
         } else {
             loginPage.loginWithUser(UserType.Committee1);
         }
-
-        loginPage.loginWithUser(UserType.valueOf(approveApplication.committeeName));
         ActionsHelper.retryClick(reassessmentBtn,4);
         ActionsHelper.sendKeys(committeeSearchApplicationField, approveApplication.refCode + Keys.ENTER);
-        ActionsHelper.retryClick(applicationCheckBox, 4);
+//        ActionsHelper.sendKeys(committeeSearchApplicationField, "SSP-11338" + Keys.ENTER);//delete
 
+        ActionsHelper.waitVisibility(ActionsHelper.element(applicationCheckBox),7);
+        System.out.println(ActionsHelper.isElementPresent(ActionsHelper.element(applicationCheckBox)));
+        ActionsHelper.retryClick(applicationCheckBox, 7);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.waitForExpectedElement(dropdownMenuSelect);
-        ActionsHelper.selectOption(dropdownMenuSelect, "150");
+        ActionsHelper.selectOption(dropdownMenuSelect, "12");
         ActionsHelper.selectByValue(ActionsHelper.element(dropdownMenuReason), "1");
 
         ActionsHelper.sendKeys(commentFieldTextBox, "Just a test reason");
         ActionsHelper.retryClick(launchBtn, 4);
         agentPage.logOut();
+
+
         homePage.navigateToLogin();
-        loginPage.loginWithUser(UserType.SeniorSpecialist100);
+        loginPage.loginWithUser(UserType.SeniorSpecialist1);
         committeeName = agentPage.seniorSpecialistApproval(approveApplication.refCode);
+//        committeeName = agentPage.seniorSpecialistApprovalIncDec("SSP-11338");
+
         System.out.println("Committee: " + committeeName);
         driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
         agentPage.logOut();
@@ -95,111 +111,42 @@ public class ReassessmentIncreaseApprove extends Base {
         } else {
             loginPage.loginWithUser(UserType.Committee1);
         }
-        ActionsHelper.driverWait(40000);
+//        ActionsHelper.sendKeys(searchForApplication, approveApplication.refCode + Keys.ENTER);
+        ActionsHelper.sendKeys(searchForApplication, "SSP-11338" + Keys.ENTER);
+        ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
+        ActionsHelper.actionClickScrollStepClick("Click on update Amount", updateAmountBtn);
+        ActionsHelper.driverWait(3000);
+        driver.get().switchTo().frame(0);
+        String[] arrOfStr = ActionsHelper.element(amountField).getAttribute("value").split(",");
+        double amount = Double.parseDouble(String.join("", arrOfStr));
+        double newAmount = amount + 2000;
+        ActionsHelper.sendKeysWithClear(amountField, String.format("%.2f", newAmount));
+        ActionsHelper.driverWait(1000);
+        ActionsHelper.retryClick(approveUpdate, 10);
+        ActionsHelper.driverWait(1000);
+        System.out.println("Save clicked");
+        driver.get().switchTo().defaultContent();
+        driver.get().navigate().refresh();
+        String amountTxt = ActionsHelper.element(amountText).getText();
+        System.out.println("amountTxt:" + amountTxt + "   amount:" + amount + "    newAmount:" + newAmount);
+        ActionsHelper.actionClickStepClick("Approve Button", acceptedOrRejectedBtn);
+        agentPage.logOut();
+        homePage.navigateToLogin();
+        loginPage.loginWithUser(UserType.Superuser);
+        driver.get().navigate().to("https://10.231.1.100/DCDBusinessParameters/BusinessParameters.aspx");
+        businessParametersPage.releaseAppliaction(approveApplication.refCode);
+//        businessParametersPage.releaseAppliaction("SSP-11338");
 
-
-
-//        //just for quick testing
-//        driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
-//        loginPage.loginWithUser(UserType.Committee100);
-//        ActionsHelper.retryClick(reassessmentBtn, 4);
-//        ActionsHelper.sendKeys(committeeSearchApplicationField, "SSP-11164" + Keys.ENTER);
-//        ActionsHelper.retryClick(applicationCheckBox, 4);
-//
-//        ActionsHelper.waitForExpectedElement(dropdownMenuSelect);
-//        ActionsHelper.selectOption(dropdownMenuSelect, "150");
-//        ActionsHelper.selectByValue(ActionsHelper.element(dropdownMenuReason), "1");
-//
-//
-//        ActionsHelper.sendKeys(commentFieldTextBox, "Just a test reason");
-//        ActionsHelper.retryClick(launchBtn, 4);
-//        agentPage.logOut();
-//        homePage.navigateToLogin();
-//        loginPage.loginWithUser(UserType.SeniorSpecialist100);//change it to option
-//        ActionsHelper.sendKeys(searchForApplication, "SSP-11164" + Keys.ENTER);
-
-
-
-
-
-
-
-
-
-//        WebElement dropdown = driver.get().findElement(dropdownMenuSelect);
-
-//
-//        this.logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
-//        this.logManager.INFO("Verify Eligibility Service Call", false);
-//        verifyEligibilityService.requestService();
-//        QuantaTestManager.getTest().log(Status.INFO, MarkupHelper.createCodeBlock(verifyEligibilityService.response.getBody()));
-//        if (verifyEligibilityService.getresponse(verifyEligibilityService).application.isEligible) {
-//            QuantaTestManager.getTest().assignCategory("1st Assessment");
-//            this.logManager.STEP("Submit Application from 12x12 API", "The System Submit Application by calling 12X12 API");
-//            this.logManager.INFO("Submit Application Service Call", false);
-//            submitApplicationService.requestService();
-//            QuantaTestManager.getTest().log(Status.INFO, MarkupHelper.createCodeBlock(submitApplicationService.response.getBody()));
-//
-//            String refCode = submitApplicationService.getresponse(submitApplicationService).applicationSummary.referenceNumber;
-//            //String refCode = "SSP-10676";
-//            homePage.navigateToLogin();
-//
-//            loginPage.loginWithUser(UserType.Superuser);
-//            this.logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
-//            this.logManager.STEP(" Login by super user, and assign the application to specialist from ادارة المراجعين ", "");
-//
-//
-//            auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), refCode);
-//            agentPage.logOut();
-//
-//            loginPage.loginWithUser(UserType.Specialist2);
-//            String seniorSpecialist = agentPage.specialistApproval(refCode);
-//            if(seniorSpecialist.contains("--")){
-//                agentPage.getAssigneeNameFromAllApplications(refCode);
-//            }
-//
-//            System.out.println(seniorSpecialist);
-//            seniorSpecialist = seniorSpecialist.replace("Supervisor", "").replace("\n", "");
-//
-//            agentPage.logOut();
-//            //String seniorSpecialist = UserType.SeniorSpecialist100.getUserName();
-//
-//            loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
-//            // loginPage.loginWithUser(UserType.SeniorSpecialist100);
-//            String committeeName = agentPage.seniorSpecialistApproval(refCode);
-//            System.out.println("Committee: " + committeeName);
-//            driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
-//            //committeeName = committeeName.replace("Committee", "").replace("\n", "");
-//            agentPage.logOut();
-//            if (committeeName.contains("ApplicationDirector")) {
-//                committeeName = committeeName.replace("Manager", "").replace("\n", "");
-//                loginPage.loginWithUser(UserType.valueOf(committeeName));
-//                agentPage.seniorSpecialistApproval(refCode);
-//                driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
-//                agentPage.logOut();
-//            } else  {
-//                committeeName = committeeName.replace("Committee", "").replace("\n", "");
-//                loginPage.loginWithUser(UserType.valueOf(committeeName));
-//                agentPage.committeeSpecialistApproval(refCode);
-//                //driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
-//                agentPage.logOut();
-//            }
-//
-//            driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
-//            //String refCode = "SSP-10679";
-//            loginPage.loginWithUser(UserType.Superuser);
-//            driver.get().navigate().to("https://10.231.1.100/DCDBusinessParameters/BusinessParameters.aspx");
-//            businessParametersPage.releaseAppliaction(refCode);
-//            agentPage.logOut();
-//            loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
-//            Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
-//
-//
-//
-//        loginPage.loginWithUser(UserType.Committee1);
-//        ActionsHelper.navigate("https://10.231.1.100/DCDBusinessParameters/ReassessApplications.aspx");
-//        ActionsHelper.isElementPresent(By.id("DCDAgentPortalTheme_wt10_block_wtFilterContainer_wt92"));
-//        ActionsHelper.sendKeys(By.id("DCDAgentPortalTheme_wt10_block_wtFilterContainer_wt92"),refCode + Keys.ENTER);
-//        }
+        driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
+//        ActionsHelper.sendKeys(superuserSearchApp, "SSP-11338" + Keys.ENTER);
+        ActionsHelper.sendKeys(superuserSearchApp, approveApplication.refCode + Keys.ENTER);
+        ActionsHelper.retryClick(applicationLink, 5);
+        ActionsHelper.waitForExpectedElement(acceptedOrRejectedBtn, 7);
+        ActionsHelper.actionClickStepClick("Approve Button", acceptedOrRejectedBtn);
+        ActionsHelper.actionClickStepClick("accepted Button", acceptedOrRejectedBtn);
+        ActionsHelper.actionClickStepClick("back Button", backBtn);
+        String benefits = ActionsHelper.element(benefitAmount).getAttribute("innerText");
+        benefits = benefits.replace(" درهم إماراتي", "").replace("،", "");
+        Assert.assertEquals(benefits, String.format("%.2f",newAmount));
     }
 }

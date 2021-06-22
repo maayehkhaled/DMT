@@ -43,8 +43,8 @@ public class AgentPage extends Base {
 
     private By firstElementAfterSearch = By.cssSelector(".ThemeGrid_Width4:nth-child(1)"); //Contains app ref number and clickable
 
-    private By agentApproveStep = By.id("DCDAgentPortalTheme_wt375_block_wtActions_wtApproveCurrentSection"); //Contains app ref number and clickable
-//By.xpath("//*[contains(@id,'DCDAgentPortalTheme')]|//*[contains(@id,'block_wtActions_wtApproveCurrentSection')]"
+    private By agentApproveStep = By.xpath("//input[contains(@id,'wtApproveCurrentSection')]"); //Contains app ref number and clickable
+    //By.xpath("//*[contains(@id,'DCDAgentPortalTheme')]|//*[contains(@id,'block_wtActions_wtApproveCurrentSection')]"
     private By agentRejectButton = By.cssSelector("[value='مرفوض - رفض']"); //Contains app ref number and clickable
 
     private By agentPersonalData = By.id("DCDAgentPortalTheme_wt377_block_wtMainContent_CloneOfWebPatterns_wttabs_block_wtTab1"); //Contains app ref number and clickable
@@ -61,7 +61,7 @@ public class AgentPage extends Base {
 
     private By applicationListSecondApplicationSupervisorName = By.cssSelector("tr:nth-child(2) .FlexColContainer"); //Contains supervisor name and role
 
-    private By applicationListFirstApplicationSupervisorName = By.cssSelector("tr:nth-child(1) .FlexColContainer"); //Contains supervisor name and role
+    private By applicationListFirstApplicationSupervisorName = By.cssSelector(".FlexColContainer"); //Contains supervisor name and role
 
     private By supervisorQuickAgreeAll = By.id("DCDAgentPortalTheme_wt363_block_wtMainContent_wt148_WebPatterns_wt119_block_wtContent_wt227"); //click on next6 after (agentClickNext56Step)
 
@@ -91,11 +91,13 @@ public class AgentPage extends Base {
 
     private By seniorApproveRejectButtonConfirmation = By.cssSelector("[value='مرفوض - رفض']"); //Only one action was needed
 
+    private By reassessmentCheckBox = By.xpath("//input[contains(@id,'IsCommunicatedbyAssessor')]"); //Only one action was needed
+
 
     public String specialistApproval(String applicationRef) throws AWTException {
 
         logManager.STEP("Search application", "Inputs the reference number in the search field");
-        ActionsHelper.sendKeys(By.id("DCDAgentPortalTheme_wt83_block_wtFilterContainer_wtSearcFrom"), applicationRef + Keys.ENTER);
+        ActionsHelper.sendKeys(By.xpath("//span[contains(@id,'SearcFrom')]"), applicationRef + Keys.ENTER);
         ActionsHelper.waitForExpectedElement(firstElementAfterSearch);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
@@ -189,7 +191,7 @@ public class AgentPage extends Base {
         PersonalInformation personalInformation = new PersonalInformation();
 
         ActionsHelper.driverWait(20000);
-        ActionsHelper.waitForExpectedElement(agentApproveStep,10);
+        ActionsHelper.waitForExpectedElement(agentApproveStep, 10);
         ActionsHelper.actionClickScrollStepClick("Approve step 1", agentApproveStep);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click next Step 1", agentClickNext);
@@ -249,9 +251,28 @@ public class AgentPage extends Base {
         return getAssigneeNameFromAllApplications(refCode);
     }
 
+    public String seniorSpecialistApprovalIncDec(String refCode) {
+        //driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
+        ActionsHelper.sendKeys(seniorSpecialistSearchApplication, refCode + Keys.ENTER);
+        ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickScrollStepClick("Click on reassessment",reassessmentCheckBox);
+        ActionsHelper.driverWait(1000);
+        ActionsHelper.actionClickScrollStepClick("Click approve all", By.cssSelector("[value='مقبول - قبول']"));
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.waitForExpectedElement(By.cssSelector("[value='الموافقة']"));
+        ActionsHelper.scrollTo(By.cssSelector("[value='الموافقة']"));
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.retryClick(By.cssSelector("[value='الموافقة']"), 30);
+        ActionsHelper.driverWait(5000);
+        return getAssigneeNameFromAllApplications(refCode);
+    }
+
+
     public void committeeSpecialistApproval(String refCode) {
         // driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
         ActionsHelper.sendKeys(committeeSearchApplicationField, refCode + Keys.ENTER);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
 
         ActionsHelper.driverWait(5000);
@@ -284,10 +305,10 @@ public class AgentPage extends Base {
 
     public void logOut() {
         ActionsHelper.driverWait(5000);
-        try{
+        try {
             ActionsHelper.actionClickScrollStepClick("Click username before logging out", By.xpath("//span[@class='HeaderUserName']"));
             ActionsHelper.actionClickStepClick("Click logout", By.xpath("//a[.='تسجيل خروج']"));
-        }catch (Exception e){
+        } catch (Exception e) {
             ActionsHelper.actionClickScrollStepClick("Click logout", By.xpath("//div[contains(@id,'Logout')]"));
         }
     }
@@ -396,8 +417,15 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(5000);
         ActionsHelper.retryClick(specalistSearchApplication2, 30);
         ActionsHelper.sendKeys(specalistSearchApplication2, refCode + Keys.ENTER);
-        System.out.println("Assigned to name: " + driver.get().findElement(applicationListFirstApplicationSupervisorName).getText());
-        String person = driver.get().findElement(applicationListFirstApplicationSupervisorName).getText();
+        String person;
+        try {
+            System.out.println("Assigned to name: " + driver.get().findElement(applicationListFirstApplicationSupervisorName).getText());
+            person = driver.get().findElement(applicationListFirstApplicationSupervisorName).getText();
+        } catch (org.openqa.selenium.StaleElementReferenceException ex) {
+            System.out.println("Assigned to name: " + driver.get().findElement(applicationListFirstApplicationSupervisorName).getText());
+            person = driver.get().findElement(applicationListFirstApplicationSupervisorName).getText();
+        }
+
         return person;
     }
 

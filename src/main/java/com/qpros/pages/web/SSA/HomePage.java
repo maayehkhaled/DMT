@@ -21,6 +21,6 @@ public class HomePage extends Base {
     public void navigateToLogin(){
         //ActionsHelper.actionClickStepClick("Click agree",agreeButton);
         //ActionsHelper.actionClickStepClick("Click on login page button",loginButton);
-
+        driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
     }
 }
