@@ -35,7 +35,7 @@ public class ApproveApplicationModule extends Base {
     private static final Pattern p = Pattern.compile("(^[^\\s]+)");
     Matcher matcher;
     public String committeeName;
-    public String refCode;
+    public static String refCode;
     public void approveApplication(boolean incOrDecApp) throws JsonProcessingException, AWTException {
         //URL: https://10.231.1.100/DCDAgentPortalTheme/Login.aspx
         driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
@@ -120,5 +120,65 @@ public class ApproveApplicationModule extends Base {
             Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
             agentPage.logOut();
         }
+
+    }
+
+    public void approveExistingApplication(String refCode) throws AWTException {
+        loginPage.loginWithUser(UserType.Specialist2);
+        ActionsHelper.driverWait(5000);
+        String seniorSpecialist = agentPage.specialistApproval(refCode, false);
+        if (seniorSpecialist.contains("-")) {
+            agentPage.getAssigneeNameFromAllApplications(refCode);
+        }
+        ActionsHelper.driverWait(5000);
+        System.out.println(seniorSpecialist);
+//            seniorSpecialist = seniorSpecialist.replace("Supervisor", "").replace("\n", "");
+        matcher = p.matcher(seniorSpecialist);
+        if (matcher.find()) {
+            System.out.println(matcher.group(0));
+            seniorSpecialist =matcher.group(0);
+        }
+        System.out.println(seniorSpecialist);
+
+        agentPage.logOut();
+        //String seniorSpecialist = UserType.SeniorSpecialist100.getUserName();
+        ActionsHelper.driverWait(5000);
+        loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
+        // loginPage.loginWithUser(UserType.SeniorSpecialist100);
+        committeeName = agentPage.seniorSpecialistApproval(refCode);
+
+        System.out.println("Committee: " + committeeName);
+        driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
+        //committeeName = committeeName.replace("Committee", "").replace("\n", "");
+        agentPage.logOut();
+        if (committeeName.contains("ApplicationDirector")) {
+            committeeName = committeeName.replace("Manager", "").replace("\n", "");
+            loginPage.loginWithUser(UserType.valueOf(committeeName));
+            agentPage.seniorSpecialistApproval(refCode);
+            driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
+            agentPage.logOut();
+        } else {
+            System.out.println("this is comettee nammeeee here plz " +committeeName);
+            committeeName = committeeName.replace("\n", "");
+            if (committeeName.contains(UserType.Committee100.getUserName())) {
+                loginPage.loginWithUser(UserType.Committee100);
+            } else {
+                loginPage.loginWithUser(UserType.Committee1);
+            }
+
+            agentPage.committeeSpecialistApproval(refCode);
+            //driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
+            agentPage.logOut();
+        }
+
+        driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
+        //String refCode = "SSP-10679";
+        loginPage.loginWithUser(UserType.Superuser);
+        driver.get().navigate().to("https://10.231.1.100/DCDBusinessParameters/BusinessParameters.aspx");
+        businessParametersPage.releaseAppliaction(refCode);
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
+        Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
+        agentPage.logOut();
     }
 }

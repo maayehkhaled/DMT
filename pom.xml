@@ -13,8 +13,8 @@
 
     <repositories>
         <repository>
-            <id>QPROS-Artifact</id>
-            <url>https://pkgs.dev.azure.com/QProsAutomationFramework/aae4c54c-9a59-441c-8e36-57f024201af4/_packaging/QPROS-Artifact/maven/v1</url>
+            <id>QPROS-Artifact@Release</id>
+            <url>https://pkgs.dev.azure.com/QProsAutomationFramework/aae4c54c-9a59-441c-8e36-57f024201af4/_packaging/QPROS-Artifact%40Release/maven/v1</url>
             <releases>
                 <enabled>true</enabled>
             </releases>

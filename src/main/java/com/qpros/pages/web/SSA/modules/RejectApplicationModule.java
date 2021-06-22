@@ -68,4 +68,28 @@ public class RejectApplicationModule extends Base {
             Assert.assertFalse(paymentSpecialistPage.checkPaymentExistence(refCode));
         }
     }
+    public void rejectExistingApplication (String refCode){
+        loginPage.loginWithUser(UserType.Specialist2);
+        String seniorSpecialist = agentPage.specialistRejectApplication(refCode);
+        System.out.println(seniorSpecialist);
+        seniorSpecialist = seniorSpecialist.replace("Supervisor", "").replace("\n", "");
+
+        System.out.println(seniorSpecialist);
+        agentPage.logOut();
+
+        loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
+        String committeeName = agentPage.seniorSpecialistRejectApplication(refCode);
+        System.out.println(committeeName);
+        agentPage.logOut();
+
+        homePage.navigateToLogin();
+
+        //String refCode = "SSP-10679";
+        loginPage.loginWithUser(UserType.Superuser);
+        driver.get().navigate().to("https://10.231.1.100/DCDBusinessParameters/BusinessParameters.aspx");
+        businessParametersPage.releaseAppliaction(refCode);
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
+        Assert.assertFalse(paymentSpecialistPage.checkPaymentExistence(refCode));
+    }
 }
