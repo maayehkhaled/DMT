@@ -12,6 +12,7 @@ public class BusinessParametersPage extends Base {
     }
 
     public String url = "https://10.231.1.100/DCDBusinessParameters/BusinessParameters.aspx";
+
     private By buttonShowDetails = By.id("DCDAgentPortalTheme_wt23_block_wtMainContent_wt8_WebPatterns_wt146_block_wtContent_wt102");
 
     private By applicationRef = By.id("DCDAgentPortalTheme_wt23_block_wtMainContent_wt8_WebPatterns_wt146_block_wtContent_wt213");
@@ -22,6 +23,7 @@ public class BusinessParametersPage extends Base {
 
 
     public void releaseAppliaction(String refNo){
+        ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Expand fields",buttonShowDetails);
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Input SSP code: " + refNo, applicationRef);

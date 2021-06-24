@@ -64,27 +64,31 @@ public class ReassessmentIncreaseApprove extends Base {
     private By applicationLink = By.xpath("//a[contains(@id,'wtlnk_ApplicationReview')]");
     private By backBtn = By.xpath("//div[contains(@id,'wtPrev2')]"); //Contains app ref number and clickable
     private By benefitAmount = By.xpath("//span[contains(@id,'wtContent5_wtBenefitAmount')]"); //Contains app ref number and clickable
+    private By finalButtonApprove = By.cssSelector("[value='الموافقة']"); //Only one action was needed
 
     @Test(description = "Approve an application", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void approveApplication() throws JsonProcessingException, AWTException {
-        approveApplication.approveApplication(true);
-        System.out.println(approveApplication.committeeName);
-        System.out.println(approveApplication.refCode);
+//        approveApplication.approveApplication(true);
+//        System.out.println(approveApplication.committeeName);
+//        System.out.println(approveApplication.refCode);
         homePage.navigateToLogin();
-        String committeeName =approveApplication.committeeName.replace("\n", "");
-//        String committeeName = "Committee100Committee".replace("\n", "");//delete
+//        String committeeName =approveApplication.committeeName.replace("\n", "");
+        String committeeName = "Committee100Committee".replace("\n", "");//delete
         homePage.navigateToLogin();
         if (committeeName.contains(UserType.Committee100.getUserName())) {
             loginPage.loginWithUser(UserType.Committee100);
         } else {
             loginPage.loginWithUser(UserType.Committee1);
         }
-        ActionsHelper.retryClick(reassessmentBtn,4);
-        ActionsHelper.sendKeys(committeeSearchApplicationField, approveApplication.refCode + Keys.ENTER);
-//        ActionsHelper.sendKeys(committeeSearchApplicationField, "SSP-11338" + Keys.ENTER);//delete
+        ActionsHelper.driverWait(5000);
+        driver.get().navigate().to("https://10.231.1.100/DCDBusinessParameters/ReassessApplications.aspx");
+        ActionsHelper.retryClick(reassessmentBtn, 4);
+//        ActionsHelper.sendKeys(committeeSearchApplicationField, approveApplication.refCode + Keys.ENTER);
+        ActionsHelper.sendKeys(committeeSearchApplicationField, "SSP-11384" + Keys.ENTER);//delete
+        ActionsHelper.driverWait(5000);
 
-        ActionsHelper.waitVisibility(ActionsHelper.element(applicationCheckBox),7);
+        ActionsHelper.waitVisibility(ActionsHelper.element(applicationCheckBox), 7);
         System.out.println(ActionsHelper.isElementPresent(ActionsHelper.element(applicationCheckBox)));
         ActionsHelper.retryClick(applicationCheckBox, 7);
         ActionsHelper.driverWait(10000);
@@ -99,8 +103,8 @@ public class ReassessmentIncreaseApprove extends Base {
 
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.SeniorSpecialist1);
-        committeeName = agentPage.seniorSpecialistApproval(approveApplication.refCode);
-//        committeeName = agentPage.seniorSpecialistApprovalIncDec("SSP-11338");
+//        committeeName = agentPage.seniorSpecialistApproval(approveApplication.refCode);
+        committeeName = agentPage.seniorSpecialistApprovalIncDec("SSP-11384");
 
         System.out.println("Committee: " + committeeName);
         driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
@@ -112,7 +116,7 @@ public class ReassessmentIncreaseApprove extends Base {
             loginPage.loginWithUser(UserType.Committee1);
         }
 //        ActionsHelper.sendKeys(searchForApplication, approveApplication.refCode + Keys.ENTER);
-        ActionsHelper.sendKeys(searchForApplication, "SSP-11338" + Keys.ENTER);
+        ActionsHelper.sendKeys(searchForApplication, "SSP-11384" + Keys.ENTER);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.actionClickScrollStepClick("Click on update Amount", updateAmountBtn);
         ActionsHelper.driverWait(3000);
@@ -127,19 +131,20 @@ public class ReassessmentIncreaseApprove extends Base {
         System.out.println("Save clicked");
         driver.get().switchTo().defaultContent();
         driver.get().navigate().refresh();
+        ActionsHelper.actionClickStepClick("Approve Button", finalButtonApprove);
         String amountTxt = ActionsHelper.element(amountText).getText();
         System.out.println("amountTxt:" + amountTxt + "   amount:" + amount + "    newAmount:" + newAmount);
-        ActionsHelper.actionClickStepClick("Approve Button", acceptedOrRejectedBtn);
         agentPage.logOut();
+
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to("https://10.231.1.100/DCDBusinessParameters/BusinessParameters.aspx");
-        businessParametersPage.releaseAppliaction(approveApplication.refCode);
-//        businessParametersPage.releaseAppliaction("SSP-11338");
+//        businessParametersPage.releaseAppliaction(approveApplication.refCode);
+        businessParametersPage.releaseAppliaction("SSP-11384");
 
         driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
-//        ActionsHelper.sendKeys(superuserSearchApp, "SSP-11338" + Keys.ENTER);
-        ActionsHelper.sendKeys(superuserSearchApp, approveApplication.refCode + Keys.ENTER);
+        ActionsHelper.sendKeys(superuserSearchApp, "SSP-11384" + Keys.ENTER);
+//        ActionsHelper.sendKeys(superuserSearchApp, approveApplication.refCode + Keys.ENTER);
         ActionsHelper.retryClick(applicationLink, 5);
         ActionsHelper.waitForExpectedElement(acceptedOrRejectedBtn, 7);
         ActionsHelper.actionClickStepClick("Approve Button", acceptedOrRejectedBtn);
@@ -147,6 +152,7 @@ public class ReassessmentIncreaseApprove extends Base {
         ActionsHelper.actionClickStepClick("back Button", backBtn);
         String benefits = ActionsHelper.element(benefitAmount).getAttribute("innerText");
         benefits = benefits.replace(" درهم إماراتي", "").replace("،", "");
-        Assert.assertEquals(benefits, String.format("%.2f",newAmount));
+        System.out.println(benefits + "     " + String.format("%.2f", newAmount));
+        Assert.assertEquals(benefits, String.format("%.2f", newAmount));
     }
 }
