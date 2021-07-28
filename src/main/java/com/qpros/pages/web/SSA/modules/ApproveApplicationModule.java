@@ -37,8 +37,8 @@ public class ApproveApplicationModule extends Base {
     public String committeeName;
     public static String refCode;
     public void approveApplication(boolean incOrDecApp) throws JsonProcessingException, AWTException {
-        //URL: https://10.231.1.100/DCDAgentPortalTheme/Login.aspx
-        driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
+        //URL: https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx
+        driver.get().navigate().to("https://uat.ssa.gov.ae/AgentPortal_CW/Login.aspx");
 
         this.logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
         this.logManager.INFO("Verify Eligibility Service Call", false);
@@ -64,12 +64,12 @@ public class ApproveApplicationModule extends Base {
             agentPage.logOut();
 
             loginPage.loginWithUser(UserType.Specialist2);
-            ActionsHelper.driverWait(5000);
+            ActionsHelper.driverWait(2000);
             String seniorSpecialist = agentPage.specialistApproval(refCode,incOrDecApp);
             if (seniorSpecialist.contains("-")) {
                 agentPage.getAssigneeNameFromAllApplications(refCode);
             }
-            ActionsHelper.driverWait(5000);
+            ActionsHelper.driverWait(2000);
             System.out.println(seniorSpecialist);
 //            seniorSpecialist = seniorSpecialist.replace("Supervisor", "").replace("\n", "");
             matcher = p.matcher(seniorSpecialist);
@@ -87,14 +87,14 @@ public class ApproveApplicationModule extends Base {
             committeeName = agentPage.seniorSpecialistApproval(refCode);
 
             System.out.println("Committee: " + committeeName);
-            driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
+            driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
             //committeeName = committeeName.replace("Committee", "").replace("\n", "");
             agentPage.logOut();
             if (committeeName.contains("ApplicationDirector")) {
                 committeeName = committeeName.replace("Manager", "").replace("\n", "");
                 loginPage.loginWithUser(UserType.valueOf(committeeName));
                 agentPage.seniorSpecialistApproval(refCode);
-                driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
+                driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
                 agentPage.logOut();
             } else {
                 System.out.println("this is comettee nammeeee here plz " +committeeName);
@@ -106,14 +106,14 @@ public class ApproveApplicationModule extends Base {
                 }
 
                 agentPage.committeeSpecialistApproval(refCode);
-                //driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
+                //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
                 agentPage.logOut();
             }
 
-            driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
+            driver.get().navigate().to("https://uat.ssa.gov.ae/AgentPortal_CW/Login.aspx");
             //String refCode = "SSP-10679";
             loginPage.loginWithUser(UserType.Superuser);
-            driver.get().navigate().to("https://10.231.1.100/DCDBusinessParameters/BusinessParameters.aspx");
+            driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/BusinessParameters.aspx");
             businessParametersPage.releaseAppliaction(refCode);
             agentPage.logOut();
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
@@ -148,14 +148,14 @@ public class ApproveApplicationModule extends Base {
         committeeName = agentPage.seniorSpecialistApproval(refCode);
 
         System.out.println("Committee: " + committeeName);
-        driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
+        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
         //committeeName = committeeName.replace("Committee", "").replace("\n", "");
         agentPage.logOut();
         if (committeeName.contains("ApplicationDirector")) {
             committeeName = committeeName.replace("Manager", "").replace("\n", "");
             loginPage.loginWithUser(UserType.valueOf(committeeName));
             agentPage.seniorSpecialistApproval(refCode);
-            driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
+            driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
             agentPage.logOut();
         } else {
             System.out.println("this is comettee nammeeee here plz " +committeeName);
@@ -167,14 +167,14 @@ public class ApproveApplicationModule extends Base {
             }
 
             agentPage.committeeSpecialistApproval(refCode);
-            //driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
+            //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
             agentPage.logOut();
         }
 
-        driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
+        driver.get().navigate().to("https://uat.ssa.gov.ae/AgentPortal_CW/Login.aspx");
         //String refCode = "SSP-10679";
         loginPage.loginWithUser(UserType.Superuser);
-        driver.get().navigate().to("https://10.231.1.100/DCDBusinessParameters/BusinessParameters.aspx");
+        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/BusinessParameters.aspx");
         businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);

@@ -48,10 +48,10 @@ public class ReassessmentDecreaseApprove extends Base {
     private By reassessmentBtn = By.linkText("إعادة التقييم");
     private By committeeSearchApplicationField = By.cssSelector("[placeholder='SSP code or Emirates ID']");
     private By applicationCheckBox = By.xpath("//input[contains(@id,'wtBenefitRequests')]");
-    private By dropdownMenuSelect = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtuseridIn");
-    private By dropdownMenuReason = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtReasonIn");
-    private By commentFieldTextBox = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtCommentIn");
-    private By launchBtn = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wt97");
+    private By dropdownMenuSelect = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtddl_useridIn");
+    private By dropdownMenuReason = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtddl_ReasonIn");
+    private By commentFieldTextBox = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wttxt_CommentIn");
+    private By launchBtn = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtbtn_LaunchReassess");
     private By searchForApplication = By.xpath("//input[contains(@id,'SearcFrom')]");
     private By firstElementAfterSearch = By.cssSelector(".ThemeGrid_Width4:nth-child(1)"); //Contains app ref number and clickable
     private By updateAmountBtn = By.xpath("//div[contains(@id,'UpdateAmount2')]"); //Contains app ref number and clickable
@@ -80,7 +80,7 @@ public class ReassessmentDecreaseApprove extends Base {
             loginPage.loginWithUser(UserType.Committee1);
         }
         ActionsHelper.driverWait(5000);
-        driver.get().navigate().to("https://10.231.1.100/DCDBusinessParameters/ReassessApplications.aspx");
+        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/ReassessApplications.aspx");
         ActionsHelper.retryClick(reassessmentBtn, 4);
         ActionsHelper.sendKeys(committeeSearchApplicationField, approveApplication.refCode + Keys.ENTER);
         ActionsHelper.driverWait(5000);
@@ -103,7 +103,7 @@ public class ReassessmentDecreaseApprove extends Base {
         committeeName = agentPage.seniorSpecialistApproval(approveApplication.refCode);
 
         System.out.println("Committee: " + committeeName);
-        driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/TasksList.aspx");
+        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
         agentPage.logOut();
         committeeName = committeeName.replace("\n", "");
         if (committeeName.contains(UserType.Committee100.getUserName())) {
@@ -133,10 +133,10 @@ public class ReassessmentDecreaseApprove extends Base {
 
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Superuser);
-        driver.get().navigate().to("https://10.231.1.100/DCDBusinessParameters/BusinessParameters.aspx");
+        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/BusinessParameters.aspx");
         businessParametersPage.releaseAppliaction(approveApplication.refCode);
 
-        driver.get().navigate().to("https://10.231.1.100/DCDAgentFrontEnd/AllApplications.aspx");
+        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
         ActionsHelper.sendKeys(superuserSearchApp, approveApplication.refCode + Keys.ENTER);
         ActionsHelper.retryClick(applicationLink, 5);
         ActionsHelper.waitForExpectedElement(acceptedOrRejectedBtn, 7);

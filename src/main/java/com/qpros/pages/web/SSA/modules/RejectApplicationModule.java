@@ -26,8 +26,8 @@ public class RejectApplicationModule extends Base {
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
 
     public void RejectApplication() throws Exception {
-        //URL: https://10.231.1.100/DCDAgentPortalTheme/Login.aspx
-        driver.get().navigate().to("https://10.231.1.100/DCDAgentPortalTheme/Login.aspx");
+        //URL: https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx
+        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx");
 
         this.logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
         this.logManager.INFO("Verify Eligibility Service Call", false);
@@ -61,7 +61,7 @@ public class RejectApplicationModule extends Base {
 
             //String refCode = "SSP-10679";
             loginPage.loginWithUser(UserType.Superuser);
-            driver.get().navigate().to("https://10.231.1.100/DCDBusinessParameters/BusinessParameters.aspx");
+            driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/BusinessParameters.aspx");
             businessParametersPage.releaseAppliaction(refCode);
             agentPage.logOut();
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
@@ -86,7 +86,7 @@ public class RejectApplicationModule extends Base {
 
         //String refCode = "SSP-10679";
         loginPage.loginWithUser(UserType.Superuser);
-        driver.get().navigate().to("https://10.231.1.100/DCDBusinessParameters/BusinessParameters.aspx");
+        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/BusinessParameters.aspx");
         businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);

@@ -14,24 +14,24 @@ public class LoginPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    private By usernameField = By.id("wt15_wtMainContent_wt22");
+    private By usernameField = By.id("wt13_wtMainContent_wt6");
 
-    private By passwordField = By.id("wt15_wtMainContent_wt23");
+    private By passwordField = By.id("wt13_wtMainContent_wt18");
 
-    private By loginButton = By.id("wt15_wtMainContent_wtLogin");
-
+    private By loginButton = By.id("wt13_wtMainContent_wtLogin");
+//wtMainContent_wtLogin
     public void loginWithUser(String username, String password) {
         logManager.STEP("Input username", "Inputs the username: " + username);
         ActionsHelper.waitForExpectedElement(usernameField);
-        ActionsHelper.retryClick(usernameField, 30);
+        ActionsHelper.retryClick(usernameField, 10);
         ActionsHelper.sendKeys(usernameField, username);
         logManager.STEP("Input password", "Inputs the password: " + password);
         ActionsHelper.waitForExpectedElement(passwordField);
-        ActionsHelper.retryClick(passwordField, 30);
+        ActionsHelper.retryClick(passwordField, 10);
         ActionsHelper.sendKeys(passwordField, password);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Click the login button", loginButton);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(1000);
 
     }
 
@@ -44,9 +44,9 @@ public class LoginPage extends Base {
         ActionsHelper.waitForExpectedElement(passwordField);
         ActionsHelper.retryClick(passwordField, 30);
         ActionsHelper.sendKeys(passwordField, usertype.getPassword());
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Click the login button", loginButton);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(1000);
 
     }
 

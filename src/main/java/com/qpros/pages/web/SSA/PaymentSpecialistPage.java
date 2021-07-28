@@ -11,12 +11,10 @@ public class PaymentSpecialistPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    public String paymentSchedulesUrl = "https://10.231.1.100/DCDPaymentsFrontEnd/PaymentsScheduleSummary.aspx";
-
-    private By paymentsTab = By.id("DCDTheme_wt136_block_wtMenu_DCDTheme_wt20_block_RichWidgets_wt217_block_wtMenuItem_wt17");
+    public String paymentSchedulesUrl = "https://uat.ssa.gov.ae/DCDPaymentsFrontEnd/PaymentsScheduleSummary.aspx";
 
     private By searchRef = By.id("DCDTheme_wt80_block_wtFilters_wt47");
-
+//block_wtFilters
     private By searchButton = By.id("DCDTheme_wt80_block_wtFilters_wt174");
 
     private By firstResult = By.cssSelector("tbody > tr:nth-of-type(1) > td:nth-of-type(1)");
@@ -31,13 +29,13 @@ public class PaymentSpecialistPage extends Base {
     public boolean checkPaymentExistence(String refNo){
         driver.get().navigate().to(paymentSchedulesUrl);
         ActionsHelper.driverWait(1000);
+        ActionsHelper.actionClickStepClick("Expand results", expandResults);
+        ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Input SSP " + refNo, searchRef);
         ActionsHelper.driverWait(1000);
         ActionsHelper.sendKeys(searchRef,refNo);
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Click search", searchButton);
-        ActionsHelper.driverWait(1000);
-        ActionsHelper.actionClickStepClick("Expand results", expandResults);
         ActionsHelper.driverWait(1000);
         System.out.println(countPayments.toString());
 

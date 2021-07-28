@@ -20,8 +20,8 @@ public class COCPage extends Base {
     private By launchCocProcess = By.id("DCDAgentPortalTheme_wt196_block_wtMainContent_WebPatterns_wt178_block_wtContent_wt214");
 
     public void navigateToCoc(){
-        logManager.STEP("Navigate to COC", "Navigate to https://10.231.1.100/DCDBusinessParameters/CoC.aspx");
-        driver.get().navigate().to("https://10.231.1.100/DCDBusinessParameters/CoC.aspx");
+        logManager.STEP("Navigate to COC", "Navigate to https://uat.ssa.gov.ae/DCDBusinessParameters/CoC.aspx");
+        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/CoC.aspx");
     }
 
     public void startCocProcess(String refCode){

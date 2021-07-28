@@ -14,7 +14,7 @@ public class GetIncomeStatus {
     public void requestService() throws JsonProcessingException {
         Unirest.config().connectTimeout(0);
         Unirest.config().verifySsl(false);
-         response = Unirest.post("https://10.231.1.100/ApplicationWS/rest/SocialSupportSupportRequest/GetIncomeStatus")
+         response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS/rest/SocialSupportSupportRequest/GetIncomeStatus")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
                 .body(requestBody())

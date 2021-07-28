@@ -18,11 +18,7 @@ public class ClaimantApplicationPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    private By nextStep1 = By.id("DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent1_wtNext19");
-
-    private By nextStep2 = By.id("DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent2_wtNext15");
-
-    private By nextStep3 = By.id("DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent3_wtNext14");
+    private By nextStep = By.xpath("//*[contains(@id,'wtbtn_Next')]");
 
 
     private By checkBill = By.cssSelector(".ThemeGrid_Width8 > .OSInline:nth-child(1) > span");

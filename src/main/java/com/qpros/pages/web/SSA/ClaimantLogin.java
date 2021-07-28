@@ -12,11 +12,11 @@ public class ClaimantLogin extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    private By usernameField = By.id("DCDWebPortalTheme_wt15_block_wtMainContent_wt1");
+    private By usernameField = By.xpath("//*[contains(@id,'wtMainContent_wttxt_EmirateId')]");
 
-    private By passwordField = By.id("DCDWebPortalTheme_wt15_block_wtMainContent_wt8");
+    private By passwordField = By.xpath("//*[contains(@id,'wtMainContent_wttxt_Password')]");
 
-    private By loginButton = By.id("DCDWebPortalTheme_wt15_block_wtMainContent_wtLogin");
+    private By loginButton = By.xpath("//*[contains(@id,'wtMainContent_wtbtn_Login')]");
 
     private By updateFamilyInformation = By.cssSelector("#DCDTheme_wt27_block_wtMainContent_wtCoCLink > .HomePageButton");
 
@@ -24,7 +24,7 @@ public class ClaimantLogin extends Base {
 
     private By clickAgree = By.id("CloneOfWebPatterns_wt20_block_wtMainContent_wtok");
 
-
+//https://uat.ssa.gov.ae/DCDClaimantFrontEnd/MainFlow.UserLogin.aspx?(Not.Licensed.For.Production)=
     public void claimantLogin(String eid){
         logManager.STEP("Input claimant username and password","Inputs EID on both fields as username and password");
 

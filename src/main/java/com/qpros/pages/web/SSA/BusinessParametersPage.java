@@ -11,29 +11,29 @@ public class BusinessParametersPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    public String url = "https://10.231.1.100/DCDBusinessParameters/BusinessParameters.aspx";
+    public String url = "https://uat.ssa.gov.ae/DCDBusinessParameters/BusinessParameters.aspx";
 
-    private By buttonShowDetails = By.id("DCDAgentPortalTheme_wt23_block_wtMainContent_wt8_WebPatterns_wt146_block_wtContent_wt102");
+    private By buttonShowDetails = By.xpath("//*[contains(@id,'wtbtn_ShowSpecificCode')]");
 
-    private By applicationRef = By.id("DCDAgentPortalTheme_wt23_block_wtMainContent_wt8_WebPatterns_wt146_block_wtContent_wt213");
+    private By applicationRef = By.xpath("//*[contains(@id,'wttxt_CodesToRelease')]");
 
-    private By validateButton = By.id("DCDAgentPortalTheme_wt23_block_wtMainContent_wt8_WebPatterns_wt146_block_wtContent_wt122");
-
-    private By startProcessButton = By.id("DCDAgentPortalTheme_wt23_block_wtMainContent_wt8_WebPatterns_wt146_block_wtContent_wtrunspecificcodes");
-
+    private By validateButton = By.xpath("//*[contains(@id,'wtbtn_Validate')]");
+//
+    private By startProcessButton = By.xpath("//*[contains(@id,'wtbtn_RunSpecificCodes')]");
+//wtbtn_RunSpecificCodes
 
     public void releaseAppliaction(String refNo){
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickStepClick("Expand fields",buttonShowDetails);
         ActionsHelper.driverWait(1000);
+        ActionsHelper.actionClickStepClick("Expand fields",buttonShowDetails);
+        ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("Input SSP code: " + refNo, applicationRef);
         ActionsHelper.driverWait(1000);
         ActionsHelper.sendKeysWithClear(applicationRef,refNo);
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Validate", validateButton);
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Start Process", startProcessButton);
-
+        ActionsHelper.driverWait(1000);
         driver.get().switchTo().alert().accept();
     }
 }
