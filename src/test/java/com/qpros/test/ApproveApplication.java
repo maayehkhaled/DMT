@@ -8,6 +8,7 @@ import com.qpros.pages.web.SSA.modules.ApproveApplicationModule;
 import com.qpros.quanta.Status;
 import com.qpros.quanta.markuputils.MarkupHelper;
 import com.qpros.reporting.QuantaTestManager;
+import com.ssa.core.common.locators.urls;
 import com.ssa.core.service.SubmitApplicationService;
 import com.ssa.core.service.VerifyEligibilityService;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion;
@@ -48,7 +49,7 @@ public class ApproveApplication extends Base {
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void test() throws JsonProcessingException, AWTException {
         try {
-            driver.get().navigate().to("https://uat.ssa.gov.ae/DCDClaimantFrontEnd/BenefitsApplication.aspx?GUID=ed345448-0069-4bc2-89ca-9318c9b701ea");
+            driver.get().navigate().to(urls.benefitsApplication);
             ActionsHelper.driverWait(1000);
             //claimantLogin.claimantLogin("784194683719275");
             //claimantLogin.navigateToUpdateFamilyInformation();

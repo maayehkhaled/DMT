@@ -3,6 +3,7 @@ package com.qpros.pages.web.SSA;
 import com.qpros.common.annotation.STEP;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
+import com.ssa.core.common.locators.urls;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +22,6 @@ public class HomePage extends Base {
     public void navigateToLogin(){
         //ActionsHelper.actionClickStepClick("Click agree",agreeButton);
         //ActionsHelper.actionClickStepClick("Click on login page button",loginButton);
-        driver.get().navigate().to("https://uat.ssa.gov.ae/AgentPortal_CW/Login.aspx");
+        driver.get().navigate().to(urls.agentLogin);
     }
 }

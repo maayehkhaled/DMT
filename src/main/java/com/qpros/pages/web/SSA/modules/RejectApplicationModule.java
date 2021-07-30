@@ -3,6 +3,7 @@ package com.qpros.pages.web.SSA.modules;
 import com.qpros.common.web.Base;
 import com.qpros.pages.web.SSA.*;
 import com.qpros.reporting.QuantaTestManager;
+import com.ssa.core.common.locators.urls;
 import com.ssa.core.service.SubmitApplicationService;
 import com.ssa.core.service.VerifyEligibilityService;
 import org.openqa.selenium.WebDriver;
@@ -27,7 +28,7 @@ public class RejectApplicationModule extends Base {
 
     public void RejectApplication() throws Exception {
         //URL: https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx
-        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx");
+        driver.get().navigate().to(urls.agentLogin);
 
         this.logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
         this.logManager.INFO("Verify Eligibility Service Call", false);
@@ -61,7 +62,7 @@ public class RejectApplicationModule extends Base {
 
             //String refCode = "SSP-10679";
             loginPage.loginWithUser(UserType.Superuser);
-            driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/BusinessParameters.aspx");
+            driver.get().navigate().to(urls.businessParameters);
             businessParametersPage.releaseAppliaction(refCode);
             agentPage.logOut();
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
@@ -86,7 +87,7 @@ public class RejectApplicationModule extends Base {
 
         //String refCode = "SSP-10679";
         loginPage.loginWithUser(UserType.Superuser);
-        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/BusinessParameters.aspx");
+        driver.get().navigate().to(urls.businessParameters);
         businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);

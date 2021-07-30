@@ -10,6 +10,7 @@ import com.qpros.quanta.Status;
 import com.qpros.quanta.markuputils.MarkupHelper;
 import com.qpros.reporting.QuantaTestManager;
 import com.ssa.core.common.data.TestData;
+import com.ssa.core.common.locators.urls;
 import com.ssa.core.service.SubmitApplicationService;
 import com.ssa.core.service.VerifyEligibilityService;
 import org.openqa.selenium.By;
@@ -55,7 +56,7 @@ public class RMIFirstAssessment extends Base {
     @Test(description = "RMI First Assessment", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void RMIFirstAssessment() throws JsonProcessingException, AWTException {
-        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx");
+        driver.get().navigate().to(urls.agentLogin);
 
         this.logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
         this.logManager.INFO("Verify Eligibility Service Call", false);
@@ -84,7 +85,7 @@ public class RMIFirstAssessment extends Base {
             ActionsHelper.driverWait(5000);
             agentPage.specialistSendAgain(refCode);
             agentPage.logOut();
-            driver.get().navigate().to("https://uat.ssa.gov.ae/DCDClaimantFrontEnd/MainFlow.UserLogin.aspx");
+            driver.get().navigate().to(urls.claimantLogin);
             claimantLogin.claimantLogin(TestData.EID);
             ActionsHelper.retryClick(submitApplication, 5);
             driver.get().switchTo().frame(0);
@@ -96,7 +97,7 @@ public class RMIFirstAssessment extends Base {
             driver.get().switchTo().defaultContent();
             ActionsHelper.driverWait(5000);
             ActionsHelper.retryClick(By.xpath("//input[contains(@id,'wtlogout')]"),5);
-            driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx");
+            driver.get().navigate().to(urls.agentLogin);
             loginPage.loginWithUser(UserType.Specialist2);
             logManager.STEP("Search application", "Inputs the reference number in the search field");
             ActionsHelper.sendKeys(By.xpath("//span[contains(@id,'SearcFrom')]"), refCode + Keys.ENTER);

@@ -3,6 +3,7 @@ package com.qpros.pages.web.SSA;
 import com.qpros.common.LogManager;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
+import com.ssa.core.common.locators.urls;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -21,7 +22,7 @@ public class COCPage extends Base {
 
     public void navigateToCoc(){
         logManager.STEP("Navigate to COC", "Navigate to https://uat.ssa.gov.ae/DCDBusinessParameters/CoC.aspx");
-        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/CoC.aspx");
+        driver.get().navigate().to(urls.cocPage);
     }
 
     public void startCocProcess(String refCode){

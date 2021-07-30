@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.qpros.pages.web.SSA.applicationreview.PersonalInformation;
+import com.ssa.core.common.locators.urls;
 import com.ssa.core.model.GetFamilyData;
 import com.ssa.core.service.GetFamilyDataService;
 import org.openqa.selenium.By;
@@ -362,10 +363,10 @@ public class AgentPage extends Base {
     }
     public String getAssigneeNameFromAllApplications(String refCode) {
         ActionsHelper.driverWait(10000);
-        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
+        driver.get().navigate().to(urls.allApplications);
         ActionsHelper.driverWait(10000);
         logManager.STEP("Refresh","Refreshes the page");
-        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
+        driver.get().navigate().to(urls.allApplications);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(allApllicationsSearchInput, 5);
         ActionsHelper.sendKeys(allApllicationsSearchInput, refCode + Keys.ENTER);

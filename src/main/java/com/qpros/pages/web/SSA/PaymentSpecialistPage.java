@@ -2,6 +2,7 @@ package com.qpros.pages.web.SSA;
 
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
+import com.ssa.core.common.locators.urls;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -11,7 +12,7 @@ public class PaymentSpecialistPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    public String paymentSchedulesUrl = "https://uat.ssa.gov.ae/DCDPaymentsFrontEnd/PaymentsScheduleSummary.aspx";
+    public String paymentSchedulesUrl = urls.paymentSchedule;
 
     private By searchRef = By.id("DCDTheme_wt80_block_wtFilters_wt47");
 //block_wtFilters

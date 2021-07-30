@@ -9,6 +9,7 @@ import com.qpros.pages.web.SSA.modules.ApproveApplicationModule;
 import com.qpros.quanta.Status;
 import com.qpros.quanta.markuputils.MarkupHelper;
 import com.qpros.reporting.QuantaTestManager;
+import com.ssa.core.common.locators.urls;
 import com.ssa.core.service.SubmitApplicationService;
 import com.ssa.core.service.VerifyEligibilityService;
 import org.openqa.selenium.By;
@@ -46,111 +47,13 @@ public class ReassessmentIncreaseApprove extends Base {
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
     ApproveApplicationModule approveApplication = new ApproveApplicationModule(driver.get());
-    private By reassessmentBtn = By.linkText("إعادة التقييم");
-    private By committeeSearchApplicationField = By.cssSelector("[placeholder='SSP code or Emirates ID']");
-    private By applicationCheckBox = By.xpath("//input[contains(@id,'wtBenefitRequests')]");
-    private By dropdownMenuSelect = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtddl_useridIn");
-    private By dropdownMenuReason = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtddl_ReasonIn");
-    private By commentFieldTextBox = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wttxt_CommentIn");
-    private By launchBtn = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtbtn_LaunchReassess");
-    private By searchForApplication = By.xpath("//input[contains(@id,'SearcFrom')]");
-    private By firstElementAfterSearch = By.xpath("//*[contains(@id,'wtMainContent_wtListRecords1')]"); //Contains app ref number and clickable
-    private By updateAmountBtn = By.xpath("//div[contains(@id,'UpdateAmount2')]"); //Contains app ref number and clickable
-    private By amountField = By.xpath("//input[contains(@id,'amount_mask')]"); //Contains app ref number and clickable
-    private By approveUpdate = By.xpath("//input[contains(@id,'Submit')]"); //Contains app ref number and clickable
-    private By amountText = By.xpath("//span[contains(@id,'wtColumn2_wtBenefitAmount')]"); //Contains app ref number and clickable
-    private By acceptedOrRejectedBtn = By.xpath("//input[contains(@id,'AcceptedOrRejected')]"); //Contains app ref number and clickable
-    private By superuserSearchApp = By.xpath("//input[contains(@id,'SearchFrom')]");
-    private By applicationLink = By.xpath("//a[contains(@id,'wtlnk_ApplicationReview')]");
-    private By backBtn = By.xpath("//div[contains(@id,'wtPrev2')]"); //Contains app ref number and clickable
-    private By benefitAmount = By.xpath("//span[contains(@id,'wtContent5_wtBenefitAmount')]"); //Contains app ref number and clickable
-    private By finalButtonApprove = By.cssSelector("[value='الموافقة']"); //Only one action was needed
-
+    ReassessmentPage reassessmentPage = new ReassessmentPage(driver.get());
     @Test(description = "Approve an application", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void approveApplication() throws JsonProcessingException, AWTException {
-      approveApplication.approveApplication(true);
-        System.out.println(approveApplication.committeeName);
-        System.out.println(approveApplication.refCode);
-        homePage.navigateToLogin();
-       String committeeName =approveApplication.committeeName.replace("\n", "");
-        //String committeeName = "Committee100Committee".replace("\n", "");//delete
-        homePage.navigateToLogin();
-        if (committeeName.contains(UserType.Committee100.getUserName())) {
-            loginPage.loginWithUser(UserType.Committee100);
-        } else {
-            loginPage.loginWithUser(UserType.Committee1);
-        }
-        ActionsHelper.driverWait(3000);
-        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/ReassessApplications.aspx");
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.retryClick(reassessmentBtn, 4);
-       ActionsHelper.sendKeys(committeeSearchApplicationField, approveApplication.refCode + Keys.ENTER);
-        //ActionsHelper.sendKeys(committeeSearchApplicationField, "SSP-11384" + Keys.ENTER);//delete
-        ActionsHelper.driverWait(3000);
-
-        ActionsHelper.waitVisibility(ActionsHelper.element(applicationCheckBox), 7);
-        //System.out.println(ActionsHelper.isElementPresent(ActionsHelper.element(applicationCheckBox)));
-        ActionsHelper.retryClick(applicationCheckBox, 7);
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.waitForExpectedElement(dropdownMenuSelect);
-        ActionsHelper.selectByValue(ActionsHelper.element(dropdownMenuSelect), "SeniorSpecialist1");
-        ActionsHelper.selectByValue(ActionsHelper.element(dropdownMenuReason), "Other");
-
-        ActionsHelper.sendKeys(commentFieldTextBox, "Just a test reason");
-        ActionsHelper.retryClick(launchBtn, 4);
-        agentPage.logOut();
-
-
-        homePage.navigateToLogin();
-        loginPage.loginWithUser(UserType.SeniorSpecialist1);
-        committeeName = agentPage.seniorSpecialistApproval(approveApplication.refCode);
-
-        System.out.println("Committee: " + committeeName);
-        agentPage.logOut();
-        committeeName = committeeName.replace("\n", "");
-        if (committeeName.contains(UserType.Committee100.getUserName())) {
-            loginPage.loginWithUser(UserType.Committee100);
-        } else {
-            loginPage.loginWithUser(UserType.Committee1);
-        }
-        ActionsHelper.sendKeys(searchForApplication, approveApplication.refCode + Keys.ENTER);
-        ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
-        ActionsHelper.actionClickScrollStepClick("Click on update Amount", updateAmountBtn);
-        ActionsHelper.driverWait(3000);
-        driver.get().switchTo().frame(0);
-        String[] arrOfStr = ActionsHelper.element(amountField).getAttribute("value").split(",");
-        double amount = Double.parseDouble(String.join("", arrOfStr));
-        double newAmount = amount + 2000;
-        ActionsHelper.sendKeysWithClear(amountField, String.format("%.2f", newAmount));
-        ActionsHelper.driverWait(1000);
-        ActionsHelper.retryClick(approveUpdate, 10);
-        ActionsHelper.driverWait(1000);
-        System.out.println("Save clicked");
-        driver.get().switchTo().defaultContent();
-        driver.get().navigate().refresh();
-        ActionsHelper.actionClickStepClick("Approve Button", finalButtonApprove);
-        String amountTxt = ActionsHelper.element(amountText).getText();
-        System.out.println("amountTxt:" + amountTxt + "   amount:" + amount + "    newAmount:" + newAmount);
-        agentPage.logOut();
-
-        homePage.navigateToLogin();
-        loginPage.loginWithUser(UserType.Superuser);
-        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/BusinessParameters.aspx");
-//        businessParametersPage.releaseAppliaction(approveApplication.refCode);
-        businessParametersPage.releaseAppliaction("SSP-11384");
-
-        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
-        ActionsHelper.sendKeys(superuserSearchApp, "SSP-11384" + Keys.ENTER);
-//        ActionsHelper.sendKeys(superuserSearchApp, approveApplication.refCode + Keys.ENTER);
-        ActionsHelper.retryClick(applicationLink, 5);
-        ActionsHelper.waitForExpectedElement(acceptedOrRejectedBtn, 7);
-        ActionsHelper.actionClickStepClick("Approve Button", acceptedOrRejectedBtn);
-        ActionsHelper.actionClickStepClick("accepted Button", acceptedOrRejectedBtn);
-        ActionsHelper.actionClickStepClick("back Button", backBtn);
-        String benefits = ActionsHelper.element(benefitAmount).getAttribute("innerText");
-        benefits = benefits.replace(" درهم إماراتي", "").replace("،", "");
-        System.out.println(benefits + "     " + String.format("%.2f", newAmount));
-        Assert.assertEquals(benefits, String.format("%.2f", newAmount));
+        approveApplication.approveApplication(true);
+        reassessmentPage.reassessToAmount();
+        reassessmentPage.increaseAmount();
+        reassessmentPage.reassessAfterAmount();
     }
 }

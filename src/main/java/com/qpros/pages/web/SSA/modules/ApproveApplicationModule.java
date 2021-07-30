@@ -7,6 +7,7 @@ import com.qpros.pages.web.SSA.*;
 import com.qpros.quanta.Status;
 import com.qpros.quanta.markuputils.MarkupHelper;
 import com.qpros.reporting.QuantaTestManager;
+import com.ssa.core.common.locators.urls;
 import com.ssa.core.service.SubmitApplicationService;
 import com.ssa.core.service.VerifyEligibilityService;
 import org.openqa.selenium.WebDriver;
@@ -38,7 +39,7 @@ public class ApproveApplicationModule extends Base {
     public static String refCode;
     public void approveApplication(boolean incOrDecApp) throws JsonProcessingException, AWTException {
         //URL: https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx
-        driver.get().navigate().to("https://uat.ssa.gov.ae/AgentPortal_CW/Login.aspx");
+        driver.get().navigate().to(urls.agentLogin);
 
         this.logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
         this.logManager.INFO("Verify Eligibility Service Call", false);
@@ -87,14 +88,14 @@ public class ApproveApplicationModule extends Base {
             committeeName = agentPage.seniorSpecialistApproval(refCode);
 
             System.out.println("Committee: " + committeeName);
-            driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
+            driver.get().navigate().to(urls.tasksList);
             //committeeName = committeeName.replace("Committee", "").replace("\n", "");
             agentPage.logOut();
             if (committeeName.contains("ApplicationDirector")) {
                 committeeName = committeeName.replace("Manager", "").replace("\n", "");
                 loginPage.loginWithUser(UserType.valueOf(committeeName));
                 agentPage.seniorSpecialistApproval(refCode);
-                driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
+                driver.get().navigate().to(urls.tasksList);
                 agentPage.logOut();
             } else {
                 System.out.println("this is comettee nammeeee here plz " +committeeName);
@@ -110,10 +111,10 @@ public class ApproveApplicationModule extends Base {
                 agentPage.logOut();
             }
 
-            driver.get().navigate().to("https://uat.ssa.gov.ae/AgentPortal_CW/Login.aspx");
+            driver.get().navigate().to(urls.agentLogin);
             //String refCode = "SSP-10679";
             loginPage.loginWithUser(UserType.Superuser);
-            driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/BusinessParameters.aspx");
+            driver.get().navigate().to(urls.businessParameters);
             businessParametersPage.releaseAppliaction(refCode);
             agentPage.logOut();
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
@@ -148,17 +149,17 @@ public class ApproveApplicationModule extends Base {
         committeeName = agentPage.seniorSpecialistApproval(refCode);
 
         System.out.println("Committee: " + committeeName);
-        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
+        driver.get().navigate().to(urls.tasksList);
         //committeeName = committeeName.replace("Committee", "").replace("\n", "");
         agentPage.logOut();
         if (committeeName.contains("ApplicationDirector")) {
             committeeName = committeeName.replace("Manager", "").replace("\n", "");
             loginPage.loginWithUser(UserType.valueOf(committeeName));
             agentPage.seniorSpecialistApproval(refCode);
-            driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
+            driver.get().navigate().to(urls.tasksList);
             agentPage.logOut();
         } else {
-            System.out.println("this is comettee nammeeee here plz " +committeeName);
+            System.out.println("Committee: " +committeeName);
             committeeName = committeeName.replace("\n", "");
             if (committeeName.contains(UserType.Committee100.getUserName())) {
                 loginPage.loginWithUser(UserType.Committee100);
@@ -171,10 +172,10 @@ public class ApproveApplicationModule extends Base {
             agentPage.logOut();
         }
 
-        driver.get().navigate().to("https://uat.ssa.gov.ae/AgentPortal_CW/Login.aspx");
+        driver.get().navigate().to(urls.agentLogin);
         //String refCode = "SSP-10679";
         loginPage.loginWithUser(UserType.Superuser);
-        driver.get().navigate().to("https://uat.ssa.gov.ae/DCDBusinessParameters/BusinessParameters.aspx");
+        driver.get().navigate().to(urls.businessParameters);
         businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);

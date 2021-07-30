@@ -2,6 +2,7 @@ package com.qpros.pages.web.SSA;
 
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
+import com.ssa.core.common.locators.urls;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -11,7 +12,7 @@ public class BusinessParametersPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    public String url = "https://uat.ssa.gov.ae/DCDBusinessParameters/BusinessParameters.aspx";
+    public String url = urls.businessParameters;
 
     private By buttonShowDetails = By.xpath("//*[contains(@id,'wtbtn_ShowSpecificCode')]");
 
