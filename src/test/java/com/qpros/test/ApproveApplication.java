@@ -39,7 +39,7 @@ public class ApproveApplication extends Base {
     ClaimantLogin claimantLogin = new ClaimantLogin(driver.get());
     @Test(description = "Approve an application", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
-    public void approveApplication() throws JsonProcessingException, AWTException {
+    public void approveApplication() throws JsonProcessingException, AWTException, InterruptedException {
 
         approveApplicationModule.approveApplication(false);
     }

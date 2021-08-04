@@ -37,7 +37,7 @@ public class ApproveApplicationModule extends Base {
     Matcher matcher;
     public String committeeName;
     public static String refCode;
-    public void approveApplication(boolean incOrDecApp) throws JsonProcessingException, AWTException {
+    public void approveApplication(boolean incOrDecApp) throws JsonProcessingException, AWTException, InterruptedException {
         //URL: https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx
         driver.get().navigate().to(urls.agentLogin);
 
@@ -115,7 +115,7 @@ public class ApproveApplicationModule extends Base {
             //String refCode = "SSP-10679";
             loginPage.loginWithUser(UserType.Superuser);
             driver.get().navigate().to(urls.businessParameters);
-            businessParametersPage.releaseAppliaction(refCode);
+            businessParametersPage.releaseApplication(refCode);
             agentPage.logOut();
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
             Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
@@ -176,7 +176,7 @@ public class ApproveApplicationModule extends Base {
         //String refCode = "SSP-10679";
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseAppliaction(refCode);
+        businessParametersPage.releaseApplication(refCode);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));

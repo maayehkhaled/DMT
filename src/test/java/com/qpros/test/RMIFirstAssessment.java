@@ -55,7 +55,7 @@ public class RMIFirstAssessment extends Base {
 
     @Test(description = "RMI First Assessment", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
-    public void RMIFirstAssessment() throws JsonProcessingException, AWTException {
+    public void RMIFirstAssessment() throws JsonProcessingException, AWTException, InterruptedException {
         driver.get().navigate().to(urls.agentLogin);
 
         this.logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");

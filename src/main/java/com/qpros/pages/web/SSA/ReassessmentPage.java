@@ -114,8 +114,8 @@ public class ReassessmentPage extends Base {
 
     public void increaseAmount(){
         String[] arrOfStr = ActionsHelper.element(amountField).getAttribute("value").split(",");
-        double amount = Double.parseDouble(String.join("", arrOfStr));
-        double newAmount = amount + 2000;
+        amount = Double.parseDouble(String.join("", arrOfStr));
+        newAmount = amount + 2000;
         ActionsHelper.sendKeysWithClear(amountField, String.format("%.2f", newAmount));
     }
 
@@ -135,7 +135,7 @@ public class ReassessmentPage extends Base {
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseAppliaction(approveApplication.refCode);
+        businessParametersPage.releaseApplication(approveApplication.refCode);
 
         driver.get().navigate().to(urls.allApplications);
         ActionsHelper.sendKeys(superuserSearchApp, approveApplication.refCode + Keys.ENTER);

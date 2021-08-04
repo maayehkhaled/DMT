@@ -63,7 +63,7 @@ public class RejectApplicationModule extends Base {
             //String refCode = "SSP-10679";
             loginPage.loginWithUser(UserType.Superuser);
             driver.get().navigate().to(urls.businessParameters);
-            businessParametersPage.releaseAppliaction(refCode);
+            businessParametersPage.releaseApplication(refCode);
             agentPage.logOut();
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
             Assert.assertFalse(paymentSpecialistPage.checkPaymentExistence(refCode));
@@ -88,7 +88,7 @@ public class RejectApplicationModule extends Base {
         //String refCode = "SSP-10679";
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseAppliaction(refCode);
+        businessParametersPage.releaseApplication(refCode);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         Assert.assertFalse(paymentSpecialistPage.checkPaymentExistence(refCode));

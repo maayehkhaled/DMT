@@ -49,7 +49,7 @@ public class ReassessmentDecreaseApprove extends Base {
     ReassessmentPage reassessmentPage = new ReassessmentPage(driver.get());
     @Test(description = "Approve an application", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
-    public void reassessmentIncrease() throws JsonProcessingException, AWTException {
+    public void reassessmentIncrease() throws JsonProcessingException, AWTException, InterruptedException {
             approveApplication.approveApplication(true);
             reassessmentPage.reassessToAmount();
             reassessmentPage.decreaseAmount();
