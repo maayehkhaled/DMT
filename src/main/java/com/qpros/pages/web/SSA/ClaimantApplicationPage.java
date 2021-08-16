@@ -59,7 +59,7 @@ public class ClaimantApplicationPage extends Base {
             driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtinputemirates")).sendKeys("196896907175");
             driver.get().findElement(By.cssSelector(".button")).click();
             ActionsHelper.driverWait(4000);
-
+            //TODO: Clean up this part
             Robot robot = new Robot();
             robot.keyPress(KeyEvent.VK_F);
             robot.keyRelease(KeyEvent.VK_F);
