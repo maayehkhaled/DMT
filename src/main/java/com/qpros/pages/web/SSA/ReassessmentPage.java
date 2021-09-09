@@ -36,10 +36,11 @@ public class ReassessmentPage extends Base {
     private By reassessmentBtn = By.linkText("إعادة التقييم");
     private By committeeSearchApplicationField = By.cssSelector("[placeholder='SSP code or Emirates ID']");
     private By applicationCheckBox = By.xpath("//input[contains(@id,'wtBenefitRequests')]");
-    private By dropdownMenuSelect = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtddl_useridIn");
-    private By dropdownMenuReason = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtddl_ReasonIn");
-    private By commentFieldTextBox = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wttxt_CommentIn");
-    private By launchBtn = By.id("DCDAgentPortalTheme_wt10_block_wtMainContent_wtbtn_LaunchReassess");
+    private By dropdownMenuSelect = By.xpath("//input[contains(@id,'ddl_useridIn')]");
+    private By dropdownMenuReason = By.xpath("//input[contains(@id,'ddl_ReasonIn')]");
+    private By commentFieldTextBox = By.xpath("//input[contains(@id,'txt_CommentIn')]");
+    //By.xpath("//input[contains(@id,'btn_LaunchReassess')]");
+    private By launchBtn = By.xpath("//input[contains(@id,'btn_LaunchReassess')]");
     private By searchForApplication = By.xpath("//input[contains(@id,'SearcFrom')]");
     private By firstElementAfterSearch = By.cssSelector(".ThemeGrid_Width4:nth-child(1)"); //Contains app ref number and clickable
     private By updateAmountBtn = By.xpath("//div[contains(@id,'UpdateAmount2')]"); //Contains app ref number and clickable
@@ -114,8 +115,8 @@ public class ReassessmentPage extends Base {
 
     public void increaseAmount(){
         String[] arrOfStr = ActionsHelper.element(amountField).getAttribute("value").split(",");
-        amount = Double.parseDouble(String.join("", arrOfStr));
-        newAmount = amount + 2000;
+        double amount = Double.parseDouble(String.join("", arrOfStr));
+        double newAmount = amount + 2000;
         ActionsHelper.sendKeysWithClear(amountField, String.format("%.2f", newAmount));
     }
 
@@ -135,7 +136,7 @@ public class ReassessmentPage extends Base {
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseApplication(approveApplication.refCode);
+        businessParametersPage.releaseAppliaction(approveApplication.refCode);
 
         driver.get().navigate().to(urls.allApplications);
         ActionsHelper.sendKeys(superuserSearchApp, approveApplication.refCode + Keys.ENTER);

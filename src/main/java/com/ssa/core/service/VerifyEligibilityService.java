@@ -15,10 +15,9 @@ public class VerifyEligibilityService {
 
     public void requestService() throws JsonProcessingException {
         Unirest.config().reset();
-        Unirest.config().connectTimeout(300000);
+        Unirest.config().connectTimeout(0);
         Unirest.config().verifySsl(false);
-        Unirest.config().socketTimeout(300000);
-        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS/rest/SocialSupportSupportRequest/VerifyEligibility")
+        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/VerifyEligibility")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
                 .body(requestBody())

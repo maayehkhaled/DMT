@@ -179,7 +179,7 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(500);
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
 
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Approve step 1", agentApproveStepFinal);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click next Step 1", agentClickNextFinal);

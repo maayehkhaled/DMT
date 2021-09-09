@@ -62,7 +62,7 @@
                     <configuration>
 
                         <suiteXmlFiles>
-                            <file>src/main/resources/xmlTests/DuDaily.xml</file>
+                            <file>src/main/resources/xmlTests/${file}</file>
                         </suiteXmlFiles>
                     </configuration>
                 </plugin>

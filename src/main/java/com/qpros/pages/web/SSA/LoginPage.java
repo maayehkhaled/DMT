@@ -14,11 +14,12 @@ public class LoginPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    private By usernameField = By.id("wt13_wtMainContent_wt6");
+    private By usernameField = By.xpath("//*[contains(@id,'wtMainContent_wt6')]");
+    //By.xpath("//*[contains(@id,'wtMainContent_wtLogin')]");
 
-    private By passwordField = By.id("wt13_wtMainContent_wt18");
+    private By passwordField = By.xpath("//*[contains(@id,'wtMainContent_wt18')]");
 
-    private By loginButton = By.id("wt13_wtMainContent_wtLogin");
+    private By loginButton = By.xpath("//*[contains(@id,'wtMainContent_wtLogin')]");
 //wtMainContent_wtLogin
     public void loginWithUser(String username, String password) {
         logManager.STEP("Input username", "Inputs the username: " + username);

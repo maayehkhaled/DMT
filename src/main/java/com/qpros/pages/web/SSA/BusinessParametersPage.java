@@ -23,7 +23,7 @@ public class BusinessParametersPage extends Base {
     private By startProcessButton = By.xpath("//*[contains(@id,'wtbtn_RunSpecificCodes')]");
 //wtbtn_RunSpecificCodes
 
-    public void releaseApplication(String refNo){
+    public void releaseAppliaction(String refNo){
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Expand fields",buttonShowDetails);
         ActionsHelper.driverWait(2000);

@@ -53,6 +53,7 @@ public class ApproveApplicationModule extends Base {
             QuantaTestManager.getTest().log(Status.INFO, MarkupHelper.createCodeBlock(submitApplicationService.response.getBody()));
 
             refCode = submitApplicationService.getresponse(submitApplicationService).applicationSummary.referenceNumber;
+            refCode.replace("\uE007","");
             //String refCode = "SSP-10676";
             homePage.navigateToLogin();
 
@@ -67,9 +68,9 @@ public class ApproveApplicationModule extends Base {
             loginPage.loginWithUser(UserType.Specialist2);
             ActionsHelper.driverWait(2000);
             String seniorSpecialist = agentPage.specialistApproval(refCode,incOrDecApp);
-            if (seniorSpecialist.contains("-")) {
+            /*if (seniorSpecialist.contains("-")) {
                 agentPage.getAssigneeNameFromAllApplications(refCode);
-            }
+            }*/
             ActionsHelper.driverWait(2000);
             System.out.println(seniorSpecialist);
 //            seniorSpecialist = seniorSpecialist.replace("Supervisor", "").replace("\n", "");
@@ -115,7 +116,7 @@ public class ApproveApplicationModule extends Base {
             //String refCode = "SSP-10679";
             loginPage.loginWithUser(UserType.Superuser);
             driver.get().navigate().to(urls.businessParameters);
-            businessParametersPage.releaseApplication(refCode);
+            businessParametersPage.releaseAppliaction(refCode);
             agentPage.logOut();
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
             Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
@@ -176,7 +177,7 @@ public class ApproveApplicationModule extends Base {
         //String refCode = "SSP-10679";
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseApplication(refCode);
+        businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));

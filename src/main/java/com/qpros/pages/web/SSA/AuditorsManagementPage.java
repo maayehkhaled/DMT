@@ -22,12 +22,14 @@ public class AuditorsManagementPage extends Base {
 
     private By auditorsManagement = By.id("DCDAgentPortalTheme_wt304_block_wtMenu_AgentPortal_CW_wt88_block_RichWidgets_wt31_block_wtMenuItem_wt72");
     private By selectspecid = By.xpath("//div[contains(@id,'block_wtContent_wtStatus')]");
-    private By selectSpecialist = By.cssSelector(".select2-selection__placeholder");
+    private By selectSpecialist = By.cssSelector(".select2-search__field");
 
 
     private By inputRef = By.xpath("//*[contains(@id,'block_wtContent_wttxt_Codes')]");
 //DCDAgentPortalTheme_wt15_block_wtMainContent_WebPatterns_wt44_block_wtContent_wttxt_Codes
     private By clickSave = By.xpath("//input[@class='Button ThemeGrid_MarginGutter']");
+
+    private By searchField = By.cssSelector(".select2-search__field");
 
 
     @STEP(name = "Set Specialist", description = "Sets the case to a specific specialist")
@@ -37,20 +39,20 @@ public class AuditorsManagementPage extends Base {
         ActionsHelper.navigate(urls.agentManagement);
         ActionsHelper.driverWait(500);
         ActionsHelper.retryClick(selectspecid,10);
-        Util.robotTypeString(specialistName);
+        ActionsHelper.driverWait(500);
+
+        ActionsHelper.retryClick(searchField,10);
+        Util.typeString(specialistName);
         Robot robot = new Robot();
+        ActionsHelper.driverWait(500);
         robot.keyPress(KeyEvent.VK_DOWN);
         robot.keyRelease(KeyEvent.VK_DOWN);
+        ActionsHelper.driverWait(500);
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
         logManager.STEP("Input Ref", "Inputs the reference nubmer: " + refNumber);
         ActionsHelper.sendKeys(inputRef, refNumber);
         ActionsHelper.actionClickStepClick("Clicks the save button", clickSave);
         ActionsHelper.driverWait(500);
-
-        try {
-            driver.get().switchTo().alert().accept();
-        } catch (Exception e) {
-        }
     }
 }

@@ -18,7 +18,7 @@ public class ClaimantLogin extends Base {
 
     private By loginButton = By.xpath("//*[contains(@id,'wtMainContent_wtbtn_Login')]");
 
-    private By updateFamilyInformation = By.cssSelector("#DCDTheme_wt27_block_wtMainContent_wtCoCLink > .HomePageButton");
+    private By updateFamilyInformation = By.cssSelector("#DCDTheme_wt22_block_wtMainContent_wtCoCLink > .HomePageButton");
 
     private By selectLocation = By.id("CloneOfWebPatterns_wt20_block_wtMainContent_wtWebPortalLocation2");
 

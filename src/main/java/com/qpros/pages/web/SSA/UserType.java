@@ -7,6 +7,7 @@ public enum UserType {
     Specialist2("Specialist2", "Specialist2"),
     SeniorSpecialist1("SeniorSpecialist1", "SeniorSpecialist1"),
     SeniorSpecialist5("SeniorSpecialist5", "SeniorSpecialist5"),
+    SeniorSpecialist2("SeniorSpecialist2", "SeniorSpecialist2"),
     SeniorSpecialist100("SeniorSpecialist100", "SeniorSpecialist100"),
     Committee100("Committee100", "Committee100"),
     Committee1("Committee1", "Committee1"),
