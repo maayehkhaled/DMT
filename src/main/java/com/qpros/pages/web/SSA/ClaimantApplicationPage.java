@@ -19,9 +19,22 @@ public class ClaimantApplicationPage extends Base {
     }
 
     private By nextStep = By.xpath("//*[contains(@id,'wtbtn_Next')]");
-
-
     private By checkBill = By.cssSelector(".ThemeGrid_Width8 > .OSInline:nth-child(1) > span");
+    private By addNewBillDropDownMenu = By.xpath("//select[@id=\"CloneOfWebPatterns_wt16_block_wtMainContent_wtddl_company\"]");
+    private By accountNumberField = By.xpath("//input[@id=\"CloneOfWebPatterns_wt16_block_wtMainContent_wttxt_AccountNumber\"]");
+    private By emiratesIdField = By.xpath("//input[@id=\"CloneOfWebPatterns_wt16_block_wtMainContent_wttxt_inputemirates\"]");
+    private By premiseNumber = By.xpath("//input[@id=\"CloneOfWebPatterns_wt16_block_wtMainContent_wttxt_InputPremiseNumber\"]");
+    private By personalInformationNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent1_wtNext18\"]");
+    private By familyInformationNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent2_wtbtn_Next15\"]");
+    private By reasonNotToPayTextField = By.xpath("//input[@id=\"CloneOfWebPatterns_wt16_block_wtMainContent_wttxt_Reason2\"]");
+    private By premiseNumberDropDownMenu = By.xpath("//div[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent3_wtAddressInfo_wtHouseholdIndividualsWithPremiseRecord3_ctl00_wtcombobox\"]");
+    private By addressNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent3_wtbtn_Next14\"]");
+    private By salaryAndPensionNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent4_wtbtn_Next13\"]");
+    private By supportIncomeNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent5_wtbtn_Next11\"]");
+    private By businessIncomeNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent6_wtbtn_Next10\"]");
+    private By assetsNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent7_wtbtn_Next12\"]");
+    private By finishApplication = By.xpath("//input[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent8_wtbtn_ab7Submit\"]");
+
 
     public void uploadBill() throws AWTException {
         if (!ActionsHelper.isElementPresent(checkBill)) {
@@ -31,6 +44,14 @@ public class ClaimantApplicationPage extends Base {
             // 4 | selectFrame | index=0 |
             ActionsHelper.driverWait(20000);
             driver.get().switchTo().frame(0);
+            ActionsHelper.selectOption(addNewBillDropDownMenu, "ADDC");
+            ActionsHelper.sendKeys(accountNumberField, "5299625382");
+            ActionsHelper.sendKeys(emiratesIdField, "784196896907175");
+            ActionsHelper.sendKeys(premiseNumber, "8354787951");
+            ActionsHelper.sendKeys(reasonNotToPayTextField, "dhsdjfjdshds");
+
+
+            /*
             // 5 | click | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtcompany |
             driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtcompany")).click();
             // 6 | select | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtcompany | label=ADDC
@@ -39,6 +60,7 @@ public class ClaimantApplicationPage extends Base {
                 dropdown.findElement(By.xpath("//option[. = 'ADDC']")).click();
             }
             // 7 | click | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtcompany |
+
             driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtcompany")).click();
             // 8 | click | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtAccountNumber |
             driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtAccountNumber")).click();
@@ -57,6 +79,8 @@ public class ClaimantApplicationPage extends Base {
             // 15 | click | css=.button |
             // 16 | type | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtinputemirates | 784-1968-9690717-5
             driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtinputemirates")).sendKeys("196896907175");
+
+             */
             driver.get().findElement(By.cssSelector(".button")).click();
             ActionsHelper.driverWait(4000);
 
@@ -81,6 +105,9 @@ public class ClaimantApplicationPage extends Base {
             driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtSubmit")).click();
 
             driver.get().switchTo().defaultContent();
+
+            ActionsHelper.selectOption(premiseNumberDropDownMenu, "354787951");
+
         }
     }
 
@@ -221,4 +248,39 @@ public class ClaimantApplicationPage extends Base {
 
         ActionsHelper.driverWait(5000);
     }
+
+
+    public void otherUploads(){
+
+    }
+
+    public void bocc() throws AWTException {
+        ActionsHelper.waitForExpectedElement(personalInformationNextBtn);
+        ActionsHelper.clickAction(personalInformationNextBtn);
+        ActionsHelper.waitForExpectedElement(familyInformationNextBtn);
+        ActionsHelper.clickAction(familyInformationNextBtn);
+        uploadBill();
+        ActionsHelper.waitForExpectedElement(addressNextBtn);
+        ActionsHelper.clickAction(addressNextBtn);
+        doPensionCheckboxes();
+        ActionsHelper.waitForExpectedElement(salaryAndPensionNextBtn);
+        ActionsHelper.clickAction(salaryAndPensionNextBtn);
+        ActionsHelper.waitForExpectedElement(supportIncomeNextBtn);
+        ActionsHelper.clickAction(supportIncomeNextBtn);
+        ActionsHelper.waitForExpectedElement(businessIncomeNextBtn);
+        ActionsHelper.clickAction(businessIncomeNextBtn);
+        ActionsHelper.waitForExpectedElement(assetsNextBtn);
+        ActionsHelper.clickAction(assetsNextBtn);
+        ActionsHelper.waitForExpectedElement(finishApplication);
+        ActionsHelper.clickAction(finishApplication);
+
+
+
+
+
+
+    }
+
+
+
 }

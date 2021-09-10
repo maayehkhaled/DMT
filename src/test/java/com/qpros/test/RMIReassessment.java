@@ -19,7 +19,6 @@ public class RMIReassessment extends Base {
     @BeforeClass
     public void initSuite() {
         QuantaTestManager.startTestSuite(getClass().getSimpleName());
-
     }
 
     @BeforeMethod(enabled = true)

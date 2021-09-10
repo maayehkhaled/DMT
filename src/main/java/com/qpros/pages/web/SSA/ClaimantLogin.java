@@ -13,25 +13,17 @@ public class ClaimantLogin extends Base {
     }
 
     private By usernameField = By.xpath("//*[contains(@id,'wtMainContent_wttxt_EmirateId')]");
-
     private By passwordField = By.xpath("//*[contains(@id,'wtMainContent_wttxt_Password')]");
-
-    private By loginButton = By.xpath("//*[contains(@id,'wtMainContent_wtbtn_Login')]");
-
+    private By loginButton = By.xpath("//input[@id=\"DCDWebPortalTheme_wt19_block_wtMainContent_wtbtn_Login\"]");
     private By updateFamilyInformation = By.cssSelector("#DCDTheme_wt22_block_wtMainContent_wtCoCLink > .HomePageButton");
-
     private By selectLocation = By.id("CloneOfWebPatterns_wt20_block_wtMainContent_wtWebPortalLocation2");
-
     private By clickAgree = By.id("CloneOfWebPatterns_wt20_block_wtMainContent_wtok");
-
 //https://uat.ssa.gov.ae/DCDClaimantFrontEnd/MainFlow.UserLogin.aspx?(Not.Licensed.For.Production)=
     public void claimantLogin(String eid){
-        logManager.STEP("Input claimant username and password","Inputs EID on both fields as username and password");
-
+        //logManager.STEP("Input claimant username and password","Inputs EID on both fields as username and password");
         ActionsHelper.sendKeys(usernameField,eid);
         ActionsHelper.sendKeys(passwordField,eid);
-        ActionsHelper.actionClickStepClick("Click login button", loginButton);
-
+        ActionsHelper.retryClick(loginButton, 30);
     }
 
     public void navigateToUpdateFamilyInformation(){
