@@ -16,7 +16,7 @@ public class GetFamilyDataService {
         Unirest.config().reset();
         Unirest.config().connectTimeout(0);
         Unirest.config().verifySsl(false);
-         response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS/rest/SocialSupportSupportRequest/GetFamilyData")
+         response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/GetFamilyData")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
                 .body(requestBody())
