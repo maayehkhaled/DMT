@@ -40,7 +40,6 @@ public class ApproveApplication extends Base {
     @Test(description = "Approve an application", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void approveApplication() throws JsonProcessingException, AWTException, InterruptedException {
-
         approveApplicationModule.approveApplication(false);
     }
 
