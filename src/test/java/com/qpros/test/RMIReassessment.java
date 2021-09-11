@@ -90,10 +90,14 @@ public class RMIReassessment extends Base {
         logManager.STEP("10. Go through steps and select ارسالة مرة اخرى then submit", "");
         logManager.STEP("11. Select the reason of RMIe.x:هوية غير صحية and select he EID, then select حفظ", "");
         logManager.STEP("12. Logout", "");
+        agentPage.logOut();
         logManager.STEP("13. Login by EID to the claiment side", "");
+        claimantLogin.claimantLogin(TestData.EID);
         logManager.STEP("14. The user should be redirected to the RMI page, click on submit", "");
         logManager.STEP("15. Logout", "");
+        agentPage.logOut();
         logManager.STEP("16 Login by supervisor", "");
+        loginPage.loginWithUser(UserType.Specialist2);
         logManager.STEP("17. Look for this SSP and click on it", "");
 
     }

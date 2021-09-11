@@ -33,5 +33,6 @@ public class RejectApplication extends Base {
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void RejectApplication() throws Exception {
         rejectApplicationModule.RejectApplication();
+
     }
 }

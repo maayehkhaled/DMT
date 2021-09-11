@@ -191,7 +191,9 @@ public class RMIBCOC extends Base {
         logManager.STEP("23. Click on التغير في الظروف المعيشية box", "Click on التغير في الظروف المعيشية box");
         logManager.STEP("24. The use should be redirected to the RMI page, click on submit", "The use should be redirected to the RMI page, click on submit ");
         logManager.STEP("25. Logout", " Logout");
+        agentPage.logOut();
         logManager.STEP("26. Login by specialist", " Login by specialist");
+        loginPage.loginWithUser(UserType.Specialist2);
         logManager.STEP("27. Look for this SSP and click on it", " Look for this SSP and click on it");
 
     }
