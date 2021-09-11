@@ -1,6 +1,5 @@
 package com.qpros.pages.web.SSA;
 
-import com.qpros.common.LogManager;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.ssa.core.common.locators.urls;

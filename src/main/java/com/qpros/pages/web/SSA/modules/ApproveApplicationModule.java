@@ -41,8 +41,8 @@ public class ApproveApplicationModule extends Base {
         //URL: https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx
         driver.get().navigate().to(urls.agentLogin);
 
-        this.logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
-        this.logManager.INFO("Verify Eligibility Service Call", false);
+        logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
+        logManager.INFO("Verify Eligibility Service Call", false);
         verifyEligibilityService.requestService();
         QuantaTestManager.getTest().log(Status.INFO, MarkupHelper.createCodeBlock(verifyEligibilityService.response.getBody()));
         if (verifyEligibilityService.getresponse(verifyEligibilityService).application.isEligible) {

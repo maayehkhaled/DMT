@@ -20,9 +20,6 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.List;
 
@@ -183,6 +180,12 @@ public class RMIBCOC extends Base {
         loginPage.loginWithUser(UserType.Specialist2);
 
         logManager.STEP("16. Look for SSP code under قائمة المهام", "Look for SSP code under قائمة المهام ");
+        ActionsHelper.driverWait(2000);
+        String seniorSpecialist = agentPage.specialistApproval(ApproveApplicationModule.refCode,false);
+
+        ActionsHelper.driverWait(2000);
+        System.out.println(seniorSpecialist);
+        agentPage.logOut();
         logManager.STEP("17. Click on application to view the details page", "Click on application to view the details page");
         logManager.STEP("18. Go through steps and select ارسالة مرة اخرى then submit", "Go through steps and select ارسالة مرة اخرى then submit ");
         logManager.STEP("19. Select the reason of RMIe.x: هوية غير صحية and select he EID, then select حفظ", " Select the reason of RMIe.x: هوية غير صحية and select he EID, then select حفظ");

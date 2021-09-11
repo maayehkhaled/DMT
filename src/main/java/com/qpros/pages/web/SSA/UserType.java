@@ -31,7 +31,7 @@ public enum UserType {
     private final String password;
 
 
-    private UserType(String userName, String password) {
+    UserType(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }

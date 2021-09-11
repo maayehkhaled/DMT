@@ -1,37 +1,37 @@
 package com.ssa.core.common.data;
 
 public interface TestData {
-    public String EID="784196858627969";
+    String EID="784195807648217";
 
-    public String approveApplicationEID = "";
+    String approveApplicationEID = "";
 
-    public String rejectApplicationEID = "";
+    String rejectApplicationEID = "";
 
-    public String reApplicationApproveEID = "";
+    String reApplicationApproveEID = "";
 
-    public String reApplicationRejectEID = "";
+    String reApplicationRejectEID = "";
 
-    public String reApplicationIncrease = "";
+    String reApplicationIncrease = "";
 
-    public String reApplicationDecrease = "";
+    String reApplicationDecrease = "";
 
-    public String bcocApprove = "";
+    String bcocApprove = "";
 
-    public String bcocReject = "";
+    String bcocReject = "";
 
-    public String acocApprove = "";
+    String acocApprove = "";
 
-    public String acocReject = "";
+    String acocReject = "";
 
-    public String rmiBCOC = "";
+    String rmiBCOC = "";
 
-    public String rmiFirstAssessment = "";
+    String rmiFirstAssessment = "";
 
-    public String appealApprove = "";
+    String appealApprove = "";
 
-    public String appealReject = "";
+    String appealReject = "";
 
-    public String rmiReassessment = "";
+    String rmiReassessment = "";
 
-    public String rmiAppeal = "";
+    String rmiAppeal = "";
 }

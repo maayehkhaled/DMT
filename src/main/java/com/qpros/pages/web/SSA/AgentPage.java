@@ -1,21 +1,14 @@
 package com.qpros.pages.web.SSA;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
-import com.qpros.pages.web.SSA.applicationreview.PersonalInformation;
 import com.ssa.core.common.locators.urls;
-import com.ssa.core.model.GetFamilyData;
-import com.ssa.core.service.GetFamilyDataService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 //This page contains the applications list. Main agent page
 public class AgentPage extends Base {
@@ -220,6 +213,7 @@ public class AgentPage extends Base {
     public String seniorSpecialistApproval(String refCode) {
         //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);

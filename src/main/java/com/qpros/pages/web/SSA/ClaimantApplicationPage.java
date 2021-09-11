@@ -3,11 +3,9 @@ package com.qpros.pages.web.SSA;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

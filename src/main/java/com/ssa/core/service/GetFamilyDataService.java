@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssa.core.common.data.TestData;
 import com.ssa.core.model.GetFamilyData;
-import com.ssa.core.model.ResponseRoot;
-import com.ssa.core.model.VerifyEligibility;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 

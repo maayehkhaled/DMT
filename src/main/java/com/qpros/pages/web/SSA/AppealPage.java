@@ -1,16 +1,11 @@
 package com.qpros.pages.web.SSA;
 
 import com.qpros.common.web.Base;
-import com.qpros.helpers.ActionsHelper;
-import com.ssa.core.common.locators.urls;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.util.List;
 
 public class AppealPage extends Base {
     public AppealPage(WebDriver driver) {

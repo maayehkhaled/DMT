@@ -69,16 +69,10 @@ public class AppealReject extends Base {
         ActionsHelper.sendKeys(By.xpath("//textarea[@class='OSFillParent']"), "test appeal text");
         List<WebElement> salaryElementList = driver.get().findElements(By.xpath("//input[contains(@id,fileinputPopup_Upload)]"));
         salaryElementList.stream().forEachOrdered(salElemnt ->
-        {
-            ActionsHelper.sendKeys(salElemnt, "C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf");
-
-        });
+                ActionsHelper.sendKeys(salElemnt, "C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf"));
         List<WebElement> fillcommentTestBoxs = driver.get().findElements(By.xpath("//textarea[contains(@id,wttxt_Description)]"));
         fillcommentTestBoxs.stream().forEachOrdered(commnt ->
-        {
-            ActionsHelper.sendKeys(commnt, "test appeal text");
-
-        });
+                ActionsHelper.sendKeys(commnt, "test appeal text"));
 
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("apply Appeal Request", By.xpath("//input[@class='Button ForwardButton Is_Default']"));
