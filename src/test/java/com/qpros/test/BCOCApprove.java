@@ -2,6 +2,7 @@ package com.qpros.test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qpros.common.web.Base;
+import com.qpros.common.web.Util;
 import com.qpros.helpers.ActionsHelper;
 import com.qpros.pages.web.SSA.*;
 import com.qpros.pages.web.SSA.modules.ApproveApplicationModule;
@@ -12,21 +13,26 @@ import com.ssa.core.common.locators.urls;
 import com.ssa.core.service.SubmitApplicationService;
 import com.ssa.core.service.VerifyEligibilityService;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.qpros.pages.web.SSA.modules.ApproveApplicationModule.refCode;
-
+@Listeners(com.qpros.common.LogManager.class)
 public class BCOCApprove extends Base {
 
 
@@ -69,14 +75,16 @@ public class BCOCApprove extends Base {
     @Test(description = "Bcoc Approve", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void bcocApprove() throws JsonProcessingException, AWTException, InterruptedException {
-        //1st assessment - Approve
-        approveApplicationModule.approveApplication(false);
-        // approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
+//        //1st assessment - Approve
+       approveApplicationModule.approveApplication(false);
+//        // approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
         logManager.STEP("2. Login to beneficiary side with the EID", "the Beneficiary User conduct login using EID" + TestData.EID);
-        ActionsHelper.navigate(urls.claimantLogin);
+          ActionsHelper.driverWait(3000);
+       ActionsHelper.navigate(urls.claimantLogin);
         claimantLogin.claimantLogin(TestData.EID);
         logManager.STEP("3. Click on التغير في الظروف المعيشية box", "the Beneficiary User Click on التغير في الظروف المعيشية box" + TestData.EID);
-        ActionsHelper.driverWait(3000);
+       ActionsHelper.driverWait(3000);
+
         ActionsHelper.actionClickStepClick("Click on update family Data", By.xpath("//div[@class='HomePageRow']/div[1]//div[@class='text']/div[1]"));
         ActionsHelper.driverWait(3000);
 
@@ -85,9 +93,11 @@ public class BCOCApprove extends Base {
         ActionsHelper.retryClick(By.xpath("//input[@class='Button Is_Default']"), 30);
         driver.get().switchTo().defaultContent();
         ActionsHelper.driverWait(40000);
-        ActionsHelper.driverWait(5000);
+       ActionsHelper.driverWait(5000);
+
         logManager.STEP("4. Click on التالي in البيانات الشخصيه tab", "Click on التالي in البيانات الشخصيه tab");
-        ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+        //ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+        ActionsHelper.driverWait(20000);
         ActionsHelper.actionClickScrollStepClick("Click on التالي in البيانات الشخصيه tab", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
         logManager.STEP("5. Click on التالي in بيانات العائلة tab", "Click on التالي in بيانات العائلة tab");
         ActionsHelper.driverWait(3000);
@@ -112,17 +122,31 @@ public class BCOCApprove extends Base {
         ActionsHelper.driverWait(3000);
         java.util.List<WebElement> incomeList = driver.get().findElements(By.xpath("//*[contains(@id,\"SelftAddSalaryDetails\")]"));
         incomeList.stream().forEachOrdered(income -> {
-            ActionsHelper.isElementPresent(income);
             ActionsHelper.driverWait(2000);
-            ActionsHelper.retryClick(income, 30);
+            ActionsHelper.clickAction(income);
             ActionsHelper.driverWait(2000);
             driver.get().switchTo().frame(0);
             ActionsHelper.retryClick(By.cssSelector("[tabindex='2']"), 30);
             ActionsHelper.selectOption(By.cssSelector("[tabindex='2']"), "__ossli_1");
             ActionsHelper.driverWait(2000);
-            driver.get().findElement(By.id("fileinputPopup_AddMemberIncome99050")).sendKeys("C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf");
+            ActionsHelper.sendKeys(By.xpath("//textarea[@class='Form_control ThemeGrid_Width6']"),"Bcoc  Test");
+            ActionsHelper.driverWait(3000);
+            ActionsHelper.retryClick(By.xpath("//label[@class='button custom-file-upload']"),5);
+            ActionsHelper.driverWait(3000);
+            try {
+                Util.typeString("1.pdf");
+                Robot robot=new Robot();
+                robot.keyPress(KeyEvent.VK_ENTER);
+                robot.keyRelease(KeyEvent.VK_ENTER);
+                ActionsHelper.driverWait(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (AWTException e) {
+                e.printStackTrace();
+            }
+            //driver.get().findElement(By.xpath("//input[contains(@id,fileinputPopup_AddMemberIncome)]")).sendKeys("C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf");
             ActionsHelper.driverWait(2000);
-            ActionsHelper.retryClick(By.cssSelector(".button"), 30);
+            ActionsHelper.clickAction(By.xpath("//input[@class='Button Is_Default']"));
             driver.get().switchTo().defaultContent();
 
 
@@ -133,9 +157,9 @@ public class BCOCApprove extends Base {
         salarySetList.stream().forEachOrdered(salaryElememnt -> {
             ActionsHelper.driverWait(2000);
             if (!salaryElememnt.isSelected()) {
+                ActionsHelper.retryClick(salaryElememnt, 30);
 
             }
-            ActionsHelper.retryClick(salaryElememnt, 30);
         });
         logManager.STEP("9. Click on التالي", "Click on التالي");
         ActionsHelper.driverWait(3000);
@@ -154,6 +178,33 @@ public class BCOCApprove extends Base {
         ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
         ActionsHelper.actionClickScrollStepClick("Click on التالي in بيانات العائلة tab", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
         logManager.STEP("12. Fill the mandatory information in دخل الاعمال التجارية  tab (make sure that the tab marked as completed)", "Fill the mandatory information in دخل الاعمال التجارية  tab (make sure that the tab marked as completed)");
+        List<WebElement> listforTrade= driver.get().findElements(By.xpath("//*[contains(@id,\"wtadd_trade\")]"));
+        listforTrade.stream().forEachOrdered(tradeItem->{
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.clickAction(tradeItem);
+            ActionsHelper.driverWait(2000);
+            driver.get().switchTo().frame(0);
+            ActionsHelper.selectOption(By.id("CloneOfWebPatterns_wt21_block_wtMainContent_wtddl_FrequencyType"),"3");
+            ActionsHelper.sendKeys(By.xpath("//input[@class='Form_control ThemeGrid_Width6']"),"500");
+            ActionsHelper.driverWait(3000);
+            ActionsHelper.retryClick(By.xpath("//label[@class='button custom-file-upload']"),5);
+            ActionsHelper.driverWait(3000);
+            try {
+                Util.typeString("1.pdf");
+                Robot robot=new Robot();
+                robot.keyPress(KeyEvent.VK_ENTER);
+                robot.keyRelease(KeyEvent.VK_ENTER);
+                ActionsHelper.driverWait(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (AWTException e) {
+                e.printStackTrace();
+            }
+            //driver.get().findElement(By.xpath("//input[contains(@id,fileinputPopup_AddMemberIncome)]")).sendKeys("C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf");
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.clickAction(By.xpath("//input[@class='Button Is_Default']"));
+            driver.get().switchTo().defaultContent();
+        });
         java.util.List<WebElement> listStoreIncome = driver.get().findElements(By.xpath("//input[contains(@id,\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent6_wtBusinessIncomeInfo_wtApplicationIndividualByProperty\")]"));
         listStoreIncome.stream().forEachOrdered(storeIncome -> {
             ActionsHelper.driverWait(2000);
