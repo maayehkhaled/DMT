@@ -55,7 +55,7 @@ public class Base {
             case CHROME:
                 try {
                     setChromeBrowser(deviceOsType);
-                    Map<String, Object> prefs = new HashMap<String, Object>();
+                    Map<String, Object> prefs = new HashMap<>();
                     //Put this into prefs map to switch off browser notification
                     prefs.put("profile.default_content_setting_values.notifications", 2);
                     //Create chrome options to set this prefs

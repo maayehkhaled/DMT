@@ -1,12 +1,9 @@
 package com.qpros.pages.web.SSA.applicationreview;
 
-import com.qpros.assertion.AssertService;
-import com.qpros.common.LogManager;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.ssa.core.model.GetFamilyData;
 import com.ssa.core.model.Household;
-import com.ssa.core.service.GetFamilyDataService;
 import com.ssa.core.utils.Helpers;
 import org.openqa.selenium.By;
 import org.testng.Assert;

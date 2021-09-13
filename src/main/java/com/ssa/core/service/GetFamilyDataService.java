@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssa.core.common.data.TestData;
 import com.ssa.core.model.GetFamilyData;
-import com.ssa.core.model.ResponseRoot;
-import com.ssa.core.model.VerifyEligibility;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 
@@ -16,7 +14,7 @@ public class GetFamilyDataService {
         Unirest.config().reset();
         Unirest.config().connectTimeout(0);
         Unirest.config().verifySsl(false);
-         response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS/rest/SocialSupportSupportRequest/GetFamilyData")
+         response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/GetFamilyData")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
                 .body(requestBody())

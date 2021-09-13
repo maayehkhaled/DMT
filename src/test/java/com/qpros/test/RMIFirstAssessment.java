@@ -16,7 +16,6 @@ import com.ssa.core.service.VerifyEligibilityService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -25,8 +24,6 @@ import org.testng.annotations.Test;
 import java.awt.*;
 import java.io.IOException;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Listeners(LogManager.class)
 public class RMIFirstAssessment extends Base {

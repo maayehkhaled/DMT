@@ -1,13 +1,9 @@
 package com.qpros.pages.web.SSA;
 
-import com.qpros.common.annotation.STEP;
 import com.qpros.common.web.Base;
-import com.qpros.helpers.ActionsHelper;
 import com.ssa.core.common.locators.urls;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class HomePage extends Base {
