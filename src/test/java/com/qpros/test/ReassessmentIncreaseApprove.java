@@ -30,14 +30,6 @@ public class ReassessmentIncreaseApprove extends Base {
         this.setUpBrowser();
     }
 
-    SubmitApplicationService submitApplicationService = new SubmitApplicationService();
-    VerifyEligibilityService verifyEligibilityService = new VerifyEligibilityService();
-    HomePage homePage = new HomePage(driver.get());
-    LoginPage loginPage = new LoginPage(driver.get());
-    AgentPage agentPage = new AgentPage(driver.get());
-    AuditorsManagementPage auditorsManagementPage = new AuditorsManagementPage(driver.get());
-    BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
-    PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
     ApproveApplicationModule approveApplication = new ApproveApplicationModule(driver.get());
     ReassessmentPage reassessmentPage = new ReassessmentPage(driver.get());
     @Test(description = "Approve an application", priority = 1,

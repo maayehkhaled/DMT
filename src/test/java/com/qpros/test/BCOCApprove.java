@@ -47,18 +47,14 @@ public class BCOCApprove extends Base {
         this.setUpBrowser();
     }
     ApproveApplicationModule approveApplicationModule = new ApproveApplicationModule(driver.get());
-    ClaimantApplicationPage claimantApplicationPage = new ClaimantApplicationPage(driver.get());
-    RejectApplicationModule rejectApplicationModule = new RejectApplicationModule(driver.get());
     ClaimantLogin claimantLogin = new ClaimantLogin(driver.get());
-    COCPage cocPage = new COCPage(driver.get());
-    SubmitApplicationService submitApplicationService = new SubmitApplicationService();
-    VerifyEligibilityService verifyEligibilityService = new VerifyEligibilityService();
     HomePage homePage = new HomePage(driver.get());
     LoginPage loginPage = new LoginPage(driver.get());
     AgentPage agentPage = new AgentPage(driver.get());
     AuditorsManagementPage auditorsManagementPage = new AuditorsManagementPage(driver.get());
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
+
     private static final Pattern p = Pattern.compile("(^[^\\s]+)");
     Matcher matcher;
     public String committeeName;

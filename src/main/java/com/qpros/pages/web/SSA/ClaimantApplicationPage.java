@@ -252,7 +252,7 @@ public class ClaimantApplicationPage extends Base {
 
     }
 
-    public void bocc() throws AWTException {
+    public void bcocApprove() throws AWTException {
         ActionsHelper.waitForExpectedElement(personalInformationNextBtn);
         ActionsHelper.clickAction(personalInformationNextBtn);
         ActionsHelper.waitForExpectedElement(familyInformationNextBtn);
@@ -274,6 +274,9 @@ public class ClaimantApplicationPage extends Base {
 
 
 
+    }
+
+    public void bcocReject(){
 
 
 

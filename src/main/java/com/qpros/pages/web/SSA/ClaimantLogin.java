@@ -2,6 +2,7 @@ package com.qpros.pages.web.SSA;
 
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
+import com.ssa.core.common.locators.urls;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,6 +21,7 @@ public class ClaimantLogin extends Base {
     private By clickAgree = By.id("CloneOfWebPatterns_wt20_block_wtMainContent_wtok");
 //https://uat.ssa.gov.ae/DCDClaimantFrontEnd/MainFlow.UserLogin.aspx?(Not.Licensed.For.Production)=
     public void claimantLogin(String eid){
+        ActionsHelper.navigate(urls.claimantLogin);
         //logManager.STEP("Input claimant username and password","Inputs EID on both fields as username and password");
         ActionsHelper.sendKeys(usernameField,eid);
         ActionsHelper.sendKeys(passwordField,eid);

@@ -37,18 +37,9 @@ public class RMIAppeal extends Base {
     }
 
     ApproveApplicationModule approveApplicationModule = new ApproveApplicationModule(driver.get());
-    ClaimantApplicationPage claimantApplicationPage = new ClaimantApplicationPage(driver.get());
-    RejectApplicationModule rejectApplicationModule = new RejectApplicationModule(driver.get());
     ClaimantLogin claimantLogin = new ClaimantLogin(driver.get());
-    COCPage cocPage = new COCPage(driver.get());
-    SubmitApplicationService submitApplicationService = new SubmitApplicationService();
-    VerifyEligibilityService verifyEligibilityService = new VerifyEligibilityService();
     HomePage homePage = new HomePage(driver.get());
     LoginPage loginPage = new LoginPage(driver.get());
-    AgentPage agentPage = new AgentPage(driver.get());
-    AuditorsManagementPage auditorsManagementPage = new AuditorsManagementPage(driver.get());
-    BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
-    PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
 
 
     @Test(description = "RMI Appeal")
@@ -57,7 +48,6 @@ public class RMIAppeal extends Base {
         approveApplicationModule.approveApplication(false);
         // approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
         logManager.STEP("2. Login to beneficiary side with the EID", "the Beneficiary User conduct login using EID" + TestData.EID);
-        ActionsHelper.navigate(urls.claimantLogin);
         claimantLogin.claimantLogin(TestData.EID);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("مراجعة شروط و معايير البرنامج و المدفوعات", By.xpath("//div[@class='HomePageRow']//div[@class='text']/div[.='مراجعة شروط ومعايير البرنامج والمدفوعات']"));
