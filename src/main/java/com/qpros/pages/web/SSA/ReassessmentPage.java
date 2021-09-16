@@ -55,10 +55,11 @@ public class ReassessmentPage extends Base {
     private By finalButtonApprove = By.cssSelector("[value='الموافقة']"); //Only one action was needed
 
     public void reassessToAmount() throws JsonProcessingException, AWTException {
-        System.out.println(approveApplication.committeeName);
-        System.out.println(approveApplication.refCode);
+        //System.out.println(approveApplication.committeeName);
+        //System.out.println(approveApplication.refCode);
         homePage.navigateToLogin();
-        String committeeName =approveApplication.committeeName.replace("\n", "");
+        //String committeeName =approveApplication.committeeName.replace("\n", "");
+        String committeeName = "test";
         homePage.navigateToLogin();
         if (committeeName.contains(UserType.Committee100.getUserName())) {
             loginPage.loginWithUser(UserType.Committee100);

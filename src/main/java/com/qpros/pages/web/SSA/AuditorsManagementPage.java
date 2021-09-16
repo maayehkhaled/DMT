@@ -18,7 +18,8 @@ public class AuditorsManagementPage extends Base {
     }
 
     private By auditorsManagement = By.id("DCDAgentPortalTheme_wt304_block_wtMenu_AgentPortal_CW_wt88_block_RichWidgets_wt31_block_wtMenuItem_wt72");
-    private By selectspecid = By.xpath("//div[contains(@id,'block_wtContent_wtStatus')]");
+    private By selectspecid = By.xpath("//span[@class=\"selection\"]");
+    //private By selectspecid = By.xpath("//div[contains(@id,'block_wtContent_wtStatus')]");
     private By selectSpecialist = By.cssSelector(".select2-search__field");
 
 

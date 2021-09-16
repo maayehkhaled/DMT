@@ -37,6 +37,8 @@ public class ApproveApplicationModule extends Base {
     Matcher matcher;
     public String committeeName;
     public static String refCode;
+
+
     public void approveApplication(boolean incOrDecApp) throws JsonProcessingException, AWTException, InterruptedException {
         //URL: https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx
         driver.get().navigate().to(urls.agentLogin);
@@ -54,7 +56,7 @@ public class ApproveApplicationModule extends Base {
 
             refCode = submitApplicationService.getresponse(submitApplicationService).applicationSummary.referenceNumber;
             refCode.replace("\uE007","");
-            //String refCode = "SSP-10676";
+            //String refCode = "SSP-12345";
             homePage.navigateToLogin();
 
             loginPage.loginWithUser(UserType.Superuser);

@@ -1,11 +1,14 @@
 package com.qpros.pages.web.SSA;
 
 import com.qpros.common.web.Base;
+import com.qpros.common.web.Util;
 import com.qpros.helpers.ActionsHelper;
+import com.ssa.core.common.data.TestData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -252,7 +255,189 @@ public class ClaimantApplicationPage extends Base {
 
     }
 
+    private By updateFamilyData =  By.xpath("//div[@class='HomePageRow']/div[1]//div[@class='text']/div[1]");
+
+    public void clickOnChangeInLivingCircumstances(){
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Click on update family Data", updateFamilyData);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.driver.get().switchTo().frame(0);
+        ActionsHelper.selectOption(By.id("CloneOfWebPatterns_wt20_block_wtMainContent_wtddl_WebPortalLocation2"), "2");
+        ActionsHelper.retryClick(By.xpath("//input[@class='Button Is_Default']"), 30);
+        driver.get().switchTo().defaultContent();
+        ActionsHelper.driverWait(40000);
+        ActionsHelper.driverWait(5000);
+
+    }
+
+    public void personalInformation(){
+        logManager.STEP("4. Click on التالي in البيانات الشخصيه tab", "Click on التالي in البيانات الشخصيه tab");
+        //ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+        ActionsHelper.driverWait(20000);
+        ActionsHelper.actionClickScrollStepClick("Click on التالي in البيانات الشخصيه tab", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+    }
+
+    public void familyInformation(){
+        logManager.STEP("5. Click on التالي in بيانات العائلة tab", "Click on التالي in بيانات العائلة tab");
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+        ActionsHelper.actionClickScrollStepClick("Click on التالي in بيانات العائلة tab", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+
+    }
+
+    public void addressAndContactInformation() {
+        logManager.STEP("6. Fill address information and contact information in العنوان tab (make sure that the tab marked as completed)", "Fill address information and contact information in العنوان tab (make sure that the tab marked as completed) ");
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.scrollTo(By.xpath("//span[.='تفاصيل مكان السكن']"));
+        ActionsHelper.isElementPresent(By.xpath("//span[.='تفاصيل مكان السكن']"));
+        java.util.List<WebElement> residentList = driver.get().findElements(By.xpath("//select"));
+        residentList.stream().forEachOrdered(selectElement -> {
+            ActionsHelper.driverWait(2000);
+            Select select = new Select(selectElement);
+            select.selectByIndex(select.getOptions().size() - 1);
+        });
+
+        logManager.STEP("7. click on التالي", "click on التالي");
+        ActionsHelper.actionClickScrollStepClick("next", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+
+    }
+
+    public void incomeAndPensionData(){
+        logManager.STEP("8. Fill the mandatory information for income in the income table and select all check boxes under pension table in بيانات الدخل tab (make sure that the tab marked as completed)", "Fill the mandatory information for income in the income table and select all check boxes under pension table in بيانات الدخل tab (make sure that the tab marked as completed) ");
+        ActionsHelper.driverWait(3000);
+        java.util.List<WebElement> incomeList = driver.get().findElements(By.xpath("//*[contains(@id,\"SelftAddSalaryDetails\")]"));
+        incomeList.stream().forEachOrdered(income -> {
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.clickAction(income);
+            ActionsHelper.driverWait(2000);
+            driver.get().switchTo().frame(0);
+            ActionsHelper.retryClick(By.cssSelector("[tabindex='2']"), 30);
+            ActionsHelper.selectOption(By.cssSelector("[tabindex='2']"), "__ossli_1");
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.sendKeys(By.xpath("//textarea[@class='Form_control ThemeGrid_Width6']"),"Bcoc  Test");
+            ActionsHelper.driverWait(3000);
+            ActionsHelper.retryClick(By.xpath("//label[@class='button custom-file-upload']"),5);
+            ActionsHelper.driverWait(3000);
+            try {
+                Util.typeString("1.pdf");
+                Robot robot=new Robot();
+                robot.keyPress(KeyEvent.VK_ENTER);
+                robot.keyRelease(KeyEvent.VK_ENTER);
+                ActionsHelper.driverWait(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (AWTException e) {
+                e.printStackTrace();
+            }
+            //driver.get().findElement(By.xpath("//input[contains(@id,fileinputPopup_AddMemberIncome)]")).sendKeys("C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf");
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.clickAction(By.xpath("//input[@class='Button Is_Default']"));
+            driver.get().switchTo().defaultContent();
+
+
+        });
+        ActionsHelper.scrollTo(By.xpath("//span[.='لائحة التقاعد']"));
+        ActionsHelper.isElementPresent(By.xpath("//span[.='لائحة التقاعد']"));
+        java.util.List<WebElement> salarySetList = driver.get().findElements(By.xpath("//input[contains(@id,\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent4_wtApplicantIncomeInfo_wtGetMemberList\")]"));
+        salarySetList.stream().forEachOrdered(salaryElememnt -> {
+            ActionsHelper.driverWait(2000);
+            if (!salaryElememnt.isSelected()) {
+                ActionsHelper.retryClick(salaryElememnt, 30);
+
+            }
+        });
+        logManager.STEP("9. Click on التالي", "Click on التالي");
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+        ActionsHelper.actionClickScrollStepClick("Click on التالي in بيانات العائلة tab", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+    }
+
+
+    public void support(){
+        logManager.STEP("10. Check all boxes under بيانات الدعم  tab (make sure that the tab marked as completed)", "Check all boxes under بيانات الدعم  tab (make sure that the tab marked as completed)");
+        java.util.List<WebElement> incomeElements = driver.get().findElements(By.xpath("//input[contains(@id,\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent5_wtSupportIcomeTab_wtGetFamilyMemberList\")]"));
+        incomeElements.stream().forEachOrdered(incomeElement -> {
+            ActionsHelper.driverWait(2000);
+            if (!incomeElement.isSelected()) {
+                ActionsHelper.retryClick(incomeElement, 30);
+            }
+        });
+        logManager.STEP("11. Click on التالي", "Click on التالي");
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+        ActionsHelper.actionClickScrollStepClick("Click on التالي in بيانات العائلة tab", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+    }
+
+    public void businessRecord(){
+        logManager.STEP("12. Fill the mandatory information in دخل الاعمال التجارية  tab (make sure that the tab marked as completed)", "Fill the mandatory information in دخل الاعمال التجارية  tab (make sure that the tab marked as completed)");
+        List<WebElement> listforTrade= driver.get().findElements(By.xpath("//*[contains(@id,\"wtadd_trade\")]"));
+        listforTrade.stream().forEachOrdered(tradeItem->{
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.clickAction(tradeItem);
+            ActionsHelper.driverWait(2000);
+            driver.get().switchTo().frame(0);
+            ActionsHelper.selectOption(By.id("CloneOfWebPatterns_wt21_block_wtMainContent_wtddl_FrequencyType"),"3");
+            ActionsHelper.sendKeys(By.xpath("//input[@class='Form_control ThemeGrid_Width6']"),"500");
+            ActionsHelper.driverWait(3000);
+            ActionsHelper.retryClick(By.xpath("//label[@class='button custom-file-upload']"),5);
+            ActionsHelper.driverWait(3000);
+            try {
+                Util.typeString("1.pdf");
+                Robot robot=new Robot();
+                robot.keyPress(KeyEvent.VK_ENTER);
+                robot.keyRelease(KeyEvent.VK_ENTER);
+                ActionsHelper.driverWait(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (AWTException e) {
+                e.printStackTrace();
+            }
+            //driver.get().findElement(By.xpath("//input[contains(@id,fileinputPopup_AddMemberIncome)]")).sendKeys("C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf");
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.clickAction(By.xpath("//input[@class='Button Is_Default']"));
+            driver.get().switchTo().defaultContent();
+        });
+        java.util.List<WebElement> listStoreIncome = driver.get().findElements(By.xpath("//input[contains(@id,\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent6_wtBusinessIncomeInfo_wtApplicationIndividualByProperty\")]"));
+        listStoreIncome.stream().forEachOrdered(storeIncome -> {
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.retryClick(storeIncome, 30);
+        });
+        logManager.STEP("13. Click on التالي", "Click on التالي");
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+        ActionsHelper.actionClickScrollStepClick("Click on التالي in بيانات العائلة tab", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+        ActionsHelper.retryClick(By.id("DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent8_wtbtn_ab7Submit"), 30);
+        driver.get().switchTo().frame(0);
+        List<WebElement> complianceWith = driver.get().findElements(By.xpath("//input[contains(@id,\"CloneOfWebPatterns_wt9_block_wtMainContent_WebPatterns_wt\")]"));
+        complianceWith.stream().forEachOrdered(comp -> {
+            ActionsHelper.driverWait(2000);
+            if (!comp.isSelected()) {
+                ActionsHelper.retryClick(comp, 30);
+            }
+        });
+
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.retryClick(By.xpath("//input[@class='Button Is_Default']"), 30);
+        driver.get().switchTo().defaultContent();
+        ActionsHelper.driverWait(5000);
+        driver.get().switchTo().frame(0);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(By.xpath("//input[@class='Button Is_Default']"), 30);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.isElementPresent(By.xpath("//*[contains(@id,\"DCDWebPortalTheme_wt90_block_wtMainContent_wt193_wtSSPCode3\")]"));
+    }
+
+
+
     public void bcocApprove() throws AWTException {
+        clickOnChangeInLivingCircumstances();
+        personalInformation();
+        familyInformation();
+        addressAndContactInformation();
+        incomeAndPensionData();
+        support();
+        businessRecord();
+        /*
         ActionsHelper.waitForExpectedElement(personalInformationNextBtn);
         ActionsHelper.clickAction(personalInformationNextBtn);
         ActionsHelper.waitForExpectedElement(familyInformationNextBtn);
@@ -271,6 +456,8 @@ public class ClaimantApplicationPage extends Base {
         ActionsHelper.clickAction(assetsNextBtn);
         ActionsHelper.waitForExpectedElement(finishApplication);
         ActionsHelper.clickAction(finishApplication);
+
+         */
 
 
 
