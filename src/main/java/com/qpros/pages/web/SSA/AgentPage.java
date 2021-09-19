@@ -23,11 +23,12 @@ public class AgentPage extends Base {
     private By seniorSpecialistSearchApplication = By.xpath("//div[@class='InputContainer FlexRowContainer ThemeGrid_Width5']/input[@class='OSFillParent']");
     private By seniorSpecialistSearchApplication2 = By.xpath("//div[@class='InputContainer FlexRowContainer ThemeGrid_Width4']/input[@class='OSFillParent']");
     private By firstElementAfterSearch = By.xpath("//*[contains(@id,'wtMainContent_wtListRecords1')]"); //Contains app ref number and clickable
-    private By agentApproveStepFinal = By.xpath("//*[contains(@id,'wtActions_wtApproveCurrentSection')]"); //Contains app ref number and clickable
+    private By agentApproveStepFinal = By.xpath("//input[contains(@id,'wtActions_wtApproveCurrentSection')]"); //Contains app ref number and clickable
     private By agentSendAgainStepFinal = By.xpath("//*[contains(@id,'wtActions_wtcurrentSectionMoreinfo')]"); //Contains app ref number and clickable
     private By agentRejectButtonFinal = By.xpath("//*[contains(@id,'wtActions_wtrbReject')]");
 
-//TODO: Update with deployement
+//TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]
+    private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6\"]");
     private By agentClickNextFinal = By.id("InternalPortalTheme_wt397_block_wtActions_wtNext");
     private By agentClickNext56StepFinal = By.xpath("//*[@id=\"InternalPortalTheme_wt397_block_wtActions_wtOperationBtnContainer\"]/div[2]");
     private By agreementBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6\"]");
@@ -143,27 +144,26 @@ public class AgentPage extends Base {
         driver.get().navigate().refresh();
         ActionsHelper.driverWait(5000);
     }
-    public String specialistApproval(String applicationRef, boolean incOrDecApp) throws AWTException {
-
+    public String specialistApproval(String applicationRef, boolean incOrDecApp) throws AWTException, InterruptedException {
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
         ActionsHelper.waitForExpectedElement(firstElementAfterSearch);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickScrollStepClick("Approve step 1", agentApproveStepFinal);
+        ActionsHelper.actionClickScrollStepClick("Approve Personal Information", agentApproveStepFinal);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click next Step 1", agentClickNextFinal);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.actionClickStepClick("Approve step 2", agentApproveStepFinal);
+        ActionsHelper.actionClickStepClick("Approve Family Information", agentApproveStepFinal);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click next Step 2", agentClickNextFinal);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.actionClickStepClick("Approve step 3", agentApproveStepFinal);
+        ActionsHelper.actionClickStepClick("Approve Address", agentApproveStepFinal);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click next Step 3", agentClickNextFinal);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.actionClickStepClick("Approve step 4", agentApproveStepFinal);
+        ActionsHelper.actionClickStepClick("Approve Income Info", agentApproveStepFinal);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click next Step 4", agentClickNextFinal);
         ActionsHelper.driverWait(2000);
@@ -171,11 +171,15 @@ public class AgentPage extends Base {
             ActionsHelper.actionClickScrollStepClick("Make application complex radio button", complexRadioBtn);
             ActionsHelper.driverWait(5000);
         }
+        //ActionsHelper.actionClickStepClick("Approve step 5", agentApproveStepFinal);
         System.out.println("Attempting step 5");
-        ActionsHelper.retryClick(agentClickNext56StepFinal, 4);
-        ActionsHelper.driverWait(2000);
+        //ActionsHelper.retryClick(agentClickNext56StepFinal, 4);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("Click Next Step 5", summaryNextBtn);
         System.out.println("Attempting step 6");
-        ActionsHelper.retryClick(agentClickNext56StepFinal, 3);
+        //ActionsHelper.actionClickStepClick("Click Approval and Agree", summaryNextBtn);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.retryClick(agreementBtn, 10);
         logManager.STEP("Approving the application","Click the confirm button");
         try {
             driver.get().switchTo().alert().accept();
@@ -193,14 +197,13 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(5000);
-        ActionsHelper.waitForExpectedElement(agentClickNext56StepFinal);
-        ActionsHelper.scrollTo(agentClickNext56StepFinal);
+        ActionsHelper.waitForExpectedElement(summaryNextBtn);        ActionsHelper.scrollTo(agentClickNext56StepFinal);
         ActionsHelper.driverWait(1000);
-        ActionsHelper.retryClick(agentClickNext56StepFinal, 10);
+        ActionsHelper.retryClick(summaryNextBtn, 10);
         ActionsHelper.driverWait(8000);
-        ActionsHelper.waitForExpectedElement(agreementBtn);
-        ActionsHelper.scrollTo(agreementBtn);
-        ActionsHelper.clickAction(agreementBtn);
+        //ActionsHelper.waitForExpectedElement(agreementBtn);
+        //ActionsHelper.scrollTo(agreementBtn);
+        //ActionsHelper.clickAction(agreementBtn);
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {

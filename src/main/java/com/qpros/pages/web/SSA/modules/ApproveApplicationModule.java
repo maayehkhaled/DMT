@@ -36,7 +36,7 @@ public class ApproveApplicationModule extends Base {
     private static final Pattern p = Pattern.compile("(^[^\\s]+)");
     Matcher matcher;
     public String committeeName;
-    public static String refCode;
+    public static String refCode = "SSP-12344";
 
 
     public void approveApplication(boolean incOrDecApp) throws JsonProcessingException, AWTException, InterruptedException {
@@ -127,7 +127,7 @@ public class ApproveApplicationModule extends Base {
 
     }
 
-    public void approveExistingApplication(String refCode) throws AWTException {
+    public void approveExistingApplication(String refCode) throws AWTException, InterruptedException {
         loginPage.loginWithUser(UserType.Specialist2);
         ActionsHelper.driverWait(5000);
         String seniorSpecialist = agentPage.specialistApproval(refCode, false);

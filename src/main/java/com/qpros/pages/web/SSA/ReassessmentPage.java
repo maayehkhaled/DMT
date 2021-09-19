@@ -34,7 +34,7 @@ public class ReassessmentPage extends Base {
 
 
     private By reassessmentBtn = By.linkText("إعادة التقييم");
-    private By committeeSearchApplicationField = By.cssSelector("[placeholder='SSP code or Emirates ID']");
+    private By committeeSearchApplicationField = By.xpath("//input[@id=\"DCDAgentPortalTheme_wt10_block_wtFilterContainer_wttxt_Search\"]");
     private By applicationCheckBox = By.xpath("//input[contains(@id,'wtBenefitRequests')]");
     private By dropdownMenuSelect = By.xpath("//input[contains(@id,'ddl_useridIn')]");
     private By dropdownMenuReason = By.xpath("//input[contains(@id,'ddl_ReasonIn')]");
