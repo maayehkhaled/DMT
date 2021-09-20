@@ -40,7 +40,7 @@ public class AuditorsManagementPage extends Base {
     //private By listOfOptions = By.xpath("//span[@class=\"select2-results\"]//ul//li");
 
     @STEP(name = "Set Specialist", description = "Sets the case to a specific specialist")
-    public void selectSpecialist(String specialistName, String refNumber) throws AWTException, InterruptedException {
+    public void selectSpecialist(String specialistName, String refNumber) throws InterruptedException, AWTException {
         logManager.STEP("Input Specialist", "Inputs the specialist: " + specialistName);
         ActionsHelper.driverWait(500);
         ActionsHelper.navigate(urls.agentManagement);

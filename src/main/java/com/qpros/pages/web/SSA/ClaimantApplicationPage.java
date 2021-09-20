@@ -258,6 +258,7 @@ public class ClaimantApplicationPage extends Base {
     private By updateFamilyData =  By.xpath("//div[@class='HomePageRow']/div[1]//div[@class='text']/div[1]");
 
     public void clickOnChangeInLivingCircumstances(){
+        logManager.STEP("3. Click on التغير في الظروف المعيشية box", "the Beneficiary User Click on التغير في الظروف المعيشية box" + TestData.EID);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click on update family Data", updateFamilyData);
         ActionsHelper.driverWait(3000);

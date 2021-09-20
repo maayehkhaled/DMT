@@ -50,6 +50,7 @@ public class RMIBCOC extends Base {
     AuditorsManagementPage auditorsManagementPage = new AuditorsManagementPage(driver.get());
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
+    ClaimantApplicationPage claimantPage = new ClaimantApplicationPage(driver.get());
 
     @Test(description = "RMI - BCOC", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
@@ -72,6 +73,10 @@ public class RMIBCOC extends Base {
 //        driver.get().switchTo().defaultContent();
 //        ActionsHelper.driverWait(40000);
         ActionsHelper.driverWait(5000);
+        claimantPage.personalInformation();
+        claimantPage.familyInformation();
+        claimantPage.addressAndContactInformation();
+
         logManager.STEP("4. Click on التالي in البيانات الشخصيه tab", "Click on التالي in البيانات الشخصيه tab");
         ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
         ActionsHelper.actionClickScrollStepClick("Click on التالي in البيانات الشخصيه tab", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));

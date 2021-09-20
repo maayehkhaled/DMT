@@ -80,68 +80,7 @@ public class BCOCApprove extends Base {
         claimantLogin.claimantLogin(TestData.EID);
         claimantPage.bcocApprove();
         ActionsHelper.retryClick(By.xpath("//input[@class='Button MenuButton LogoutButton']"), 30);
-        logManager.STEP("14. Login by super user, and assign the application to specialist from ادارة المراجعين", "Login by super user, and assign the application to specialist from ادارة المراجعين ");
-        homePage.navigateToLogin();
-        loginPage.loginWithUser(UserType.Superuser);
-        auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), refCode);
-        agentPage.logOut();
-        logManager.STEP("15. Login by the specialist", "Login by the specialist");
-        homePage.navigateToLogin();
-        loginPage.loginWithUser(UserType.Specialist2);
-        logManager.STEP("16. Look for SSP code under قائمة المهام", "Look for SSP code under قائمة المهام ");
-        ActionsHelper.driverWait(2000);
-        String seniorSpecialist = agentPage.specialistApproval(refCode,false);
-        ActionsHelper.driverWait(2000);
-
-
-       logManager.STEP("19. Go to الطلبات المقدمة tab and look for this SSP and check to whom its assigned","");
-        matcher = p.matcher(seniorSpecialist);
-        if (matcher.find()) {
-            System.out.println(matcher.group(0));
-            seniorSpecialist =matcher.group(0);
-        }
-        System.out.println(seniorSpecialist);
-
-        agentPage.logOut();
-        //String seniorSpecialist = UserType.SeniorSpecialist100.getUserName();
-        ActionsHelper.driverWait(5000);
-        loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
-        // loginPage.loginWithUser(UserType.SeniorSpecialist100);
-        committeeName = agentPage.seniorSpecialistApproval(refCode);
-
-        System.out.println("Committee: " + committeeName);
-        driver.get().navigate().to(urls.tasksList);
-        //committeeName = committeeName.replace("Committee", "").replace("\n", "");
-        agentPage.logOut();
-        if (committeeName.contains("ApplicationDirector")) {
-            committeeName = committeeName.replace("Manager", "").replace("\n", "");
-            loginPage.loginWithUser(UserType.valueOf(committeeName));
-            agentPage.seniorSpecialistApproval(refCode);
-            driver.get().navigate().to(urls.tasksList);
-            agentPage.logOut();
-        } else {
-            System.out.println("this is comettee nammeeee here plz " +committeeName);
-            committeeName = committeeName.replace("\n", "");
-            if (committeeName.contains(UserType.Committee100.getUserName())) {
-                loginPage.loginWithUser(UserType.Committee100);
-            } else {
-                loginPage.loginWithUser(UserType.Committee1);
-            }
-
-            agentPage.committeeSpecialistApproval(refCode);
-            //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
-            agentPage.logOut();
-        }
-
-        driver.get().navigate().to(urls.agentLogin);
-        //String refCode = "SSP-10679";
-        loginPage.loginWithUser(UserType.Superuser);
-        driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseAppliaction(refCode);
-        agentPage.logOut();
-        loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
-        Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
-        agentPage.logOut();
+        approveApplicationModule.afterBcocApprovalProcess();
 
 
     }

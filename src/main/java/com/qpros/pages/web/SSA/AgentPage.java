@@ -144,7 +144,7 @@ public class AgentPage extends Base {
         driver.get().navigate().refresh();
         ActionsHelper.driverWait(5000);
     }
-    public String specialistApproval(String applicationRef, boolean incOrDecApp) throws AWTException, InterruptedException {
+    public String specialistApproval(String applicationRef, boolean incOrDecApp)  {
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
         ActionsHelper.waitForExpectedElement(firstElementAfterSearch);

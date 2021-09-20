@@ -45,6 +45,7 @@ public class RMIFirstAssessment extends Base {
     AgentPage agentPage = new AgentPage(driver.get());
     AuditorsManagementPage auditorsManagementPage = new AuditorsManagementPage(driver.get());
     ClaimantLogin claimantLogin = new ClaimantLogin(driver.get());
+    RMIPage rmiPage = new RMIPage(driver.get());
 
     private By submitApplication = By.xpath("//input[contains(@id,'wtCorrectData')]");
 
@@ -59,49 +60,9 @@ public class RMIFirstAssessment extends Base {
         this.logManager.INFO("Verify Eligibility Service Call", false);
 
         verifyEligibilityService.requestService();
+        rmiPage.firstAssessment();
 
-        QuantaTestManager.getTest().log(Status.INFO, MarkupHelper.createCodeBlock(verifyEligibilityService.response.getBody()));
 
-        if (verifyEligibilityService.getresponse(verifyEligibilityService).application.isEligible) {
-            QuantaTestManager.getTest().assignCategory("1st Assessment");
-            this.logManager.STEP("Submit Application from 12x12 API", "The System Submit Application by calling 12X12 API");
-            this.logManager.INFO("Submit Application Service Call", false);
-            submitApplicationService.requestService();
-            QuantaTestManager.getTest().log(Status.INFO, MarkupHelper.createCodeBlock(submitApplicationService.response.getBody()));
 
-            String refCode = submitApplicationService.getresponse(submitApplicationService).applicationSummary.referenceNumber;
-            homePage.navigateToLogin();
-
-            loginPage.loginWithUser(UserType.Superuser);
-            this.logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
-            this.logManager.STEP(" Login by super user, and assign the application to specialist from ادارة المراجعين ", "");
-            auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), refCode);
-            agentPage.logOut();
-
-            loginPage.loginWithUser(UserType.Specialist2);
-            ActionsHelper.driverWait(5000);
-            agentPage.specialistSendAgain(refCode);
-            agentPage.logOut();
-            driver.get().navigate().to(urls.claimantLogin);
-            claimantLogin.claimantLogin(TestData.EID);
-            ActionsHelper.retryClick(submitApplication, 5);
-            driver.get().switchTo().frame(0);
-            List<WebElement> checkboxes = driver.get().findElements(By.xpath("//input[contains(@id,'Column1_wtchk')]"));
-            checkboxes.stream().forEachOrdered(checkbox ->
-                    ActionsHelper.retryClick(checkbox, 10));
-            ActionsHelper.retryClick(By.xpath("//input[contains(@id,'wtSubmit')]"),5);
-            System.out.println("Save clicked");
-            driver.get().switchTo().defaultContent();
-            ActionsHelper.driverWait(5000);
-            ActionsHelper.retryClick(By.xpath("//input[contains(@id,'wtlogout')]"),5);
-            driver.get().navigate().to(urls.agentLogin);
-            loginPage.loginWithUser(UserType.Specialist2);
-            logManager.STEP("Search application", "Inputs the reference number in the search field");
-            ActionsHelper.sendKeys(By.xpath("//span[contains(@id,'SearcFrom')]"), refCode + Keys.ENTER);
-            ActionsHelper.waitForExpectedElement(firstElementAfterSearch);
-            ActionsHelper.driverWait(3000);
-            ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
-
-        }
     }
 }

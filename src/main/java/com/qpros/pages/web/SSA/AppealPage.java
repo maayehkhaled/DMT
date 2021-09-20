@@ -152,6 +152,8 @@ public class AppealPage extends Base {
         ActionsHelper.actionClickStepClick("click on logout",By.cssSelector("[tabindex='4'] > .OvalIcon"));
         ActionsHelper.driverWait(5000);
     }
+
+
     public void doAddressSelections() throws AWTException {
 
     }
