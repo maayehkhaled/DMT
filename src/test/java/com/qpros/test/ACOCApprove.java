@@ -13,6 +13,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import javax.jws.soap.SOAPBinding;
 import java.awt.*;
 import java.io.IOException;
 
@@ -45,8 +46,10 @@ public class ACOCApprove extends Base {
     @Test(description = "ACOC - Approve", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void acocApprove() throws JsonProcessingException, AWTException, InterruptedException {
-        approveApplicationModule.approveApplication(true);
-        cocPage.startCocProcess(ApproveApplicationModule.refCode);
+        //approveApplicationModule.approveApplication(true);
+        //cocPage.startCocProcess(ApproveApplicationModule.refCode);
+        cocPage.navigateToCoc();
+        cocPage.startCocProcess("SSP-12421");
         approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
 
     }

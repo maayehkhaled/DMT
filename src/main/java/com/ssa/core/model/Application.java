@@ -15,4 +15,8 @@ public class Application {
     public String incorrectInfoMessageEN;
     @JsonProperty("IncorrectInfoMessageAR")
     public String incorrectInfoMessageAR;
+    @JsonProperty("TitleEN")
+    public String titleEN;
+    @JsonProperty("TitleAR")
+    public String titleAR;
 }
