@@ -13,11 +13,12 @@ public class COCPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    private By searchField = By.id("DCDWebPortalTheme_wt15_block_wtMainContent_wt1");
-    private By searchFieldSSP = By.id("DCDAgentPortalTheme_wt196_block_wtMainContent_WebPatterns_wt178_block_wtContent_wt131");
-    private By firstRequest = By.id("DCDAgentPortalTheme_wt196_block_wtMainContent_WebPatterns_wt178_block_wtContent_wtBenefitRequests_ctl03_wt210");
-    private By commentSection = By.id("DCDAgentPortalTheme_wt196_block_wtMainContent_WebPatterns_wt178_block_wtContent_wtCommentIn");
-    private By launchCocProcess = By.id("DCDAgentPortalTheme_wt196_block_wtMainContent_WebPatterns_wt178_block_wtContent_wt214");
+    private By searchButton = By.xpath("//input[@id=\"DCDAgentPortalTheme_wt194_block_wtMainContent_WebPatterns_wt179_block_wtContent_wtbtn_filtereligible\"]");
+    private By searchFieldSSP = By.id("DCDAgentPortalTheme_wt194_block_wtMainContent_WebPatterns_wt179_block_wtContent_wttxt_SearchEligible");
+    private By firstRequest = By.xpath("//input[@id=\"DCDAgentPortalTheme_wt194_block_wtMainContent_WebPatterns_wt179_block_wtContent_wtBenefitRequests_ctl03_wt211\"]");
+    private By commentSection = By.id("DCDAgentPortalTheme_wt194_block_wtMainContent_WebPatterns_wt179_block_wtContent_wttxt_CommentIn");
+    private By launchCocProcess = By.id("DCDAgentPortalTheme_wt194_block_wtMainContent_WebPatterns_wt179_block_wtContent_wtbtn_LaunchCOC");
+    private By cocPage = By.xpath("//a[@id=\"InternalPortalTheme_wt85_block_wtMenu_AgentPortal_CW_wt90_block_RichWidgets_wt90_block_wtMenuItem_wt55\"]");
 
     public void navigateToCoc(){
         logManager.STEP("Navigate to COC", "Navigate to https://uat.ssa.gov.ae/DCDBusinessParameters/CoC.aspx");
@@ -25,13 +26,22 @@ public class COCPage extends Base {
     }
 
     public void startCocProcess(String refCode){
+
         logManager.STEP("Input search field", "Inputs the SSP code and press enter");
-        ActionsHelper.sendKeys(searchFieldSSP, refCode + Keys.ENTER);
-        ActionsHelper.driverWait(1000);
-        ActionsHelper.actionClickStepClick("Click on first application checkbox", firstRequest);
+        //ActionsHelper.actionClickStepClick("Click on COC page", cocPage);
+        ActionsHelper.sendKeys(searchFieldSSP, refCode);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Click on first application search checkbox", firstRequest);
         ActionsHelper.sendKeys(commentSection, "testComment");
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Click Launch Process", launchCocProcess);
+        try {
+            driver.get().switchTo().alert().accept();
+        } catch (Exception e) {
+        }
+        ActionsHelper.driverWait(5000);
+        driver.get().navigate().to(urls.tasksList);
+
     }
 
 

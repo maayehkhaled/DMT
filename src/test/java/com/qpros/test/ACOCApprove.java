@@ -48,8 +48,10 @@ public class ACOCApprove extends Base {
     public void acocApprove() throws JsonProcessingException, AWTException, InterruptedException {
         //approveApplicationModule.approveApplication(true);
         //cocPage.startCocProcess(ApproveApplicationModule.refCode);
+        homePage.navigateToLogin();
+        loginPage.loginWithUser(UserType.Committee1);
         cocPage.navigateToCoc();
-        cocPage.startCocProcess("SSP-12421");
+        cocPage.startCocProcess("SSP-12388");
         approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
 
     }
