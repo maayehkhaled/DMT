@@ -51,7 +51,7 @@ public class ACOCApprove extends Base {
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Committee1);
         cocPage.navigateToCoc();
-        cocPage.startCocProcess("SSP-12388");
+        cocPage.acocApprove("SSP-10038");
         approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
 
     }
@@ -61,7 +61,10 @@ public class ACOCApprove extends Base {
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void acocReject() throws JsonProcessingException, AWTException, InterruptedException {
         approveApplicationModule.approveApplication(false);
-        cocPage.startCocProcess(ApproveApplicationModule.refCode);
+        homePage.navigateToLogin();
+        loginPage.loginWithUser(UserType.Committee1);
+        cocPage.navigateToCoc();
+        cocPage.acocApprove(ApproveApplicationModule.refCode);
         rejectApplicationModule.rejectExistingApplication(ApproveApplicationModule.refCode);
     }
 
