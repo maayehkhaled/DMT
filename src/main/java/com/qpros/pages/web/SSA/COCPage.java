@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 import java.awt.*;
 import java.util.regex.Matcher;
@@ -24,6 +25,9 @@ public class COCPage extends Base {
     private By launchCocProcess = By.id("DCDAgentPortalTheme_wt194_block_wtMainContent_WebPatterns_wt179_block_wtContent_wtbtn_LaunchCOC");
     private By cocPage = By.xpath("//a[@id=\"InternalPortalTheme_wt85_block_wtMenu_AgentPortal_CW_wt90_block_RichWidgets_wt90_block_wtMenuItem_wt55\"]");
 
+
+    BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
+    PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
     Matcher matcher;
     AgentPage agentPage = new AgentPage(driver.get());
     private static final Pattern p = Pattern.compile("(^[^\\s]+)");
@@ -84,12 +88,20 @@ public class COCPage extends Base {
          String user = agentPage.seniorSpecialistApproval(refCode);
          loginPage.loginWithUser(UserType.valueOf(user));
          // Add a function for application approval
+        agentPage.committeeSpecialistApproval(refCode);
+        //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
+        agentPage.logOut();
 
         driver.get().navigate().to(urls.tasksList);
         //committeeName = committeeName.replace("Committee", "").replace("\n", "");
+        loginPage.loginWithUser(UserType.Superuser);
+        driver.get().navigate().to(urls.businessParameters);
+        businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
-        agentPage.specialistApproval(refCode);
-        agentPage.seniorSpecialistApproval(refCode);
+        loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
+        Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
+        agentPage.logOut();
+
 
 
 
@@ -124,13 +136,96 @@ public class COCPage extends Base {
         // loginPage.loginWithUser(UserType.SeniorSpecialist100);
         String user = agentPage.seniorSpecialistApproval(refCode);
         loginPage.loginWithUser(UserType.valueOf(user));
+        agentPage.committeeSpecialistApproval(refCode);
+        //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
+        agentPage.logOut();
         // Add a function for application approval
 
         driver.get().navigate().to(urls.tasksList);
         //committeeName = committeeName.replace("Committee", "").replace("\n", "");
         agentPage.logOut();
-        agentPage.specialistApproval(refCode);
-        agentPage.seniorSpecialistApproval(refCode);
+        loginPage.loginWithUser(UserType.Superuser);
+        driver.get().navigate().to(urls.businessParameters);
+        businessParametersPage.releaseAppliaction(refCode);
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
+        Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
+        agentPage.logOut();
+
+
+
+
+    }
+
+    public void refreshCOCApprove(String refCode) throws AWTException {
+        logManager.STEP("Search application", "Inputs the reference number in the search field");
+        loginPage.loginWithUser(UserType.Specialist2);
+        ActionsHelper.driverWait(5000);
+        String seniorSpecialist = agentPage.specialistApproval(refCode);
+        matcher = p.matcher(seniorSpecialist);
+        if (matcher.find()) {
+            System.out.println(matcher.group(0));
+            seniorSpecialist =matcher.group(0);
+        }
+        System.out.println("Senior Specialist : " + seniorSpecialist);
+
+        agentPage.logOut();
+        //String seniorSpecialist = UserType.SeniorSpecialist100.getUserName();
+        ActionsHelper.driverWait(5000);
+        agentPage.seniorSpecialistRejectApplication(refCode);
+        // loginPage.loginWithUser(UserType.SeniorSpecialist100);
+        String user = agentPage.seniorSpecialistApproval(refCode);
+        loginPage.loginWithUser(UserType.valueOf(user));
+        // Add a function for application approval
+        agentPage.committeeSpecialistApproval(refCode);
+        //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
+        agentPage.logOut();
+
+        driver.get().navigate().to(urls.tasksList);
+        loginPage.loginWithUser(UserType.Superuser);
+        driver.get().navigate().to(urls.businessParameters);
+        businessParametersPage.releaseAppliaction(refCode);
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
+        Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
+        agentPage.logOut();
+
+
+
+    }
+
+    public void refreshCOCReject(String refCode) throws AWTException {
+        logManager.STEP("Search application", "Inputs the reference number in the search field");
+        loginPage.loginWithUser(UserType.Specialist2);
+        ActionsHelper.driverWait(5000);
+        String seniorSpecialist = agentPage.specialistApproval(refCode);
+        matcher = p.matcher(seniorSpecialist);
+        if (matcher.find()) {
+            System.out.println(matcher.group(0));
+            seniorSpecialist =matcher.group(0);
+        }
+        System.out.println("Senior Specialist : " + seniorSpecialist);
+
+        agentPage.logOut();
+        //String seniorSpecialist = UserType.SeniorSpecialist100.getUserName();
+        ActionsHelper.driverWait(5000);
+        agentPage.seniorSpecialistRejectApplication(refCode);
+        // loginPage.loginWithUser(UserType.SeniorSpecialist100);
+        String user = agentPage.seniorSpecialistRejectApplication(refCode);
+        loginPage.loginWithUser(UserType.valueOf(user));
+        // Add a function for application approval
+        agentPage.committeeSpecialistApproval(refCode);
+        //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
+        agentPage.logOut();
+
+        driver.get().navigate().to(urls.tasksList);
+        loginPage.loginWithUser(UserType.Superuser);
+        driver.get().navigate().to(urls.businessParameters);
+        businessParametersPage.releaseAppliaction(refCode);
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
+        Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
+        agentPage.logOut();
 
 
 

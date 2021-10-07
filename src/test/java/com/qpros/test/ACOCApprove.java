@@ -52,7 +52,7 @@ public class ACOCApprove extends Base {
         loginPage.loginWithUser(UserType.Committee1);
         cocPage.navigateToCoc();
         cocPage.acocApprove("SSP-10038");
-        approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
+        //approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
 
     }
 
@@ -64,8 +64,33 @@ public class ACOCApprove extends Base {
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Committee1);
         cocPage.navigateToCoc();
-        cocPage.acocApprove(ApproveApplicationModule.refCode);
+        cocPage.acocReject(ApproveApplicationModule.refCode);
+        //rejectApplicationModule.rejectExistingApplication(ApproveApplicationModule.refCode);
+    }
+
+    @Test(description = "Refresh COC - Approve", priority = 1,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+    public void refreshCocApprove() throws JsonProcessingException, AWTException, InterruptedException {
+        approveApplicationModule.approveApplication(false);
+        homePage.navigateToLogin();
+        loginPage.loginWithUser(UserType.Committee1);
+        cocPage.navigateToCoc();
+        cocPage.refreshCOCApprove("SSP-9186");
         rejectApplicationModule.rejectExistingApplication(ApproveApplicationModule.refCode);
     }
+
+    @Test(description = "Refresh COC - Reject", priority = 1,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+    public void refreshCocReject() throws JsonProcessingException, AWTException, InterruptedException {
+        approveApplicationModule.approveApplication(false);
+        homePage.navigateToLogin();
+        loginPage.loginWithUser(UserType.Committee1);
+        cocPage.navigateToCoc();
+        cocPage.refreshCOCReject("SSP-9186");
+        rejectApplicationModule.rejectExistingApplication(ApproveApplicationModule.refCode);
+    }
+
+
+
 
 }
