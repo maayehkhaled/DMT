@@ -25,7 +25,6 @@ public class COCPage extends Base {
     private By launchCocProcess = By.id("DCDAgentPortalTheme_wt194_block_wtMainContent_WebPatterns_wt179_block_wtContent_wtbtn_LaunchCOC");
     private By cocPage = By.xpath("//a[@id=\"InternalPortalTheme_wt85_block_wtMenu_AgentPortal_CW_wt90_block_RichWidgets_wt90_block_wtMenuItem_wt55\"]");
 
-
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
     Matcher matcher;
@@ -43,7 +42,9 @@ public class COCPage extends Base {
         logManager.STEP("Input search field", "Inputs the SSP code and press enter");
         //ActionsHelper.actionClickStepClick("Click on COC page", cocPage);
         ActionsHelper.sendKeys(searchFieldSSP, refCode);
-        ActionsHelper.driverWait(3000);
+        logManager.STEP("Search For the Application", "Inputs the SSP code and press enter");
+        ActionsHelper.clickAction(searchButton);
+        ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click on first application search checkbox", firstRequest);
         ActionsHelper.sendKeys(commentSection, "testComment");
         ActionsHelper.driverWait(1000);

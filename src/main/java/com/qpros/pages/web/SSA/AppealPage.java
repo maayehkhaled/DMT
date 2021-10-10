@@ -1,9 +1,12 @@
 package com.qpros.pages.web.SSA;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.qpros.common.web.Base;
+import com.qpros.common.web.Util;
 import com.qpros.helpers.ActionsHelper;
 import com.ssa.core.common.data.TestData;
 import com.ssa.core.common.locators.urls;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,8 +14,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
+@Getter
 public class AppealPage extends Base {
     public AppealPage(WebDriver driver) {
         PageFactory.initElements(Base.driver.get(), this);
@@ -37,34 +42,66 @@ public class AppealPage extends Base {
 
     private By reviewConditionsAndStandards = By.xpath("//div[@class='HomePageRow']//div[@class='text']/div[.='مراجعة شروط ومعايير البرنامج والمدفوعات']");
     private By applyApplication = By.xpath("//input[@value='تقديم طلب تظلم']");
+    private By applyApplicationBtn = By.xpath("//input[@value=\"طلب تظلم\"]");
     private By appealApplication =  By.id("DCDWebPortalTheme_wtLayout_block_wtMainContent_wtbtn_Appeal");
     private By osFillParent  = By.xpath("//textarea[@class='OSFillParent']");
-    @FindBy(xpath = "//input[contains(@id,fileinputPopup_Upload)]")
+    @FindBy(xpath = "//label[contains(text(),'رفع المستند')]")
     private List<WebElement> salaryElementList;
     @FindBy(xpath = "//textarea[contains(@id,wttxt_Description)]")
     private List<WebElement> fillcommentTestBoxs;
+    @FindBy(xpath = "//input[@type=\"checkbox\"]")
+    private List<WebElement> familyMembersCheckBoxes;
     private By applyAppealRequest =  By.xpath("//input[@class='Button ForwardButton Is_Default']");
     @FindBy(xpath = "//input[contains(@id,wtchk_canProceed)]")
     private List<WebElement> listOfAgree;
     private By approveOnAppeal = By.xpath("//div[@class='PopupActionsContainer']");
     private By profilePage =  By.xpath("//input[@class='Button MenuButton UserProfileButton OSFillParent']");
     private By logout = By.cssSelector("[tabindex='4'] > .OvalIcon");
+    private By commentTextBox = By.xpath("//textarea[contains(@id,wttxt_Description)]");
+    private By uploadBankStatement = By.xpath("//label[contains(text(),'رفع المستند')]");
+    private By checkbox = By.xpath("//input[@type=\"checkbox\"]");
+
+
+
+    public void uploadDocument(WebElement element){
+        try {
+            ActionsHelper.clickAction(element);
+            Util.typeString("C:\\Users\\RawaQaffaf\\Desktop\\testpdf.pdf");
+            Robot robot=new Robot();
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+            ActionsHelper.driverWait(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+        //driver.get().findElement(By.xpath("//input[contains(@id,fileinputPopup_AddMemberIncome)]")).sendKeys("C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf");
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.clickAction(By.xpath("//input[@class='Button Is_Default']"));
+        driver.get().switchTo().defaultContent();
+    }
 
 
 
     public void appealApprove(){
         //1st assessment - Approve
+
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("مراجعة شروط و معايير البرنامج و المدفوعات", reviewConditionsAndStandards);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("تقديم طلب تظلم", applyApplication);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.actionClickScrollStepClick(" طلب تظلم", applyApplication);
+        ActionsHelper.actionClickScrollStepClick(" طلب تظلم", applyApplicationBtn);
         ActionsHelper.driverWait(2000);
         ActionsHelper.scrollTo(osFillParent);
         ActionsHelper.sendKeys(osFillParent, "test appeal text");
-        salaryElementList.stream().forEachOrdered(salElemnt -> ActionsHelper.sendKeys(salElemnt, "C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf"));
-        fillcommentTestBoxs.stream().forEachOrdered(commnt -> ActionsHelper.sendKeys(commnt, "test appeal text"));
+        List<WebElement> fillCommentTextBoxes = driver.get().findElements(commentTextBox);
+        List<WebElement> uploadStatementsList = driver.get().findElements(uploadBankStatement);
+        List<WebElement> familyMembersCheckBoxList = driver.get().findElements(checkbox);
+        familyMembersCheckBoxList.stream().forEachOrdered(checkbox -> ActionsHelper.clickAction(checkbox));
+        uploadStatementsList.stream().forEachOrdered(salElemnt -> uploadDocument(salElemnt));
+        fillCommentTextBoxes.stream().forEachOrdered(commnt -> ActionsHelper.sendKeys(commnt, "test appeal text"));
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("apply Appeal Request",applyAppealRequest);
         ActionsHelper.driverWait(3000);
