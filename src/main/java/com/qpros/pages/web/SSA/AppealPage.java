@@ -14,6 +14,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
@@ -51,10 +52,10 @@ public class AppealPage extends Base {
     private List<WebElement> fillcommentTestBoxs;
     @FindBy(xpath = "//input[@type=\"checkbox\"]")
     private List<WebElement> familyMembersCheckBoxes;
-    private By applyAppealRequest =  By.xpath("//input[@class='Button ForwardButton Is_Default']");
-    @FindBy(xpath = "//input[contains(@id,wtchk_canProceed)]")
+    private By sendAppealRequest =  By.xpath("//input[@value=\"إرسال طلب التظلم\"]");
+    @FindBy(xpath = "//input[contains(@id, 'wtchk_canProceed')]")
     private List<WebElement> listOfAgree;
-    private By approveOnAppeal = By.xpath("//div[@class='PopupActionsContainer']");
+    private By approveOnAppeal = By.xpath("//input[@value=\"أوافق\"]");
     private By profilePage =  By.xpath("//input[@class='Button MenuButton UserProfileButton OSFillParent']");
     private By logout = By.cssSelector("[tabindex='4'] > .OvalIcon");
     private By commentTextBox = By.xpath("//textarea[contains(@id,wttxt_Description)]");
@@ -62,23 +63,35 @@ public class AppealPage extends Base {
     private By checkbox = By.xpath("//input[@type=\"checkbox\"]");
 
 
+    public static void setClipboardData(String string) {
+        //StringSelection is a class that can be used for copy and paste operations.
+        StringSelection stringSelection = new StringSelection(string);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+    }
 
     public void uploadDocument(WebElement element){
+        //put path to your image in a clipboard
+        ActionsHelper.retryClick(element, 30);
+        ActionsHelper.driverWait(3000);
+        //imitate mouse events like ENTER, CTRL+C, CTRL+V
         try {
-            ActionsHelper.clickAction(element);
-            Util.typeString("C:\\Users\\RawaQaffaf\\Desktop\\testpdf.pdf");
+            setClipboardData("C://Users//RawaQaffaf//Desktop//testpdf.pdf");
             Robot robot=new Robot();
+            robot.delay(250);
             robot.keyPress(KeyEvent.VK_ENTER);
             robot.keyRelease(KeyEvent.VK_ENTER);
-            ActionsHelper.driverWait(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_V);
+            robot.keyRelease(KeyEvent.VK_V);
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.delay(90);
+            robot.keyRelease(KeyEvent.VK_ENTER);
         } catch (AWTException e) {
             e.printStackTrace();
         }
         //driver.get().findElement(By.xpath("//input[contains(@id,fileinputPopup_AddMemberIncome)]")).sendKeys("C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf");
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.clickAction(By.xpath("//input[@class='Button Is_Default']"));
+//        ActionsHelper.driverWait(2000);
         driver.get().switchTo().defaultContent();
     }
 
@@ -103,7 +116,7 @@ public class AppealPage extends Base {
         uploadStatementsList.stream().forEachOrdered(salElemnt -> uploadDocument(salElemnt));
         fillCommentTextBoxes.stream().forEachOrdered(commnt -> ActionsHelper.sendKeys(commnt, "test appeal text"));
         ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickStepClick("apply Appeal Request",applyAppealRequest);
+        ActionsHelper.actionClickStepClick("apply Appeal Request",sendAppealRequest);
         ActionsHelper.driverWait(3000);
         driver.get().switchTo().frame(0);
         listOfAgree.stream().forEachOrdered(agreeitem -> {
@@ -133,7 +146,7 @@ public class AppealPage extends Base {
         salaryElementList.stream().forEachOrdered(salElemnt -> ActionsHelper.sendKeys(salElemnt, "C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf"));
         fillcommentTestBoxs.stream().forEachOrdered(commnt -> ActionsHelper.sendKeys(commnt, "test appeal text"));
         ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickStepClick("apply Appeal Request",applyAppealRequest);
+        ActionsHelper.actionClickStepClick("apply Appeal Request",sendAppealRequest);
         ActionsHelper.driverWait(3000);
         driver.get().switchTo().frame(0);
         listOfAgree.stream().forEachOrdered(agreeitem -> {

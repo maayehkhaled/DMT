@@ -22,6 +22,7 @@ public class Util {
                 robot.keyPress(KeyEvent.VK_SHIFT);
             }
 
+
             //Actually pressing the key
             robot.keyPress(Character.toUpperCase(c));
             robot.keyRelease(Character.toUpperCase(c));
