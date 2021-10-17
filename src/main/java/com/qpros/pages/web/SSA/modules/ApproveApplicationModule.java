@@ -68,12 +68,12 @@ public class ApproveApplicationModule extends Base {
             agentPage.logOut();
 
             loginPage.loginWithUser(UserType.Specialist2);
-            ActionsHelper.driverWait(5000);
+            ActionsHelper.driverWait(8000);
             String seniorSpecialist = agentPage.specialistApproval(refCode,incOrDecApp);
             /*if (seniorSpecialist.contains("-")) {
                 agentPage.getAssigneeNameFromAllApplications(refCode);
             }*/
-            ActionsHelper.driverWait(2000);
+            ActionsHelper.driverWait(8000);
             System.out.println(seniorSpecialist);
 //            seniorSpecialist = seniorSpecialist.replace("Supervisor", "").replace("\n", "");
             matcher = p.matcher(seniorSpecialist);
