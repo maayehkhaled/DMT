@@ -28,8 +28,6 @@ public class DeleteEmirateId {
         "     \"EmiratesId\": \""+ TestData.EID+"\"\n" +
         " \n" +
         "}";
-
-
   }
 
   public ResponseStatus getresponse(DeleteEmirateId serviceObject) throws JsonProcessingException {
@@ -37,6 +35,7 @@ public class DeleteEmirateId {
     return om.readValue(serviceObject.response.getBody(), ResponseStatus.class);
 
   }
+
   public static void main(String[] args) throws JsonProcessingException {
     DeleteEmirateId deleteEmirateId = new DeleteEmirateId();
     deleteEmirateId.requestService();

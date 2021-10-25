@@ -9,6 +9,7 @@ import com.qpros.pages.web.SSA.modules.RejectApplicationModule;
 import com.qpros.reporting.QuantaTestManager;
 import com.ssa.core.common.data.TestData;
 import com.ssa.core.common.locators.urls;
+import com.ssa.core.service.DeleteEmirateId;
 import com.ssa.core.service.SubmitApplicationService;
 import com.ssa.core.service.VerifyEligibilityService;
 import org.openqa.selenium.By;
@@ -42,10 +43,11 @@ public class AppealApprove extends Base {
     LoginPage loginPage = new LoginPage(driver.get());
     AppealPage appealPage = new AppealPage(driver.get());
 
+
     @Test(description = "AppealApprove")
     public void AppealApprove() throws JsonProcessingException, InterruptedException, AWTException {
         //1st assessment - Approve
-        //approveApplicationModule.approveApplication(false);
+        approveApplicationModule.approveApplication(false);
         // approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
         logManager.STEP("2. Login to beneficiary side with the EID", "the Beneficiary User conduct login using EID" + TestData.EID);
         claimantLogin.claimantLogin(TestData.EID);

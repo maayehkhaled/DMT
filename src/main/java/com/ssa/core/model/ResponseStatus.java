@@ -7,4 +7,6 @@ public class ResponseStatus {
     public int statusCode;
     @JsonProperty("Message")
     public String message;
+    @JsonProperty("Errors")
+    public String errors;
 }

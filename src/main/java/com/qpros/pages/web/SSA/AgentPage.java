@@ -28,10 +28,10 @@ public class AgentPage extends Base {
     private By agentRejectButtonFinal = By.xpath("//*[contains(@id,'wtActions_wtrbReject')]");
 
 //TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]
-    private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6\"]");
-    private By agentClickNextFinal = By.id("InternalPortalTheme_wt397_block_wtActions_wtNext");
+    private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
+    private By agentClickNextFinal = By.id("InternalPortalTheme_wt567_block_wtActions_wtNext");
     private By agentClickNext56StepFinal = By.xpath("//*[@id=\"InternalPortalTheme_wt397_block_wtActions_wtOperationBtnContainer\"]/div[2]");
-    private By agreementBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6\"]");
+    private By agreementBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
     private By applicationListFirstApplicationSupervisorName = By.cssSelector(".FlexColContainer"); //Contains supervisor name and role
     private By approveButton = By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']"); //Only one action was needed
     private By specalistSearchApplicationFinal = By.xpath("//*[contains(@id,'wttxt_SearcFrom')]");
@@ -147,24 +147,24 @@ public class AgentPage extends Base {
     public String specialistApproval(String applicationRef, boolean incOrDecApp)  {
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
-        ActionsHelper.waitForExpectedElement(firstElementAfterSearch);
+        ActionsHelper.waitForExpectedElement(firstElementAfterSearch, 30);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickScrollStepClick("Approve Personal Information", agentApproveStepFinal);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Click next Step 1", agentClickNextFinal);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Approve Family Information", agentApproveStepFinal);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Click next Step 2", agentClickNextFinal);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Approve Address", agentApproveStepFinal);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Click next Step 3", agentClickNextFinal);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Approve Income Info", agentApproveStepFinal);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Click next Step 4", agentClickNextFinal);
         ActionsHelper.driverWait(2000);
         if (incOrDecApp) {
@@ -197,7 +197,8 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(5000);
-        ActionsHelper.waitForExpectedElement(summaryNextBtn);        ActionsHelper.scrollTo(agentClickNext56StepFinal);
+        ActionsHelper.waitForExpectedElement(summaryNextBtn);
+        //ActionsHelper.scrollTo(agentClickNext56StepFinal);
         ActionsHelper.driverWait(1000);
         ActionsHelper.retryClick(summaryNextBtn, 10);
         ActionsHelper.driverWait(8000);

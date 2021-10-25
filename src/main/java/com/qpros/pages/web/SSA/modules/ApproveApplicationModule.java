@@ -8,6 +8,7 @@ import com.qpros.quanta.Status;
 import com.qpros.quanta.markuputils.MarkupHelper;
 import com.qpros.reporting.QuantaTestManager;
 import com.ssa.core.common.locators.urls;
+import com.ssa.core.service.DeleteEmirateId;
 import com.ssa.core.service.SubmitApplicationService;
 import com.ssa.core.service.VerifyEligibilityService;
 import org.openqa.selenium.WebDriver;
@@ -33,6 +34,7 @@ public class ApproveApplicationModule extends Base {
     AuditorsManagementPage auditorsManagementPage = new AuditorsManagementPage(driver.get());
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
+    DeleteEmirateId deleteId = new DeleteEmirateId();
     private static final Pattern p = Pattern.compile("(^[^\\s]+)");
     Matcher matcher;
     public String committeeName;
@@ -40,9 +42,9 @@ public class ApproveApplicationModule extends Base {
 
 
     public void approveApplication(boolean incOrDecApp) throws JsonProcessingException, AWTException, InterruptedException {
+        //deleteId.requestService();
         //URL: https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx
         driver.get().navigate().to(urls.agentLogin);
-
         logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
         logManager.INFO("Verify Eligibility Service Call", false);
         verifyEligibilityService.requestService();

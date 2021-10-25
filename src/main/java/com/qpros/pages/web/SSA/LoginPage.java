@@ -11,10 +11,10 @@ public class LoginPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    private By usernameField = By.xpath("//*[contains(@id,'wtMainContent_wt6')]");
+    private By usernameField = By.xpath("//input[@placeholder=\"اسم المستخدم\"]");
     //By.xpath("//*[contains(@id,'wtMainContent_wtLogin')]");
 
-    private By passwordField = By.xpath("//*[contains(@id,'wtMainContent_wt18')]");
+    private By passwordField = By.xpath("//input[@placeholder=\"كلمة السر\"]");
 
     private By loginButton = By.xpath("//*[contains(@id,'wtMainContent_wtLogin')]");
 //wtMainContent_wtLogin
@@ -35,7 +35,7 @@ public class LoginPage extends Base {
 
     public void loginWithUser(UserType usertype) {
         logManager.STEP("Input username", "Inputs the username: " + usertype.getUserName());
-        ActionsHelper.waitForExpectedElement(usernameField);
+        ActionsHelper.waitForExpectedElement(usernameField, 30);
         ActionsHelper.retryClick(usernameField, 30);
         ActionsHelper.sendKeys(usernameField, usertype.getUserName());
         logManager.STEP("Input password", "Inputs the password: " + usertype.getPassword());
