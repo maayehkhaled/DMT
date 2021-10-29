@@ -35,8 +35,35 @@ public class ClaimantApplicationPage extends Base {
     private By businessIncomeNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent6_wtbtn_Next10\"]");
     private By assetsNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent7_wtbtn_Next12\"]");
     private By finishApplication = By.xpath("//input[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent8_wtbtn_ab7Submit\"]");
+    private By uploadPersonalDetailsDocument = By.xpath("//div[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent1_wtDivocrceDoc_wtImage\"]");
+    private By uploadDocumentBtn = By.xpath("//label[@class=\"button custom-file-upload\"]");
 
 
+    public void uploadDocument(By element){
+        //put path to your image in a clipboard
+        ActionsHelper.retryClick(element, 30);
+        ActionsHelper.driverWait(3000);
+        driver.get().switchTo().frame(0);
+        ActionsHelper.retryClick(uploadDocumentBtn, 30);
+        ActionsHelper.driverWait(3000);
+        //imitate mouse events like ENTER, CTRL+C, CTRL+V
+        try {
+            Util.typeString("test.pdf");
+            Robot robot=new Robot();
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+            ActionsHelper.driverWait(8000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+
+        //driver.get().findElement(By.xpath("//input[contains(@id,fileinputPopup_AddMemberIncome)]")).sendKeys("C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf");
+//        ActionsHelper.driverWait(2000);
+        ActionsHelper.clickAction(By.xpath("//input[@value=\"حفظ\"]"));
+        driver.get().switchTo().defaultContent();
+    }
     public void uploadBill() throws AWTException {
         if (!ActionsHelper.isElementPresent(checkBill)) {
             ActionsHelper.driverWait(1000);
@@ -275,6 +302,8 @@ public class ClaimantApplicationPage extends Base {
         logManager.STEP("4. Click on التالي in البيانات الشخصيه tab", "Click on التالي in البيانات الشخصيه tab");
         //ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
         ActionsHelper.driverWait(20000);
+        ActionsHelper.waitForExpectedElement(uploadPersonalDetailsDocument, 30);
+        uploadDocument(uploadPersonalDetailsDocument);
         ActionsHelper.actionClickScrollStepClick("Click on التالي in البيانات الشخصيه tab", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
     }
 

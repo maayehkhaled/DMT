@@ -34,7 +34,7 @@ public class BusinessParametersPage extends Base {
         ActionsHelper.actionClickStepClick("Validate", validateButton);
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Start Process", startProcessButton);
-        ActionsHelper.driverWait(1000);
+        ActionsHelper.driverWait(4000);
         driver.get().switchTo().alert().accept();
     }
 }

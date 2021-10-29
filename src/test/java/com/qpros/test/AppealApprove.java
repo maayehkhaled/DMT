@@ -47,13 +47,15 @@ public class AppealApprove extends Base {
     @Test(description = "AppealApprove")
     public void AppealApprove() throws JsonProcessingException, InterruptedException, AWTException {
         //1st assessment - Approve
-        approveApplicationModule.approveApplication(false);
+        //approveApplicationModule.approveApplication(false);
         // approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
         logManager.STEP("2. Login to beneficiary side with the EID", "the Beneficiary User conduct login using EID" + TestData.EID);
         claimantLogin.claimantLogin(TestData.EID);
         appealPage.appealApprove();
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Superuser);
+        //auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), referenceNumber);
+        //agentPage.logOut();
 
     }
 }

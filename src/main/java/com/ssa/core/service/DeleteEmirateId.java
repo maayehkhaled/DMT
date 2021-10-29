@@ -24,10 +24,14 @@ public class DeleteEmirateId {
   }
 
   public String requestBody() throws JsonProcessingException {
-    return "{\n" +
+    return "{\n"+
+            "     \"EmiratesId\": \""+ "[\n" +
+            "{\n" +
         "     \"EmiratesId\": \""+ TestData.EID+"\"\n" +
         " \n" +
-        "}";
+            "}" +
+            "]\n" +
+            "}";
   }
 
   public ResponseStatus getresponse(DeleteEmirateId serviceObject) throws JsonProcessingException {

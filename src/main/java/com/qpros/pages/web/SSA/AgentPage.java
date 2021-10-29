@@ -30,6 +30,7 @@ public class AgentPage extends Base {
 //TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]
     private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
     private By agentClickNextFinal = By.id("InternalPortalTheme_wt567_block_wtActions_wtNext");
+    private By agentClickNext = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
     private By agentClickNext56StepFinal = By.xpath("//*[@id=\"InternalPortalTheme_wt397_block_wtActions_wtOperationBtnContainer\"]/div[2]");
     private By agreementBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
     private By applicationListFirstApplicationSupervisorName = By.cssSelector(".FlexColContainer"); //Contains supervisor name and role
@@ -88,6 +89,51 @@ public class AgentPage extends Base {
         } catch (Exception e) {
         }
         return getAssigneeNameFromAllApplications(applicationRef);
+
+
+    }//Finished
+
+
+    public String specialistAcocApproval(String applicationRef) throws AWTException {
+/*
+        logManager.STEP("Search application", "Inputs the reference number in the search field");
+        ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
+        ActionsHelper.waitForExpectedElement(firstElementAfterSearch);
+        ActionsHelper.driverWait(500);
+        ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.actionClickScrollStepClick("Approve step 1", agentApproveStepFinal);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("Click next Step 1", agentClickNextFinal);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.actionClickStepClick("Approve step 2", agentApproveStepFinal);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("Click next Step 2", agentClickNextFinal);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.actionClickStepClick("Approve step 3", agentApproveStepFinal);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("Click next Step 3", agentClickNextFinal);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.actionClickStepClick("Approve step 4", agentApproveStepFinal);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("Click next Step 4", agentClickNextFinal);
+        ActionsHelper.driverWait(4000);
+        System.out.println("Attempting step 5");
+        ActionsHelper.retryClick(agentClickNext, 4);
+        ActionsHelper.driverWait(4000);
+        System.out.println("Attempting step 6");
+        ActionsHelper.retryClick(agentClickNext, 3);
+        logManager.STEP("Approving the application","Click the confirm button");
+        try {
+            driver.get().switchTo().alert().accept();
+        } catch (Exception e) {
+        }
+
+
+
+ */
+        return getAssigneeNameFromAllApplications(applicationRef);
+
 
     }//Finished
     public void specialistSendAgain(String applicationRef) throws AWTException {
@@ -342,6 +388,8 @@ public class AgentPage extends Base {
 
         return getAssigneeNameFromAllApplications(refCode);
     }
+
+
     public String getAssigneeNameFromAllApplications(String refCode) {
         ActionsHelper.driverWait(10000);
         driver.get().navigate().to(urls.allApplications);
@@ -351,6 +399,7 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(allApllicationsSearchInput, 5);
         ActionsHelper.sendKeys(allApllicationsSearchInput, refCode + Keys.ENTER);
+        ActionsHelper.driverWait(4000);
         String person;
         try {
             System.out.println("Assigned to name: " + driver.get().findElement(applicationListFirstApplicationSupervisorName).getText());
@@ -362,6 +411,5 @@ public class AgentPage extends Base {
         logManager.STEP("Get next person name","Reads the username of the next stage of the process");
         return person;
     }//Finished
-
 
 }

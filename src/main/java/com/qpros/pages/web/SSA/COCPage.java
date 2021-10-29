@@ -3,6 +3,7 @@ package com.qpros.pages.web.SSA;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.ssa.core.common.locators.urls;
+import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -60,12 +61,16 @@ public class COCPage extends Base {
 
 
     public void acocApprove(String refCode) throws AWTException {
-        startCocProcess(refCode);
-        driver.get().navigate().to(urls.tasksList);
+        //startCocProcess(refCode);
+        //agentPage.logOut();
         logManager.STEP("Search application", "Inputs the reference number in the search field");
+        //String specialist = agentPage.getAssigneeNameFromAllApplications("SSP-13273");
+        //System.out.println("Specialist type " + specialist);
+        agentPage.logOut();
         loginPage.loginWithUser(UserType.Specialist2);
+        agentPage.specialistAcocApproval("SSP-13273");
         ActionsHelper.driverWait(5000);
-        String seniorSpecialist = agentPage.specialistApproval(refCode);
+        String seniorSpecialist = agentPage.specialistAcocApproval("SSP-13273");
             /*if (seniorSpecialist.contains("-")) {
                 agentPage.getAssigneeNameFromAllApplications(refCode);
             }*/

@@ -60,9 +60,7 @@ public class AppealPage extends Base {
     private By commentTextBox = By.xpath("//textarea[contains(@id,wttxt_Description)]");
     private By uploadBankStatement = By.xpath("//label[contains(text(),'رفع المستند')]");
     private By checkbox = By.xpath("//input[@type=\"checkbox\"]");
-    private By approvalCheckboxesId = By.xpath("//input[contains(@id, 'wtchk_canProceed')]");
-    private By lastApprovalCheckboxId = By.xpath("//input[@id=\"CloneOfWebPatterns_wt9_block_wtMainContent_WebPatterns_wt29_block_wtColumn1_wtchk_\"]");
-
+    private By approvalCheckboxesId = By.xpath("//form[@action=\"PopupDisclaimer2.aspx\"]//div//div//div//div[2]//div//div//div//div//div//input");
     public static void setClipboardData(String string) {
         //StringSelection is a class that can be used for copy and paste operations.
         StringSelection stringSelection = new StringSelection(string);
@@ -120,32 +118,28 @@ public class AppealPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickScrollStepClick(" طلب تظلم", applyApplicationBtn);
         ActionsHelper.driverWait(4000);
-        ActionsHelper.scrollTo(osFillParent);
-        ActionsHelper.sendKeys(osFillParent, "test appeal text");
+        //ActionsHelper.scrollTo(osFillParent);
+        //ActionsHelper.sendKeys(osFillParent, "test appeal text");
         List<WebElement> fillCommentTextBoxes = driver.get().findElements(commentTextBox);
         List<WebElement> uploadStatementsList = driver.get().findElements(uploadBankStatement);
         List<WebElement> familyMembersCheckBoxList = driver.get().findElements(checkbox);
         familyMembersCheckBoxList.stream().forEachOrdered(checkbox -> ActionsHelper.clickAction(checkbox));
         uploadStatementsList.stream().forEachOrdered(salElemnt -> uploadDocument(salElemnt));
-
-    fillCommentTextBoxes.stream().forEachOrdered(commnt -> ActionsHelper.sendKeys(commnt, "test appeal text"));
-        ActionsHelper.driverWait(3000);
+        fillCommentTextBoxes.stream().forEachOrdered(commnt -> ActionsHelper.sendKeys(commnt, "test appeal text"));
+        ActionsHelper.driverWait(7000);
         ActionsHelper.actionClickStepClick("apply Appeal Request",sendAppealRequest);
-        ActionsHelper.driverWait(30);
-        driver.get().switchTo().frame("WebForm1");
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.waitForExpectedElement(approvalCheckboxesId);
-        List<WebElement> approvalCheckboxes = driver.get().findElements(approvalCheckboxesId);
-        approvalCheckboxes.stream().forEachOrdered(checkbox -> checkbox.click());
-        ActionsHelper.clickAction(lastApprovalCheckboxId);
-        /*
-        listOfAgree.stream().forEachOrdered(agreeitem -> {
+        ActionsHelper.driverWait(8000);
+        driver.get().switchTo().frame(0);
+        List<WebElement> approvalCheckboxeslist = driver.get().findElements(approvalCheckboxesId);
+        approvalCheckboxeslist.stream().forEachOrdered(checkbox -> ActionsHelper.clickAction(checkbox));
+        //ActionsHelper.scrollTo(lastApprovalCheckboxId);
+        //ActionsHelper.clickAction(lastApprovalCheckboxId);
+        approvalCheckboxeslist.stream().forEachOrdered(agreeitem -> {
             if (!agreeitem.isSelected()) {
                 agreeitem.click();
             }
         });
-        1.pdf
-         */
+
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("click approve on appeal", approveOnAppeal);
         ActionsHelper.driverWait(10000);
@@ -153,6 +147,7 @@ public class AppealPage extends Base {
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("click on logout", logout);
         ActionsHelper.driverWait(5000);
+
     }
 
     public void appealReject(){
