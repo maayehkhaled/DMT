@@ -220,7 +220,7 @@ public class AgentPage extends Base {
         //ActionsHelper.actionClickStepClick("Approve step 5", agentApproveStepFinal);
         System.out.println("Attempting step 5");
         //ActionsHelper.retryClick(agentClickNext56StepFinal, 4);
-        ActionsHelper.driverWait(10000);
+        ActionsHelper.driverWait(12000);
         ActionsHelper.actionClickStepClick("Click Next Step 5", summaryNextBtn);
         System.out.println("Attempting step 6");
         //ActionsHelper.actionClickStepClick("Click Approval and Agree", summaryNextBtn);

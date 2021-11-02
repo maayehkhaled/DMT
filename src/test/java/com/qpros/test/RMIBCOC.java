@@ -65,7 +65,7 @@ public class RMIBCOC extends Base {
         logManager.STEP("3. Click on التغير في الظروف المعيشية box", "the Beneficiary User Click on التغير في الظروف المعيشية box" + TestData.EID);
         ActionsHelper.driverWait(3000);
         /*
-        ActionsHelper.actionClickStepClick("Click on update family Data", By.xpath("//div[@class='HomePageRow']/div[1]//div[@class='text']/div[1]"));
+d        ActionsHelper.actionClickStepClick("Click on update family Data", By.xpath("//div[@class='HomePageRow']/div[1]//div[@class='text']/div[1]"));
         ActionsHelper.driverWait(3000);
         ActionsHelper.driver.get().switchTo().frame(0);
         ActionsHelper.selectOption(By.id("CloneOfWebPatterns_wt20_block_wtMainContent_wtddl_WebPortalLocation2"),"2");
@@ -87,7 +87,7 @@ public class RMIBCOC extends Base {
 
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Superuser);
-        auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), "SSP-12256");
+        auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), "SSP-13345");
         agentPage.logOut();
         logManager.STEP("15. Login by the specialist", "Login by the specialist");
         homePage.navigateToLogin();
@@ -102,7 +102,9 @@ public class RMIBCOC extends Base {
         System.out.println(seniorSpecialist);
         agentPage.logOut();
         logManager.STEP("17. Click on application to view the details page", "Click on application to view the details page");
+        agentPage.specialistSendAgain("SSP-13345");
         logManager.STEP("18. Go through steps and select ارسالة مرة اخرى then submit", "Go through steps and select ارسالة مرة اخرى then submit ");
+
         logManager.STEP("19. Select the reason of RMIe.x: هوية غير صحية and select he EID, then select حفظ", " Select the reason of RMIe.x: هوية غير صحية and select he EID, then select حفظ");
         logManager.STEP("20. Logout", "Logout");
         logManager.STEP("21. Login by EID to the claiment side", "Login by EID to the claiment side ");

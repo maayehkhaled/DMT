@@ -62,7 +62,5 @@ public class RMIFirstAssessment extends Base {
         verifyEligibilityService.requestService();
         rmiPage.firstAssessment();
 
-
-
     }
 }

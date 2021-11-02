@@ -28,7 +28,7 @@ public class ClaimantApplicationPage extends Base {
     private By personalInformationNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent1_wtNext18\"]");
     private By familyInformationNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent2_wtbtn_Next15\"]");
     private By reasonNotToPayTextField = By.xpath("//input[@id=\"CloneOfWebPatterns_wt16_block_wtMainContent_wttxt_Reason2\"]");
-    private By premiseNumberDropDownMenu = By.xpath("//div[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent3_wtAddressInfo_wtHouseholdIndividualsWithPremiseRecord3_ctl00_wtcombobox\"]");
+    private By premiseNumberDropDownMenu = By.xpath("//select[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent3_wtAddressInfo_wtHouseholdIndividualsWithPremiseRecord3_ctl00_wtddl_PremiseLivingOn\"]");
     private By addressNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent3_wtbtn_Next14\"]");
     private By salaryAndPensionNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent4_wtbtn_Next13\"]");
     private By supportIncomeNextBtn = By.xpath("//*[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent5_wtbtn_Next11\"]");
@@ -37,9 +37,32 @@ public class ClaimantApplicationPage extends Base {
     private By finishApplication = By.xpath("//input[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent8_wtbtn_ab7Submit\"]");
     private By uploadPersonalDetailsDocument = By.xpath("//div[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent1_wtDivocrceDoc_wtImage\"]");
     private By uploadDocumentBtn = By.xpath("//label[@class=\"button custom-file-upload\"]");
-
+    private By addBillSaveBtn = By.xpath("//input[@id=\"CloneOfWebPatterns_wt16_block_wtMainContent_wtbtn_Submit\"]");
 
     public void uploadDocument(By element){
+        //put path to your image in a clipboard
+        ActionsHelper.retryClick(element, 30);
+        ActionsHelper.driverWait(3000);
+        //imitate mouse events like ENTER, CTRL+C, CTRL+V
+        try {
+            Util.typeString("test.pdf");
+            Robot robot=new Robot();
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+            ActionsHelper.driverWait(8000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+
+        //driver.get().findElement(By.xpath("//input[contains(@id,fileinputPopup_AddMemberIncome)]")).sendKeys("C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf");
+//        ActionsHelper.driverWait(2000);
+        ActionsHelper.clickAction(By.xpath("//input[@value=\"حفظ\"]"));
+    }
+
+
+    public void uploadDocumentPersonalInfo(By element){
         //put path to your image in a clipboard
         ActionsHelper.retryClick(element, 30);
         ActionsHelper.driverWait(3000);
@@ -64,8 +87,10 @@ public class ClaimantApplicationPage extends Base {
         ActionsHelper.clickAction(By.xpath("//input[@value=\"حفظ\"]"));
         driver.get().switchTo().defaultContent();
     }
+
+
     public void uploadBill() throws AWTException {
-        if (!ActionsHelper.isElementPresent(checkBill)) {
+        //if (!ActionsHelper.isElementPresent(checkBill)) {
             ActionsHelper.driverWait(1000);
             // 3 | click | css=#DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent3_wtAddressInfo_wtoldaddressinfo > .Button |
             driver.get().findElement(By.cssSelector("#DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent3_wtAddressInfo_wtoldaddressinfo > .Button")).click();
@@ -74,70 +99,20 @@ public class ClaimantApplicationPage extends Base {
             driver.get().switchTo().frame(0);
             ActionsHelper.selectOption(addNewBillDropDownMenu, "ADDC");
             ActionsHelper.sendKeys(accountNumberField, "5299625382");
-            ActionsHelper.sendKeys(emiratesIdField, "784196896907175");
+            ActionsHelper.sendKeys(emiratesIdField, "196896907175");
             ActionsHelper.sendKeys(premiseNumber, "8354787951");
             ActionsHelper.sendKeys(reasonNotToPayTextField, "dhsdjfjdshds");
-
-
-            /*
-            // 5 | click | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtcompany |
-            driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtcompany")).click();
-            // 6 | select | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtcompany | label=ADDC
-            {
-                WebElement dropdown = driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtcompany"));
-                dropdown.findElement(By.xpath("//option[. = 'ADDC']")).click();
-            }
-            // 7 | click | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtcompany |
-
-            driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtcompany")).click();
-            // 8 | click | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtAccountNumber |
-            driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtAccountNumber")).click();
-            // 9 | type | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtAccountNumber | 5299625382
-            driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtAccountNumber")).sendKeys("5299625382");
-            // 10 | click | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtinputemirates |
-            driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtinputemirates")).click();
-            // 11 | click | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtInoutPremiseNumber |
-            driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtInoutPremiseNumber")).click();
-            // 12 | type | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtInoutPremiseNumber | 8354787951
-            driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtInoutPremiseNumber")).sendKeys("8354787951");
-            // 13 | click | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtReason2 |
-            driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtReason2")).click();
-            // 14 | type | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtReason2 | asdf
-            driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtReason2")).sendKeys("asdf");
-            // 15 | click | css=.button |
-            // 16 | type | id=CloneOfWebPatterns_wt8_block_wtMainContent_wtinputemirates | 784-1968-9690717-5
-            driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtinputemirates")).sendKeys("196896907175");
-
-             */
-            driver.get().findElement(By.cssSelector(".button")).click();
+            uploadDocument(By.cssSelector(".button"));
+            ActionsHelper.waitForExpectedElement(By.xpath("//input[@value=\"حفظ\"]"));
+            ActionsHelper.retryClick(By.xpath("//input[@value=\"حفظ\"]"), 30);
+            //ActionsHelper.clickAction(By.xpath("//input[@value=\"حفظ\"]"));
+            //driver.get().switchTo().defaultContent();
+            ActionsHelper.driverWait(8000);
+            ActionsHelper.selectOption(premiseNumberDropDownMenu, "8354787951");
             ActionsHelper.driverWait(4000);
 
-            Robot robot = new Robot();
-            robot.keyPress(KeyEvent.VK_F);
-            robot.keyRelease(KeyEvent.VK_F);
-            robot.keyPress(KeyEvent.VK_PERIOD);
-            robot.keyRelease(KeyEvent.VK_PERIOD);
-            robot.keyPress(KeyEvent.VK_P);
-            robot.keyRelease(KeyEvent.VK_P);
-            robot.keyPress(KeyEvent.VK_D);
-            robot.keyRelease(KeyEvent.VK_D);
-            robot.keyPress(KeyEvent.VK_F);
-            robot.keyRelease(KeyEvent.VK_F);
-
-            ActionsHelper.driverWait(1000);
-            robot.keyPress(KeyEvent.VK_ENTER);
-            robot.keyRelease(KeyEvent.VK_ENTER);
-
-            ActionsHelper.driverWait(5000);
-
-            driver.get().findElement(By.id("CloneOfWebPatterns_wt8_block_wtMainContent_wtSubmit")).click();
-
-            driver.get().switchTo().defaultContent();
-
-            ActionsHelper.selectOption(premiseNumberDropDownMenu, "354787951");
-
         }
-    }
+   // }
 
     public void doAddressSelections() throws AWTException {
         ActionsHelper.driverWait(10000);
@@ -303,7 +278,7 @@ public class ClaimantApplicationPage extends Base {
         //ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
         ActionsHelper.driverWait(20000);
         ActionsHelper.waitForExpectedElement(uploadPersonalDetailsDocument, 30);
-        uploadDocument(uploadPersonalDetailsDocument);
+        uploadDocumentPersonalInfo(uploadPersonalDetailsDocument);
         ActionsHelper.actionClickScrollStepClick("Click on التالي in البيانات الشخصيه tab", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
     }
 
@@ -312,12 +287,12 @@ public class ClaimantApplicationPage extends Base {
         ActionsHelper.driverWait(3000);
         ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
         ActionsHelper.actionClickScrollStepClick("Click on التالي in بيانات العائلة tab", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
-
     }
 
-    public void addressAndContactInformation() {
+    public void addressAndContactInformation() throws AWTException {
         logManager.STEP("6. Fill address information and contact information in العنوان tab (make sure that the tab marked as completed)", "Fill address information and contact information in العنوان tab (make sure that the tab marked as completed) ");
         ActionsHelper.driverWait(3000);
+        uploadBill();
         ActionsHelper.scrollTo(By.xpath("//span[.='تفاصيل مكان السكن']"));
         ActionsHelper.isElementPresent(By.xpath("//span[.='تفاصيل مكان السكن']"));
         java.util.List<WebElement> residentList = driver.get().findElements(By.xpath("//select"));
@@ -409,6 +384,8 @@ public class ClaimantApplicationPage extends Base {
             ActionsHelper.selectOption(By.id("CloneOfWebPatterns_wt21_block_wtMainContent_wtddl_FrequencyType"),"3");
             ActionsHelper.sendKeys(By.xpath("//input[@class='Form_control ThemeGrid_Width6']"),"500");
             ActionsHelper.driverWait(3000);
+            uploadDocument(By.xpath("//label[@class='button custom-file-upload']"));
+            /*
             ActionsHelper.retryClick(By.xpath("//label[@class='button custom-file-upload']"),5);
             ActionsHelper.driverWait(3000);
             try {
@@ -425,6 +402,7 @@ public class ClaimantApplicationPage extends Base {
             //driver.get().findElement(By.xpath("//input[contains(@id,fileinputPopup_AddMemberIncome)]")).sendKeys("C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf");
             ActionsHelper.driverWait(2000);
             ActionsHelper.clickAction(By.xpath("//input[@class='Button Is_Default']"));
+             */
             driver.get().switchTo().defaultContent();
         });
         java.util.List<WebElement> listStoreIncome = driver.get().findElements(By.xpath("//input[contains(@id,\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent6_wtBusinessIncomeInfo_wtApplicationIndividualByProperty\")]"));
