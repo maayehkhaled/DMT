@@ -143,15 +143,15 @@ public class AgentPage extends Base {
         ActionsHelper.waitForExpectedElement(firstElementAfterSearch);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickScrollStepClick("Approve step 1", agentSendAgainStepFinal);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Click next Step 1", agentClickNextFinal);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Approve step 2", agentSendAgainStepFinal);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Click next Step 2", agentClickNextFinal);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Approve step 3", agentSendAgainStepFinal);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click next Step 3", agentClickNextFinal);
@@ -175,7 +175,7 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(10000);
         driver.get().switchTo().frame(0);
         ActionsHelper.driverWait(1000);
-        ActionsHelper.retryClick(By.xpath("//input[contains(@id,'wtListRecords1_ctl00_wt37_wtchk_Reasom')]"), 10);
+        ActionsHelper.retryClick(By.xpath("//input[@id=\"CloneOfWebPatterns_wt35_block_wtMainContent_wtListRecords1_ctl00_wt15_wtchk_Reasom\"]"), 10);
         ActionsHelper.driverWait(1000);
         ActionsHelper.retryClick(By.cssSelector(".select2-selection__rendered"), 10);
         ActionsHelper.driverWait(1000);
@@ -190,6 +190,8 @@ public class AgentPage extends Base {
         driver.get().navigate().refresh();
         ActionsHelper.driverWait(5000);
     }
+
+
     public String specialistApproval(String applicationRef, boolean incOrDecApp)  {
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
@@ -238,9 +240,9 @@ public class AgentPage extends Base {
     public String seniorSpecialistApproval(String refCode) {
         //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
-        ActionsHelper.driverWait(1000);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(5000);
         ActionsHelper.waitForExpectedElement(summaryNextBtn);

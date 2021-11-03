@@ -4,6 +4,7 @@ import com.qpros.common.LogManager;
 import com.qpros.common.web.Base;
 import com.qpros.pages.web.SSA.HomePage;
 import com.qpros.pages.web.SSA.LoginPage;
+import com.qpros.pages.web.SSA.ReassessmentPage;
 import com.qpros.pages.web.SSA.UserType;
 import com.qpros.pages.web.SSA.modules.ApproveApplicationModule;
 import com.qpros.pages.web.SSA.modules.RejectApplicationModule;
@@ -30,6 +31,7 @@ public class ReassessmentApprove extends Base {
     ApproveApplicationModule approveApplication = new ApproveApplicationModule(driver.get());
     HomePage homePage = new HomePage(driver.get());
     LoginPage loginPage = new LoginPage(driver.get());
+    ReassessmentPage reassessmentPage = new ReassessmentPage(driver.get());
 /*
     @Test(description = "reApplication-Approve", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
@@ -44,9 +46,9 @@ public class ReassessmentApprove extends Base {
     @Test(description = "Re Assessment Approve", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void reassessmentApprove() throws Exception {
-        approveApplication.approveApplication(false);
-        homePage.navigateToLogin();
-        loginPage.loginWithUser(UserType.Committee1);
+        //approveApplication.approveApplication(false);
+        reassessmentPage.reassessmentApprove();
+
 
 
     }

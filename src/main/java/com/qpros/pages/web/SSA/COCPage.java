@@ -61,16 +61,16 @@ public class COCPage extends Base {
 
 
     public void acocApprove(String refCode) throws AWTException {
-        //startCocProcess(refCode);
-        //agentPage.logOut();
+        startCocProcess(refCode);
+        agentPage.logOut();
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         //String specialist = agentPage.getAssigneeNameFromAllApplications("SSP-13273");
         //System.out.println("Specialist type " + specialist);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.Specialist2);
-        agentPage.specialistAcocApproval("SSP-13273");
+        agentPage.specialistAcocApproval(refCode);
         ActionsHelper.driverWait(5000);
-        String seniorSpecialist = agentPage.specialistAcocApproval("SSP-13273");
+        String seniorSpecialist = agentPage.specialistAcocApproval(refCode);
             /*if (seniorSpecialist.contains("-")) {
                 agentPage.getAssigneeNameFromAllApplications(refCode);
             }*/

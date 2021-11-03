@@ -36,11 +36,11 @@ public class ReassessmentPage extends Base {
     private By reassessmentBtn = By.linkText("إعادة التقييم");
     private By committeeSearchApplicationField = By.xpath("//input[@id=\"DCDAgentPortalTheme_wt10_block_wtFilterContainer_wttxt_Search\"]");
     private By applicationCheckBox = By.xpath("//input[contains(@id,'wtBenefitRequests')]");
-    private By dropdownMenuSelect = By.xpath("//input[contains(@id,'ddl_useridIn')]");
-    private By dropdownMenuReason = By.xpath("//input[contains(@id,'ddl_ReasonIn')]");
-    private By commentFieldTextBox = By.xpath("//input[contains(@id,'txt_CommentIn')]");
+    private By dropdownMenuSelectSupervisor = By.xpath("//select[@id=\"DCDAgentPortalTheme_wt10_block_wtMainContent_wtddl_useridIn\"]");
+    private By dropdownMenuReason = By.xpath("//select[@id=\"DCDAgentPortalTheme_wt10_block_wtMainContent_wtddl_ReasonIn\"]");
+    private By commentFieldTextBox = By.xpath("//textarea[@id=\"DCDAgentPortalTheme_wt10_block_wtMainContent_wttxt_CommentIn\"]");
     //By.xpath("//input[contains(@id,'btn_LaunchReassess')]");
-    private By launchBtn = By.xpath("//input[contains(@id,'btn_LaunchReassess')]");
+    private By launchBtn = By.xpath("//input[@id=\"DCDAgentPortalTheme_wt10_block_wtMainContent_wtbtn_LaunchReassess\"]");
     private By searchForApplication = By.xpath("//input[contains(@id,'SearcFrom')]");
     private By firstElementAfterSearch = By.cssSelector(".ThemeGrid_Width4:nth-child(1)"); //Contains app ref number and clickable
     private By updateAmountBtn = By.xpath("//div[contains(@id,'UpdateAmount2')]"); //Contains app ref number and clickable
@@ -53,11 +53,66 @@ public class ReassessmentPage extends Base {
     private By backBtn = By.xpath("//div[contains(@id,'wtPrev2')]"); //Contains app ref number and clickable
     private By benefitAmount = By.xpath("//span[contains(@id,'wtContent5_wtBenefitAmount')]"); //Contains app ref number and clickable
     private By finalButtonApprove = By.cssSelector("[value='الموافقة']"); //Only one action was needed
+    private By filterApplicationBtn = By.xpath("//input[@id=\"DCDAgentPortalTheme_wt10_block_wtFilterContainer_wtbtn_Filter\"]");
+    String refCode = "SSP-13405";
+
+    public void reassessmentApprove(){
+        String committeeName = "test";
+
+        homePage.navigateToLogin();
+        loginPage.loginWithUser(UserType.Committee1);
+        /*
+        if (committeeName.contains(UserType.Committee100.getUserName())) {
+            loginPage.loginWithUser(UserType.Committee100);
+        } else {
+            loginPage.loginWithUser(UserType.Committee1);
+        }
+         */
+        ActionsHelper.driverWait(5000);
+        driver.get().navigate().to(urls.reassessApplications);
+        //ActionsHelper.retryClick(reassessmentBtn, 4);
+        ActionsHelper.sendKeys(committeeSearchApplicationField, refCode );
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.clickAction(filterApplicationBtn);
+        ActionsHelper.waitVisibility(ActionsHelper.element(applicationCheckBox), 7);
+        System.out.println(ActionsHelper.isElementPresent(ActionsHelper.element(applicationCheckBox)));
+        ActionsHelper.retryClick(applicationCheckBox, 7);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.waitForExpectedElement(dropdownMenuSelectSupervisor);
+        ActionsHelper.selectOption(dropdownMenuSelectSupervisor, "12");
+        ActionsHelper.selectByValue(ActionsHelper.element(dropdownMenuReason), "1");
+
+        ActionsHelper.sendKeys(commentFieldTextBox, "Just a test reason");
+        ActionsHelper.retryClick(launchBtn, 4);
+        agentPage.logOut();
+
+
+        homePage.navigateToLogin();
+        loginPage.loginWithUser(UserType.SeniorSpecialist1);
+        committeeName = agentPage.seniorSpecialistApproval(approveApplication.refCode);
+
+        System.out.println("Committee: " + committeeName);
+        driver.get().navigate().to(urls.tasksList);
+        agentPage.logOut();
+        committeeName = committeeName.replace("\n", "");
+        if (committeeName.contains(UserType.Committee100.getUserName())) {
+            loginPage.loginWithUser(UserType.Committee100);
+        } else {
+            loginPage.loginWithUser(UserType.Committee1);
+        }
+        ActionsHelper.sendKeys(searchForApplication, approveApplication.refCode + Keys.ENTER);
+        ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
+        ActionsHelper.actionClickScrollStepClick("Click on update Amount", updateAmountBtn);
+        ActionsHelper.driverWait(3000);
+        driver.get().switchTo().frame(0);
+
+    }
+
+
 
     public void reassessToAmount() throws JsonProcessingException, AWTException {
         //System.out.println(approveApplication.committeeName);
         //System.out.println(approveApplication.refCode);
-        homePage.navigateToLogin();
         //String committeeName =approveApplication.committeeName.replace("\n", "");
         String committeeName = "test";
         homePage.navigateToLogin();
@@ -76,8 +131,8 @@ public class ReassessmentPage extends Base {
         System.out.println(ActionsHelper.isElementPresent(ActionsHelper.element(applicationCheckBox)));
         ActionsHelper.retryClick(applicationCheckBox, 7);
         ActionsHelper.driverWait(10000);
-        ActionsHelper.waitForExpectedElement(dropdownMenuSelect);
-        ActionsHelper.selectOption(dropdownMenuSelect, "12");
+        ActionsHelper.waitForExpectedElement(dropdownMenuSelectSupervisor);
+        ActionsHelper.selectOption(dropdownMenuSelectSupervisor, "12");
         ActionsHelper.selectByValue(ActionsHelper.element(dropdownMenuReason), "1");
 
         ActionsHelper.sendKeys(commentFieldTextBox, "Just a test reason");

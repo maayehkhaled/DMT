@@ -42,11 +42,11 @@ public class AuditorsManagementPage extends Base {
     @STEP(name = "Set Specialist", description = "Sets the case to a specific specialist")
     public void selectSpecialist(String specialistName, String refNumber) throws InterruptedException, AWTException {
         logManager.STEP("Input Specialist", "Inputs the specialist: " + specialistName);
-        ActionsHelper.driverWait(500);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.navigate(urls.agentManagement);
-        ActionsHelper.driverWait(500);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.retryClick(selectspecid,10);
-        ActionsHelper.driverWait(500);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.retryClick(searchField,10);
         /*
         for (WebElement element : getListOfOptions()){
@@ -65,6 +65,7 @@ public class AuditorsManagementPage extends Base {
         robot.keyRelease(KeyEvent.VK_ENTER);
         logManager.STEP("Input Ref", "Inputs the reference nubmer: " + refNumber);
         ActionsHelper.sendKeys(inputRef, refNumber);
+        ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Clicks the save button", clickSave);
         ActionsHelper.driverWait(4000);
         try {

@@ -42,6 +42,7 @@ public class AppealApprove extends Base {
     HomePage homePage = new HomePage(driver.get());
     LoginPage loginPage = new LoginPage(driver.get());
     AppealPage appealPage = new AppealPage(driver.get());
+    AgentPage agentPage = new AgentPage(driver.get());
 
 
     @Test(description = "AppealApprove")
@@ -54,6 +55,9 @@ public class AppealApprove extends Base {
         appealPage.appealApprove();
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Superuser);
+        ActionsHelper.driverWait(20000);
+        String specialist = agentPage.getAssigneeNameFromAllApplications(ApproveApplicationModule.refCode);
+        loginPage.loginWithUser(UserType.valueOf(specialist));
         //auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), referenceNumber);
         //agentPage.logOut();
 

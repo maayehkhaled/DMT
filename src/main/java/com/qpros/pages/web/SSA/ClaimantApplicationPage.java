@@ -3,6 +3,7 @@ package com.qpros.pages.web.SSA;
 import com.qpros.common.web.Base;
 import com.qpros.common.web.Util;
 import com.qpros.helpers.ActionsHelper;
+import com.qpros.pages.web.SSA.commonSSA.Popups;
 import com.ssa.core.common.data.TestData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -38,6 +39,11 @@ public class ClaimantApplicationPage extends Base {
     private By uploadPersonalDetailsDocument = By.xpath("//div[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent1_wtDivocrceDoc_wtImage\"]");
     private By uploadDocumentBtn = By.xpath("//label[@class=\"button custom-file-upload\"]");
     private By addBillSaveBtn = By.xpath("//input[@id=\"CloneOfWebPatterns_wt16_block_wtMainContent_wtbtn_Submit\"]");
+    private By sendAnApplicationBusinessRecord = By.xpath("//input[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent6_wtbtn_Tab5Submit\"]");
+    private By approvalCheckboxesId = By.xpath("//form[@action=\"PopupDisclaimer2.aspx\"]//div//div//div//div[2]//div//div//div//div//div//input");
+    private By agreeBtn = By.xpath("//input[@value=\"أوافق\"]");
+    BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
+    Popups popUp = new Popups(driver.get());
 
     public void uploadDocument(By element){
         //put path to your image in a clipboard
@@ -108,9 +114,8 @@ public class ClaimantApplicationPage extends Base {
             //ActionsHelper.clickAction(By.xpath("//input[@value=\"حفظ\"]"));
             //driver.get().switchTo().defaultContent();
             ActionsHelper.driverWait(8000);
-            ActionsHelper.selectOption(premiseNumberDropDownMenu, "8354787951");
-            ActionsHelper.driverWait(4000);
-
+            ActionsHelper.selectOption(premiseNumberDropDownMenu, "4");
+            ActionsHelper.driverWait(10000);
         }
    // }
 
@@ -283,6 +288,7 @@ public class ClaimantApplicationPage extends Base {
     }
 
     public void familyInformation(){
+        ActionsHelper.driverWait(4000);
         logManager.STEP("5. Click on التالي in بيانات العائلة tab", "Click on التالي in بيانات العائلة tab");
         ActionsHelper.driverWait(3000);
         ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
@@ -303,6 +309,7 @@ public class ClaimantApplicationPage extends Base {
         });
 
         logManager.STEP("7. click on التالي", "click on التالي");
+        ActionsHelper.driverWait(15000);
         ActionsHelper.actionClickScrollStepClick("next", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
 
     }
@@ -434,6 +441,16 @@ public class ClaimantApplicationPage extends Base {
         ActionsHelper.driverWait(5000);
         ActionsHelper.isElementPresent(By.xpath("//*[contains(@id,\"DCDWebPortalTheme_wt90_block_wtMainContent_wt193_wtSSPCode3\")]"));
     }
+
+    public void sendAnApplicationForBusinessRecord(){
+        ActionsHelper.waitForExpectedElement(sendAnApplicationBusinessRecord, 30);
+        ActionsHelper.clickAction(sendAnApplicationBusinessRecord);
+        driver.get().switchTo().frame(0);
+        popUp.agreeToTermsPopUp();
+        popUp.feedbackPopUp();
+
+    }
+
 
 
 

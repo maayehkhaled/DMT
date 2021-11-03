@@ -57,23 +57,23 @@ public class RMIBCOC extends Base {
     public void rmiBCOCStep() throws JsonProcessingException, AWTException, InterruptedException {
 
         //1st assessment - Approve
-        //approveApplicationModule.approveApplication(false);
+        approveApplicationModule.approveApplication(false);
         // approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
+
         logManager.STEP("2. Login to beneficiary side with the EID", "the Beneficiary User conduct login using EID" + TestData.EID);
         ActionsHelper.navigate(urls.claimantLogin);
         claimantLogin.claimantLogin(TestData.EID);
+
         logManager.STEP("3. Click on التغير في الظروف المعيشية box", "the Beneficiary User Click on التغير في الظروف المعيشية box" + TestData.EID);
         ActionsHelper.driverWait(3000);
-        /*
-d        ActionsHelper.actionClickStepClick("Click on update family Data", By.xpath("//div[@class='HomePageRow']/div[1]//div[@class='text']/div[1]"));
+        ActionsHelper.actionClickStepClick("Click on update family Data", By.xpath("//div[@class='HomePageRow']/div[1]//div[@class='text']/div[1]"));
         ActionsHelper.driverWait(3000);
         ActionsHelper.driver.get().switchTo().frame(0);
-        ActionsHelper.selectOption(By.id("CloneOfWebPatterns_wt20_block_wtMainContent_wtddl_WebPortalLocation2"),"2");
+        ActionsHelper.selectOption(By.xpath("//select[@id=\"CloneOfWebPatterns_wt20_block_wtMainContent_wtddl_WebPortalLocation2\"]"),"2");
         ActionsHelper.retryClick(By.xpath("//input[@class='Button Is_Default']"),30);
         driver.get().switchTo().defaultContent();
         ActionsHelper.driverWait(40000);
 
-         */
         ActionsHelper.driverWait(5000);
         claimantPage.personalInformation();
         claimantPage.familyInformation();
@@ -81,14 +81,21 @@ d        ActionsHelper.actionClickStepClick("Click on update family Data", By.xp
         claimantPage.incomeAndPensionData();
         claimantPage.support();
         claimantPage.businessRecord();
+        claimantPage.sendAnApplicationForBusinessRecord();
+
+
 
         ActionsHelper.retryClick(By.xpath("//input[@class='Button MenuButton LogoutButton']"), 30);
+
         logManager.STEP("14. Login by super user, and assign the application to specialist from ادارة المراجعين", "Login by super user, and assign the application to specialist from ادارة المراجعين ");
+
 
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Superuser);
-        auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), "SSP-13345");
+        auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), "SSP-13387");
         agentPage.logOut();
+
+
         logManager.STEP("15. Login by the specialist", "Login by the specialist");
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Specialist2);
@@ -96,19 +103,25 @@ d        ActionsHelper.actionClickStepClick("Click on update family Data", By.xp
         logManager.STEP("16. Look for SSP code under قائمة المهام", "Look for SSP code under قائمة المهام ");
         ActionsHelper.driverWait(2000);
         //Change the specialist approval function to match the send again step IN RMI COC
-        String seniorSpecialist = agentPage.specialistApproval(ApproveApplicationModule.refCode,false);
-
+        //String seniorSpecialist = agentPage.specialistApproval("SSP-13387",false);
         ActionsHelper.driverWait(2000);
-        System.out.println(seniorSpecialist);
-        agentPage.logOut();
         logManager.STEP("17. Click on application to view the details page", "Click on application to view the details page");
-        agentPage.specialistSendAgain("SSP-13345");
         logManager.STEP("18. Go through steps and select ارسالة مرة اخرى then submit", "Go through steps and select ارسالة مرة اخرى then submit ");
-
         logManager.STEP("19. Select the reason of RMIe.x: هوية غير صحية and select he EID, then select حفظ", " Select the reason of RMIe.x: هوية غير صحية and select he EID, then select حفظ");
         logManager.STEP("20. Logout", "Logout");
+
+        agentPage.specialistSendAgain("SSP-13387");
+        //System.out.println(seniorSpecialist);
+        agentPage.logOut();
+
+
+
         logManager.STEP("21. Login by EID to the claiment side", "Login by EID to the claiment side ");
+        ActionsHelper.navigate(urls.claimantLogin);
+        claimantLogin.claimantLogin(TestData.EID);
         logManager.STEP("23. Click on التغير في الظروف المعيشية box", "Click on التغير في الظروف المعيشية box");
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("Click on update family Data", By.xpath("//div[@class='HomePageRow']/div[1]//div[@class='text']/div[1]"));
         logManager.STEP("24. The use should be redirected to the RMI page, click on submit", "The use should be redirected to the RMI page, click on submit ");
         logManager.STEP("25. Logout", " Logout");
         agentPage.logOut();
