@@ -1639,3 +1639,15 @@
 [INFO] PaymentSpecialistPage INFO - [0;34mNavigation to Page with URL : https://uat.ssa.gov.ae/DCDClaimantFrontEnd/MainFlow.UserLogin.aspx[0m
 [INFO] PaymentSpecialistPage INFO - [0;34mThe User Enter in   784192024307529[0m
 [INFO] PaymentSpecialistPage INFO - [0;34mThe User Enter in   784192024307529[0m
+[INFO] PaymentSpecialistPage onTestStart - **********************************************************************************
+[INFO] PaymentSpecialistPage onTestStart - *$$$$$$$$$$$$$$$$$$$$ com.qpros.test.ACOCApprove.acocApprove $$$$$$$$$$$$$$$$$$$$*
+[INFO] PaymentSpecialistPage onTestStart - **********************************************************************************
+[INFO] PaymentSpecialistPage STEP - [0;32mVE from 12x12 API[0m
+[INFO] PaymentSpecialistPage INFO - [0;34mVerify Eligibility Service Call[0m
+[INFO] PaymentSpecialistPage STEP - [0;32mInput username[0m
+[INFO] PaymentSpecialistPage INFO - [0;34mThe User Enter in   Committee1[0m
+[INFO] PaymentSpecialistPage STEP - [0;32mInput password[0m
+[INFO] PaymentSpecialistPage INFO - [0;34mThe User Enter in   Committee1[0m
+[INFO] PaymentSpecialistPage STEP - [0;32mClick the login button[0m
+[INFO] PaymentSpecialistPage INFO - [0;34mthe user Click the login button[0m
+[INFO] PaymentSpecialistPage STEP - [0;32mNavigate to COC[0m

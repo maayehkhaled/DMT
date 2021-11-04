@@ -62,12 +62,11 @@ public class COCPage extends Base {
 
     public void acocApprove(String refCode) throws AWTException {
         startCocProcess(refCode);
-        agentPage.logOut();
         logManager.STEP("Search application", "Inputs the reference number in the search field");
-        //String specialist = agentPage.getAssigneeNameFromAllApplications("SSP-13273");
+        String specialist = agentPage.getAssigneeNameForSpecialist(refCode);
         //System.out.println("Specialist type " + specialist);
         agentPage.logOut();
-        loginPage.loginWithUser(UserType.Specialist2);
+        loginPage.loginWithUser(UserType.valueOf(specialist));
         agentPage.specialistAcocApproval(refCode);
         ActionsHelper.driverWait(5000);
         String seniorSpecialist = agentPage.specialistAcocApproval(refCode);
@@ -91,13 +90,12 @@ public class COCPage extends Base {
         //Change the function for seniorSpecialistApproval
         agentPage.seniorSpecialistApproval(refCode);
         // loginPage.loginWithUser(UserType.SeniorSpecialist100);
-         String user = agentPage.seniorSpecialistApproval(refCode);
-         loginPage.loginWithUser(UserType.valueOf(user));
+         String assignedUser = agentPage.seniorSpecialistApproval(refCode);
+         loginPage.loginWithUser(UserType.valueOf(assignedUser));
          // Add a function for application approval
         agentPage.committeeSpecialistApproval(refCode);
         //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
         agentPage.logOut();
-
         driver.get().navigate().to(urls.tasksList);
         //committeeName = committeeName.replace("Committee", "").replace("\n", "");
         loginPage.loginWithUser(UserType.Superuser);
@@ -119,7 +117,7 @@ public class COCPage extends Base {
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         loginPage.loginWithUser(UserType.Specialist2);
         ActionsHelper.driverWait(5000);
-        String seniorSpecialist = agentPage.specialistApproval(refCode);
+        String seniorSpecialist = agentPage.specialistRejectApplication(refCode);
             /*if (seniorSpecialist.contains("-")) {
                 agentPage.getAssigneeNameFromAllApplications(refCode);
             }*/
@@ -140,9 +138,9 @@ public class COCPage extends Base {
         //Change the function for seniorSpecialistApproval
         agentPage.seniorSpecialistRejectApplication(refCode);
         // loginPage.loginWithUser(UserType.SeniorSpecialist100);
-        String user = agentPage.seniorSpecialistApproval(refCode);
-        loginPage.loginWithUser(UserType.valueOf(user));
-        agentPage.committeeSpecialistApproval(refCode);
+        String assignedUser = agentPage.seniorSpecialistApproval(refCode);
+        loginPage.loginWithUser(UserType.valueOf(assignedUser));
+        agentPage.committeeSpecialistRejection(refCode);
         //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
         agentPage.logOut();
         // Add a function for application approval
