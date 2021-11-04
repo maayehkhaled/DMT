@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.qpros.pages.web.SSA.*;
+import com.qpros.pages.web.SSA.commonSSA.Steps;
 import com.qpros.pages.web.SSA.modules.ApproveApplicationModule;
 import com.qpros.pages.web.SSA.modules.RejectApplicationModule;
 import com.qpros.reporting.QuantaTestManager;
@@ -14,11 +15,13 @@ import com.ssa.core.service.SubmitApplicationService;
 import com.ssa.core.service.VerifyEligibilityService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import javax.jws.soap.SOAPBinding;
 import java.awt.*;
 import java.io.IOException;
 import java.util.List;
@@ -39,27 +42,26 @@ public class AppealApprove extends Base {
 
     ApproveApplicationModule approveApplicationModule = new ApproveApplicationModule(driver.get());
     ClaimantLogin claimantLogin = new ClaimantLogin(driver.get());
-    HomePage homePage = new HomePage(driver.get());
-    LoginPage loginPage = new LoginPage(driver.get());
     AppealPage appealPage = new AppealPage(driver.get());
-    AgentPage agentPage = new AgentPage(driver.get());
+
 
 
     @Test(description = "AppealApprove")
     public void AppealApprove() throws JsonProcessingException, InterruptedException, AWTException {
         //1st assessment - Approve
-        //approveApplicationModule.approveApplication(false);
+        approveApplicationModule.approveApplication(false);
         // approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
         logManager.STEP("2. Login to beneficiary side with the EID", "the Beneficiary User conduct login using EID" + TestData.EID);
         claimantLogin.claimantLogin(TestData.EID);
         appealPage.appealApprove();
-        homePage.navigateToLogin();
-        loginPage.loginWithUser(UserType.Superuser);
-        ActionsHelper.driverWait(20000);
-        String specialist = agentPage.getAssigneeNameFromAllApplications(ApproveApplicationModule.refCode);
-        loginPage.loginWithUser(UserType.valueOf(specialist));
+
         //auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), referenceNumber);
         //agentPage.logOut();
-
     }
+
+
+
+
+
+
 }

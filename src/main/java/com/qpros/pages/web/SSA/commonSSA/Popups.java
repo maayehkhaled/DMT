@@ -1,6 +1,7 @@
 package com.qpros.pages.web.SSA.commonSSA;
 
 import com.qpros.common.web.Base;
+import com.qpros.common.web.Util;
 import com.qpros.helpers.ActionsHelper;
 import lombok.Getter;
 import org.openqa.selenium.By;
@@ -8,6 +9,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 
@@ -48,7 +51,24 @@ public class Popups extends Base {
     }
 
 
-
+    public void uploadDocument(WebElement element){
+        //put path to your image in a clipboard
+        ActionsHelper.retryClick(element, 30);
+        ActionsHelper.driverWait(3000);
+        //imitate mouse events like ENTER, CTRL+C, CTRL+V
+        try {
+            Util.typeString("test.pdf");
+            Robot robot=new Robot();
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+            ActionsHelper.driverWait(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+        driver.get().switchTo().defaultContent();
+    }
 
 
 

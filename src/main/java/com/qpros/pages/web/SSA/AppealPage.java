@@ -4,14 +4,18 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.qpros.common.web.Base;
 import com.qpros.common.web.Util;
 import com.qpros.helpers.ActionsHelper;
+import com.qpros.pages.web.SSA.commonSSA.Popups;
+import com.qpros.pages.web.SSA.commonSSA.Steps;
 import com.ssa.core.common.data.TestData;
 import com.ssa.core.common.locators.urls;
+import com.ssa.core.service.DeleteEmirateId;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
@@ -23,6 +27,15 @@ public class AppealPage extends Base {
     public AppealPage(WebDriver driver) {
         PageFactory.initElements(Base.driver.get(), this);
     }
+    HomePage homePage = new HomePage(driver.get());
+    LoginPage loginPage = new LoginPage(driver.get());
+    AgentPage agentPage = new AgentPage(driver.get());
+    AuditorsManagementPage auditorsManagementPage = new AuditorsManagementPage(driver.get());
+    BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
+    PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
+    DeleteEmirateId deleteId = new DeleteEmirateId();
+    Steps step = new Steps(driver.get());
+    Popups popUps = new Popups(driver.get());
 
     private By buttonShowDetails = By.xpath("//*[contains(@id,'wtbtn_ShowSpecificCode')]");
     private By applicationRef = By.xpath("//*[contains(@id,'wttxt_CodesToRelease')]");
@@ -61,50 +74,12 @@ public class AppealPage extends Base {
     private By uploadBankStatement = By.xpath("//label[contains(text(),'رفع المستند')]");
     private By checkbox = By.xpath("//input[@type=\"checkbox\"]");
     private By approvalCheckboxesId = By.xpath("//form[@action=\"PopupDisclaimer2.aspx\"]//div//div//div//div[2]//div//div//div//div//div//input");
+
+
     public static void setClipboardData(String string) {
         //StringSelection is a class that can be used for copy and paste operations.
         StringSelection stringSelection = new StringSelection(string);
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
-    }
-
-    public void uploadDocument(WebElement element){
-        //put path to your image in a clipboard
-        ActionsHelper.retryClick(element, 30);
-        ActionsHelper.driverWait(3000);
-        //imitate mouse events like ENTER, CTRL+C, CTRL+V
-        try {
-            Util.typeString("1.pdf");
-            Robot robot=new Robot();
-            robot.keyPress(KeyEvent.VK_ENTER);
-            robot.keyRelease(KeyEvent.VK_ENTER);
-            ActionsHelper.driverWait(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
-        /*
-        try {
-            setClipboardData("C://Users//RawaQaffaf//Desktop//testpdf.pdf");
-            Robot robot=new Robot();
-            robot.delay(250);
-            robot.keyPress(KeyEvent.VK_ENTER);
-            robot.keyRelease(KeyEvent.VK_ENTER);
-            robot.keyPress(KeyEvent.VK_CONTROL);
-            robot.keyPress(KeyEvent.VK_V);
-            robot.keyRelease(KeyEvent.VK_V);
-            robot.keyRelease(KeyEvent.VK_CONTROL);
-            robot.keyPress(KeyEvent.VK_ENTER);
-            robot.delay(90);
-            robot.keyRelease(KeyEvent.VK_ENTER);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
-
-         */
-        //driver.get().findElement(By.xpath("//input[contains(@id,fileinputPopup_AddMemberIncome)]")).sendKeys("C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf");
-//        ActionsHelper.driverWait(2000);
-        driver.get().switchTo().defaultContent();
     }
 
 
@@ -124,7 +99,7 @@ public class AppealPage extends Base {
         List<WebElement> uploadStatementsList = driver.get().findElements(uploadBankStatement);
         List<WebElement> familyMembersCheckBoxList = driver.get().findElements(checkbox);
         familyMembersCheckBoxList.stream().forEachOrdered(checkbox -> ActionsHelper.clickAction(checkbox));
-        uploadStatementsList.stream().forEachOrdered(salElemnt -> uploadDocument(salElemnt));
+        uploadStatementsList.stream().forEachOrdered(salElemnt -> popUps.uploadDocument(salElemnt));
         fillCommentTextBoxes.stream().forEachOrdered(commnt -> ActionsHelper.sendKeys(commnt, "test appeal text"));
         ActionsHelper.driverWait(7000);
         ActionsHelper.actionClickStepClick("apply Appeal Request",sendAppealRequest);
@@ -142,45 +117,104 @@ public class AppealPage extends Base {
 
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("click approve on appeal", approveOnAppeal);
-        ActionsHelper.driverWait(10000);
-        ActionsHelper.actionClickStepClick("click on profile page ", profilePage);
+        //ActionsHelper.driverWait(10000);
+        //ActionsHelper.actionClickStepClick("click on profile page ", profilePage);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("click on logout", logout);
         ActionsHelper.driverWait(5000);
+        String specialist = "";
+        String refCode = "SSP-13343";
+        homePage.navigateToLogin();
+        loginPage.loginWithUser(UserType.Superuser);
+        if (step.refreshTheListOfApplications(refCode).isEmpty()){
+            step.refreshTheListOfApplications(refCode);
+        }
+        else {
+            specialist = step.refreshTheListOfApplications(refCode);
+        }
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.valueOf(specialist));
+        String assignedUser = agentPage.specialistAppealApproval(refCode);
+        agentPage.logOut();
+
+        //String assignedUser = "SeniorSpecialist2";
+        loginPage.loginWithUser(UserType.valueOf(assignedUser));
+        agentPage.seniorSpecialistAppealApproval(refCode);
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.Superuser);
+        driver.get().navigate().to(urls.businessParameters);
+        businessParametersPage.releaseAppliaction(refCode);
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
+        Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
+        agentPage.logOut();
 
     }
 
     public void appealReject(){
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("مراجعة شروط و معايير البرنامج و المدفوعات", reviewConditionsAndStandards);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("تقديم طلب تظلم", applyApplication);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.actionClickScrollStepClick(" طلب تظلم", applyApplication);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.scrollTo(osFillParent);
-        ActionsHelper.sendKeys(osFillParent, "test appeal text");
-        salaryElementList.stream().forEachOrdered(salElemnt -> ActionsHelper.sendKeys(salElemnt, "C:\\Users\\KhaledMa'ayeh\\Downloads\\pdf-test.pdf"));
-        fillcommentTestBoxs.stream().forEachOrdered(commnt -> ActionsHelper.sendKeys(commnt, "test appeal text"));
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickScrollStepClick(" طلب تظلم", applyApplicationBtn);
+        ActionsHelper.driverWait(4000);
+        //ActionsHelper.scrollTo(osFillParent);
+        //ActionsHelper.sendKeys(osFillParent, "test appeal text");
+        List<WebElement> fillCommentTextBoxes = driver.get().findElements(commentTextBox);
+        List<WebElement> uploadStatementsList = driver.get().findElements(uploadBankStatement);
+        List<WebElement> familyMembersCheckBoxList = driver.get().findElements(checkbox);
+        familyMembersCheckBoxList.stream().forEachOrdered(checkbox -> ActionsHelper.clickAction(checkbox));
+        uploadStatementsList.stream().forEachOrdered(salElemnt -> popUps.uploadDocument(salElemnt));
+        fillCommentTextBoxes.stream().forEachOrdered(commnt -> ActionsHelper.sendKeys(commnt, "test appeal text"));
+        ActionsHelper.driverWait(7000);
         ActionsHelper.actionClickStepClick("apply Appeal Request",sendAppealRequest);
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.driverWait(8000);
         driver.get().switchTo().frame(0);
-        /*
-        listOfAgree.stream().forEachOrdered(agreeitem -> {
+        List<WebElement> approvalCheckboxeslist = driver.get().findElements(approvalCheckboxesId);
+        approvalCheckboxeslist.stream().forEachOrdered(checkbox -> ActionsHelper.clickAction(checkbox));
+        //ActionsHelper.scrollTo(lastApprovalCheckboxId);
+        //ActionsHelper.clickAction(lastApprovalCheckboxId);
+        approvalCheckboxeslist.stream().forEachOrdered(agreeitem -> {
             if (!agreeitem.isSelected()) {
                 agreeitem.click();
             }
         });
 
-         */
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("click approve on appeal", approveOnAppeal);
-        ActionsHelper.driverWait(10000);
-        ActionsHelper.actionClickStepClick("click on profile page ", profilePage);
+        //ActionsHelper.driverWait(10000);
+        //ActionsHelper.actionClickStepClick("click on profile page ", profilePage);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("click on logout", logout);
         ActionsHelper.driverWait(5000);
+        String specialist = "";
+        String refCode = "SSP-13343";
+        homePage.navigateToLogin();
+        loginPage.loginWithUser(UserType.Superuser);
+        if (step.refreshTheListOfApplications(refCode).isEmpty()){
+            step.refreshTheListOfApplications(refCode);
+        }
+        else {
+            specialist = step.refreshTheListOfApplications(refCode);
+        }
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.valueOf(specialist));
+        String assignedUser = agentPage.specialistAppealRejection(refCode);
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.valueOf(assignedUser));
+        agentPage.specialistAppealRejection(refCode);
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.Superuser);
+        driver.get().navigate().to(urls.businessParameters);
+        businessParametersPage.releaseAppliaction(refCode);
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
+        Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
+        agentPage.logOut();
+        //auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), referenceNumber);
+        //agentPage.logOut();
+
 
     }
 
