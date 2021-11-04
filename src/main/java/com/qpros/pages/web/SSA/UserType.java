@@ -18,7 +18,6 @@ public enum UserType {
     PaymentSeniorAccountant("PaymentSeniorAccountant", "123456"),
     FinanceTeam("FinanceTeam", "123456");
 
-
     public String getUserName() {
         return userName;
     }

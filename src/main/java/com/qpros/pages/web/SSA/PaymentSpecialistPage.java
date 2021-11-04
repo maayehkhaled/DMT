@@ -26,6 +26,23 @@ public class PaymentSpecialistPage extends Base {
     private By countPayments = By.xpath("//div[@class='Counter_Message']");
 
 
+    //*****TABLE FIRST ROW INFORMATION BEGIN********
+    private By totalPaymentAmount = By.xpath("//td[7]/div");
+
+
+    private By firstPaymentDueDate = By.xpath("//td[7]/div");
+
+    private By firstPaymentAmount = By.xpath("//td[8]/div");
+
+
+    private By firstPaymentEndDate = By.xpath("//td[6]/div");
+
+    private By firstPaymentStartDate = By.xpath("//td[5]/div");
+
+    private By scheduleType = By.xpath("//td[10]/div");
+    private By firstPaymentReason = By.xpath("//td[11]");
+    //******TABLE FIRST ROW INFORMATION END*********
+
 
     public boolean checkPaymentExistence(String refNo){
         driver.get().navigate().to(paymentSchedulesUrl);

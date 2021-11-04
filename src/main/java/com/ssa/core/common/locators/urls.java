@@ -12,4 +12,8 @@ public interface urls {
     String benefitsApplication = "https://uat.ssa.gov.ae/DCDClaimantFrontEnd/BenefitsApplication.aspx";
     String reassessApplications = "https://uat.ssa.gov.ae/DCDBusinessParameters/ReassessApplications.aspx";
     String claimantLogin = "https://uat.ssa.gov.ae/DCDClaimantFrontEnd/MainFlow.UserLogin.aspx";
+    String paymentNewCard = "https://uat.ssa.gov.ae/DCDPaymentsFrontEndN/RequestNewCard.aspx";
+    String paymentTasksList = "https://uat.ssa.gov.ae/DCDPaymentsFrontEndN/TaskList.aspx";
+    String cardSummary = "https://uat.ssa.gov.ae/DCDPaymentsFrontEndN/CardsSummary.aspx";
+
 }
