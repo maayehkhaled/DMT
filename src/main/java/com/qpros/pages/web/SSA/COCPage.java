@@ -2,6 +2,7 @@ package com.qpros.pages.web.SSA;
 
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
+import com.qpros.pages.web.SSA.commonSSA.Steps;
 import com.ssa.core.common.locators.urls;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion;
 import org.openqa.selenium.By;
@@ -32,6 +33,7 @@ public class COCPage extends Base {
     AgentPage agentPage = new AgentPage(driver.get());
     private static final Pattern p = Pattern.compile("(^[^\\s]+)");
     LoginPage loginPage = new LoginPage(driver.get());
+    Steps step = new Steps(driver.get());
 
     public void navigateToCoc(){
         logManager.STEP("Navigate to COC", "Navigate to https://uat.ssa.gov.ae/DCDBusinessParameters/CoC.aspx");
@@ -63,33 +65,20 @@ public class COCPage extends Base {
     public void acocApprove(String refCode) throws AWTException {
         startCocProcess(refCode);
         logManager.STEP("Search application", "Inputs the reference number in the search field");
-        String specialist = agentPage.getAssigneeNameForSpecialist(refCode);
-        //System.out.println("Specialist type " + specialist);
+        String specialist = step.refreshTheListOfApplications(refCode);
+        System.out.println("Specialist type " + specialist);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.valueOf(specialist));
+        ActionsHelper.driverWait(4000);
         agentPage.specialistAcocApproval(refCode);
         ActionsHelper.driverWait(5000);
         String seniorSpecialist = agentPage.specialistAcocApproval(refCode);
-            /*if (seniorSpecialist.contains("-")) {
-                agentPage.getAssigneeNameFromAllApplications(refCode);
-            }*/
         ActionsHelper.driverWait(2000);
-        System.out.println(seniorSpecialist);
-//            seniorSpecialist = seniorSpecialist.replace("Supervisor", "").replace("\n", "");
-        matcher = p.matcher(seniorSpecialist);
-        if (matcher.find()) {
-            System.out.println(matcher.group(0));
-            seniorSpecialist =matcher.group(0);
-        }
         System.out.println("Senior Specialist : " + seniorSpecialist);
-
         agentPage.logOut();
-        //String seniorSpecialist = UserType.SeniorSpecialist100.getUserName();
         ActionsHelper.driverWait(5000);
         loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
         //Change the function for seniorSpecialistApproval
-        agentPage.seniorSpecialistApproval(refCode);
-        // loginPage.loginWithUser(UserType.SeniorSpecialist100);
          String assignedUser = agentPage.seniorSpecialistApproval(refCode);
          loginPage.loginWithUser(UserType.valueOf(assignedUser));
          // Add a function for application approval
@@ -105,10 +94,6 @@ public class COCPage extends Base {
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
         agentPage.logOut();
-
-
-
-
     }
 
     public void acocReject(String refCode) throws AWTException {

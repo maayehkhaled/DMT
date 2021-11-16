@@ -34,8 +34,8 @@ public class AgentPage extends Base {
     private By agentClickNext = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
     private By agentClickNext56StepFinal = By.xpath("//*[@id=\"InternalPortalTheme_wt397_block_wtActions_wtOperationBtnContainer\"]/div[2]");
     private By agreementBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
-    private By applicationListFirstApplicationSupervisorName = By.cssSelector(".FlexColContainer"); //Contains supervisor name and role
-    private By applicationListFirstApplicationSpecialistName = By.xpath("//*[@id=\"InternalPortalTheme_wt36_block_wtMainContent_wtBenefitRequestsList_ctl03_wtBenefitRequestsListRow5\"]/div/span[1]");
+    private By applicationListFirstApplicationSupervisorName = By.xpath("//tbody//tr//td//div[@class=\"FlexColContainer\"]//span[1]"); //Contains supervisor name and role
+    private By applicationListFirstApplicationSpecialistName = By.xpath("//tbody//tr//td//div[@class=\"FlexColContainer\"]//span[1]");
     private By approveButton = By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']"); //Only one action was needed
     private By specalistSearchApplicationFinal = By.xpath("//*[contains(@id,'wttxt_SearcFrom')]");
     private By finalButtonApprove = By.cssSelector("[value='الموافقة']");
@@ -487,11 +487,11 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(4000);
         String person;
         try {
-            System.out.println("Assigned to name: " + driver.get().findElement(applicationListFirstApplicationSupervisorName).getText());
-            person = driver.get().findElement(applicationListFirstApplicationSupervisorName).getText();
+            System.out.println("Assigned to name: " + driver.get().findElement(applicationListFirstApplicationSpecialistName).getText());
+            person = driver.get().findElement(applicationListFirstApplicationSpecialistName).getText();
         } catch (org.openqa.selenium.StaleElementReferenceException ex) {
-            System.out.println("Assigned to name: " + driver.get().findElement(applicationListFirstApplicationSupervisorName).getText());
-            person = driver.get().findElement(applicationListFirstApplicationSupervisorName).getText();
+            System.out.println("Assigned to name: " + driver.get().findElement(applicationListFirstApplicationSpecialistName).getText());
+            person = driver.get().findElement(applicationListFirstApplicationSpecialistName).getText();
         }
         logManager.STEP("Get next person name","Reads the username of the next stage of the process");
         return person;

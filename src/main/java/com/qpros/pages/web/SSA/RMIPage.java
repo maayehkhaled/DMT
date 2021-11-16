@@ -116,7 +116,7 @@ public void rmiReassessment() throws AWTException {
     logManager.STEP("2. Login as Committee", "");
     ActionsHelper.driverWait(5000);
     loginPage.loginWithUser(UserType.Committee1);
-    
+
     logManager.STEP("3. Go to اعادة تقييم screen", "");
     ActionsHelper.driverWait(5000);
     driver.get().navigate().to(urls.reassessApplications);

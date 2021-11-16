@@ -32,9 +32,9 @@ public class BusinessParametersPage extends Base {
         ActionsHelper.sendKeysWithClear(applicationRef,refNo);
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Validate", validateButton);
-        ActionsHelper.driverWait(1000);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Start Process", startProcessButton);
-        ActionsHelper.driverWait(4000);
+        ActionsHelper.driverWait(8000);
         driver.get().switchTo().alert().accept();
     }
 }
