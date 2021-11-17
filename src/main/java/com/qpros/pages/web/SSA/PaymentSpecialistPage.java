@@ -14,9 +14,9 @@ public class PaymentSpecialistPage extends Base {
 
     public String paymentSchedulesUrl = urls.paymentSchedule;
 
-    private By searchRef = By.id("DCDTheme_wt80_block_wtFilters_wt47");
+    private By searchRef = By.id("DCDTheme_wt78_block_wtFilters_wt46");
 //block_wtFilters
-    private By searchButton = By.id("DCDTheme_wt80_block_wtFilters_wt174");
+    private By searchButton = By.id("DCDTheme_wt78_block_wtFilters_wt173");
 
     private By firstResult = By.cssSelector("tbody > tr:nth-of-type(1) > td:nth-of-type(1)");
 

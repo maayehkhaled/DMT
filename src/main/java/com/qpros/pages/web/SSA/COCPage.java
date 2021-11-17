@@ -45,6 +45,7 @@ public class COCPage extends Base {
         logManager.STEP("Input search field", "Inputs the SSP code and press enter");
         //ActionsHelper.actionClickStepClick("Click on COC page", cocPage);
         ActionsHelper.sendKeys(searchFieldSSP, refCode);
+        ActionsHelper.driverWait(4000);
         logManager.STEP("Search For the Application", "Inputs the SSP code and press enter");
         ActionsHelper.clickAction(searchButton);
         ActionsHelper.driverWait(5000);
@@ -97,34 +98,25 @@ public class COCPage extends Base {
     }
 
     public void acocReject(String refCode) throws AWTException {
-        startCocProcess(refCode);
-        driver.get().navigate().to(urls.tasksList);
+        //startCocProcess(refCode);
         logManager.STEP("Search application", "Inputs the reference number in the search field");
-        loginPage.loginWithUser(UserType.Specialist2);
-        ActionsHelper.driverWait(5000);
+        String specialist = step.refreshTheListOfApplications(refCode);
+        System.out.println("Specialist type " + specialist);
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.valueOf(specialist));
         String seniorSpecialist = agentPage.specialistRejectApplication(refCode);
-            /*if (seniorSpecialist.contains("-")) {
-                agentPage.getAssigneeNameFromAllApplications(refCode);
-            }*/
-        ActionsHelper.driverWait(2000);
-        System.out.println(seniorSpecialist);
-//            seniorSpecialist = seniorSpecialist.replace("Supervisor", "").replace("\n", "");
-        matcher = p.matcher(seniorSpecialist);
-        if (matcher.find()) {
-            System.out.println(matcher.group(0));
-            seniorSpecialist =matcher.group(0);
-        }
+        ActionsHelper.driverWait(4000);
         System.out.println("Senior Specialist : " + seniorSpecialist);
-
         agentPage.logOut();
         //String seniorSpecialist = UserType.SeniorSpecialist100.getUserName();
         ActionsHelper.driverWait(5000);
         loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
         //Change the function for seniorSpecialistApproval
+        ActionsHelper.driverWait(5000);
         agentPage.seniorSpecialistRejectApplication(refCode);
-        // loginPage.loginWithUser(UserType.SeniorSpecialist100);
-        String assignedUser = agentPage.seniorSpecialistApproval(refCode);
+        String assignedUser = agentPage.seniorSpecialistRejectApplication(refCode);
         loginPage.loginWithUser(UserType.valueOf(assignedUser));
+        ActionsHelper.driverWait(4000);
         agentPage.committeeSpecialistRejection(refCode);
         //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
         agentPage.logOut();
@@ -137,9 +129,13 @@ public class COCPage extends Base {
         driver.get().navigate().to(urls.businessParameters);
         businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
+
+        driver.get().navigate().to(urls.paymentList);
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
+        ActionsHelper.driverWait(4000);
         Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
-        agentPage.logOut();
+        //agentPage.logOut();
+
 
 
 

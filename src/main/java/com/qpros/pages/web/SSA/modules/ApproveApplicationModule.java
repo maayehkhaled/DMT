@@ -90,8 +90,8 @@ public class ApproveApplicationModule extends Base {
             ActionsHelper.driverWait(5000);
             loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
             // loginPage.loginWithUser(UserType.SeniorSpecialist100);
+            ActionsHelper.driverWait(5000);
             committeeName = agentPage.seniorSpecialistApproval(refCode);
-
             System.out.println("Committee: " + committeeName);
             driver.get().navigate().to(urls.tasksList);
             //committeeName = committeeName.replace("Committee", "").replace("\n", "");

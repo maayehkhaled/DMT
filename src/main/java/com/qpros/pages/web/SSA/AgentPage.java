@@ -355,10 +355,9 @@ public class AgentPage extends Base {
     public void committeeSpecialistApproval(String refCode) {
         // driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
-        ActionsHelper.driverWait(1000);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
-
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(3000);
 
