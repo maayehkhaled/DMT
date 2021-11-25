@@ -57,8 +57,7 @@ public class ApproveApplicationModule extends Base {
             QuantaTestManager.getTest().log(Status.INFO, MarkupHelper.createCodeBlock(submitApplicationService.response.getBody()));
 
             refCode = submitApplicationService.getresponse(submitApplicationService).applicationSummary.referenceNumber;
-            refCode.replace("\uE007","");
-            //String refCode = "SSP-12345";
+            refCode.replace("\uE007","");;
             homePage.navigateToLogin();
 
             loginPage.loginWithUser(UserType.Superuser);
@@ -72,24 +71,12 @@ public class ApproveApplicationModule extends Base {
             loginPage.loginWithUser(UserType.Specialist2);
             ActionsHelper.driverWait(8000);
             String seniorSpecialist = agentPage.specialistApproval(refCode,incOrDecApp);
-            /*if (seniorSpecialist.contains("-")) {
-                agentPage.getAssigneeNameFromAllApplications(refCode);
-            }*/
             ActionsHelper.driverWait(8000);
-            System.out.println(seniorSpecialist);
-//            seniorSpecialist = seniorSpecialist.replace("Supervisor", "").replace("\n", "");
-            matcher = p.matcher(seniorSpecialist);
-            if (matcher.find()) {
-                System.out.println(matcher.group(0));
-                seniorSpecialist =matcher.group(0);
-            }
             System.out.println("Senior Specialist : " + seniorSpecialist);
-
             agentPage.logOut();
-            //String seniorSpecialist = UserType.SeniorSpecialist100.getUserName();
+
             ActionsHelper.driverWait(5000);
             loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
-            // loginPage.loginWithUser(UserType.SeniorSpecialist100);
             ActionsHelper.driverWait(5000);
             committeeName = agentPage.seniorSpecialistApproval(refCode);
             System.out.println("Committee: " + committeeName);
@@ -117,11 +104,11 @@ public class ApproveApplicationModule extends Base {
             }
 
             driver.get().navigate().to(urls.agentLogin);
-            //String refCode = "SSP-10679";
             loginPage.loginWithUser(UserType.Superuser);
             driver.get().navigate().to(urls.businessParameters);
             businessParametersPage.releaseAppliaction(refCode);
             agentPage.logOut();
+            driver.get().navigate().to(urls.paymentList);
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
             Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
             agentPage.logOut();

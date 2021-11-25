@@ -357,7 +357,7 @@ public class AgentPage extends Base {
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
-        ActionsHelper.driverWait(4000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(3000);
 

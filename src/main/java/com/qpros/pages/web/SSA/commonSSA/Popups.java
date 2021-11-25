@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.awt.*;
@@ -25,6 +26,12 @@ public class Popups extends Base {
     private By happyFace = By.xpath("//*[@id=\"CloneOfWebPatterns_wt24_block_wtMainContent_wt21\"]/img");
     private By feedbackTextBox = By.xpath("//textarea[@id=\"CloneOfWebPatterns_wt24_block_wtMainContent_wtCommentBox\"]");
     private By saveBtn = By.xpath("//input[@value=\"حفظ\"]");
+    @FindBy(xpath = "//div[@class=\"Feedback_Message_Error\"]//span[@class=\"Feedback_Message_Text\"]")
+    private WebElement feedbackMessageError;
+    @FindBy(xpath = "//div[@class=\"Feedback_Message_Success\"]//span[@class=\"Feedback_Message_Text\"]")
+    private WebElement feedbackMessageSuccess;
+    private By feedbackMessage = By.xpath("//span[@class=\"Feedback_Message_Text\"]");
+
 
 
     public void agreeToTermsPopUp(){
@@ -69,6 +76,17 @@ public class Popups extends Base {
         }
         driver.get().switchTo().defaultContent();
     }
+
+
+    public String feedbackMessage(){
+        ActionsHelper.waitForExpectedElement(feedbackMessage);
+        String message =  driver.get().findElement(feedbackMessage).getText();
+        return message;
+    }
+
+
+
+
 
 
 

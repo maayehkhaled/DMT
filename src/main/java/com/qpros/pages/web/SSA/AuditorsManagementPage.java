@@ -4,6 +4,7 @@ import com.qpros.common.annotation.STEP;
 import com.qpros.common.web.Base;
 import com.qpros.common.web.Util;
 import com.qpros.helpers.ActionsHelper;
+import com.qpros.pages.web.SSA.commonSSA.Popups;
 import com.ssa.core.common.locators.urls;
 import lombok.Getter;
 import org.openqa.selenium.By;
@@ -22,6 +23,8 @@ public class AuditorsManagementPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
+    Popups feedbackMessage = new Popups(driver.get());
+
     @FindBy(xpath = "//span[@class=\"select2-results\"]//ul//li")
     private List<WebElement> listOfOptions;
 
@@ -36,6 +39,8 @@ public class AuditorsManagementPage extends Base {
     private By clickSave = By.xpath("//input[@class='Button ThemeGrid_MarginGutter']");
 
     private By searchField = By.cssSelector(".select2-search__field");
+    private By feedBackMessage = By.xpath("//span[@class=\"Feedback_Message_Text\"]");
+
 
     //private By listOfOptions = By.xpath("//span[@class=\"select2-results\"]//ul//li");
 
@@ -65,9 +70,22 @@ public class AuditorsManagementPage extends Base {
         robot.keyRelease(KeyEvent.VK_ENTER);
         logManager.STEP("Input Ref", "Inputs the reference nubmer: " + refNumber);
         ActionsHelper.sendKeys(inputRef, refNumber);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Clicks the save button", clickSave);
-        ActionsHelper.driverWait(4000);
+        ActionsHelper.driverWait(6000);
+        ActionsHelper.waitForExpectedElement(feedBackMessage, 30);
+        if (feedbackMessage.feedbackMessage().equals("تم إعادة تعيين الطلبات بنجاح"))
+        {
+            try {
+                driver.get().switchTo().alert().accept();
+            } catch (Exception e) {
+            }
+        }
+        else {
+            ActionsHelper.sendKeys(inputRef, refNumber);
+            ActionsHelper.driverWait(8000);
+            ActionsHelper.actionClickStepClick("Clicks the save button", clickSave);
+        }
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
