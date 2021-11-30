@@ -35,15 +35,18 @@ public class BusinessParametersPage extends Base {
         ActionsHelper.driverWait(7000);
         ActionsHelper.sendKeysWithClear(applicationRef,refNo);
         ActionsHelper.driverWait(7000);
-        ActionsHelper.actionClickStepClick("Validate", validateButton);
-        ActionsHelper.driverWait(70000);
+        this.logManager.STEP("Click On Validate", "The user clicks on validate");
+        ActionsHelper.actionClickStepClick("validate", validateButton);
+        ActionsHelper.clickAction(validateButton);
         ActionsHelper.waitForExpectedElement(feedbackMessage, 30);
-        if (feedbackMessageNotification.feedbackMessage().contains("Application was added")){
+        Boolean message = feedbackMessageNotification.feedbackMessage().contains("released");
+        if (message){
             ActionsHelper.actionClickStepClick("Start Process", startProcessButton);
             ActionsHelper.driverWait(7000);
             driver.get().switchTo().alert().accept();
         }
         ActionsHelper.waitForExpectedElement(feedbackMessage, 30);
-        Assert.assertTrue(feedbackMessageNotification.feedbackMessage().contains("Update scheduled"));
+        Boolean message1 = feedbackMessageNotification.feedbackMessage().contains("Update scheduled");
+        Assert.assertTrue(message1);
     }
 }
