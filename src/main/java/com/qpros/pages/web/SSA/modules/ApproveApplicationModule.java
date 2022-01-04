@@ -12,6 +12,7 @@ import com.ssa.core.service.DeleteEmirateId;
 import com.ssa.core.service.SubmitApplicationService;
 import com.ssa.core.service.VerifyEligibilityService;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
@@ -105,7 +106,8 @@ public class ApproveApplicationModule extends Base {
 
             driver.get().navigate().to(urls.agentLogin);
             loginPage.loginWithUser(UserType.Superuser);
-            driver.get().navigate().to(urls.businessParameters);
+            ActionsHelper.navigate(urls.businessParameters);
+            ActionsHelper.driverWait(3000);
             businessParametersPage.releaseAppliaction(refCode);
             agentPage.logOut();
             driver.get().navigate().to(urls.paymentList);

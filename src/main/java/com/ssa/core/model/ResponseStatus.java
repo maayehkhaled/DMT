@@ -1,5 +1,6 @@
 package com.ssa.core.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ResponseStatus {
@@ -7,6 +8,7 @@ public class ResponseStatus {
     public int statusCode;
     @JsonProperty("Message")
     public String message;
+    @JsonIgnore
     @JsonProperty("Errors")
     public String errors;
 }

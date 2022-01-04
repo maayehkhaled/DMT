@@ -29,8 +29,10 @@ public class AgentPage extends Base {
     private By rejectBtn = By.xpath("//input[@value=\"مرفوض - رفض\"]");
 
 //TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]
-    private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
-    private By agentClickNextFinal = By.id("InternalPortalTheme_wt567_block_wtActions_wtNext");
+
+    private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt573_block_wtActions_wtbtn_Next6\"]");
+    //private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
+    private By agentClickNextFinal = By.className("ForwardButton");
     private By agentClickNext = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
     private By agentClickNext56StepFinal = By.xpath("//*[@id=\"InternalPortalTheme_wt397_block_wtActions_wtOperationBtnContainer\"]/div[2]");
     private By agreementBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
@@ -45,7 +47,7 @@ public class AgentPage extends Base {
 //wtLockOnComplex5
     private By seniorApproveRejectButtonConfirmation = By.cssSelector("[value='مرفوض - رفض']"); //Only one action was needed
     private By reassessmentCheckBox = By.xpath("//input[contains(@id,'IsCommunicatedbyAssessor')]"); //Only one action was needed
-    private By allApllicationsSearchInput = By.xpath("//*[contains(@id,'wtFilterContainer_wttxt_SearchFrom')]"); //Only one action was needed
+    private By allApllicationsSearchInput = By.xpath("//input[contains(@id,'wttxt_SearchFrom')]"); //Only one action was needed
     private By seniorSpecialsitApproveAll1Final = By.xpath("//*[contains(@id,'btn_AcceptedOrRejected')]"); //Only one action was needed
 //wtFilterContainer_wttxt_SearchFrom
 //btn_AcceptedOrRejected
@@ -476,10 +478,10 @@ public class AgentPage extends Base {
 
     public String getAssigneeNameFromAllApplications(String refCode) {
         ActionsHelper.driverWait(10000);
-        driver.get().navigate().to(urls.allApplications);
+        ActionsHelper.navigate(urls.allApplications);
         ActionsHelper.driverWait(10000);
         logManager.STEP("Refresh","Refreshes the page");
-        driver.get().navigate().to(urls.allApplications);
+        ActionsHelper.navigate(urls.allApplications);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(allApllicationsSearchInput, 5);
         ActionsHelper.sendKeysWithClear(allApllicationsSearchInput, refCode + Keys.ENTER );
