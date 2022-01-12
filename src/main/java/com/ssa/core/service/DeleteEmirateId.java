@@ -16,7 +16,7 @@ public class DeleteEmirateId {
     Unirest.config().reset();
     Unirest.config().connectTimeout(0);
     Unirest.config().verifySsl(false);
-     response = Unirest.delete("https://uat.ssa.gov.ae/AutomationSupport/rest/DeleteEmiratesId/CallDelete")
+     response = Unirest.delete("https://uat.ssa.gov.ae/AutomationSupport_API/rest/DeleteEmiratesId/CallDelete")
         .header("Content-Type", "application/json")
         .header("Authorization", "Basic c3VwZXJ1c2VyOjEyMzQ1Ng==")
         .body(requestBody())
@@ -24,13 +24,12 @@ public class DeleteEmirateId {
   }
 
   public String requestBody() throws JsonProcessingException {
-    return "{\n"+
-            "     \"EmiratesId\": \""+ "[\n" +
-            "{\n" +
-        "     \"EmiratesId\": \""+ TestData.EID+"\"\n" +
-        " \n" +
-            "}" +
-            "]\n" +
+    return "{\n" +
+            "    \"Emiratesid\": [\n" +
+            "        {\n" +
+            "            \"Emiratesid\": \""+TestData.EID+"\"\n" +
+            "        }\n" +
+            "    ]\n" +
             "}";
   }
 
@@ -43,7 +42,6 @@ public class DeleteEmirateId {
   public static void main(String[] args) throws JsonProcessingException {
     DeleteEmirateId deleteEmirateId = new DeleteEmirateId();
     deleteEmirateId.requestService();
-    System.out.print(deleteEmirateId.getresponse(deleteEmirateId).statusCode);
   }
 
 

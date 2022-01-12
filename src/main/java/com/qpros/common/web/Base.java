@@ -36,6 +36,7 @@ public class Base {
         DriverType browser = getBrowser();
         initiateDriver(OsType, browser);
         driver.get().navigate().to(ReadWriteHelper.ReadData("BaseURL"));
+
     }
 
 
@@ -58,13 +59,17 @@ public class Base {
                     Map<String, Object> prefs = new HashMap<>();
                     //Put this into prefs map to switch off browser notification
                     prefs.put("profile.default_content_setting_values.notifications", 2);
+                    prefs.put("credentials_enable_service", false);
+                    prefs.put("profile.password_manager_enabled", false);
                     //Create chrome options to set this prefs
                     ChromeOptions options = new ChromeOptions();
                     options.setExperimentalOption("prefs", prefs);
                     options.addArguments("--ignore-certificate-errors");
                     options.addArguments("--disable-web-security");
                     options.addArguments("--allow-running-insecure-content");
+
                     options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
+                    options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
                     driver.set(new ChromeDriver(options));
                     //Dimension targetSize = new Dimension(1920, 1080); //your screen resolution here
                     //driver.get().manage().window().setSize(targetSize);

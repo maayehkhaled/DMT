@@ -16,5 +16,8 @@ public interface urls {
     String paymentTasksList = "https://uat.ssa.gov.ae/DCDPaymentsFrontEndN/TaskList.aspx";
     String cardSummary = "https://uat.ssa.gov.ae/DCDPaymentsFrontEndN/CardsSummary.aspx";
     String paymentList = "https://uat.ssa.gov.ae/Assessment_CW/LoginPage.aspx";
+    String requestNewCard="https://uat.ssa.gov.ae/DCDPaymentsFrontEndN_/RequestNewCard.aspx";
+    String UpdateCardSummery="https://uat.ssa.gov.ae/DCDPaymentsFrontEndN_/UpdateCardStatus.aspx";
+    String closeCard="https://uat.ssa.gov.ae/DCDPaymentsFrontEndN_/ChangeCardStatus.aspx";
 
 }

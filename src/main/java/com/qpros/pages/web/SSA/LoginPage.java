@@ -34,6 +34,7 @@ public class LoginPage extends Base {
     }
 
     public void loginWithUser(UserType usertype) {
+        ActionsHelper.driverWait(3000);
         logManager.STEP("Input username", "Inputs the username: " + usertype.getUserName());
         ActionsHelper.waitForExpectedElement(usernameField, 30);
         ActionsHelper.retryClick(usernameField, 30);
