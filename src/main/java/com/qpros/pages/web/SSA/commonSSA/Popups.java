@@ -77,13 +77,14 @@ public class Popups extends Base {
         driver.get().switchTo().defaultContent();
     }
 
-    public void uploadDocuments(WebElement element){
+    public void uploadDocuments(WebElement element,String filename){
         //put path to your image in a clipboard
         ActionsHelper.retryClick(element, 30);
         ActionsHelper.driverWait(3000);
         //imitate mouse events like ENTER, CTRL+C, CTRL+V
         try {
-            Util.typeString("test.pdf");
+            //Util.typeString("test.pdf");
+            Util.typeString(filename);
             Robot robot=new Robot();
             robot.keyPress(KeyEvent.VK_ENTER);
             robot.keyRelease(KeyEvent.VK_ENTER);

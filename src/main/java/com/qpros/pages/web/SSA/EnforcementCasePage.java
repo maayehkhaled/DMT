@@ -5,14 +5,11 @@ import com.qpros.helpers.ActionsHelper;
 import com.qpros.pages.web.SSA.commonSSA.Popups;
 import lombok.Getter;
 import lombok.Setter;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.Date;
 import java.util.List;
 @Getter
 @Setter
@@ -130,6 +127,9 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.driverWait(2000);
     }
 
+    /**
+     *
+     */
     public void addAction(){
     ActionsHelper.retryClick(caseID,30);
     ActionsHelper.driverWait(2000);
@@ -139,7 +139,6 @@ public class EnforcementCasePage extends Base {
     ActionsHelper.selectOption(actionAssignedToDDl,"1708");
     ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(actionDueDate,30);
-    //ActionsHelper.sendKeys(actionDueDate,"3/1/2022");
     ActionsHelper.driverWait(2000);
     ActionsHelper.retryClick(actionTodayBtn,30);
     ActionsHelper.driverWait(2000);
@@ -196,12 +195,11 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.clickAction(logDescriptionTextbox);
         ActionsHelper.sendKeys(logDescriptionTextbox,"Log Description Automation ");
         ActionsHelper.driverWait(2000);
-        //pop.uploadDocument(uploadFile);
-        getPopupsPage().uploadDocuments(driver.get().findElement(uploadFile));
+
+        getPopupsPage().uploadDocuments(driver.get().findElement(uploadFile),"test.pdf");
 
         ActionsHelper.driverWait(2000);
         ActionsHelper.waitUntilElementIsDisplayed(fileDescription,30);
-        //ActionsHelper.clickAction(fileDescription);
         ActionsHelper.moveToElement(driver.get().findElement(fileDescription));
         ActionsHelper.sendKeys(fileDescription,"Uploaded File Description");
         ActionsHelper.driverWait(2000);
@@ -212,11 +210,6 @@ public class EnforcementCasePage extends Base {
     }
 
     public void editEnforcementCase() {
-      /*  ActionsHelper.retryClick(searchRequestLink, 30);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(eIdTexebox, "784195843653981");
-        ActionsHelper.retryClick(searchBtn, 30);
-        ActionsHelper.driverWait(8000);*/
         ActionsHelper.scrollTo(editCaseBtn);
         ActionsHelper.retryClick(editCaseBtn, 30);
         ActionsHelper.driverWait(2000);
