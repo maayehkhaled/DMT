@@ -49,6 +49,8 @@ public class ApproveApplicationModule extends Base {
         logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
         logManager.INFO("Verify Eligibility Service Call", false);
         verifyEligibilityService.requestService();
+
+        //if the emirates id is eligable for a service then request the service else finish scenario
         QuantaTestManager.getTest().log(Status.INFO, MarkupHelper.createCodeBlock(verifyEligibilityService.response.getBody()));
         if (verifyEligibilityService.getresponse(verifyEligibilityService).application.isEligible) {
             QuantaTestManager.getTest().assignCategory("1st Assessment");
@@ -57,18 +59,19 @@ public class ApproveApplicationModule extends Base {
             submitApplicationService.requestService();
             QuantaTestManager.getTest().log(Status.INFO, MarkupHelper.createCodeBlock(submitApplicationService.response.getBody()));
 
+            //read the referance code application is
             refCode = submitApplicationService.getresponse(submitApplicationService).applicationSummary.referenceNumber;
             refCode.replace("\uE007","");;
             homePage.navigateToLogin();
 
+            //login with super user
             loginPage.loginWithUser(UserType.Superuser);
-            this.logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
             this.logManager.STEP(" Login by super user, and assign the application to specialist from ادارة المراجعين ", "");
 
-
+            //start assign process by selecting specialist 2 with appication id
             auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), refCode);
             agentPage.logOut();
-
+            //login with specialist 2
             loginPage.loginWithUser(UserType.Specialist2);
             ActionsHelper.driverWait(8000);
             String seniorSpecialist = agentPage.specialistApproval(refCode,incOrDecApp);
@@ -83,12 +86,15 @@ public class ApproveApplicationModule extends Base {
             System.out.println("Committee: " + committeeName);
             driver.get().navigate().to(urls.tasksList);
             //committeeName = committeeName.replace("Committee", "").replace("\n", "");
+            ActionsHelper.driverWait(2000);
+
             agentPage.logOut();
             if (committeeName.contains("ApplicationDirector")) {
                 committeeName = committeeName.replace("Manager", "").replace("\n", "");
                 loginPage.loginWithUser(UserType.valueOf(committeeName));
                 agentPage.seniorSpecialistApproval(refCode);
                 driver.get().navigate().to(urls.tasksList);
+                ActionsHelper.driverWait(2000);
                 agentPage.logOut();
             } else {
                 System.out.println("this is comettee nammeeee here plz " +committeeName);
@@ -98,9 +104,12 @@ public class ApproveApplicationModule extends Base {
                 } else {
                     loginPage.loginWithUser(UserType.Committee1);
                 }
+                ActionsHelper.driverWait(2000);
 
                 agentPage.committeeSpecialistApproval(refCode);
                 //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
+                ActionsHelper.driverWait(2000);
+
                 agentPage.logOut();
             }
 
@@ -113,7 +122,7 @@ public class ApproveApplicationModule extends Base {
             driver.get().navigate().to(urls.paymentList);
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
             Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
-            agentPage.logOut();
+            agentPage.logOut2();
         }
 
     }

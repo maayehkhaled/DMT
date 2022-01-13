@@ -46,15 +46,15 @@ public class PaymentSpecialistPage extends Base {
 
     public boolean checkPaymentExistence(String refNo){
         driver.get().navigate().to(paymentSchedulesUrl);
-        ActionsHelper.driverWait(1000);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickStepClick("Expand results", expandResults);
-        ActionsHelper.driverWait(1000);
+        ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Input SSP " + refNo, searchRef);
-        ActionsHelper.driverWait(1000);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.sendKeys(searchRef,refNo);
-        ActionsHelper.driverWait(1000);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickStepClick("Click search", searchButton);
-        ActionsHelper.driverWait(1000);
+        ActionsHelper.driverWait(5000);
         System.out.println(countPayments.toString());
 
         System.out.println(driver.get().findElement(firstResult).getText());
