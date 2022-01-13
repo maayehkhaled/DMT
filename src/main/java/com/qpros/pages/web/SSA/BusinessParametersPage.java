@@ -23,30 +23,41 @@ public class BusinessParametersPage extends Base {
 
     private By validateButton = By.xpath("//input[@value=\"Validate\"]");
 //
-    private By startProcessButton = By.xpath("//*[contains(@id,'wtbtn_RunSpecificCodes')]");
+    private By startProcessButton = By.xpath("//*[contains(@id,'RunSpecificCodesAjaxRfrsh')]");
 //wtbtn_RunSpecificCodes
     private By feedbackMessage = By.xpath("//span[@class=\"Feedback_Message_Text\"]");
 
-    public void releaseAppliaction(String refNo){
-        ActionsHelper.driverWait(7000);
-        ActionsHelper.actionClickStepClick("Expand fields",buttonShowDetails);
-        ActionsHelper.driverWait(7000);
-        ActionsHelper.actionClickStepClick("Input SSP code: " + refNo, applicationRef);
-        ActionsHelper.driverWait(7000);
-        ActionsHelper.sendKeysWithClear(applicationRef,refNo);
-        ActionsHelper.driverWait(7000);
-        this.logManager.STEP("Click On Validate", "The user clicks on validate");
-        ActionsHelper.actionClickStepClick("validate", validateButton);
-        ActionsHelper.clickAction(validateButton);
-        ActionsHelper.waitForExpectedElement(feedbackMessage, 30);
-        Boolean message = feedbackMessageNotification.feedbackMessage().contains("released");
-        if (message){
-            ActionsHelper.actionClickStepClick("Start Process", startProcessButton);
-            ActionsHelper.driverWait(7000);
-            driver.get().switchTo().alert().accept();
+    public void releaseAppliaction(String refNo) {
+
+        int counter=0;
+        while (!ActionsHelper.isElementPresent(buttonShowDetails)) {
+            ActionsHelper.driverWait(2000);
+            counter=counter+1;
+            if(counter>=7){
+                logManager.ERROR("Expected Element took long time to be shown",false);
+                break;
+            }
+
         }
-        ActionsHelper.waitForExpectedElement(feedbackMessage, 30);
-        Boolean message1 = feedbackMessageNotification.feedbackMessage().contains("Update scheduled");
-        Assert.assertTrue(message1);
-    }
+            ActionsHelper.actionClickStepClick("Expand fields", buttonShowDetails);
+            ActionsHelper.driverWait(7000);
+            ActionsHelper.actionClickStepClick("Input SSP code: " + refNo, applicationRef);
+            ActionsHelper.driverWait(7000);
+            ActionsHelper.sendKeysWithClear(applicationRef, refNo);
+            ActionsHelper.driverWait(7000);
+            this.logManager.STEP("Click On Validate", "The user clicks on validate");
+            ActionsHelper.actionClickStepClick("validate", validateButton);
+            ActionsHelper.clickAction(validateButton);
+            ActionsHelper.waitForExpectedElement(feedbackMessage, 30);
+            Boolean message = feedbackMessageNotification.feedbackMessage().contains("released");
+            if (message) {
+                ActionsHelper.actionClickStepClick("Start Process", startProcessButton);
+                ActionsHelper.driverWait(7000);
+                driver.get().switchTo().alert().accept();
+            }
+            ActionsHelper.waitForExpectedElement(feedbackMessage, 30);
+            Boolean message1 = feedbackMessageNotification.feedbackMessage().contains("Update scheduled");
+            Assert.assertTrue(message1);
+        }
+
 }

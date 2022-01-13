@@ -2,6 +2,7 @@ package com.qpros.pages.web.SSA;
 
 public enum UserType {
 
+    CaseManagerHead("CaseManagerHead","123456"),
     Specialist100("Specialist100", "Specialist100"),
     Superuser("Superuser", "123456"),
     Specialist2("Specialist2", "Specialist2"),
@@ -17,6 +18,7 @@ public enum UserType {
     PaymentSpecialist("PaymentSpecialist", "123456"),
     PaymentSeniorAccountant("PaymentSeniorAccountant", "123456"),
     FinanceTeam("FinanceTeam", "123456");
+
 
     public String getUserName() {
         return userName;
