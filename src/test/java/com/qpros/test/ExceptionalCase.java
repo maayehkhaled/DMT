@@ -122,4 +122,15 @@ public class ExceptionalCase extends Base{
         exceptionalPage.addWrongRelativeInfo();
         exceptionalPage.deleteWrongDependent();
     }
+
+    @Test(description = "Create Full Exceptional Case", priority = 1,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+    public void validateCreateFullExceptionalCase(){
+        startPage();
+        exceptionalPage.chooseReferralEntity();
+        exceptionalPage.enterHeadOfFamilyData("784-1991-4064300-0","01/01/1937");
+        exceptionalPage.createFullExceptionalCase();
+        System.out.print(exceptionalPage.bigFileValidationMsg());
+        Assert.assertEquals(exceptionalPage.bigFileValidationMsg(),"ملف غير صالح - تم تجاوز الحد الأقصى المسموح به وهو 4 ميغابايت");
+    }
 }

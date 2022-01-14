@@ -57,12 +57,21 @@ public class ExceptionalCasePage extends Base{
 
     //Screen V
     private By familyResidentDDL=By.xpath("//select[contains(@id,'LivingOnLocationList')]");
-    private By supportDocsLink=By.id("fileinputPopup_Upload201200");
+    private By supportDocsLink=By.className("dottedBorder");
     private By uploadMoreSupportDocs=By.xpath("//input[contains(@id,'Upload201200')]");
     private By firstFileDescription=By.xpath("//input[contains(@id,'ctl00_wttxt_Comment')]");
     private By secondFileDescription=By.xpath("//input[contains(@id,'ctl02_wttxt_Comment')]");
 
-    String longData= "sadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadass";
+    //Files screen
+    private By saveFilesBtn=By.xpath("//input[contains(@id,'wtbtn_save')]");
+    private By editFileDescription=By.xpath("//a[contains(@id,'EditComment')]");
+
+    String myLongData= "sadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassad" +
+            "assadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadas" +
+            "sadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassad" +
+            "assadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadass" +
+            "adassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassada" +
+            "ssadassadassadassadassadassadassadassadassadass";
     String shortData="sadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassa";
 
     public void openExceptionalCase(){
@@ -113,7 +122,8 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(referralEntityDDL,"74");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(caseDescriptionTextarea,longData);
+        //need to solve this problem
+        //ActionsHelper.sendKeys(caseDescriptionTextarea,myLongData);
         ActionsHelper.driverWait(2000);
         String s1=(driver.get().findElement(caseDescriptionTextarea)).getAttribute("value");
         return s1.length();
@@ -189,18 +199,51 @@ public class ExceptionalCasePage extends Base{
     }
 
     public void createFullExceptionalCase(){
+        ActionsHelper.retryClick(nextBtn,30);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(nextBtn,30);
+        ActionsHelper.driverWait(2000);
+        //ActionsHelper.waitUntilElementIsDisplayed(familyResidentDDL,5);
         ActionsHelper.selectOption(familyResidentDDL,"Automation Referral Entity Name  -  حالة استثنائية");
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(2000);
         getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"test.pdf");
         ActionsHelper.driverWait(2000);
-        getPopupsPage().uploadDocuments(driver.get().findElement(uploadMoreSupportDocs),"PNGForAutomation.png");
+        driver.get().switchTo().frame(0);
+        ActionsHelper.sendKeys(driver.get().findElement(By.xpath("//input[contains(@id,'ctl00_wttxt_Comment')]")),"PDF File");
+        //getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"test.pdf");
         ActionsHelper.driverWait(2000);
-        /*getPopupsPage().uploadDocuments(driver.get().findElement(uploadMoreSupportDocs),"JPGForAutomation.jpg");
+        getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"PNGForAutomation.png");
+        ActionsHelper.sendKeys(driver.get().findElement(By.xpath("//input[contains(@id,'ctl02_wttxt_Comment')]")),"PNG File");
         ActionsHelper.driverWait(2000);
-        getPopupsPage().uploadDocuments(driver.get().findElement(uploadMoreSupportDocs),"DocForAutomation.docx");
-        ActionsHelper.driverWait(2000);*/
+        getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"JPGForAutomation.jpg");
+        ActionsHelper.sendKeys(driver.get().findElement(By.xpath("//input[contains(@id,'ctl04_wttxt_Comment')]")),"JPG File");
+        ActionsHelper.driverWait(2000);
+        getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"DocForAutomation.docx");
+        ActionsHelper.sendKeys(driver.get().findElement(By.xpath("//input[contains(@id,'ctl06_wttxt_Comment')]")),"Doc File");
+        ActionsHelper.driverWait(2000);
+        getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"FileToDelete.png");
+        ActionsHelper.sendKeys(driver.get().findElement(By.xpath("//input[contains(@id,'ctl08_wttxt_Comment')]")),"To Be Deleted File");
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(driver.get().findElement(By.xpath("//a[contains(@id,'ctl08_wtlnk_delete')]")), 30);
+        ActionsHelper.driverWait(2000);
 
+        getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"MoreThan500MB.docx");
+        ActionsHelper.driverWait(8000);
+        ActionsHelper.retryClick(saveFilesBtn,30);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(editFileDescription,30);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.sendKeys(driver.get().findElement(By.xpath("//input[contains(@id,'Comment')]")),"new description for file");
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(nextBtn,30);
+        ActionsHelper.driverWait(2000);
+        //validation msg : //span[contains(@id,'wtSanitizedHtml2')]
+    }
+
+    public String bigFileValidationMsg(){
+        return (driver.get().findElement(By.xpath("//span[contains(@id,'wtSanitizedHtml2')]"))).getText();
+        //return driver.get().findElement(By.xpath("//div[contains(@class,'Feedback_Message_Error')]")).getText();
     }
 }
