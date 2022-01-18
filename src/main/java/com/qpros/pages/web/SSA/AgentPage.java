@@ -30,7 +30,7 @@ public class AgentPage extends Base {
 
 //TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]
 
-    private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt573_block_wtActions_wtbtn_Next6\"]");
+    private By summaryNextBtn = By.xpath("//*[contains(@id,'wtActions_wtbtn_Next6')]");
     //private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
     private By agentClickNextFinal = By.className("ForwardButton");
     private By agentClickNext = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
@@ -268,13 +268,12 @@ public class AgentPage extends Base {
             ActionsHelper.actionClickScrollStepClick("Make application complex radio button", complexRadioBtn);
             ActionsHelper.driverWait(5000);
         }
-        //ActionsHelper.actionClickStepClick("Approve step 5", agentApproveStepFinal);
         System.out.println("Attempting step 5");
-        //ActionsHelper.retryClick(agentClickNext56StepFinal, 4);
+        ActionsHelper.actionClickStepClick("Click Next Step 5", agentClickNextFinal);
+
         ActionsHelper.driverWait(12000);
         ActionsHelper.actionClickStepClick("Click Next Step 5", summaryNextBtn);
         System.out.println("Attempting step 6");
-        //ActionsHelper.actionClickStepClick("Click Approval and Agree", summaryNextBtn);
         ActionsHelper.driverWait(5000);
         ActionsHelper.retryClick(agreementBtn, 10);
         logManager.STEP("Approving the application","Click the confirm button");
@@ -287,22 +286,30 @@ public class AgentPage extends Base {
 
 
     public String seniorSpecialistApproval(String refCode) {
-        //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
+        //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");ActionsHelper.driverWait(3000);
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
+        ActionsHelper.driverWait(6000);
+        ActionsHelper.scrollTo(seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
-        ActionsHelper.driverWait(7000);
-        ActionsHelper.waitForExpectedElement(summaryNextBtn);
-        //ActionsHelper.scrollTo(agentClickNext56StepFinal);
-        ActionsHelper.driverWait(1000);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.scrollTo(summaryNextBtn);
+        ActionsHelper.driverWait(6000);
+        ActionsHelper.actionClickStepClick("click on next button",summaryNextBtn);
+// ActionsHelper.waitForExpectedElement(summaryNextBtn);
+//ActionsHelper.scrollTo(agentClickNext56StepFinal);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.retryClick(summaryNextBtn, 10);
         ActionsHelper.driverWait(8000);
-        //ActionsHelper.waitForExpectedElement(agreementBtn);
-        //ActionsHelper.scrollTo(agreementBtn);
-        //ActionsHelper.clickAction(agreementBtn);
+//ActionsHelper.waitForExpectedElement(agreementBtn);
+//ActionsHelper.scrollTo(agreementBtn);
+//ActionsHelper.clickAction(agreementBtn);
+
         try {
+            driver.get().switchTo().alert().accept();
+            ActionsHelper.driverWait(2000);
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
         }
@@ -335,7 +342,6 @@ public class AgentPage extends Base {
         }
         return getAssigneeNameFromAllApplications(refCode);
     } //Finished
-
 
 
     public String seniorSpecialistApprovalIncDec(String refCode) {
