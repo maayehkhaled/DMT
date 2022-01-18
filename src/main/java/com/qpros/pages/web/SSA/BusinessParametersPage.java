@@ -28,7 +28,7 @@ public class BusinessParametersPage extends Base {
     private By feedbackMessage = By.xpath("//span[@class=\"Feedback_Message_Text\"]");
 
     public void releaseAppliaction(String refNo){
-        ActionsHelper.driverWait(7000);
+        ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Expand fields",buttonShowDetails);
         ActionsHelper.driverWait(7000);
         ActionsHelper.actionClickStepClick("Input SSP code: " + refNo, applicationRef);

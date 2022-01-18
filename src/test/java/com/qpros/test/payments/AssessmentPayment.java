@@ -69,7 +69,7 @@ public class AssessmentPayment extends Base {
         ActionsHelper.navigate(urls.paymentList);
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         assessmentPaymentPage.paymentScenario5();
-    }*/
+    }
 
     @Test(
             description = "Payment Scenario 6", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
@@ -78,8 +78,8 @@ public class AssessmentPayment extends Base {
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         assessmentPaymentPage.paymentScenario6();
 
-}
-/*
+}*/
+
     @Test(
             description = "Payment Scenario 7", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
     public void paymentS7() {
@@ -87,7 +87,7 @@ public class AssessmentPayment extends Base {
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         assessmentPaymentPage.paymentScenario7();
     }
-
+/*
     @Test(description = "Payment Scenario 8", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
     public void paymentS8() {
         ActionsHelper.navigate(urls.paymentList);
