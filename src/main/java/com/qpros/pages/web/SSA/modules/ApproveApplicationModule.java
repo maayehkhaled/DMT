@@ -78,13 +78,14 @@ public class ApproveApplicationModule extends Base {
             ActionsHelper.driverWait(8000);
             System.out.println("Senior Specialist : " + seniorSpecialist);
             agentPage.logOut();
-
+            //login with senior specialist
             ActionsHelper.driverWait(5000);
             loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
             ActionsHelper.driverWait(5000);
             committeeName = agentPage.seniorSpecialistApproval(refCode);
-            System.out.println("Committee: " + committeeName);
+            System.out.println("seniorSpecial: " + committeeName);
             driver.get().navigate().to(urls.tasksList);
+
             //committeeName = committeeName.replace("Committee", "").replace("\n", "");
             ActionsHelper.driverWait(2000);
 

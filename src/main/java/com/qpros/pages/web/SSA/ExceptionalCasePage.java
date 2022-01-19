@@ -64,7 +64,8 @@ public class ExceptionalCasePage extends Base{
 
     //Files screen
     private By saveFilesBtn=By.xpath("//input[contains(@id,'wtbtn_save')]");
-    private By editFileDescription=By.xpath("//a[contains(@id,'EditComment')]");
+    private By editFileDescription=By.xpath("//a[contains(@id,'ctl03_wtlnk_EditComment')]");
+    //By.xpath("//a[contains(@id,'EditComment')]");
 
     String myLongData= "sadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassad" +
             "assadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadas" +
@@ -209,7 +210,7 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(2000);
         getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"test.pdf");
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(5000);
         driver.get().switchTo().frame(0);
         ActionsHelper.sendKeys(driver.get().findElement(By.xpath("//input[contains(@id,'ctl00_wttxt_Comment')]")),"PDF File");
         //getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"test.pdf");
@@ -230,15 +231,21 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(2000);
 
         getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"MoreThan500MB.docx");
-        ActionsHelper.driverWait(8000);
+        ActionsHelper.driverWait(5000);
+
+        //ActionsHelper.waitUntilElementIsDisplayed(By.xpath("//a[contains(@id,'wt9_block_wt33')]"));
+        ActionsHelper.retryClick(driver.get().findElement(By.xpath("//a[contains(@id,'wt9_block_wt33')]")),30 );
         ActionsHelper.retryClick(saveFilesBtn,30);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(5000);
         ActionsHelper.retryClick(editFileDescription,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(driver.get().findElement(By.xpath("//input[contains(@id,'Comment')]")),"new description for file");
         ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(driver.get().findElement(By.xpath("//a[contains(@id,'wt165')]")),30 );
+        ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(driver.get().findElement(By.xpath("//div[contains(@id,'wtNextButtonContainer')]")),30 );
         //validation msg : //span[contains(@id,'wtSanitizedHtml2')]
     }
 

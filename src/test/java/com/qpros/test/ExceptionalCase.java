@@ -128,9 +128,9 @@ public class ExceptionalCase extends Base{
     public void validateCreateFullExceptionalCase(){
         startPage();
         exceptionalPage.chooseReferralEntity();
-        exceptionalPage.enterHeadOfFamilyData("784-1991-4064300-0","01/01/1937");
+        exceptionalPage.enterHeadOfFamilyData("784195872616300","21/03/1959");
         exceptionalPage.createFullExceptionalCase();
-        System.out.print(exceptionalPage.bigFileValidationMsg());
-        Assert.assertEquals(exceptionalPage.bigFileValidationMsg(),"ملف غير صالح - تم تجاوز الحد الأقصى المسموح به وهو 4 ميغابايت");
+        //System.out.print(exceptionalPage.bigFileValidationMsg());
+       // Assert.assertEquals(exceptionalPage.bigFileValidationMsg(),"ملف غير صالح - تم تجاوز الحد الأقصى المسموح به وهو 4 ميغابايت");
     }
 }

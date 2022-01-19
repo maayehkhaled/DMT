@@ -286,7 +286,8 @@ public class AgentPage extends Base {
 
 
     public String seniorSpecialistApproval(String refCode) {
-        //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");ActionsHelper.driverWait(3000);
+        //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
+        ActionsHelper.driverWait(3000);
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
@@ -298,15 +299,14 @@ public class AgentPage extends Base {
         ActionsHelper.scrollTo(summaryNextBtn);
         ActionsHelper.driverWait(6000);
         ActionsHelper.actionClickStepClick("click on next button",summaryNextBtn);
-// ActionsHelper.waitForExpectedElement(summaryNextBtn);
-//ActionsHelper.scrollTo(agentClickNext56StepFinal);
+        // ActionsHelper.waitForExpectedElement(summaryNextBtn);
+        //ActionsHelper.scrollTo(agentClickNext56StepFinal);
         ActionsHelper.driverWait(10000);
         ActionsHelper.retryClick(summaryNextBtn, 10);
         ActionsHelper.driverWait(8000);
-//ActionsHelper.waitForExpectedElement(agreementBtn);
-//ActionsHelper.scrollTo(agreementBtn);
-//ActionsHelper.clickAction(agreementBtn);
-
+        //ActionsHelper.waitForExpectedElement(agreementBtn);
+        //ActionsHelper.scrollTo(agreementBtn);
+        //ActionsHelper.clickAction(agreementBtn);
         try {
             driver.get().switchTo().alert().accept();
             ActionsHelper.driverWait(2000);
@@ -368,7 +368,6 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(3000);
-
     }//Finished
 
 
@@ -393,6 +392,14 @@ public class AgentPage extends Base {
             ActionsHelper.actionClickScrollStepClick("Click logout", logout2);
         }
     }//Finished
+
+    public void logOut2()
+    {
+
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("click on logout",userNameBeforeLogout);
+        ActionsHelper.driverWait(4000);
+    }
 
 
 
