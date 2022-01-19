@@ -77,9 +77,34 @@ public class Popups extends Base {
         driver.get().switchTo().defaultContent();
     }
 
+    public void uploadDocuments(WebElement element,String filename){
+        //put path to your image in a clipboard
+        ActionsHelper.retryClick(element, 30);
+        ActionsHelper.driverWait(3000);
+        //imitate mouse events like ENTER, CTRL+C, CTRL+V
+        try {
+            //Util.typeString("test.pdf");
+            Util.typeString(filename);
+            Robot robot=new Robot();
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+            ActionsHelper.driverWait(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+    }
 
     public String feedbackMessage(){
-        ActionsHelper.waitForExpectedElement(feedbackMessage);
+        int count=0;
+        while (!ActionsHelper.isElementPresent(feedbackMessage)) {
+            count=count +1;
+            ActionsHelper.waitForExpectedElement(feedbackMessage);
+            if(count>=5){
+                break;
+            }
+        }
         String message =  driver.get().findElement(feedbackMessage).getText();
         return message;
     }

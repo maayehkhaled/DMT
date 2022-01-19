@@ -25,11 +25,17 @@ public class DeleteEmirateId {
 
   public String requestBody() throws JsonProcessingException {
     return "{\n" +
-            "    \"Emiratesid\": [\n" +
-            "        {\n" +
-            "            \"Emiratesid\": \""+TestData.EID+"\"\n" +
-            "        }\n" +
-            "    ]\n" +
+            "\n" +
+            "  \"Emiratesid\": [\n" +
+            "\n" +
+            "     {\n" +
+            "\n" +
+            "      \"Emiratesid\": \""+TestData.EID+"\"\n" +
+            "\n" +
+            "    }\n" +
+            "\n" +
+            "  ]\n" +
+            "\n" +
             "}";
   }
 
@@ -42,6 +48,7 @@ public class DeleteEmirateId {
   public static void main(String[] args) throws JsonProcessingException {
     DeleteEmirateId deleteEmirateId = new DeleteEmirateId();
     deleteEmirateId.requestService();
+    //System.out.print(deleteEmirateId.getresponse(deleteEmirateId).statusCode);
   }
 
 

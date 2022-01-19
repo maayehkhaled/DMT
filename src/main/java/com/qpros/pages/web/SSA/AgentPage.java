@@ -5,7 +5,6 @@ import com.qpros.helpers.ActionsHelper;
 import com.ssa.core.common.locators.urls;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
@@ -29,7 +28,9 @@ public class AgentPage extends Base {
     private By agentRejectButtonFinal = By.xpath("//*[contains(@id,'wtActions_wtrbReject')]");
     private By rejectBtn = By.xpath("//input[@value=\"مرفوض - رفض\"]");
 //TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]
-    private By summaryNextBtn = By.xpath("//*[contains(@id,'wtActions_wtbtn_Next6')]");
+
+    private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt573_block_wtActions_wtbtn_Next6\"]");
+    //private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
     private By agentClickNextFinal = By.className("ForwardButton");
     private By agentClickNext = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
     private By agentClickNext56StepFinal = By.xpath("//*[@id=\"InternalPortalTheme_wt397_block_wtActions_wtOperationBtnContainer\"]/div[2]");
@@ -46,7 +47,7 @@ public class AgentPage extends Base {
 //wtLockOnComplex5
     private By seniorApproveRejectButtonConfirmation = By.cssSelector("[value='مرفوض - رفض']"); //Only one action was needed
     private By reassessmentCheckBox = By.xpath("//input[contains(@id,'IsCommunicatedbyAssessor')]"); //Only one action was needed
-    private By allApllicationsSearchInput = By.xpath("//*[contains(@id,'wtInput_wttxt_SearchFrom')]"); //Only one action was needed
+    private By allApllicationsSearchInput = By.xpath("//input[contains(@id,'wttxt_SearchFrom')]"); //Only one action was needed
     private By seniorSpecialsitApproveAll1Final = By.xpath("//*[contains(@id,'btn_AcceptedOrRejected')]"); //Only one action was needed
 //wtFilterContainer_wttxt_SearchFrom
 //btn_AcceptedOrRejected
@@ -267,12 +268,13 @@ public class AgentPage extends Base {
             ActionsHelper.actionClickScrollStepClick("Make application complex radio button", complexRadioBtn);
             ActionsHelper.driverWait(5000);
         }
+        //ActionsHelper.actionClickStepClick("Approve step 5", agentApproveStepFinal);
         System.out.println("Attempting step 5");
-        ActionsHelper.actionClickStepClick("Click Next Step 5", agentClickNextFinal);
-
+        //ActionsHelper.retryClick(agentClickNext56StepFinal, 4);
         ActionsHelper.driverWait(12000);
         ActionsHelper.actionClickStepClick("Click Next Step 5", summaryNextBtn);
         System.out.println("Attempting step 6");
+        //ActionsHelper.actionClickStepClick("Click Approval and Agree", summaryNextBtn);
         ActionsHelper.driverWait(5000);
         ActionsHelper.retryClick(agreementBtn, 10);
         logManager.STEP("Approving the application","Click the confirm button");
@@ -390,17 +392,11 @@ public class AgentPage extends Base {
         try {
             ActionsHelper.actionClickScrollStepClick("Click username before logging out", userNameBeforeLogout);
             ActionsHelper.actionClickStepClick("Click logout", logout1);
-        } catch (NoSuchElementException e) {
+        } catch (Exception e) {
             ActionsHelper.actionClickScrollStepClick("Click logout", logout2);
         }
     }//Finished
-    public void logOut2()
-    {
 
-        ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickStepClick("click on logout",userNameBeforeLogout);
-        ActionsHelper.driverWait(4000);
-    }
 
 
     public String specialistRejectApplication(String applicationRef) {
@@ -460,9 +456,7 @@ public class AgentPage extends Base {
 
 
     public String seniorSpecialistRejectApplication(String refCode) {
-        ActionsHelper.driverWait(5000);
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
-        ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Reject application", seniorApproveRejectButton);
@@ -493,17 +487,16 @@ public class AgentPage extends Base {
 
     public String getAssigneeNameFromAllApplications(String refCode) {
         ActionsHelper.driverWait(10000);
-        driver.get().navigate().to(urls.allApplications);
+        ActionsHelper.navigate(urls.allApplications);
         ActionsHelper.driverWait(10000);
         logManager.STEP("Refresh","Refreshes the page");
-        driver.get().navigate().to(urls.allApplications);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.navigate(urls.allApplications);
+        ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(allApllicationsSearchInput, 5);
         ActionsHelper.sendKeysWithClear(allApllicationsSearchInput, refCode + Keys.ENTER );
         ActionsHelper.driverWait(4000);
         String person;
         try {
-            ActionsHelper.driverWait(3000);
             System.out.println("Assigned to name: " + driver.get().findElement(applicationListFirstApplicationSpecialistName).getText());
             person = driver.get().findElement(applicationListFirstApplicationSpecialistName).getText();
         } catch (org.openqa.selenium.StaleElementReferenceException ex) {
