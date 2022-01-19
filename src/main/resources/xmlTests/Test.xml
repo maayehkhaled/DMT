@@ -9,22 +9,35 @@
         <listener class-name="com.qpros.common.LogManager"/>
     </listeners>
 
-
-    <test name="SSA 1st assessment Run">
+   <test name ="reassessment approve application">
         <classes>
-            <class name="com.qpros.test.ApproveApplication"/>
-            <class name="com.qpros.test.RejectApplication"/>
+
+            <class name="com.qpros.test.ApproveApplication"></class>
+            <class name="com.qpros.test.RejectApplication"></class>
+            <class name="com.qpros.test.ReassessmentApprove"></class>
         </classes>
     </test>
+    <!--
+        <test name ="reassessment decrease">
+            <classes>
+                <class name="com.qpros.test.ReassessmentDecreaseApprove"></class>
+            </classes>
+        </test>-->
+    <!--    <test name="SSA 1st assessment Run">-->
+<!--        <classes>-->
+<!--            <class name="com.qpros.test.ApproveApplication"/>-->
+<!--            <class name="com.qpros.test.RejectApplication"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="SSA Reassessment Run">
-        <classes>
-            <class name="com.qpros.test.ReassessmentIncreaseApprove"/>
-            <class name="com.qpros.test.ReassessmentDecreaseApprove"/>
-            <class name="com.qpros.test.ReassessmentApprove"/>
-            <class name="com.qpros.test.ReassessmentReject"/>
-        </classes>
-    </test>
+<!--    <test name="SSA Reassessment Run">-->
+<!--        <classes>-->
+<!--            <class name="com.qpros.test.ReassessmentIncreaseApprove"/>-->
+<!--            <class name="com.qpros.test.ReassessmentDecreaseApprove"/>-->
+<!--            <class name="com.qpros.test.ReassessmentApprove"/>-->
+<!--            <class name="com.qpros.test.ReassessmentReject"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 
 </suite>

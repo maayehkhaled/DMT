@@ -29,14 +29,13 @@ import java.util.Random;
 @Getter
 public class AssessmentPaymentPage extends Base {
 
-
     public AssessmentPaymentPage(WebDriver driver) {
         PageFactory.initElements(Base.driver.get(), this);
     }
     LoginPage loginPage = new LoginPage(driver.get());
     AgentPage agentPage = new AgentPage(driver.get());
     Random rng = new java.util.Random();
-    public static String refCode = "SSP-9737";
+    public static String refCode = "SSP-20345";
     //Locators
     private By paymentMenuItem = By.xpath("//a[.='المدفوعات']");
     private By paymentsTableSubMenuItem = By.xpath("//div[.='جداول الدفع']");
@@ -76,6 +75,7 @@ public class AssessmentPaymentPage extends Base {
     private By applicationChoseTaskReceivedFrom=By.xpath("//li[text()='PaymentSeniorSpecialist']");
     private By applicationTakeAction=By.xpath("//span[@class='fa fa-fw fa-edit']");
     private By applicationApproveButton = By.cssSelector("[value='الموافقة']");
+    private By applicationApproveInstruction=By.cssSelector("[value='تقديم للحصول على موافقة']");
     private By applicationCardSummary=By.xpath("//div[.='ملخص البطاقة']");
     private By applicationSchedulePage=By.xpath("//div[.='جداول الدفع']");
     private By applicationPaymentInstruction=By.xpath("//div[.='تعليمات الدفع']");
@@ -134,18 +134,9 @@ public class AssessmentPaymentPage extends Base {
     private By choseSchdulePayment=By.xpath("//option[text()='Variance Payment']");
     //Actions
     public void differenceBetweenDate() throws ParseException {
-        ActionsHelper.driverWait(3000);
-        ((JavascriptExecutor)driver.get()).executeScript("window.open()");
-        ArrayList<String> tabs = new ArrayList<String>(driver.get().getWindowHandles());
-        driver.get().switchTo().window(tabs.get(1));
-        ActionsHelper.navigate(urls.paymentList);
-        loginPage.loginWithUser(UserType.PaymentSectionHead);
-        ActionsHelper.driverWait(3000);
-        clickOnSchedulePayment();
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickStepClick("click on اعادة تعيين ",reSearchButton);
+
+
         ActionsHelper.driverWait(2000);
-        driver.get().switchTo().window(tabs.get(0));
         clickOnSchedulePayment();
         ActionsHelper.scrollTo(applicationTableResult);
         ActionsHelper.driverWait(3000);
@@ -328,7 +319,7 @@ public class AssessmentPaymentPage extends Base {
         ActionsHelper.sendKeys(applicationTaskSearch,"Approval of Instructions");
         ActionsHelper.actionClickStepClick("chose Approval of Instructions",applicationChoseTaskApprovalOfInstruction);
         ActionsHelper.driverWait(2000);
-        fillTaskSourceAndSearchAndClickSubmit();
+        clickOnTakeAction();
         clickOnSchedulePayment();//from 59 to 61
     }
     public void createInstruction()
@@ -417,7 +408,7 @@ public class AssessmentPaymentPage extends Base {
         ActionsHelper.actionClickStepClick("click on Active status",applicationCardActive);
         ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("click on submit button",applicationSubmitButton);
-        ActionsHelper.driverWait(4000);
+        ActionsHelper.driverWait(6000);
         logOut();
        loginByPaymentSectionHead();
         ActionsHelper.driverWait(4000);
@@ -456,6 +447,54 @@ public class AssessmentPaymentPage extends Base {
         ActionsHelper.driverWait(3000);
         driver.get().switchTo().alert().accept();
     }
+    public void openNewTap()
+    {
+        ActionsHelper.driverWait(3000);
+        ((JavascriptExecutor)driver.get()).executeScript("window.open()");
+        ArrayList<String> tabs = new ArrayList<String>(driver.get().getWindowHandles());
+        driver.get().switchTo().window(tabs.get(1));
+        ActionsHelper.navigate(urls.paymentList);
+        loginPage.loginWithUser(UserType.PaymentSectionHead);
+        clickOnSchedulePayment();
+        ActionsHelper.actionClickStepClick("click on عرض موسع",applicationExpendedView);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.actionClickStepClick("click on search ", applicationIDSearchButton);
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.scrollTo(applicationFullData);
+        List<WebElement> tableBodyDataIsPayment=driver.get().findElements(By.className("TableRecords_OddLine"));
+        ActionsHelper.driverWait(3000);
+        if(!tableBodyDataIsPayment.get(8).getText().equalsIgnoreCase("pending"))
+        {
+            logManager.ERROR("Actual Date  [" +tableBodyDataIsPayment.get(8).getText()+ "]  while expected result should [pending]   ", false);
+        }
+        else
+        {
+            logManager.INFO("the card status is    ["+tableBodyDataIsPayment.get(8).getText()+"]" ,false);
+
+        }
+        ActionsHelper.driverWait(3000);
+        driver.get().navigate().refresh();
+        ActionsHelper.actionClickStepClick("click on عرض موسع",applicationExpendedView);
+
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("click on search ", applicationIDSearchButton);
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.scrollTo(applicationFullData);
+        List<WebElement> tableBodyDataIsBending=driver.get().findElements(By.className("TableRecords_OddLine"));
+        ActionsHelper.driverWait(3000);
+        if(!tableBodyDataIsBending.get(8).getText().equalsIgnoreCase("pending"))
+        {
+            logManager.ERROR("Actual Date  [" +tableBodyDataIsBending.get(8).getText()+ "]  while expected result should [pending]   ", false);
+        }
+        else
+        {
+            logManager.INFO("the card status is    ["+tableBodyDataIsBending.get(8).getText()+"]" ,false);
+
+        }
+        ActionsHelper.driverWait(3000);
+        driver.get().switchTo().window(tabs.get(0));
+    }
+
     public void clickOnSchedulePayment()
     {
         ActionsHelper.driverWait(5000);
@@ -689,7 +728,7 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario6()
     {
-    /*    requestManualCard();
+        requestManualCard();
         addTaskAndCheckFromData();
         logOut();
         loginByPaymentSeniorSpecialist();
@@ -728,7 +767,7 @@ ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(applicationTaskSearch," Approval of UnderPayment");
         ActionsHelper.actionClickStepClick("chose  Approval of UnderPayment",applicationChoseApprovalOfUnderPayment);
         ActionsHelper.driverWait(2000);
-        fillTaskSourceAndSearchAndClickSubmit();*/
+        fillTaskSourceAndSearchAndClickSubmit();
         ActionsHelper.driverWait(7000);
         clickOnSchedulePayment();
         ActionsHelper.actionClickStepClick("click on عرض موسع",applicationExpendedView);
@@ -740,11 +779,11 @@ ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("click on search ", applicationIDSearchButton);
         ActionsHelper.driverWait(2000);
         System.out.println(ActionsHelper.element(numberOfRecord).getText());
-        System.out.println(ActionsHelper.element(numberOfRecord).getText().charAt(2));
+        System.out.println(ActionsHelper.element(numberOfRecord).getText().charAt(0));
         ActionsHelper.scrollTo(numberOfRecord);
-
+    char record=ActionsHelper.element(numberOfRecord).getText().charAt(0);
         ActionsHelper.driverWait(6000);
-        if(ActionsHelper.element(numberOfRecord).getText().contains(" 4 "))
+        if(record=='4')
         {
             logManager.INFO("sum of record  is equal 4 ",false);
 
@@ -795,6 +834,7 @@ ActionsHelper.driverWait(2000);
     }
     public void searchOnApplication()
     {
+        ActionsHelper.element(applicationIDSearchBox).clear();
         ActionsHelper.driverWait(5000);
         ActionsHelper.sendKeys(applicationIDSearchBox, refCode);
         ActionsHelper.retryClick(applicationIDSearchBox, 30);
@@ -864,8 +904,15 @@ ActionsHelper.driverWait(2000);
         loginByPaymentSeniorSpecialist();
         ActionsHelper.driverWait(4000);
         createInstruction();
-        //step 28
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.driverWait(7000);
+        ActionsHelper.scrollTo(applicationApproveInstruction);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.actionClickStepClick("click on تقديم للموافقة",applicationApproveInstruction);
+
+        ActionsHelper.driverWait(10000);
+        driver.get().switchTo().alert().accept();
+        ActionsHelper.driverWait(5000);
+
         logOut();
         ActionsHelper.driverWait(4000);
         loginByPaymentSectionHead();
@@ -873,18 +920,8 @@ ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("click on عرض موسع",applicationExpendedView);
         ActionsHelper.driverWait(2000);
         ActionsHelper.scrollTo(applicationFullData);
-        List<WebElement> tableBodyDataIsBending=driver.get().findElements(By.className("TableRecords_OddLine"));
-        ActionsHelper.driverWait(3000);
-        if(!tableBodyDataIsBending.get(8).getText().equalsIgnoreCase("Pending"))
-        {
-            logManager.ERROR("Actual Date  [" +tableBodyDataIsBending.get(8).getText()+ "]  while expected result should [Pending]   ", false);
-        }
-        else
-        {
-            logManager.INFO("the card status is    ["+tableBodyDataIsBending.get(8).getText()+"]" ,false);
 
-        }
-        ActionsHelper.driverWait(3000);
+        openNewTap();
         updateInstruction();
         ActionsHelper.actionClickStepClick("chose the Interfaced to ERP",applicationChoseInterfacedToERP);
 
@@ -902,12 +939,13 @@ ActionsHelper.driverWait(2000);
         }
         ActionsHelper.driverWait(3000);
         updateInstruction();
+        ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("chose the Failed",applicationChoseFailed);
         saveStatusAndGoToPayment();
         List<WebElement> tableBodyDataIsBendingAfterFailed=driver.get().findElements(By.className("TableRecords_OddLine"));
-        if(!tableBodyDataIsBendingAfterFailed.get(8).getText().equalsIgnoreCase("paid"))
+        if(!tableBodyDataIsBendingAfterFailed.get(8).getText().equalsIgnoreCase("pending"))
         {
-            logManager.ERROR("Actual Date  [" +tableBodyDataIsBendingAfterFailed.get(8).getText()+ "]  while expected result should [bending]   ", false);
+            logManager.ERROR("Actual Date  [" +tableBodyDataIsBendingAfterFailed.get(8).getText()+ "]  while expected result should [pending]   ", false);
         }
         else
         {
@@ -931,12 +969,8 @@ ActionsHelper.driverWait(2000);
     }
     public void updateInstruction()
     {
-        ActionsHelper.actionClickStepClick("click on المدفوعات",paymentMenuItem);
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickStepClick("click on تعليمات الدفع",applicationPaymentInstruction);
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickStepClick("click on تحديث التعليمات",applicationUpdateInstruction);
-        ActionsHelper.driverWait(3000);
+       ActionsHelper.navigate(urls.updateInstruction);
+        ActionsHelper.driverWait(5000);
         searchOnApplication();
         ActionsHelper.scrollTo(applicationTableUpdate);
         ActionsHelper.driverWait(3000);

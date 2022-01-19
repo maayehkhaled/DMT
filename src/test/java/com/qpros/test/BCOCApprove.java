@@ -74,14 +74,13 @@ public class BCOCApprove extends Base {
     public void bcocApprove() throws JsonProcessingException, AWTException, InterruptedException {
 //        //1st assessment - Approve
        approveApplicationModule.approveApplication(false);
-//        // approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
+       // approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
         logManager.STEP("2. Login to beneficiary side with the EID", "the Beneficiary User conduct login using EID" + TestData.EID);
           ActionsHelper.driverWait(3000);
         claimantLogin.claimantLogin(TestData.EID);
         claimantPage.bcocApprove();
         ActionsHelper.retryClick(By.xpath("//input[@class='Button MenuButton LogoutButton']"), 30);
         approveApplicationModule.afterBcocApprovalProcess();
-
 
     }
 

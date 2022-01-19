@@ -27,7 +27,6 @@ public class AgentPage extends Base {
     private By agentSendAgainStepFinal = By.xpath("//*[contains(@id,'wtActions_wtcurrentSectionMoreinfo')]"); //Contains app ref number and clickable
     private By agentRejectButtonFinal = By.xpath("//*[contains(@id,'wtActions_wtrbReject')]");
     private By rejectBtn = By.xpath("//input[@value=\"مرفوض - رفض\"]");
-
 //TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]
 
     private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt573_block_wtActions_wtbtn_Next6\"]");
@@ -44,6 +43,7 @@ public class AgentPage extends Base {
     private By approveRejectButton = By.xpath("//input[@class='Button Is_Default']");
     private By seniorApproveRejectButton = By.cssSelector("[value='مرفوض - رفض']"); //Only one action was needed
     private By complexRadioBtn = By.xpath("//*[contains(@id,'wtLockOnComplex5')]"); //Only one action was needed
+    private By nextButton=By.xpath("//*[contains(@class,'Button ForwardButton')]");
 //wtLockOnComplex5
     private By seniorApproveRejectButtonConfirmation = By.cssSelector("[value='مرفوض - رفض']"); //Only one action was needed
     private By reassessmentCheckBox = By.xpath("//input[contains(@id,'IsCommunicatedbyAssessor')]"); //Only one action was needed
@@ -288,21 +288,29 @@ public class AgentPage extends Base {
 
     public String seniorSpecialistApproval(String refCode) {
         //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
+        ActionsHelper.driverWait(3000);
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
+        ActionsHelper.driverWait(6000);
+        ActionsHelper.scrollTo(seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
-        ActionsHelper.driverWait(7000);
-        ActionsHelper.waitForExpectedElement(summaryNextBtn);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.scrollTo(summaryNextBtn);
+        ActionsHelper.driverWait(6000);
+        ActionsHelper.actionClickStepClick("click on next button",summaryNextBtn);
+        // ActionsHelper.waitForExpectedElement(summaryNextBtn);
         //ActionsHelper.scrollTo(agentClickNext56StepFinal);
-        ActionsHelper.driverWait(1000);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.retryClick(summaryNextBtn, 10);
         ActionsHelper.driverWait(8000);
         //ActionsHelper.waitForExpectedElement(agreementBtn);
         //ActionsHelper.scrollTo(agreementBtn);
         //ActionsHelper.clickAction(agreementBtn);
         try {
+            driver.get().switchTo().alert().accept();
+            ActionsHelper.driverWait(2000);
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
         }
@@ -330,6 +338,7 @@ public class AgentPage extends Base {
         //ActionsHelper.scrollTo(agreementBtn);
         //ActionsHelper.clickAction(agreementBtn);
         try {
+
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
         }

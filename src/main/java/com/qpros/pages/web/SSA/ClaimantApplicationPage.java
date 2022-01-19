@@ -20,7 +20,7 @@ public class ClaimantApplicationPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    private By nextStep = By.xpath("//*[contains(@id,'wtbtn_Next')]");
+    private By nextStep = By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']");
     private By checkBill = By.cssSelector(".ThemeGrid_Width8 > .OSInline:nth-child(1) > span");
     private By addNewBillDropDownMenu = By.xpath("//select[@id=\"CloneOfWebPatterns_wt16_block_wtMainContent_wtddl_company\"]");
     private By accountNumberField = By.xpath("//input[@id=\"CloneOfWebPatterns_wt16_block_wtMainContent_wttxt_AccountNumber\"]");
@@ -42,6 +42,8 @@ public class ClaimantApplicationPage extends Base {
     private By sendAnApplicationBusinessRecord = By.xpath("//input[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent6_wtbtn_Tab5Submit\"]");
     private By approvalCheckboxesId = By.xpath("//form[@action=\"PopupDisclaimer2.aspx\"]//div//div//div//div[2]//div//div//div//div//div//input");
     private By agreeBtn = By.xpath("//input[@value=\"أوافق\"]");
+    private By updateFamilyData =  By.xpath("//*[@id='DCDTheme_wt24_block_wtMainContent_DCD_Activation_CommonModules_CW_wt46_block_wtIcon']");
+
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     Popups popUp = new Popups(driver.get());
 
@@ -104,9 +106,9 @@ public class ClaimantApplicationPage extends Base {
             ActionsHelper.driverWait(20000);
             driver.get().switchTo().frame(0);
             ActionsHelper.selectOption(addNewBillDropDownMenu, "ADDC");
-            ActionsHelper.sendKeys(accountNumberField, "5299625382");
-            ActionsHelper.sendKeys(emiratesIdField, "196896907175");
-            ActionsHelper.sendKeys(premiseNumber, "8354787951");
+            ActionsHelper.sendKeys(accountNumberField, "8296115007");
+            ActionsHelper.sendKeys(emiratesIdField, "784198585861937");
+            ActionsHelper.sendKeys(premiseNumber, "1409065300");
             ActionsHelper.sendKeys(reasonNotToPayTextField, "dhsdjfjdshds");
             uploadDocument(By.cssSelector(".button"));
             ActionsHelper.waitForExpectedElement(By.xpath("//input[@value=\"حفظ\"]"));
@@ -262,19 +264,21 @@ public class ClaimantApplicationPage extends Base {
 
     }
 
-    private By updateFamilyData =  By.xpath("//div[@class='HomePageRow']/div[1]//div[@class='text']/div[1]");
 
     public void clickOnChangeInLivingCircumstances(){
-        logManager.STEP("3. Click on التغير في الظروف المعيشية box", "the Beneficiary User Click on التغير في الظروف المعيشية box" + TestData.EID);
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.actionClickStepClick("Click on update family Data", updateFamilyData);
+     //   logManager.STEP("3. Click on التغير في الظروف المعيشية box", "the Beneficiary User Click on التغير في الظروف المعيشية box" + TestData.EID);
+     ActionsHelper.driverWait(8000);
+      ActionsHelper.actionClickStepClick("Click on update family Data", updateFamilyData);
         ActionsHelper.driverWait(3000);
         ActionsHelper.driver.get().switchTo().frame(0);
         ActionsHelper.selectOption(By.id("CloneOfWebPatterns_wt20_block_wtMainContent_wtddl_WebPortalLocation2"), "2");
         ActionsHelper.retryClick(By.xpath("//input[@class='Button Is_Default']"), 30);
         driver.get().switchTo().defaultContent();
-        ActionsHelper.driverWait(40000);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(35000);
+        ActionsHelper.driverWait(6000);
+        ActionsHelper.actionClickStepClick("click on next Button",nextStep);
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.actionClickStepClick("click on next Button",nextStep);
 
     }
 
@@ -315,6 +319,8 @@ public class ClaimantApplicationPage extends Base {
     }
 
     public void incomeAndPensionData(){
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("click on next step ",nextStep);
         logManager.STEP("8. Fill the mandatory information for income in the income table and select all check boxes under pension table in بيانات الدخل tab (make sure that the tab marked as completed)", "Fill the mandatory information for income in the income table and select all check boxes under pension table in بيانات الدخل tab (make sure that the tab marked as completed) ");
         ActionsHelper.driverWait(3000);
         java.util.List<WebElement> incomeList = driver.get().findElements(By.xpath("//*[contains(@id,\"SelftAddSalaryDetails\")]"));
@@ -377,7 +383,8 @@ public class ClaimantApplicationPage extends Base {
         logManager.STEP("11. Click on التالي", "Click on التالي");
         ActionsHelper.driverWait(3000);
         ActionsHelper.waitForExpectedElement(By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
-        ActionsHelper.actionClickScrollStepClick("Click on التالي in بيانات العائلة tab", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
+        ActionsHelper.actionClickStepClick("click on next button",nextStep);
+
     }
 
     public void businessRecord(){
@@ -456,12 +463,12 @@ public class ClaimantApplicationPage extends Base {
 
     public void bcocApprove() throws AWTException {
         clickOnChangeInLivingCircumstances();
-        personalInformation();
-        familyInformation();
-        addressAndContactInformation();
+       addressAndContactInformation();
         incomeAndPensionData();
         support();
-        businessRecord();
+        //personalInformation();
+        //familyInformation();
+        //businessRecord();
         /*
         ActionsHelper.waitForExpectedElement(personalInformationNextBtn);
         ActionsHelper.clickAction(personalInformationNextBtn);
