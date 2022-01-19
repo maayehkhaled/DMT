@@ -397,6 +397,14 @@ public class AgentPage extends Base {
         }
     }//Finished
 
+    public void logOut2()
+    {
+
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("click on logout",userNameBeforeLogout);
+        ActionsHelper.driverWait(4000);
+    }
+
 
 
     public String specialistRejectApplication(String applicationRef) {
