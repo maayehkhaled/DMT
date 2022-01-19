@@ -79,6 +79,7 @@ public class AuditorsManagementPage extends Base {
             try {
                 driver.get().switchTo().alert().accept();
             } catch (Exception e) {
+                logManager.WARN("must be ASSGIN to Specialist");
             }
         }
         else {
@@ -89,6 +90,7 @@ public class AuditorsManagementPage extends Base {
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("must be ASSGIN to Specialist");
         }
 
     }

@@ -43,7 +43,7 @@ public class ClaimantApplicationPage extends Base {
     private By approvalCheckboxesId = By.xpath("//form[@action=\"PopupDisclaimer2.aspx\"]//div//div//div//div[2]//div//div//div//div//div//input");
     private By agreeBtn = By.xpath("//input[@value=\"أوافق\"]");
     private By updateFamilyData =  By.xpath("//*[@id='DCDTheme_wt24_block_wtMainContent_DCD_Activation_CommonModules_CW_wt46_block_wtIcon']");
-
+    private By chosePremiseNumber=By.xpath("//option[@value='9403']");
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     Popups popUp = new Popups(driver.get());
 
@@ -302,7 +302,7 @@ public class ClaimantApplicationPage extends Base {
     public void addressAndContactInformation() throws AWTException {
         logManager.STEP("6. Fill address information and contact information in العنوان tab (make sure that the tab marked as completed)", "Fill address information and contact information in العنوان tab (make sure that the tab marked as completed) ");
         ActionsHelper.driverWait(3000);
-        uploadBill();
+        /*uploadBill();
         ActionsHelper.scrollTo(By.xpath("//span[.='تفاصيل مكان السكن']"));
         ActionsHelper.isElementPresent(By.xpath("//span[.='تفاصيل مكان السكن']"));
         java.util.List<WebElement> residentList = driver.get().findElements(By.xpath("//select"));
@@ -314,8 +314,16 @@ public class ClaimantApplicationPage extends Base {
 
         logManager.STEP("7. click on التالي", "click on التالي");
         ActionsHelper.driverWait(15000);
-        ActionsHelper.actionClickScrollStepClick("next", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));
-
+        ActionsHelper.actionClickScrollStepClick("next", By.xpath("//div[@class='PH Tabs__content active']//div[@class='card']"));*/
+        List<WebElement> PremiseNumber=driver.get().findElements(By.xpath("//select[contains(@id,'wtddl_PremiseLivingOn')]"));
+        for(int i=0;i<=PremiseNumber.size();i++)
+        {
+            PremiseNumber.get(i).click();
+            ActionsHelper.driverWait(3000);
+            ActionsHelper.actionClickStepClick("chose PremiseNumber",chosePremiseNumber);
+        }
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.actionClickStepClick("click on next Button",nextStep);
     }
 
     public void incomeAndPensionData(){

@@ -247,6 +247,7 @@ public class AgentPage extends Base {
         ActionsHelper.waitForExpectedElement(firstElementAfterSearch, 30);
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
+        logManager.WARN("must be click on the app to chose it");
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickScrollStepClick("Approve Personal Information", agentApproveStepFinal);
         ActionsHelper.driverWait(10000);
@@ -281,6 +282,7 @@ public class AgentPage extends Base {
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("must be approve the app ");
         }
         return getAssigneeNameFromAllApplications(applicationRef);
     }//Finished
@@ -292,6 +294,7 @@ public class AgentPage extends Base {
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
+        logManager.WARN("must be chose  the app  to chose it ");
         ActionsHelper.driverWait(6000);
         ActionsHelper.scrollTo(seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(4000);
@@ -313,6 +316,7 @@ public class AgentPage extends Base {
             ActionsHelper.driverWait(2000);
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("must be approve the app ");
         }
         return getAssigneeNameFromAllApplications(refCode);
     } //Finished
@@ -440,6 +444,7 @@ public class AgentPage extends Base {
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("must reject the app ");
         }
         ActionsHelper.driverWait(3000);
         driver.get().switchTo().frame(0);
@@ -472,6 +477,7 @@ public class AgentPage extends Base {
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("must reject the app ");
         }
 
         ActionsHelper.driverWait(3000);
@@ -484,7 +490,13 @@ public class AgentPage extends Base {
         return getAssigneeNameFromAllApplications(refCode);
     }
 
+    public void logOut2()
+    {
 
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("click on logout",userNameBeforeLogout);
+        ActionsHelper.driverWait(4000);
+    }
     public String getAssigneeNameFromAllApplications(String refCode) {
         ActionsHelper.driverWait(10000);
         ActionsHelper.navigate(urls.allApplications);
