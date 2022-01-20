@@ -56,7 +56,6 @@ public class RejectApplicationModule extends Base {
 
             loginPage.loginWithUser(UserType.Superuser);
             auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), refCode);
-            logManager.WARN("must assgin to Specialist2 user");
             agentPage.logOut();
 
             loginPage.loginWithUser(UserType.Specialist2);
@@ -68,7 +67,7 @@ public class RejectApplicationModule extends Base {
             agentPage.logOut();
 
             loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
-            logManager.WARN("must assgin to Specialist2 user");
+
             String committeeName = agentPage.seniorSpecialistRejectApplication(refCode);
             System.out.println(committeeName);
             agentPage.logOut();

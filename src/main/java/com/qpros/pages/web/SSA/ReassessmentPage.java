@@ -91,7 +91,6 @@ public class ReassessmentPage extends Base {
             //login with super user
             loginPage.loginWithUser(UserType.Superuser);
             this.logManager.STEP(" Login by super user, and assign the application to specialist from ادارة المراجعين ", "");
-            logManager.WARN("must login with super user ");
             //start assign process by selecting specialist 2 with appication id
             auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), refCode);
 

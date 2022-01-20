@@ -64,7 +64,7 @@ public class BCOCReject extends Base {
     public void rmiBCOCStep() throws JsonProcessingException, AWTException, InterruptedException {
 
         //1st assessment - Approve
-       approveApplicationModule.approveApplication(false);
+    //   approveApplicationModule.approveApplication(false);
         // approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
         logManager.STEP("2. Login to beneficiary side with the EID", "the Beneficiary User conduct login using EID" + TestData.EID);
         ActionsHelper.navigate(urls.claimantLogin);
