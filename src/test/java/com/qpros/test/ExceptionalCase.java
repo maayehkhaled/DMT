@@ -128,7 +128,7 @@ public class ExceptionalCase extends Base{
     public void validateCreateFullExceptionalCase(){
         startPage();
         exceptionalPage.chooseReferralEntity();
-        exceptionalPage.enterHeadOfFamilyData("784195872616300","21/03/1959");
+        exceptionalPage.enterHeadOfFamilyData("784199140633000","21/03/1988");
         exceptionalPage.createFullExceptionalCase();
         //System.out.print(exceptionalPage.bigFileValidationMsg());
        // Assert.assertEquals(exceptionalPage.bigFileValidationMsg(),"ملف غير صالح - تم تجاوز الحد الأقصى المسموح به وهو 4 ميغابايت");

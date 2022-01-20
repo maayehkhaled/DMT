@@ -26,14 +26,15 @@ public class ExceptionalCasePage extends Base{
     private By referralEntityNameTextbox=By.xpath("//input[contains(@id,'ReferralEntityName')]");
     private By saveReferralNameBtn=By.xpath("//input[contains(@id,'SaveBtn')]");
     private By caseDescriptionTextarea=By.xpath("//textarea[contains(@id,'wttxt_ReferralCaseInput')]");
-    private By firstApprovalCalendar=By.xpath("//input[contains(@id,'wt557_block_wtInput_wtdt_PreliminaryApprovalDate')]");
+    //private By firstApprovalCalendar=By.xpath("//input[contains(@id,'wt557_block_wtInput_wtdt_PreliminaryApprovalDate')]");
+    private By firstApprovalCalendar=By.xpath("//input[contains(@id,'wt558_block_wtInput_wtdt_PreliminaryApprovalDate')]");
     private By referralCalendar=By.xpath("//input[contains(@id,'wt354_block_wtInput_wtdt_DateOfRefferal')]");
     private By nextBtn=By.xpath("//input[contains(@id,'NextBtn')]");
     private By referralEntityDDL=By.xpath("//select[contains(@id,'ReferralEntityList')]");
 
     //Screen II
     private By hohEIDTextbox=By.xpath("//input[contains(@id,'HOHEmiratesID')]");
-    private By dateOfBirthCalendar=By.xpath("//input[contains(@id,'wt577_block_wtInput_wtdt_DateOfBrith')]");
+    private By dateOfBirthCalendar=By.xpath("//input[contains(@id,'wt578_block_wtInput_wtdt_DateOfBrith')]");
     private By validateDetailsBtn=By.xpath("//input[contains(@id,'ValidateDetailsBtn')]");
     private By validationMsg=By.xpath("//span[contains(@id,'wtSanitizedHtml3')]");
             //("//span[co//span[contains(@id,'wtSanitizedHtml3')]ntains(@id,'wtSanitizedHtml2')]");
@@ -233,19 +234,25 @@ public class ExceptionalCasePage extends Base{
         getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"MoreThan500MB.docx");
         ActionsHelper.driverWait(5000);
 
-        //ActionsHelper.waitUntilElementIsDisplayed(By.xpath("//a[contains(@id,'wt9_block_wt33')]"));
-        ActionsHelper.retryClick(driver.get().findElement(By.xpath("//a[contains(@id,'wt9_block_wt33')]")),30 );
+        //ActionsHelper.retryClick(driver.get().findElement(By.xpath("//a[contains(@id,'wt9_block_wt33')]")),30 );
         ActionsHelper.retryClick(saveFilesBtn,30);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.retryClick(driver.get().findElement(By.id("InternalPortalTheme_wt24_block_WebPatterns_wt23_block_RichWidgets_wt9_block_wt33")),30 );
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.scrollTo(editFileDescription);
+        ActionsHelper.clickElementActions(driver.get().findElement(editFileDescription));
         ActionsHelper.retryClick(editFileDescription,30);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.sendKeysWithClear(driver.get().findElement(By.xpath("//input[contains(@id,'Comment')]")),"new description for file");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(driver.get().findElement(By.xpath("//input[contains(@id,'Comment')]")),"new description for file");
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(driver.get().findElement(By.xpath("//a[contains(@id,'wt165')]")),30 );
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(driver.get().findElement(By.xpath("//a[contains(@id,'ctl03_wt165')]")),30 );
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.scrollTo(nextBtn);
         ActionsHelper.retryClick(nextBtn,30);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(driver.get().findElement(By.xpath("//div[contains(@id,'wtNextButtonContainer')]")),30 );
+        ActionsHelper.driverWait(8000);
+        /*ActionsHelper.retryClick(nextBtn,30);
+        ActionsHelper.driverWait(8000);*/
+        //ActionsHelper.retryClick(driver.get().findElement(By.xpath("//div[contains(@id,'wtNextButtonContainer')]")),30 );
         //validation msg : //span[contains(@id,'wtSanitizedHtml2')]
     }
 
