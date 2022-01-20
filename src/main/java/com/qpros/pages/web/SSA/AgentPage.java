@@ -28,7 +28,8 @@ public class AgentPage extends Base {
     private By agentRejectButtonFinal = By.xpath("//*[contains(@id,'wtActions_wtrbReject')]");
     private By rejectBtn = By.xpath("//input[@value=\"مرفوض - رفض\"]");
 //TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]
-
+    private By approveApp=By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']");
+    private By nextButton=By.xpath("//*[contains(@class,'ForwardButton')]");
     private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt573_block_wtActions_wtbtn_Next6\"]");
     //private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
     private By agentClickNextFinal = By.className("ForwardButton");
@@ -43,7 +44,6 @@ public class AgentPage extends Base {
     private By approveRejectButton = By.xpath("//input[@class='Button Is_Default']");
     private By seniorApproveRejectButton = By.cssSelector("[value='مرفوض - رفض']"); //Only one action was needed
     private By complexRadioBtn = By.xpath("//*[contains(@id,'wtLockOnComplex5')]"); //Only one action was needed
-    private By nextButton=By.xpath("//*[contains(@class,'Button ForwardButton')]");
 //wtLockOnComplex5
     private By seniorApproveRejectButtonConfirmation = By.cssSelector("[value='مرفوض - رفض']"); //Only one action was needed
     private By reassessmentCheckBox = By.xpath("//input[contains(@id,'IsCommunicatedbyAssessor')]"); //Only one action was needed
@@ -81,12 +81,12 @@ public class AgentPage extends Base {
         ActionsHelper.actionClickStepClick("Approve step 4", agentApproveStepFinal);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click next Step 4", agentClickNextFinal);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(4000);
         System.out.println("Attempting step 5");
-        ActionsHelper.retryClick(agentClickNext56StepFinal, 4);
+        ActionsHelper.retryClick(finalButtonApprove, 4);
         ActionsHelper.driverWait(2000);
         System.out.println("Attempting step 6");
-        ActionsHelper.retryClick(agentClickNext56StepFinal, 3);
+        ActionsHelper.retryClick(finalButtonApprove, 3);
         logManager.STEP("Approving the application","Click the confirm button");
         try {
             driver.get().switchTo().alert().accept();
@@ -261,26 +261,27 @@ public class AgentPage extends Base {
         ActionsHelper.actionClickStepClick("Click next Step 3", agentClickNextFinal);
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Approve Income Info", agentApproveStepFinal);
-        ActionsHelper.driverWait(8000);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Click next Step 4", agentClickNextFinal);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(12000);
         if (incOrDecApp) {
             ActionsHelper.actionClickScrollStepClick("Make application complex radio button", complexRadioBtn);
-            ActionsHelper.driverWait(5000);
+            ActionsHelper.driverWait(8000);
         }
         //ActionsHelper.actionClickStepClick("Approve step 5", agentApproveStepFinal);
         System.out.println("Attempting step 5");
         //ActionsHelper.retryClick(agentClickNext56StepFinal, 4);
-        ActionsHelper.driverWait(12000);
-        ActionsHelper.actionClickStepClick("Click Next Step 5", summaryNextBtn);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Click Next Step 5", nextButton);
         System.out.println("Attempting step 6");
         //ActionsHelper.actionClickStepClick("Click Approval and Agree", summaryNextBtn);
         ActionsHelper.driverWait(5000);
-        ActionsHelper.retryClick(agreementBtn, 10);
+        ActionsHelper.retryClick(finalButtonApprove, 10);
         logManager.STEP("Approving the application","Click the confirm button");
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("must be approve the app ");
         }
         return getAssigneeNameFromAllApplications(applicationRef);
     }//Finished
@@ -297,13 +298,13 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(10000);
-        ActionsHelper.scrollTo(summaryNextBtn);
+        ActionsHelper.scrollTo(approveApp);
         ActionsHelper.driverWait(6000);
-        ActionsHelper.actionClickStepClick("click on next button",summaryNextBtn);
+        ActionsHelper.actionClickStepClick("click on next button",approveApp);
         // ActionsHelper.waitForExpectedElement(summaryNextBtn);
         //ActionsHelper.scrollTo(agentClickNext56StepFinal);
         ActionsHelper.driverWait(10000);
-        ActionsHelper.retryClick(summaryNextBtn, 10);
+        ActionsHelper.retryClick(nextButton, 10);
         ActionsHelper.driverWait(8000);
         //ActionsHelper.waitForExpectedElement(agreementBtn);
         //ActionsHelper.scrollTo(agreementBtn);
@@ -313,6 +314,7 @@ public class AgentPage extends Base {
             ActionsHelper.driverWait(2000);
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("must be approve the app ");
         }
         return getAssigneeNameFromAllApplications(refCode);
     } //Finished
@@ -448,6 +450,7 @@ public class AgentPage extends Base {
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("must reject the app ");
         }
         ActionsHelper.driverWait(3000);
         driver.get().switchTo().frame(0);
@@ -480,6 +483,7 @@ public class AgentPage extends Base {
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("must reject the app ");
         }
 
         ActionsHelper.driverWait(3000);
@@ -492,7 +496,13 @@ public class AgentPage extends Base {
         return getAssigneeNameFromAllApplications(refCode);
     }
 
+    public void logOut2()
+    {
 
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("click on logout",userNameBeforeLogout);
+        ActionsHelper.driverWait(4000);
+    }
     public String getAssigneeNameFromAllApplications(String refCode) {
         ActionsHelper.driverWait(10000);
         ActionsHelper.navigate(urls.allApplications);

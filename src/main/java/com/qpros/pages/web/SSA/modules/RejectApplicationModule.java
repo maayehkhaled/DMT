@@ -67,6 +67,7 @@ public class RejectApplicationModule extends Base {
             agentPage.logOut();
 
             loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
+
             String committeeName = agentPage.seniorSpecialistRejectApplication(refCode);
             System.out.println(committeeName);
             agentPage.logOut();

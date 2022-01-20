@@ -41,9 +41,11 @@ public class BusinessParametersPage extends Base {
         ActionsHelper.waitForExpectedElement(feedbackMessage, 30);
         Boolean message = feedbackMessageNotification.feedbackMessage().contains("released");
         if (message){
+            ActionsHelper.driverWait(4000);
             ActionsHelper.actionClickStepClick("Start Process", startProcessButton);
-            ActionsHelper.driverWait(7000);
+            ActionsHelper.driverWait(5000);
             driver.get().switchTo().alert().accept();
+            ActionsHelper.driverWait(5000);
         }
         ActionsHelper.waitForExpectedElement(feedbackMessage, 30);
         Boolean message1 = feedbackMessageNotification.feedbackMessage().contains("Update scheduled");
