@@ -130,6 +130,11 @@ public class ExceptionalCase extends Base{
         exceptionalPage.chooseReferralEntity();
         exceptionalPage.enterHeadOfFamilyData("784199140633000","21/03/1988");
         exceptionalPage.createFullExceptionalCase();
+        exceptionalPage.searchForId();
+        System.out.println(exceptionalPage.checkRequestAssigned());
+        Assert.assertEquals(exceptionalPage.checkIsComplex(),"معقد");
+        exceptionalPage.completeApprovals(false);
+        //System.out.println(exceptionalPage.searchForId());
         //System.out.print(exceptionalPage.bigFileValidationMsg());
        // Assert.assertEquals(exceptionalPage.bigFileValidationMsg(),"ملف غير صالح - تم تجاوز الحد الأقصى المسموح به وهو 4 ميغابايت");
     }

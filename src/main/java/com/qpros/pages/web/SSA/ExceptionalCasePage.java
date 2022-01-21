@@ -5,11 +5,14 @@ import com.qpros.pages.web.SSA.commonSSA.Popups;
 import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 import java.util.UUID;
+
+import static com.qpros.pages.web.SSA.modules.ApproveApplicationModule.refCode;
 
 @Getter
 @Setter
@@ -20,6 +23,7 @@ public class ExceptionalCasePage extends Base{
     }
 
     Popups PopupsPage=new Popups(driver.get());
+    AgentPage agentPage=new AgentPage(driver.get());
 
     private By exceptionalCaseLink= By.xpath("//a[contains(@id,'wt160')]");
     private By addNewEntity=By.xpath("//input[contains(@id,'openPopup')]");
@@ -67,6 +71,12 @@ public class ExceptionalCasePage extends Base{
     private By saveFilesBtn=By.xpath("//input[contains(@id,'wtbtn_save')]");
     private By editFileDescription=By.xpath("//a[contains(@id,'ctl03_wtlnk_EditComment')]");
     //By.xpath("//a[contains(@id,'EditComment')]");
+
+    //All list page
+    private By searchForIdTextbox=By.xpath("//input[contains(@id,'SearchFrom')]");
+    private By allListTbl=By.xpath("//table[contains(@id,'wtBenefitRequestsList')]");
+    private By appIdLink=By.xpath("//a[contains(@id,'ApplicationReview')]");
+    private By assignedToLbl=By.className("display-block");
 
     String myLongData= "sadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassad" +
             "assadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadas" +
@@ -201,6 +211,7 @@ public class ExceptionalCasePage extends Base{
     }
 
     public void createFullExceptionalCase(){
+        ActionsHelper.scrollTo(nextBtn);
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(nextBtn,30);
@@ -250,10 +261,33 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.scrollTo(nextBtn);
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(8000);
-        /*ActionsHelper.retryClick(nextBtn,30);
-        ActionsHelper.driverWait(8000);*/
+        ActionsHelper.retryClick(nextBtn,30);
+        ActionsHelper.driverWait(8000);
         //ActionsHelper.retryClick(driver.get().findElement(By.xpath("//div[contains(@id,'wtNextButtonContainer')]")),30 );
         //validation msg : //span[contains(@id,'wtSanitizedHtml2')]
+    }
+
+    public void searchForId(){
+        ActionsHelper.sendKeys(searchForIdTextbox,"784199140633000"+ Keys.ENTER);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(appIdLink,30);
+        ActionsHelper.driverWait(20000);
+        /*ActionsHelper.waitUntilElementIsDisplayed(assignedToLbl);
+        return driver.get().findElement(assignedToLbl).getText();*/
+    }
+
+    public String  checkRequestAssigned(){
+        WebElement allListTable = driver.get().findElement(allListTbl);
+        WebElement tableCell = allListTable.findElement(By.xpath("//tbody//td[contains(@id,'ctl03_wtBenefitRequestsListRow5')]"));
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.retryClick(appIdLink,30);
+        return tableCell.getText();
+    }
+    public String checkIsComplex(){
+        return driver.get().findElement(By.xpath("//span[contains(@id,'wtisComplex2')]")).getText();
+    }
+    public void completeApprovals(boolean incOrDecApp){
+        agentPage.specialistApproval(refCode,incOrDecApp);
     }
 
     public String bigFileValidationMsg(){
