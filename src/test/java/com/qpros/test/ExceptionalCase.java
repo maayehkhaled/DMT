@@ -1,4 +1,5 @@
 package com.qpros.test;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qpros.common.web.Base;
 import com.qpros.pages.web.SSA.*;
 import com.qpros.reporting.QuantaTestManager;
@@ -9,6 +10,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.awt.*;
 import java.io.IOException;
 @Listeners(com.qpros.common.LogManager.class)
 
@@ -125,17 +127,19 @@ public class ExceptionalCase extends Base{
 
     @Test(description = "Create Full Exceptional Case", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
-    public void validateCreateFullExceptionalCase(){
+    public void validateCreateFullExceptionalCase() throws AWTException, InterruptedException, JsonProcessingException {
         startPage();
         exceptionalPage.chooseReferralEntity();
-        exceptionalPage.enterHeadOfFamilyData("784199140633000","21/03/1988");
+        exceptionalPage.enterHeadOfFamilyData("784-1991-4063300-0","21/03/1988");
         exceptionalPage.createFullExceptionalCase();
         exceptionalPage.searchForId();
-        System.out.println(exceptionalPage.checkRequestAssigned());
-        Assert.assertEquals(exceptionalPage.checkIsComplex(),"معقد");
-        exceptionalPage.completeApprovals(false);
-        //System.out.println(exceptionalPage.searchForId());
-        //System.out.print(exceptionalPage.bigFileValidationMsg());
-       // Assert.assertEquals(exceptionalPage.bigFileValidationMsg(),"ملف غير صالح - تم تجاوز الحد الأقصى المسموح به وهو 4 ميغابايت");
+        exceptionalPage.completeApprovals();
+    }
+
+    @Test(description = "search EID", priority = 1,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+    public void searchEID() throws AWTException, InterruptedException, JsonProcessingException {
+        startPage();
+        exceptionalPage.searchForId();
     }
 }
