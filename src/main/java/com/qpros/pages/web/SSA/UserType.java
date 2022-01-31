@@ -3,7 +3,7 @@ package com.qpros.pages.web.SSA;
 public enum UserType {
 
     CaseManagerHead("CaseManagerHead","123456"),
-    Specialist100("Specialist100", "Specialist100"),
+    Specialist100("Specialist100", "123456"),
     Superuser("Superuser", "123456"),
     Specialist2("Specialist2", "Specialist2"),
     SeniorSpecialist1("SeniorSpecialist1", "SeniorSpecialist1"),
@@ -12,6 +12,7 @@ public enum UserType {
     SeniorSpecialist100("SeniorSpecialist100", "SeniorSpecialist100"),
     Committee100("Committee100", "Committee100"),
     Committee1("Committee1", "Committee1"),
+    Committee2("Committee2","Committee2"),
     ApplicationDirector1("ApplicationDirector1", "ApplicationDirector1"),
     PaymentSeniorSpecialist("PaymentSeniorSpecialist", "123456"),
     PaymentSectionHead("PaymentSectionHead", "123456"),

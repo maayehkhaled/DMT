@@ -20,12 +20,13 @@ public class COCPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    private By searchButton = By.xpath("//input[@id=\"DCDAgentPortalTheme_wt194_block_wtMainContent_WebPatterns_wt179_block_wtContent_wtbtn_filtereligible\"]");
+    private By searchButton = By.xpath("//input[@class='Button ButtonDefault Is_Default']");
     private By searchFieldSSP = By.id("DCDAgentPortalTheme_wt194_block_wtMainContent_WebPatterns_wt179_block_wtContent_wttxt_SearchEligible");
     private By firstRequest = By.xpath("//input[@id=\"DCDAgentPortalTheme_wt194_block_wtMainContent_WebPatterns_wt179_block_wtContent_wtBenefitRequests_ctl03_wt211\"]");
     private By commentSection = By.id("DCDAgentPortalTheme_wt194_block_wtMainContent_WebPatterns_wt179_block_wtContent_wttxt_CommentIn");
     private By launchCocProcess = By.id("DCDAgentPortalTheme_wt194_block_wtMainContent_WebPatterns_wt179_block_wtContent_wtbtn_LaunchCOC");
     private By cocPage = By.xpath("//a[@id=\"InternalPortalTheme_wt85_block_wtMenu_AgentPortal_CW_wt90_block_RichWidgets_wt90_block_wtMenuItem_wt55\"]");
+    public String committeeName;
 
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
@@ -37,24 +38,30 @@ public class COCPage extends Base {
 
     public void navigateToCoc(){
         logManager.STEP("Navigate to COC", "Navigate to https://uat.ssa.gov.ae/DCDBusinessParameters/CoC.aspx");
+       ActionsHelper.driverWait(3000);
         driver.get().navigate().to(urls.cocPage);
     }
 
     public void startCocProcess(String refCode){
-
         logManager.STEP("Input search field", "Inputs the SSP code and press enter");
         //ActionsHelper.actionClickStepClick("Click on COC page", cocPage);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.sendKeys(searchFieldSSP, refCode);
         ActionsHelper.driverWait(4000);
         logManager.STEP("Search For the Application", "Inputs the SSP code and press enter");
+        ActionsHelper.driverWait(3000);
         ActionsHelper.clickAction(searchButton);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click on first application search checkbox", firstRequest);
         ActionsHelper.sendKeys(commentSection, "testComment");
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Click Launch Process", launchCocProcess);
+
         try {
+
             driver.get().switchTo().alert().accept();
+            ActionsHelper.driverWait(5000);
+            logManager.INFO("Accept coc msg ",false);
         } catch (Exception e) {
         }
         ActionsHelper.driverWait(5000);
@@ -63,41 +70,67 @@ public class COCPage extends Base {
     }
 
 
-    public void acocApprove(String refCode) throws AWTException {
+    public void acocApprove(String refCode,boolean incOrDecApp) {
         startCocProcess(refCode);
         logManager.STEP("Search application", "Inputs the reference number in the search field");
+        logManager.INFO("Search on Application", false);
         String specialist = step.refreshTheListOfApplications(refCode);
         System.out.println("Specialist type " + specialist);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.valueOf(specialist));
-        ActionsHelper.driverWait(4000);
-        agentPage.specialistAcocApproval(refCode);
-        ActionsHelper.driverWait(5000);
-        String seniorSpecialist = agentPage.specialistAcocApproval(refCode);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(8000);
+        String seniorSpecialist = agentPage.specialistApproval(refCode, incOrDecApp);
+        ActionsHelper.driverWait(8000);
         System.out.println("Senior Specialist : " + seniorSpecialist);
         agentPage.logOut();
+
         ActionsHelper.driverWait(5000);
         loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
-        //Change the function for seniorSpecialistApproval
-         String assignedUser = agentPage.seniorSpecialistApproval(refCode);
-         loginPage.loginWithUser(UserType.valueOf(assignedUser));
-         // Add a function for application approval
-        agentPage.committeeSpecialistApproval(refCode);
-        //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
-        agentPage.logOut();
+        ActionsHelper.driverWait(5000);
+        committeeName = agentPage.seniorSpecialistApproval(refCode);
+        System.out.println("Committee: " + committeeName);
         driver.get().navigate().to(urls.tasksList);
         //committeeName = committeeName.replace("Committee", "").replace("\n", "");
-        loginPage.loginWithUser(UserType.Superuser);
-        driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseAppliaction(refCode);
-        agentPage.logOut();
-        loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
-        Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
-        agentPage.logOut();
-    }
+        ActionsHelper.driverWait(2000);
 
-    public void acocReject(String refCode) throws AWTException {
+        agentPage.logOut();
+        if (committeeName.contains("ApplicationDirector")) {
+            committeeName = committeeName.replace("Manager", "").replace("\n", "");
+            loginPage.loginWithUser(UserType.valueOf(committeeName));
+            logManager.WARN("must be login with seniorSpecialistApproval user");
+            agentPage.seniorSpecialistApproval(refCode);
+            driver.get().navigate().to(urls.tasksList);
+            ActionsHelper.driverWait(2000);
+            agentPage.logOut();
+        } else {
+            System.out.println("this is comettee nammeeee here plz " + committeeName);
+            committeeName = committeeName.replace("\n", "");
+            if (committeeName.contains(UserType.Committee100.getUserName())) {
+                loginPage.loginWithUser(UserType.Committee100);
+            } else {
+                loginPage.loginWithUser(UserType.Committee1);
+
+            }
+            ActionsHelper.driverWait(2000);
+
+            agentPage.committeeSpecialistApproval(refCode);
+            //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
+            ActionsHelper.driverWait(5000);
+
+            agentPage.logOut();
+            driver.get().navigate().to(urls.agentLogin);
+            loginPage.loginWithUser(UserType.Superuser);
+            ActionsHelper.navigate(urls.businessParameters);
+            ActionsHelper.driverWait(3000);
+            businessParametersPage.releaseAppliaction(refCode);
+            agentPage.logOut();
+            driver.get().navigate().to(urls.paymentList);
+            loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
+            Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
+            agentPage.logOut2();
+        }
+    }
+    public void acocReject(String refCode)  {
         //startCocProcess(refCode);
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         String specialist = step.refreshTheListOfApplications(refCode);

@@ -2,6 +2,7 @@ package com.qpros.pages.web.SSA.payments;
 
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
+import com.qpros.helpers.FileUtils;
 import com.qpros.pages.web.SSA.AgentPage;
 import com.qpros.pages.web.SSA.LoginPage;
 import com.qpros.pages.web.SSA.UserType;
@@ -35,7 +36,8 @@ public class AssessmentPaymentPage extends Base {
     LoginPage loginPage = new LoginPage(driver.get());
     AgentPage agentPage = new AgentPage(driver.get());
     Random rng = new java.util.Random();
-    public static String refCode = "SSP-20345";
+     String refCode = "SSP-22864";
+
     //Locators
     private By paymentMenuItem = By.xpath("//a[.='المدفوعات']");
     private By paymentsTableSubMenuItem = By.xpath("//div[.='جداول الدفع']");
@@ -134,6 +136,7 @@ public class AssessmentPaymentPage extends Base {
     private By choseSchdulePayment=By.xpath("//option[text()='Variance Payment']");
     //Actions
     public void differenceBetweenDate() throws ParseException {
+        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
 
 
         ActionsHelper.driverWait(2000);
@@ -408,7 +411,7 @@ public class AssessmentPaymentPage extends Base {
         ActionsHelper.actionClickStepClick("click on Active status",applicationCardActive);
         ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("click on submit button",applicationSubmitButton);
-        ActionsHelper.driverWait(6000);
+        ActionsHelper.driverWait(10000);
         logOut();
        loginByPaymentSectionHead();
         ActionsHelper.driverWait(4000);
@@ -449,6 +452,8 @@ public class AssessmentPaymentPage extends Base {
     }
     public void openNewTap()
     {
+        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+
         ActionsHelper.driverWait(3000);
         ((JavascriptExecutor)driver.get()).executeScript("window.open()");
         ArrayList<String> tabs = new ArrayList<String>(driver.get().getWindowHandles());
@@ -497,6 +502,8 @@ public class AssessmentPaymentPage extends Base {
 
     public void clickOnSchedulePayment()
     {
+        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click on المدفوعات", paymentMenuItem);
         ActionsHelper.actionClickStepClick("click on جداول الدفع ", paymentsTableSubMenuItem);
@@ -504,6 +511,8 @@ public class AssessmentPaymentPage extends Base {
     }
     public void clickOnCardAndCardProcedures()
     {
+        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+
         ActionsHelper.actionClickStepClick("click on card",applicationCard);
         ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("click on اجراءات البطاقات",applicationCardProcedures);
@@ -512,8 +521,11 @@ public class AssessmentPaymentPage extends Base {
 
     public void paymentScenario2()
     {
+        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+
 
         requestManualCard();
+
         addTaskAndCheckFromData();
         logOut();
         loginByPaymentSeniorSpecialist();
@@ -581,6 +593,8 @@ public class AssessmentPaymentPage extends Base {
     }
     public void paymentScenario3()
     {
+        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+
         requestManualCard();
         addTaskAndCheckFromData();
         logOut();
@@ -647,7 +661,9 @@ public class AssessmentPaymentPage extends Base {
     }
 public void paymentScenario5()
 {
-   requestManualCard();
+    refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+
+    requestManualCard();
     addTaskAndCheckFromData();
     logOut();
     loginByPaymentSeniorSpecialist();
@@ -728,6 +744,8 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario6()
     {
+        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+
         requestManualCard();
         addTaskAndCheckFromData();
         logOut();
@@ -846,6 +864,8 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario4()
     {
+        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+
         requestManualCard();
         addTaskAndCheckFromData();
         logOut();
@@ -898,6 +918,8 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario7()
     {
+        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+
         requestManualCard();
         addTaskAndCheckFromData();
         logOut();
@@ -978,6 +1000,7 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario10()
     {
+        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
 
         requestManualCard();
         ActionsHelper.driverWait(3000);
@@ -1009,7 +1032,9 @@ ActionsHelper.driverWait(2000);
 
     public void paymentScenario8()
     {
-       requestManualCard();
+        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+
+        requestManualCard();
 
         addTaskAndCheckFromData();
         logOut();
@@ -1069,6 +1094,8 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario9()
     {
+        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+
         logOut();
         ActionsHelper.driverWait(5000);
         loginByPaymentSeniorSpecialist();

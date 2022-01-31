@@ -50,7 +50,7 @@ public class ACOCApprove extends Base {
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Committee1);
         cocPage.navigateToCoc();
-        cocPage.acocApprove(ApproveApplicationModule.refCode);
+        cocPage.acocApprove(ApproveApplicationModule.refCode,false);
         //approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
     }
 
@@ -88,7 +88,6 @@ public class ACOCApprove extends Base {
         cocPage.refreshCOCReject("SSP-9186");
         rejectApplicationModule.rejectExistingApplication(ApproveApplicationModule.refCode);
     }
-
 
 
 

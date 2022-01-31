@@ -13,4 +13,7 @@ public class ApplicationSummary {
     public String contractStartDate;
     @JsonProperty("ContractEndDate")
     public String contractEndDate;
+    @JsonProperty("EstimatedSupportAmount")
+    public String EstimatedSupportAmount;
+
 }

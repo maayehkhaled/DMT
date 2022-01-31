@@ -176,7 +176,7 @@ public void test()
         //System.out.println(approveApplication.refCode);
         //String committeeName =approveApplication.committeeName.replace("\n", "");
         String committeeName = "test";
-        homePage.navigateToLogin();
+     homePage.navigateToLogin();
         if (committeeName.contains(UserType.Committee100.getUserName())) {
             loginPage.loginWithUser(UserType.Committee100);
         } else {
@@ -203,7 +203,7 @@ public void test()
 
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.SeniorSpecialist1);
-        committeeName = agentPage.seniorSpecialistApproval(approveApplicationModule.refCode);
+        committeeName = agentPage.specialistApproveForIncrease(approveApplicationModule.refCode);
 
         System.out.println("Committee: " + committeeName);
         driver.get().navigate().to(urls.tasksList);
@@ -212,7 +212,7 @@ public void test()
         if (committeeName.contains(UserType.Committee100.getUserName())) {
             loginPage.loginWithUser(UserType.Committee100);
         } else {
-            loginPage.loginWithUser(UserType.Committee1);
+            loginPage.loginWithUser(UserType.Committee2);
         }
         ActionsHelper.sendKeys(searchForApplication, approveApplicationModule.refCode + Keys.ENTER);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);

@@ -8,8 +8,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-import java.awt.*;
-
 //This page contains the applications list. Main agent page
 public class AgentPage extends Base {
 
@@ -30,7 +28,9 @@ public class AgentPage extends Base {
 //TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]
     private By approveApp=By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']");
     private By nextButton=By.xpath("//*[contains(@class,'ForwardButton')]");
+    private By increaseNextButton=By.xpath("//div[contains(@class,'Button ForwardButton')]");
     private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt573_block_wtActions_wtbtn_Next6\"]");
+    private By clickNext=By.xpath("//input[@value='التالي']");
     //private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
     private By agentClickNextFinal = By.className("ForwardButton");
     private By agentClickNext = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
@@ -57,9 +57,14 @@ public class AgentPage extends Base {
     private By logout1 = By.xpath("//a[.='تسجيل خروج']");
     private By logout2 = By.xpath("//div[contains(@id,'Logout')]");
     private By appealApplicationCheckbox = By.xpath("//input[@id=\"InternalPortalTheme_wt85_block_wtFilterContainer_wt67\"]");
+    private By reValueButton=By.xpath("//input[@type='checkbox']");
 
-
-    public String specialistApproval(String applicationRef) throws AWTException {
+    /**
+     * TO CREATE APPROVAL USING specialist USER
+     * @param applicationRef This is SSP of the app
+     * @return its return the next assignee
+     */
+    public String specialistApproval(String applicationRef) {
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
         ActionsHelper.waitForExpectedElement(firstElementAfterSearch);
@@ -91,10 +96,17 @@ public class AgentPage extends Base {
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("could not interact with popup msg");
         }
         return getAssigneeNameFromAllApplications(applicationRef);
-    }//Finished
+    }
 
+    /**
+     *
+     * TO CREATE APPEAl Approval USING specialist USER
+     *      * @param applicationRef This is SSP of the app
+     *      * @return its return the next assignee
+     */
     public String specialistAppealApproval(String refCode){
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         ActionsHelper.driverWait(4000);
@@ -115,10 +127,17 @@ public class AgentPage extends Base {
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("could not interact with popup msg");
         }
         return getAssigneeNameFromAllApplications(refCode);
     }
 
+    /**
+     *
+     * TO CREATE APPEAl rejection USING specialist USER
+     *      *      * @param applicationRef This is SSP of the app
+     *      *      * @return its return the next assignee
+     */
     public String specialistAppealRejection(String refCode){
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         ActionsHelper.driverWait(4000);
@@ -133,21 +152,26 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(7000);
         ActionsHelper.actionClickScrollStepClick("Click on rejection Button", rejectBtn);
         ActionsHelper.driverWait(4000);
-        //ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
-        //ActionsHelper.driverWait(5000);
+
         ActionsHelper.waitForExpectedElement(summaryNextBtn);
-        //ActionsHelper.scrollTo(agentClickNext56StepFinal);
         ActionsHelper.driverWait(1000);
         ActionsHelper.retryClick(summaryNextBtn, 10);
         ActionsHelper.driverWait(8000);
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("does not interact with popup msg");
         }
         return getAssigneeNameFromAllApplications(refCode);
     }
 
-    public String specialistAcocApproval(String applicationRef) throws AWTException {
+    /**
+     *
+     * TO CREATE Acoc Approval USING specialist USER
+     *      *      * @param applicationRef This is SSP of the app
+     *      *      * @return its return the next assignee
+     */
+    public String specialistAcocApproval(String applicationRef)  {
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
         ActionsHelper.waitForExpectedElement(firstElementAfterSearch);
@@ -179,13 +203,14 @@ public class AgentPage extends Base {
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("does not interact with popup msg");
         }
 
         return getAssigneeNameFromAllApplications(applicationRef);
 
 
-    }//Finished
-    public void specialistSendAgain(String applicationRef) throws AWTException {
+    }
+    public void specialistSendAgain(String applicationRef)  {
 
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
@@ -285,7 +310,49 @@ public class AgentPage extends Base {
         }
         return getAssigneeNameFromAllApplications(applicationRef);
     }//Finished
-
+    public String specialistApproveForIncrease(String applicationRef)
+    {
+        logManager.STEP("Search application", "Inputs the reference number in the search field");
+        ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
+        ActionsHelper.waitForExpectedElement(firstElementAfterSearch, 30);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickScrollStepClick("click on اعادة التقييم",reValueButton);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickScrollStepClick("Approve Personal Information", agentApproveStepFinal);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Click next Step 1", increaseNextButton);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Approve Family Information", agentApproveStepFinal);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Click next Step 2", increaseNextButton);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Approve Address", agentApproveStepFinal);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Click next Step 3", increaseNextButton);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Approve Income Info", agentApproveStepFinal);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Click next Step 4", increaseNextButton);
+        ActionsHelper.driverWait(12000);
+        //ActionsHelper.actionClickStepClick("Approve step 5", agentApproveStepFinal);
+        System.out.println("Attempting step 5");
+        //ActionsHelper.retryClick(agentClickNext56StepFinal, 4);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Click Next Step 5", clickNext);
+        System.out.println("Attempting step 6");
+        //ActionsHelper.actionClickStepClick("Click Approval and Agree", summaryNextBtn);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.retryClick(finalButtonApprove, 10);
+        logManager.STEP("Approving the application","Click the confirm button");
+        try {
+            driver.get().switchTo().alert().accept();
+        } catch (Exception e) {
+            logManager.WARN("must be approve the app ");
+        }
+        return getAssigneeNameFromAllApplications(applicationRef);
+    }
 
     public String seniorSpecialistApproval(String refCode) {
         //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");

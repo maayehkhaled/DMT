@@ -35,7 +35,7 @@ public class ReassessmentIncreaseApprove extends Base {
     @Test(description = "Approve an application", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void approveApplication() throws JsonProcessingException, AWTException, InterruptedException {
-        approveApplication.approveApplication(true);
+       approveApplication.approveApplication(true);
         reassessmentPage.reassessToAmount();
         reassessmentPage.increaseAmount();
         reassessmentPage.reassessAfterAmount();
