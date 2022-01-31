@@ -3,6 +3,8 @@ package com.qpros.pages.web.SSA;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.qpros.pages.web.SSA.commonSSA.Popups;
+import com.ssa.core.common.data.StaticValues;
+import com.ssa.core.common.data.TestData;
 import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.By;
@@ -21,14 +23,14 @@ public class EnforcementCasePage extends Base {
     Popups PopupsPage=new Popups(driver.get());
 
     private By enforcementCaseLink = By.xpath("//a[contains(@id,'ctl24_RichWidgets_wt6_block_wtMenuItem_wt11')]");
-    private By NewenforcementCaseLink = By.xpath("//div[contains(@class,'Longbutton')]"); //a[contains(@id,'AddAction')]
+    private By NewEnforcementCaseLink = By.xpath("//div[contains(@class,'Longbutton')]");
 
     private By emiratesIdTextbox = By.xpath("//input[contains(@id,'wtBeneficiaryData_wttxt_emiratesid')]");
     private By fetchBtn = By.xpath("//input[contains(@id,'wtButton1_wtbtn_FetchDetails')]");
     private By enforcementTypeDDL = By.xpath("//select[contains(@id,'EnforcementType')]");//select
     private By infoSourceDDL = By.xpath("//select[contains(@id,'EnforcementSource')]");//select
-    private By caseDescriptionTextbox = By.xpath("//textarea[contains(@id,'wtinput_description')]"); //Test Automation
-    private By recomendedTextbox = By.xpath("//input[contains(@id,'RecommendedAction')]"); //Recommendation Action Automation
+    private By caseDescriptionTextbox = By.xpath("//textarea[contains(@id,'wtinput_description')]");
+    private By recommendedTextbox = By.xpath("//input[contains(@id,'RecommendedAction')]");
     private By justificationTextbox=By.xpath("//textarea[contains(@id,'wtinput_ActionDescription')]");
     private By actionDueDateCalendar=By.xpath("//input[contains(@id,'wtMainContent_wtActionDueDateInput')]");
 
@@ -48,8 +50,8 @@ public class EnforcementCasePage extends Base {
     private By searchBtn=By.xpath("//input[contains(@id,'wtbtn_Search')]");
     private By editCaseBtn=By.xpath("//a[contains(@id,'ctl03_wtlnk_editcase')]");
     private By saveChanges=By.xpath("//input[contains(@id,'wtbtnCreateCase')]");
-    private By successMsg=By.xpath("//span[contains(@id,'wtSanitizedHtml3')]");
-            //By.className("Feedback_Message_Success");
+    private By successMsg=By.className("Feedback_Message_Success");
+
     //Add action Locators
     private By caseID=By.xpath("//a[contains(@id,'ctl03_wtlnk_CaseId')]");
     private By addActionBtn=By.xpath("//a[contains(@id,'AddAction')]");
@@ -67,7 +69,6 @@ public class EnforcementCasePage extends Base {
     private By deleteActionBtn=By.xpath("//a[contains(@id,'ctl04_wt667')]");
     private By deletedRecord=By.xpath("//td[contains(@id,'ctl04_wtActionTableRow1')]");
     private By actionTable=By.xpath("//table[contains(@id,'wtActionTable')]");
-
     //Add Logs Locators
     private By addLogLink=By.xpath("//a[contains(@id,'AddLog')]");
     private By logTypeDDL=By.xpath("//select[contains(@id,'LogType')]");
@@ -76,7 +77,9 @@ public class EnforcementCasePage extends Base {
     private By saveLogBtn=By.xpath("//input[contains(@id,'wtbtnCreateLog')]");
     //Delete Logs Locators
     private By deleteLogBtn=By.xpath("//a[contains(@id,'wt143')]");
+
     public void deleteLogs(){
+        logManager.STEP("Delete Enforcement Case Log","The User Will Delete The Created Log For Existent Enforcement Case");
         ActionsHelper.retryClick(caseID,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(addLogLink,30);
@@ -86,21 +89,23 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.driverWait(2000);
     }
     public void addLogs(){
+        logManager.STEP("Add Enforcement Case Log","The User Will Add New Log For Existent Enforcement Case");
         ActionsHelper.retryClick(caseID,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(addLogLink,30);
         ActionsHelper.driverWait(2000);
         driver.get().switchTo().frame(0);
-        ActionsHelper.selectOption(logTypeDDL,"43");
+        ActionsHelper.selectOption(logTypeDDL,StaticValues.enforcementLogType);
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(logDescriptionText,"Automation Log Description");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.selectOption(actionTodayBtn,"184");
+        ActionsHelper.selectOption(actionTodayBtn,StaticValues.actionToday);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(saveLogBtn,30);
         ActionsHelper.driverWait(2000);
     }
     public void deleteAction() {
+        logManager.STEP("Delete The Created Action","The User Will Delete The Action Created Before For Existent Enforcement Case");
         ActionsHelper.retryClick(caseID,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(deleteActionBtn,30);
@@ -112,14 +117,14 @@ public class EnforcementCasePage extends Base {
         WebElement actionsTable = driver.get().findElement(actionTable);
         List<WebElement> tableRows = actionsTable.findElements(By.tagName("tr"));
         return tableRows.size();
-        //return ActionsHelper.isElementPresent(deletedRecord);//not correct assertion
     }
 
     public void editAction() {
+        logManager.STEP("Edit Action To The Enforcement Case","The user will click on edit icon for existent enforcement case to mark this action as completed");
         ActionsHelper.retryClick(caseID,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(editActionBtn, 30);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(4000);
         driver.get().switchTo().frame(0);
         ActionsHelper.retryClick(agreeRdionBtn, 30);
         ActionsHelper.driverWait(2000);
@@ -128,7 +133,13 @@ public class EnforcementCasePage extends Base {
     }
 
     /**
-     *
+     * 2.	Click on Case ID
+     * 3.	Click on Add action
+     * 4.	Select Action Assigned To
+     * 5.	Select Action Due Date
+     * 6.	Add Action Description, text: action automation new
+     * 7.	Click on Add Action button
+     * 8.	Successful MSG should be displayed: Action created successfully
      */
     public void addAction(){
     ActionsHelper.retryClick(caseID,30);
@@ -136,9 +147,9 @@ public class EnforcementCasePage extends Base {
     ActionsHelper.retryClick(addActionBtn,30);
     ActionsHelper.driverWait(2000);
     driver.get().switchTo().frame(0);
-    ActionsHelper.selectOption(actionAssignedToDDl,"1708");
+    ActionsHelper.selectOption(actionAssignedToDDl, StaticValues.actionAssignedAutomationOption);
     ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(actionDueDate,30);
+    ActionsHelper.retryClick(actionDueDate,30);
     ActionsHelper.driverWait(2000);
     ActionsHelper.retryClick(actionTodayBtn,30);
     ActionsHelper.driverWait(2000);
@@ -148,45 +159,50 @@ public class EnforcementCasePage extends Base {
     ActionsHelper.driverWait(2000);
     }
 
+    /**
+     * To open existence enforcement case
+     */
     public void openEnforcementCase(){
         ActionsHelper.retryClick(enforcementCaseLink, 30);
         ActionsHelper.driverWait(8000);
     }
 
+    /**
+     * To create new enforcement case
+     */
     public void createEnforcementCase() {
-        ActionsHelper.retryClick(NewenforcementCaseLink, 30);
+        ActionsHelper.retryClick(NewEnforcementCaseLink, 30);
         ActionsHelper.driverWait(8000);
 
         driver.get().switchTo().frame(0);
         ActionsHelper.driverWait(8000);
 
-        ActionsHelper.sendKeys(emiratesIdTextbox,"784195843653981");
+        ActionsHelper.sendKeys(emiratesIdTextbox, TestData.enforcementCaseEID);
         ActionsHelper.retryClick(fetchBtn,30);
         ActionsHelper.driverWait(8000);
 
         ActionsHelper.scrollTo(enforcementTypeDDL);
         ActionsHelper.driverWait(8000);
 
-        ActionsHelper.selectOption(enforcementTypeDDL,"21");
+        ActionsHelper.selectOption(enforcementTypeDDL,StaticValues.enforcementType);
         ActionsHelper.driverWait(2000);
 
-        ActionsHelper.selectOption(infoSourceDDL,"54");
+        ActionsHelper.selectOption(infoSourceDDL,StaticValues.infoSource);
         ActionsHelper.driverWait(2000);
 
         ActionsHelper.sendKeys(caseDescriptionTextbox,"My new Test Automation");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(recomendedTextbox,"Recommendation Action Automation");
+        ActionsHelper.sendKeys(recommendedTextbox,"Recommendation Action Automation");
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(justificationTextbox,"Insert Justification for action recommendation Automation");
         ActionsHelper.driverWait(2000);
-
 
         ActionsHelper.retryClick(actionDueDateCalendar,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(todayDate,30);
         ActionsHelper.driverWait(2000);
 
-        ActionsHelper.selectOption(enforcementLogTypeDDL,"43");
+        ActionsHelper.selectOption(enforcementLogTypeDDL,StaticValues.enforcementLogType);
         ActionsHelper.driverWait(2000);
 
         ActionsHelper.sendKeysWithClear(logDateCalendar,"30/12/2021");
@@ -223,15 +239,26 @@ public class EnforcementCasePage extends Base {
     }
 
     public void searchByEID(){
+        logManager.STEP("Search by EID","The user is searching for EID in the enforcement page");
         ActionsHelper.retryClick(searchRequestLink, 30);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(eIdTexebox, "784195843653981");
+        ActionsHelper.sendKeys(eIdTexebox, TestData.enforcementCaseEID);
         ActionsHelper.retryClick(searchBtn, 30);
         ActionsHelper.driverWait(8000);
     }
 
         public String getEnforcementSuccessMsg(){
-        ActionsHelper.driverWait(8000);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.clickAction(successMsg);
+        int count=0;
+        while(!ActionsHelper.isElementPresent(successMsg)){
+            ActionsHelper.driverWait(1000);
+            count=count+1;
+            if(count>=5){
+                break;
+            }
+        }
+        logManager.WARN("Success MSG is not shown");
         String successMsgTxt=driver.get().findElement(successMsg).getText();
         return(successMsgTxt);
     }

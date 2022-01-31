@@ -16,4 +16,15 @@ public interface StaticValues {
     public String generatedString="";
     public String DateTimeFormatYearMonthDay="yyyy/MM/dd";
     public String DateTimeFormatDayMonthYear="dd/MM/yyyy";
+    public String actionAssignedAutomationOption="1708";
+    public String enforcementType="21";
+    public String infoSource="54";
+    public String enforcementLogType="43";
+    public String actionToday="184";
+    public String graduationMonthOption="5";
+    public String graduationYearOption="2022";
+    public String masterDegree="3";
+    public String joblessJan="5";
+    public String joblessY="2019";
+    public String IELTS="2";
 }

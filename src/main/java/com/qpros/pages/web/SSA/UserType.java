@@ -17,6 +17,7 @@ public enum UserType {
     PaymentSectionHead("PaymentSectionHead", "123456"),
     PaymentSpecialist("PaymentSpecialist", "123456"),
     PaymentSeniorAccountant("PaymentSeniorAccountant", "123456"),
+    CM2("CM2","123456"),
     FinanceTeam("FinanceTeam", "123456");
 
 

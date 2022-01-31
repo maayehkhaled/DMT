@@ -25,7 +25,11 @@
             <class name="com.qpros.test.ReassessmentReject"/>
         </classes>
     </test>
-
+<test name="Exptionel case">
+    <classes>
+        <class name="com.qpros.test.ExceptionalCase"/>
+    </classes>
+</test>
 
 </suite>
 

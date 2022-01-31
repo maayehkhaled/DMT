@@ -64,7 +64,7 @@ public class ExceptionalCasePage extends Base{
     private By deleteFirstDependent=By.xpath("//a[contains(@id,'ctl00_wt551')]");
     private By deleteSecondDependent=By.xpath("//a[contains(@id,'ctl02_wt551')]");
     //Screen V
-    private By familyResidentDDL=By.xpath("//select[contains(@id,'wtddl_LivingOnLocationList')]");
+    private By familyResidentDDL=By.xpath("//select[@id='InternalPortalTheme_wt24_block_wtMainContent_wtddl_LivingOnLocationList']");
     //InternalPortalTheme_wt24_block_wtMainContent_wtddl_LivingOnLocationList
     private By supportDocsLink=By.className("dottedBorder");
     private By uploadMoreSupportDocs=By.xpath("//input[contains(@id,'Upload201200')]");
@@ -175,16 +175,14 @@ public class ExceptionalCasePage extends Base{
         return driver.get().findElement(mobileValidationMsg).getText();
     }
 
-    public void addRelatives(){
-     /*   if(driver.get().findElement(deleteFirstDependent).isDisplayed()){
-            ActionsHelper.retryClick(deleteFirstDependent,30);
+    public void addRelatives() {
+        if (driver.get().findElement(deleteFirstDependent).isDisplayed()) {
+            ActionsHelper.retryClick(deleteFirstDependent, 30);
             driver.get().switchTo().alert().accept();
-        }
-        else if(driver.get().findElement(deleteSecondDependent).isDisplayed()){
-            ActionsHelper.retryClick(deleteSecondDependent,30);
+        } else if (driver.get().findElement(deleteSecondDependent).isDisplayed()) {
+            ActionsHelper.retryClick(deleteSecondDependent, 30);
             driver.get().switchTo().alert().accept();
-        }
-        else {*/
+        } else {
             ActionsHelper.driverWait(4000);
             ActionsHelper.clickAction(firstDependentEIDTextbox);
             ActionsHelper.sendKeys(firstDependentEIDTextbox, "784-1991-4063100-5");
@@ -211,8 +209,10 @@ public class ExceptionalCasePage extends Base{
             ActionsHelper.driverWait(2000);
             driver.get().switchTo().alert().accept();
         }
+    }
 
     public void addWrongRelativeInfo(){
+            //log.step
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(8000);
         ActionsHelper.sendKeysWithClear(firstDependentEIDTextbox,"784198680432055");
@@ -241,14 +241,16 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(2000);
         addRelatives();
         ActionsHelper.driverWait(3000);
-        ActionsHelper.selectOption(familyResidentDDL,"Automation Referral Entity Name  -  حالة استثنائية");
-        ActionsHelper.driverWait(3000);
-        ActionsHelper.retryClick(nextBtn,30);
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.selectOption(familyResidentDDL,"4666034082-88-015-2-63");
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.clickAction(nextBtn);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(nextBtn, 30);
+        ActionsHelper.driverWait(4000);
         getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"test.pdf");
         ActionsHelper.driverWait(5000);
         driver.get().switchTo().frame(0);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(5000);
         ActionsHelper.sendKeys(driver.get().findElement(By.xpath("//input[contains(@id,'ctl00_wttxt_Comment')]")),"PDF File");
         ActionsHelper.driverWait(3000);
         getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"PNGForAutomation.png");
