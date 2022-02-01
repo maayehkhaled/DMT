@@ -11,11 +11,7 @@ import com.ssa.core.common.data.TestData;
 import com.ssa.core.common.locators.urls;
 import lombok.Getter;
 import org.openqa.selenium.*;
-
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
-
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,7 +22,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 @Getter
 public class AssessmentPaymentPage extends Base {
 
@@ -39,101 +34,99 @@ public class AssessmentPaymentPage extends Base {
      String refCode = "SSP-22864";
 
     //Locators
-    private By paymentMenuItem = By.xpath("//a[.='المدفوعات']");
-    private By paymentsTableSubMenuItem = By.xpath("//div[.='جداول الدفع']");
-    private By applicationIDSearchBox = By.cssSelector("[placeholder='رقم الطلب']");
-    private By applicationIDSearchButton = By.cssSelector("[value='بحث']");
-    private By applicationTableResult = By.xpath("//table[contains(@id,'wtSummarizedInfoTable')]");
-    private By applicationTableCardResult = By.xpath("//table[contains(@id,'wtDCDCreditCardTable')]");
-    private By applicationPaymentAction=By.xpath("//div[.='إجراءات الدفع']");
-    private By applicationExpendedView=By.linkText("عرض موسع");
-    private By applicationFirstDate=By.xpath("//input[contains(@id,'wtInput_wtDateToInput2')]");
-    private By applicationEndDate=By.xpath("//input[contains(@id,'wtInput_wtDateFromInput2')]");
-    private By numberOfRecord=By.className("Counter_Message");
-    private By applicationValue=By.xpath("//*[@id='DCDTheme_wt78_block_wtMainContent_wtFullInformationTable']/tbody/tr[1]/td[8]/div");
-    private By applicationCard=By.xpath("//a[text()='بطاقات']");
-    private By applicationCardProcedures=By.xpath("//div[.='إجراءات البطاقة']");
-    private By applicationRequestManualCard=By.xpath("//div[.='طلب بطاقة يدويا']");
-    private By applicationAddNew=By.xpath("//span[@class='fa fa-fw fa-plus-circle fa-lg']");
-    private By applicationCardId=By.cssSelector("[maxlength='16']");
-    private By applicationCardNumber=By.cssSelector("[maxlength='13']");
-    private By applicationCardStatus=By.xpath("//select[contains(@id,'wtDCD_PrepaidCard_StatusId')]");
-    private By applicationTaskFromDate=By.xpath("//input[contains(@name,'DateFromInput')]");
-    private By applicationTaskToDate=By.xpath("//input[contains(@name,'DateToInput')]");
-    private By applicationCardActive=By.xpath("//option[text()='Active']");
-    private By applicationSubmitButton=By.xpath("//input[@class='Button Is_Default']");
-    private By applicationsRegularPayment=By.xpath("//table[@class='TableRecords OSFillParent']//tr[1]//div[.='Regular Payment']");
-    private By applicationsOriginalApplication=By.xpath("//td[text()='Original Application']");
-    private By applicationReleasePayment=By.xpath("//span[@class='fa fa-fw fa-refresh']");
-    @FindBy(xpath="//div[.='إجراءات البطاقة']")
-   private WebElement zz;
-    private By applicationTaskList=By.xpath("//a[.='قائمة المهام']");
-    private By applicationTaskSource=By.xpath("//span[contains(@id,'TaskSource-container')]");
-    private By applicationTaskSearch=By.xpath("//input[@class='select2-search__field']");
-    private By applicationChoseTask=By.xpath("//li[text()='Approval of Card Request']");
-    private By applicationTaskStatus=By.xpath("//span[contains(@id,'wtcb_Status-container')]");
-    private By applicationChoseTaskStatus=By.xpath("//li[text()='New']");
-    private By applicationTaskReceivedFromList=By.xpath("//span[contains(@id,'ReceivedFrom-container')]");
-    private By applicationChoseTaskReceivedFrom=By.xpath("//li[text()='PaymentSeniorSpecialist']");
-    private By applicationTakeAction=By.xpath("//span[@class='fa fa-fw fa-edit']");
-    private By applicationApproveButton = By.cssSelector("[value='الموافقة']");
-    private By applicationApproveInstruction=By.cssSelector("[value='تقديم للحصول على موافقة']");
-    private By applicationCardSummary=By.xpath("//div[.='ملخص البطاقة']");
-    private By applicationSchedulePage=By.xpath("//div[.='جداول الدفع']");
-    private By applicationPaymentInstruction=By.xpath("//div[.='تعليمات الدفع']");
-    private By applicationNewInstruction=By.xpath("//div[.='إنشاء تعليمات']");
-    private By applicationPaymentCardStatus=By.xpath("//select[@id='DCDTheme_wtLayoutWB_block_wtFilters_wtcb_CardStatus']");
-  private By applicationChosePaymentCardStatus=By.xpath("//option[text()='فعال']");
-  private By applicationPaymentList=By.xpath("//select[@id='DCDTheme_wtLayoutWB_block_wtFilters_wtcb_NextMonth']");
-   private By applicationChoseInclude=By.xpath("//option[text()='تتضمن']");
-    private By applicationInformationGeneration = By.xpath("//input[contains(@id,'wtGenerateInstructionBtn')]");
-    private By userNameBeforeLogout = By.className("logoutBorder1");
-    private By logo=By.xpath("//div[contains(@class,'Header_Menu_Container')]");
-    private By logout2 = By.xpath("//div[contains(@id,'Logout')]");
-    private By applicationIsInProcess = By.xpath("//select[contains(@id,'wtFilters_wt113')]");
-    private By applicationChoseInProcess=By.xpath("//option[text()='In Process']");
-    private By applicationChoseTaskApprovalOfInstruction=By.xpath("//li[text()='Approval of Instructions']");
-    private By applicationFullData=By.xpath("//table[contains(@id,'wtFullInformationTable')]");
-    private By applicationTableCard = By.xpath("//table[contains(@id,'wtCardsTable')]");
-    private By applicationCardStatusList=By.xpath("//select[contains(@id,'wtCardsTable')]");
-    private By applicationChoseUpdateCardStatus=By.xpath("//option[text()='Stolen']");
-    private By applicationSubmit=By.xpath("//input[@class='Button Is_Default']");
-    private By applicationChoseApprovalOfCardStatus=By.xpath("//li[text()='Approval of Card Status']");
-    private By cardStatusValue=By.xpath("//option[@selected]");
-    private By cardTable=By.xpath("//select[contains(@id,'wtCardsTable')]");
-    private By tableClass=By.className("TableRecords_OddLine");
-    private By closeCardTable=By.xpath("//table[contains(@id,'wtDCDPrepaidCardTable')]");
-    private By applicationCloseCard=By.xpath("//span[contains(@class,'fa-times fa-lg')]");
-    private By applicationChoseChangeCardStatusAPI=By.xpath("//option[text()='Change card status API']");
-    private By applicationChoseApprovalOfOverPayment=By.xpath("//option[text()='Approval of OverPayment']");
-    private By applicationChoseApprovalOfUnderPayment=By.xpath("//option[text()='Approval of UnderPayment']");
-    private By applicationApprovalOfPaymentStatus=By.xpath("//option[text()='Approval of Payment Status']");
-    private By applicationSubmitCloseCard = By.cssSelector("[value='تأكيد']");
-    private By applicationBlockCardButton=By.xpath("//span[@class='fa fa-fw fa-clock-o fa-lg']");
-    private By applicationManualCardTable=By.xpath("//table[contains(@id,'wtIndividualTable')]");
-    private By applicationVariancePayment=By.xpath("//div[.='مدفوعات التباين']");
-    private By applicationAddVariancePayment=By.xpath("//span[contains(@class,'fa fa-fw fa-plus fa-lg')]");
-    private By applicationVariancePaymentType=By.xpath("//select[contains(@id,'wtVarianceTypeWidget')]");
-    private By applicationChosePaymentType=By.xpath("//option[text()='Dependent']");
-    private By applicationReason=By.xpath("//textarea");
-    private By applicationMinusIcon=By.xpath("//span[contains(@class,'fa fa-fw fa-minus fa-lg')]");
-    private By applicationMinusValue=By.xpath("//input[contains(@id,'wtVariancePaymentsUnderpayment_Amount')]");
-    private By applicationMinusMonthValue=By.xpath("//input[contains(@id,'wtVariancePaymentsUnderpayment_NrMonths')]");
-    private By applicationMinusVarianceType=By.xpath("//select[contains(@id,'wtVariancePaymentsUnderpayment_Variancetype')]");
-    private By applicationMinusChoseType=By.xpath("//option[text()='Dependent']");
-    private  By applicationUpdateInstruction=By.xpath("//div[.='تحديث التعليمات']");
-    private By applicationStatusByUpdate=By.xpath("//select[contains(@class,'OSFillParent')]");
-    private By applicationTableUpdate=By.xpath("//table[contains(@id,'wtDCDPaymentInstructionTable')]");
-    private By applicationChoseInterfacedToERP=By.xpath("//option[text()='Interfaced to ERP']");
-    private By applicationSavedUpdate=By.xpath("//span[contains(@class,'fa fa-fw fa-save fa-lg')]");
-    private By applicationChoseFailed=By.xpath("//option[text()='Failed']");
-    private By applicationHoldPaymentButton=By.xpath("//span[contains(@class,'fa fa-fw fa-pause')]");
-    private By applicationPaymentActionTable=By.xpath("//table[contains(@id,'wtDCDBenefitRequestTable')]");
-    private By applicationHoldPaymentPowerOff=By.xpath("//*[@id='DCDTheme_wt131_block_wtMainContent_wtDCDBenefitRequestTable_ctl03_wtTerminateLink3']/span");
-    private By reSearchButton=By.xpath("//input[@value='إعادة تعيين']");
-    private By addOverPaymentValue=By.className("ThemeGrid_Width4");
-    private By clickONSchudelType=By.xpath("//div[@class='hiddenFilters']/div[@class='ThemeGrid_Width3']/select[@class='OSFillParent']");
-    private By choseSchdulePayment=By.xpath("//option[text()='Variance Payment']");
+    private final By paymentMenuItem = By.xpath("//a[.='المدفوعات']");
+    private final By paymentsTableSubMenuItem = By.xpath("//div[.='جداول الدفع']");
+    private final By applicationIDSearchBox = By.cssSelector("[placeholder='رقم الطلب']");
+    private final By applicationIDSearchButton = By.cssSelector("[value='بحث']");
+    private final By applicationTableResult = By.xpath("//table[contains(@id,'wtSummarizedInfoTable')]");
+    private final By applicationTableCardResult = By.xpath("//table[contains(@id,'wtDCDCreditCardTable')]");
+    private final By applicationPaymentAction=By.xpath("//div[.='إجراءات الدفع']");
+    private final By applicationExpendedView=By.linkText("عرض موسع");
+    private final By applicationFirstDate=By.xpath("//input[contains(@id,'wtInput_wtDateToInput2')]");
+    private final By applicationEndDate=By.xpath("//input[contains(@id,'wtInput_wtDateFromInput2')]");
+    private final By numberOfRecord=By.className("Counter_Message");
+    private final By applicationValue=By.xpath("//*[@id='DCDTheme_wt78_block_wtMainContent_wtFullInformationTable']/tbody/tr[1]/td[8]/div");
+    private final By applicationCard=By.xpath("//a[text()='بطاقات']");
+    private final By applicationCardProcedures=By.xpath("//div[.='إجراءات البطاقة']");
+    private final By applicationRequestManualCard=By.xpath("//div[.='طلب بطاقة يدويا']");
+    private final By applicationAddNew=By.xpath("//span[@class='fa fa-fw fa-plus-circle fa-lg']");
+    private final By applicationCardId=By.cssSelector("[maxlength='16']");
+    private final By applicationCardNumber=By.cssSelector("[maxlength='13']");
+    private final By applicationCardStatus=By.xpath("//select[contains(@id,'wtDCD_PrepaidCard_StatusId')]");
+    private final By applicationTaskFromDate=By.xpath("//input[contains(@name,'DateFromInput')]");
+    private final By applicationTaskToDate=By.xpath("//input[contains(@name,'DateToInput')]");
+    private final By applicationCardActive=By.xpath("//option[text()='Active']");
+    private final By applicationSubmitButton=By.xpath("//input[@class='Button Is_Default']");
+    private final By applicationsRegularPayment=By.xpath("//table[@class='TableRecords OSFillParent']//tr[1]//div[.='Regular Payment']");
+    private final By applicationsOriginalApplication=By.xpath("//td[text()='Original Application']");
+    private final By applicationReleasePayment=By.xpath("//span[@class='fa fa-fw fa-refresh']");
+    private final By applicationTaskList=By.xpath("//a[.='قائمة المهام']");
+    private final By applicationTaskSource=By.xpath("//span[contains(@id,'TaskSource-container')]");
+    private final By applicationTaskSearch=By.xpath("//input[@class='select2-search__field']");
+    private final By applicationChoseTask=By.xpath("//li[text()='Approval of Card Request']");
+    private final By applicationTaskStatus=By.xpath("//span[contains(@id,'wtcb_Status-container')]");
+    private final By applicationChoseTaskStatus=By.xpath("//li[text()='New']");
+    private final By applicationTaskReceivedFromList=By.xpath("//span[contains(@id,'ReceivedFrom-container')]");
+    private final By applicationChoseTaskReceivedFrom=By.xpath("//li[text()='PaymentSeniorSpecialist']");
+    private final By applicationTakeAction=By.xpath("//span[@class='fa fa-fw fa-edit']");
+    private final By applicationApproveButton = By.cssSelector("[value='الموافقة']");
+    private final By applicationApproveInstruction=By.cssSelector("[value='تقديم للحصول على موافقة']");
+    private final By applicationCardSummary=By.xpath("//div[.='ملخص البطاقة']");
+    private final By applicationSchedulePage=By.xpath("//div[.='جداول الدفع']");
+    private final By applicationPaymentInstruction=By.xpath("//div[.='تعليمات الدفع']");
+    private final By applicationNewInstruction=By.xpath("//div[.='إنشاء تعليمات']");
+    private final By applicationPaymentCardStatus=By.xpath("//select[@id='DCDTheme_wtLayoutWB_block_wtFilters_wtcb_CardStatus']");
+    private final By applicationChosePaymentCardStatus=By.xpath("//option[text()='فعال']");
+    private final By applicationPaymentList=By.xpath("//select[@id='DCDTheme_wtLayoutWB_block_wtFilters_wtcb_NextMonth']");
+    private final By applicationChoseInclude=By.xpath("//option[text()='تتضمن']");
+    private final By applicationInformationGeneration = By.xpath("//input[contains(@id,'wtGenerateInstructionBtn')]");
+    private final By userNameBeforeLogout = By.className("logoutBorder1");
+    private final By logo=By.xpath("//div[contains(@class,'Header_Menu_Container')]");
+    private final By logout2 = By.xpath("//div[contains(@id,'Logout')]");
+    private final By applicationIsInProcess = By.xpath("//select[contains(@id,'wtFilters_wt113')]");
+    private final By applicationChoseInProcess=By.xpath("//option[text()='In Process']");
+    private final By applicationChoseTaskApprovalOfInstruction=By.xpath("//li[text()='Approval of Instructions']");
+    private final By applicationFullData=By.xpath("//table[contains(@id,'wtFullInformationTable')]");
+    private final By applicationTableCard = By.xpath("//table[contains(@id,'wtCardsTable')]");
+    private final By applicationCardStatusList=By.xpath("//select[contains(@id,'wtCardsTable')]");
+    private final By applicationChoseUpdateCardStatus=By.xpath("//option[text()='Stolen']");
+    private final By applicationSubmit=By.xpath("//input[@class='Button Is_Default']");
+    private final By applicationChoseApprovalOfCardStatus=By.xpath("//li[text()='Approval of Card Status']");
+    private final By cardStatusValue=By.xpath("//option[@selected]");
+    private final By cardTable=By.xpath("//select[contains(@id,'wtCardsTable')]");
+    private final By tableClass=By.className("TableRecords_OddLine");
+    private final By closeCardTable=By.xpath("//table[contains(@id,'wtDCDPrepaidCardTable')]");
+    private final By applicationCloseCard=By.xpath("//span[contains(@class,'fa-times fa-lg')]");
+    private final By applicationChoseChangeCardStatusAPI=By.xpath("//option[text()='Change card status API']");
+    private final By applicationChoseApprovalOfOverPayment=By.xpath("//option[text()='Approval of OverPayment']");
+    private final By applicationChoseApprovalOfUnderPayment=By.xpath("//option[text()='Approval of UnderPayment']");
+    private final By applicationApprovalOfPaymentStatus=By.xpath("//option[text()='Approval of Payment Status']");
+    private final By applicationSubmitCloseCard = By.cssSelector("[value='تأكيد']");
+    private final By applicationBlockCardButton=By.xpath("//span[@class='fa fa-fw fa-clock-o fa-lg']");
+    private final By applicationManualCardTable=By.xpath("//table[contains(@id,'wtIndividualTable')]");
+    private final By applicationVariancePayment=By.xpath("//div[.='مدفوعات التباين']");
+    private final By applicationAddVariancePayment=By.xpath("//span[contains(@class,'fa fa-fw fa-plus fa-lg')]");
+    private final By applicationVariancePaymentType=By.xpath("//select[contains(@id,'wtVarianceTypeWidget')]");
+    private final By applicationChosePaymentType=By.xpath("//option[text()='Dependent']");
+    private final By applicationReason=By.xpath("//textarea");
+    private final By applicationMinusIcon=By.xpath("//span[contains(@class,'fa fa-fw fa-minus fa-lg')]");
+    private final By applicationMinusValue=By.xpath("//input[contains(@id,'wtVariancePaymentsUnderpayment_Amount')]");
+    private final By applicationMinusMonthValue=By.xpath("//input[contains(@id,'wtVariancePaymentsUnderpayment_NrMonths')]");
+    private final By applicationMinusVarianceType=By.xpath("//select[contains(@id,'wtVariancePaymentsUnderpayment_Variancetype')]");
+    private final By applicationMinusChoseType=By.xpath("//option[text()='Dependent']");
+    private final By applicationUpdateInstruction=By.xpath("//div[.='تحديث التعليمات']");
+    private final By applicationStatusByUpdate=By.xpath("//select[contains(@class,'OSFillParent')]");
+    private final By applicationTableUpdate=By.xpath("//table[contains(@id,'wtDCDPaymentInstructionTable')]");
+    private final By applicationChoseInterfacedToERP=By.xpath("//option[text()='Interfaced to ERP']");
+    private final By applicationSavedUpdate=By.xpath("//span[contains(@class,'fa fa-fw fa-save fa-lg')]");
+    private final By applicationChoseFailed=By.xpath("//option[text()='Failed']");
+    private final By applicationHoldPaymentButton=By.xpath("//span[contains(@class,'fa fa-fw fa-pause')]");
+    private final By applicationPaymentActionTable=By.xpath("//table[contains(@id,'wtDCDBenefitRequestTable')]");
+    private final By applicationHoldPaymentPowerOff=By.xpath("//*[@id='DCDTheme_wt131_block_wtMainContent_wtDCDBenefitRequestTable_ctl03_wtTerminateLink3']/span");
+    private final By reSearchButton=By.xpath("//input[@value='إعادة تعيين']");
+    private final By addOverPaymentValue=By.className("ThemeGrid_Width4");
+    private final By clickONSchudelType=By.xpath("//div[@class='hiddenFilters']/div[@class='ThemeGrid_Width3']/select[@class='OSFillParent']");
+    private final By choseSchdulePayment=By.xpath("//option[text()='Variance Payment']");
     //Actions
     public void differenceBetweenDate() throws ParseException {
         refCode=FileUtils.readFile("refCodeFile.txt").get(0);
@@ -192,9 +185,7 @@ public class AssessmentPaymentPage extends Base {
         System.out.println(ActionsHelper.element(applicationValue).getText());
          removeComma=ActionsHelper.element(applicationValue).getText().replace("،","");
         System.out.println(removeComma);
-        //TODO define why it is 5 static value
         double value=Double.parseDouble(removeComma.substring(StaticValues.currencySubString,removeComma.length()));
-        //TODO define why it is 12 static value
         double sumOfAmount=value*StaticValues.yearsFullMonths;
         System.out.println(sumOfAmount);
 
@@ -468,9 +459,9 @@ public class AssessmentPaymentPage extends Base {
         ActionsHelper.scrollTo(applicationFullData);
         List<WebElement> tableBodyDataIsPayment=driver.get().findElements(By.className("TableRecords_OddLine"));
         ActionsHelper.driverWait(3000);
-        if(!tableBodyDataIsPayment.get(8).getText().equalsIgnoreCase("pending"))
+        if(!tableBodyDataIsPayment.get(8).getText().equalsIgnoreCase("in progress"))
         {
-            logManager.ERROR("Actual Date  [" +tableBodyDataIsPayment.get(8).getText()+ "]  while expected result should [pending]   ", false);
+            logManager.ERROR("Actual Date  [" +tableBodyDataIsPayment.get(8).getText()+ "]  while expected result should [in progress]   ", false);
         }
         else
         {
@@ -717,8 +708,7 @@ ActionsHelper.driverWait(2000);
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("click on نوع التباين",applicationVariancePaymentType);
         ActionsHelper.driverWait(2000);
-        Select dropdown = new Select(ActionsHelper.element(applicationVariancePaymentType));
-        ActionsHelper.driverWait(2000);
+
         ActionsHelper.actionClickStepClick("chose payment type",applicationChosePaymentType);
         String generatedString = rng.ints(StaticValues.leftLimit, StaticValues.rightLimit + 1)
                 .limit(StaticValues.targetStringLength)
@@ -930,11 +920,10 @@ ActionsHelper.driverWait(2000);
         ActionsHelper.scrollTo(applicationApproveInstruction);
         ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("click on تقديم للموافقة",applicationApproveInstruction);
-
         ActionsHelper.driverWait(10000);
         driver.get().switchTo().alert().accept();
         ActionsHelper.driverWait(5000);
-
+        openNewTap();
         logOut();
         ActionsHelper.driverWait(4000);
         loginByPaymentSectionHead();
@@ -942,8 +931,16 @@ ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("click on عرض موسع",applicationExpendedView);
         ActionsHelper.driverWait(2000);
         ActionsHelper.scrollTo(applicationFullData);
+        List<WebElement> tableBodyDataIsBending=driver.get().findElements(By.className("TableRecords_OddLine"));
+        if(!tableBodyDataIsBending.get(8).getText().equalsIgnoreCase("pending"))
+        {
+            logManager.ERROR("Actual Date  [" +tableBodyDataIsBending.get(8).getText()+ "]  while expected result should [pending]   ", false);
+        }
+        else
+        {
+            logManager.INFO("the card status is    ["+tableBodyDataIsBending.get(8).getText()+"]" ,false);
 
-        openNewTap();
+        }
         updateInstruction();
         ActionsHelper.actionClickStepClick("chose the Interfaced to ERP",applicationChoseInterfacedToERP);
 
@@ -1131,9 +1128,7 @@ ActionsHelper.driverWait(2000);
             ActionsHelper.actionClickStepClick("click on logout",userNameBeforeLogout);
             ActionsHelper.driverWait(4000);
 
-            System.out.println("hello");
         } catch (NoSuchElementException e) {//
-            //TODO Remove unused
-          //  ActionsHelper.actionClickScrollStepClick("Click logout", logout2);
+           logManager.WARN("dose not interact with logout");
         }
 }}

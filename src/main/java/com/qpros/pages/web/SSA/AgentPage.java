@@ -17,47 +17,43 @@ public class AgentPage extends Base {
     }
 
 
-    private By committeeSearchApplicationField = By.xpath("//input[contains(@id,'SearcFrom')]"); //Enter search text here (ref code)
-    private By seniorSpecialistSearchApplication = By.xpath("//div[@class='InputContainer FlexRowContainer ThemeGrid_Width5']/input[@class='OSFillParent']");
-    private By seniorSpecialistSearchApplication2 = By.xpath("//div[@class='InputContainer FlexRowContainer ThemeGrid_Width4']/input[@class='OSFillParent']");
-    private By firstElementAfterSearch = By.xpath("//*[contains(@id,'wtMainContent_wtListRecords1')]"); //Contains app ref number and clickable
-    private By agentApproveStepFinal = By.xpath("//input[contains(@id,'wtActions_wtApproveCurrentSection')]"); //Contains app ref number and clickable
-    private By agentSendAgainStepFinal = By.xpath("//*[contains(@id,'wtActions_wtcurrentSectionMoreinfo')]"); //Contains app ref number and clickable
-    private By agentRejectButtonFinal = By.xpath("//*[contains(@id,'wtActions_wtrbReject')]");
-    private By rejectBtn = By.xpath("//input[@value=\"مرفوض - رفض\"]");
+    private final By committeeSearchApplicationField = By.xpath("//input[contains(@id,'SearcFrom')]"); //Enter search text here (ref code)
+    private final By seniorSpecialistSearchApplication = By.xpath("//div[@class='InputContainer FlexRowContainer ThemeGrid_Width5']/input[@class='OSFillParent']");
+    private final By firstElementAfterSearch = By.xpath("//*[contains(@id,'wtMainContent_wtListRecords1')]"); //Contains app ref number and clickable
+    private final By agentApproveStepFinal = By.xpath("//input[contains(@id,'wtActions_wtApproveCurrentSection')]"); //Contains app ref number and clickable
+    private final By agentSendAgainStepFinal = By.xpath("//*[contains(@id,'wtActions_wtcurrentSectionMoreinfo')]"); //Contains app ref number and clickable
+    private final By agentRejectButtonFinal = By.xpath("//*[contains(@id,'wtActions_wtrbReject')]");
+    private final By rejectBtn = By.xpath("//input[@value=\"مرفوض - رفض\"]");
 //TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]
-    private By approveApp=By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']");
-    private By nextButton=By.xpath("//*[contains(@class,'ForwardButton')]");
-    private By increaseNextButton=By.xpath("//div[contains(@class,'Button ForwardButton')]");
-    private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt573_block_wtActions_wtbtn_Next6\"]");
-    private By clickNext=By.xpath("//input[@value='التالي']");
-    //private By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
-    private By agentClickNextFinal = By.className("ForwardButton");
-    private By agentClickNext = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
-    private By agentClickNext56StepFinal = By.xpath("//*[@id=\"InternalPortalTheme_wt397_block_wtActions_wtOperationBtnContainer\"]/div[2]");
-    private By agreementBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
-    private By applicationListFirstApplicationSupervisorName = By.xpath("//tbody//tr//td//div[@class=\"FlexColContainer\"]//span[1]"); //Contains supervisor name and role
-    private By applicationListFirstApplicationSpecialistName = By.xpath("//tbody//tr//td//div[@class=\"FlexColContainer\"]//span[1]");
-    private By approveButton = By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']"); //Only one action was needed
-    private By specalistSearchApplicationFinal = By.xpath("//*[contains(@id,'wttxt_SearcFrom')]");
-    private By finalButtonApprove = By.cssSelector("[value='الموافقة']");
-    private By approveRejectButton = By.xpath("//input[@class='Button Is_Default']");
-    private By seniorApproveRejectButton = By.cssSelector("[value='مرفوض - رفض']"); //Only one action was needed
-    private By complexRadioBtn = By.xpath("//*[contains(@id,'wtLockOnComplex5')]"); //Only one action was needed
+    private final By approveApp=By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']");
+    private final By nextButton=By.xpath("//*[contains(@class,'ForwardButton')]");
+    private final By increaseNextButton=By.xpath("//div[contains(@class,'Button ForwardButton')]");
+    private final By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt573_block_wtActions_wtbtn_Next6\"]");
+    private final By clickNext=By.xpath("//input[@value='التالي']");
+    private final By agentClickNextFinal = By.className("ForwardButton");
+    private final By agentClickNext = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
+    private final By agentClickNext56StepFinal = By.xpath("//*[@id=\"InternalPortalTheme_wt397_block_wtActions_wtOperationBtnContainer\"]/div[2]");
+    private final By applicationListFirstApplicationSpecialistName = By.xpath("//tbody//tr//td//div[@class=\"FlexColContainer\"]//span[1]");
+    private final By approveButton = By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']"); //Only one action was needed
+    private final By specalistSearchApplicationFinal = By.xpath("//*[contains(@id,'wttxt_SearcFrom')]");
+    private final By finalButtonApprove = By.cssSelector("[value='الموافقة']");
+    private final By approveRejectButton = By.xpath("//input[@class='Button Is_Default']");
+    private final By seniorApproveRejectButton = By.cssSelector("[value='مرفوض - رفض']"); //Only one action was needed
+    private final By complexRadioBtn = By.xpath("//*[contains(@id,'wtLockOnComplex5')]"); //Only one action was needed
 //wtLockOnComplex5
-    private By seniorApproveRejectButtonConfirmation = By.cssSelector("[value='مرفوض - رفض']"); //Only one action was needed
-    private By reassessmentCheckBox = By.xpath("//input[contains(@id,'IsCommunicatedbyAssessor')]"); //Only one action was needed
-    private By allApllicationsSearchInput = By.xpath("//input[contains(@id,'wttxt_SearchFrom')]"); //Only one action was needed
-    private By seniorSpecialsitApproveAll1Final = By.xpath("//*[contains(@id,'btn_AcceptedOrRejected')]"); //Only one action was needed
+    private final By seniorApproveRejectButtonConfirmation = By.cssSelector("[value='مرفوض - رفض']"); //Only one action was needed
+    private final By reassessmentCheckBox = By.xpath("//input[contains(@id,'IsCommunicatedbyAssessor')]"); //Only one action was needed
+    private final By allApllicationsSearchInput = By.xpath("//input[contains(@id,'wttxt_SearchFrom')]"); //Only one action was needed
+    private final By seniorSpecialsitApproveAll1Final = By.xpath("//*[contains(@id,'btn_AcceptedOrRejected')]"); //Only one action was needed
 //wtFilterContainer_wttxt_SearchFrom
 //btn_AcceptedOrRejected
-    private By approvalBtn = By.cssSelector("[value='الموافقة']");
-    private By approveAll = By.cssSelector("[value='مقبول - قبول']");
-    private By userNameBeforeLogout = By.xpath("//span[@class='HeaderUserName']");
-    private By logout1 = By.xpath("//a[.='تسجيل خروج']");
-    private By logout2 = By.xpath("//div[contains(@id,'Logout')]");
-    private By appealApplicationCheckbox = By.xpath("//input[@id=\"InternalPortalTheme_wt85_block_wtFilterContainer_wt67\"]");
-    private By reValueButton=By.xpath("//input[@type='checkbox']");
+    private final By approvalBtn = By.cssSelector("[value='الموافقة']");
+    private final By approveAll = By.cssSelector("[value='مقبول - قبول']");
+    private final By userNameBeforeLogout = By.xpath("//span[@class='HeaderUserName']");
+    private final By logout1 = By.xpath("//a[.='تسجيل خروج']");
+    private final By logout2 = By.xpath("//div[contains(@id,'Logout')]");
+    private final By appealApplicationCheckbox = By.xpath("//input[@id=\"InternalPortalTheme_wt85_block_wtFilterContainer_wt67\"]");
+    private final By  reValueButton=By.xpath("//input[@type='checkbox']");
 
     /**
      * TO CREATE APPROVAL USING specialist USER
@@ -152,7 +148,6 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(7000);
         ActionsHelper.actionClickScrollStepClick("Click on rejection Button", rejectBtn);
         ActionsHelper.driverWait(4000);
-
         ActionsHelper.waitForExpectedElement(summaryNextBtn);
         ActionsHelper.driverWait(1000);
         ActionsHelper.retryClick(summaryNextBtn, 10);
@@ -210,8 +205,11 @@ public class AgentPage extends Base {
 
 
     }
+    /**
+     * send approval again
+     * @param applicationRef its SSP for this App
+     */
     public void specialistSendAgain(String applicationRef)  {
-
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
         ActionsHelper.waitForExpectedElement(firstElementAfterSearch);
@@ -245,6 +243,7 @@ public class AgentPage extends Base {
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("does mot interact with popup msg");
         }
         ActionsHelper.driverWait(10000);
         driver.get().switchTo().frame(0);
@@ -265,8 +264,13 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(5000);
     }
 
-
-    public String specialistApproval(String applicationRef, boolean incOrDecApp)  {
+    /**
+     *
+     *  * TO CREATE APPROVAL USING specialist USER
+     *      * @param applicationRef This is SSP of the app/inOrDecApp its a boolean take true or false
+     *      * @return its return the next assignee
+     */
+    public String specialistApproval(String applicationRef, boolean incOrDecApp) {
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
         ActionsHelper.waitForExpectedElement(firstElementAfterSearch, 30);
@@ -293,23 +297,27 @@ public class AgentPage extends Base {
             ActionsHelper.actionClickScrollStepClick("Make application complex radio button", complexRadioBtn);
             ActionsHelper.driverWait(8000);
         }
-        //ActionsHelper.actionClickStepClick("Approve step 5", agentApproveStepFinal);
         System.out.println("Attempting step 5");
-        //ActionsHelper.retryClick(agentClickNext56StepFinal, 4);
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Click Next Step 5", nextButton);
         System.out.println("Attempting step 6");
-        //ActionsHelper.actionClickStepClick("Click Approval and Agree", summaryNextBtn);
         ActionsHelper.driverWait(5000);
         ActionsHelper.retryClick(finalButtonApprove, 10);
-        logManager.STEP("Approving the application","Click the confirm button");
+        logManager.STEP("Approving the application", "Click the confirm button");
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
             logManager.WARN("must be approve the app ");
         }
         return getAssigneeNameFromAllApplications(applicationRef);
-    }//Finished
+    }
+
+    /**
+     *
+     * * TO CREATE APPROVAL for increase and decrease USING specialist USER
+     *      * @param applicationRef This is SSP of the app
+     *      * @return its return the next assignee
+     */
     public String specialistApproveForIncrease(String applicationRef)
     {
         logManager.STEP("Search application", "Inputs the reference number in the search field");
@@ -354,6 +362,12 @@ public class AgentPage extends Base {
         return getAssigneeNameFromAllApplications(applicationRef);
     }
 
+    /**
+     *
+     *  * TO CREATE APPROVAL USING senior specialist USER
+     *      * @param applicationRef This is SSP of the app
+     *      * @return its return the next assignee
+     */
     public String seniorSpecialistApproval(String refCode) {
         //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
         ActionsHelper.driverWait(3000);
@@ -384,8 +398,14 @@ public class AgentPage extends Base {
             logManager.WARN("must be approve the app ");
         }
         return getAssigneeNameFromAllApplications(refCode);
-    } //Finished
+    }
 
+    /**
+     *
+     *  * TO CREATE APPROVAL Appeal USING senior specialist USER
+     *      * @param applicationRef This is SSP of the app
+     *      * @return its return the next assignee
+     */
     public String seniorSpecialistAppealApproval(String refCode) {
         //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
         logManager.STEP("Search application", "Inputs the reference number in the search field");
@@ -410,11 +430,16 @@ public class AgentPage extends Base {
 
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
+            logManager.WARN("does not interact with popup msg");
         }
         return getAssigneeNameFromAllApplications(refCode);
-    } //Finished
+    }
 
-
+    /**
+     * TO CREATE APPROVAL USING senior specialist USER for increase and decrease payment
+     * @param refCode This is SSP of the app
+     * @return its return the next assignee
+     */
 
     public String seniorSpecialistApprovalIncDec(String refCode) {
         //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
@@ -432,6 +457,14 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(5000);
         return getAssigneeNameFromAllApplications(refCode);
     }
+
+    /**
+     *
+     *  * TO CREATE APPROVAL USING committee USER
+     *      * @param applicationRef This is SSP of the app
+     *
+     */
+
     public void committeeSpecialistApproval(String refCode) {
         // driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
@@ -441,9 +474,14 @@ public class AgentPage extends Base {
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(3000);
 
-    }//Finished
+    }
 
-
+    /**
+     *
+     ** TO CREATE reject APPROVAL USING committee USER
+     *   * @param applicationRef This is SSP of the app
+     *   return to return for any user assignee
+     */
     public String committeeSpecialistRejection(String refCode) {
 
         ActionsHelper.sendKeys(committeeSearchApplicationField, refCode + Keys.ENTER);
@@ -456,6 +494,10 @@ public class AgentPage extends Base {
         return getAssigneeNameFromAllApplications(refCode);
 
     }
+
+    /**
+     * to logout from pages
+     */
     public void logOut() {
         ActionsHelper.driverWait(5000);
         try {
@@ -464,9 +506,13 @@ public class AgentPage extends Base {
         } catch (Exception e) {
             ActionsHelper.actionClickScrollStepClick("Click logout", logout2);
         }
-    }//Finished
-
-
+    }
+    /**
+     *
+     ** TO CREATE reject APPROVAL USING specialist USER
+     *    * @param applicationRef This is SSP of the app
+     *    return to return for any user assignee
+     */
 
     public String specialistRejectApplication(String applicationRef) {
 
@@ -522,8 +568,14 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(3000);
         return getAssigneeNameFromAllApplications(applicationRef);
 
-    } //Finished
+    }
 
+    /**
+     *
+     * TO CREATE reject APPROVAL USING senior specialist USER
+     *      *    * @param applicationRef This is SSP of the app
+     *      *    return to return for any user assignee
+     */
 
     public String seniorSpecialistRejectApplication(String refCode) {
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
@@ -537,12 +589,13 @@ public class AgentPage extends Base {
             ActionsHelper.actionClickScrollStepClick("Confirm Rejection", seniorApproveRejectButtonConfirmation);
             ActionsHelper.driverWait(1000);
         } catch (Exception e) {
+            logManager.WARN("does not interact with confirm Rejection");
         }
 
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
-            logManager.WARN("must reject the app ");
+            logManager.WARN("does not interact with popup msg ");
         }
 
         ActionsHelper.driverWait(3000);
@@ -555,6 +608,9 @@ public class AgentPage extends Base {
         return getAssigneeNameFromAllApplications(refCode);
     }
 
+    /**
+     * logout from payment page
+     */
     public void logOut2()
     {
 
@@ -562,6 +618,13 @@ public class AgentPage extends Base {
         ActionsHelper.actionClickStepClick("click on logout",userNameBeforeLogout);
         ActionsHelper.driverWait(4000);
     }
+
+    /**
+     * to get assignee user
+     * @param refCode this is a SSP for this App
+     * @return its return for any user assignee
+     */
+
     public String getAssigneeNameFromAllApplications(String refCode) {
         ActionsHelper.driverWait(10000);
         ActionsHelper.navigate(urls.allApplications);
@@ -582,10 +645,10 @@ public class AgentPage extends Base {
         }
         logManager.STEP("Get next person name","Reads the username of the next stage of the process");
         return person;
-    }//Finished
+    }
 
 
-
+/* duplicated
     public String getAssigneeNameForSpecialist(String refCode) {
         ActionsHelper.driverWait(10000);
         driver.get().navigate().to(urls.allApplications);
@@ -606,8 +669,8 @@ public class AgentPage extends Base {
         }
         logManager.STEP("Get next person name","Reads the username of the next stage of the process");
         return person;
-    }//Finished
-
+    }
+*/
 
 
 }

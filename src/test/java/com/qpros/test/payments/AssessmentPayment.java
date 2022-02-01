@@ -73,7 +73,7 @@ public class AssessmentPayment extends Base {
             ActionsHelper.navigate(urls.paymentList);
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
             assessmentPaymentPage.paymentScenario4();
-        }*/
+        }
     @Test(
             description = "Payment Scenario 5", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
     public void paymentS5() throws JsonProcessingException, InterruptedException, AWTException {
@@ -83,7 +83,7 @@ public class AssessmentPayment extends Base {
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         assessmentPaymentPage.paymentScenario5();
     }
-/*
+
     @Test(
             description = "Payment Scenario 6", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
     public void paymentS6() throws JsonProcessingException, InterruptedException, AWTException {
@@ -92,18 +92,18 @@ public class AssessmentPayment extends Base {
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         assessmentPaymentPage.paymentScenario6();
 
-}
+}*/
 
     @Test(
             description = "Payment Scenario 7", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
-    public void paymentS7() {
+    public void paymentS7() throws JsonProcessingException, InterruptedException, AWTException {
             approveApplicationModule.approveApplication(false);
 
         ActionsHelper.navigate(urls.paymentList);
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         assessmentPaymentPage.paymentScenario7();
     }
-
+/*
     @Test(description = "Payment Scenario 8", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
     public void paymentS8() throws JsonProcessingException, InterruptedException, AWTException {
             approveApplicationModule.approveApplication(false);

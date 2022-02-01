@@ -25,7 +25,7 @@ public class Steps extends Base{
     public String refreshTheListOfApplications(String refCode){
         logManager.STEP("Refresh","Refreshes the page");
         ActionsHelper.driverWait(10000);
-        String specialist = agentPage.getAssigneeNameForSpecialist(refCode);
+        String specialist = agentPage.getAssigneeNameFromAllApplications(refCode);
         logManager.INFO("assignee Application ",false);
         driver.get().navigate().to(urls.allApplications);
         return specialist;
