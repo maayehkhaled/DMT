@@ -24,7 +24,11 @@ public interface StaticValues {
     public String graduationMonthOption="5";
     public String graduationYearOption="2022";
     public String masterDegree="3";
+    public String masterGraduation="2025";
     public String joblessJan="5";
     public String joblessY="2019";
     public String IELTS="2";
+    public String countryPalestine="12";
+    public String secondCountryEgypt="13";
+    public String csDept="26";
 }

@@ -33,6 +33,11 @@ public class PEPScenario extends Base {
         loginPage.loginWithUser(UserType.CM2);
         PEP.openJobInfo();
         PEP.editJobInfo();
-        PEP.experienceJobInfo();
+        PEP.editJobStatus();
+        PEP.editQualificationInfo();
+        PEP.editExperienceJobInfo();
+        PEP.addFirstWorkExperience();
+        PEP.addSecondWorkExperience();
+        PEP.editMoreInfo();
     }
 }
