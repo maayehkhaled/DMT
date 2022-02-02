@@ -35,7 +35,7 @@ public class AcocTriggerPage extends Base {
     private final By choseName=By.xpath("//option[text()='???? ???? ??? ???? ???????']");
     private final By reasonCircumstances=By.xpath("//select[contains(@id,'wtInput_wtddl_ReasonValue')]");
     private final By choseReason=By.xpath("//option[text()='تم التعرف على دخل إضافي للأسرة أثناء المناقشات مع المستفيد']");
-
+    private final By addCircumstancesAgreeButton=By.xpath("//input[@value='اضافة ']");
     /**
      * method to add التواصل
      */
@@ -50,7 +50,7 @@ public class AcocTriggerPage extends Base {
         ActionsHelper.actionClickStepClick("Click on البحث",searchButton);
         ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("go to صفحة التواصل",clickOnSSP);
-       ActionsHelper.actionClickScrollStepClick("click on التواصل ",contact);
+      ActionsHelper.actionClickScrollStepClick("click on التواصل ",contact);
         ActionsHelper.driverWait(3000);
         driver.get().switchTo().frame(0);
         ActionsHelper.driverWait(2000);
@@ -116,7 +116,7 @@ public class AcocTriggerPage extends Base {
         ActionsHelper.driverWait(2000);
         if(record=='1')
         {
-            logManager.INFO("sum of record  is equal 1 ",false);
+            logManager.INFO("sum of comment  record  is equal 1 ",false);
 
         }
         else
@@ -140,11 +140,13 @@ public class AcocTriggerPage extends Base {
         ActionsHelper.actionClickStepClick("click on اختيار سبب تغير الظروف ",reasonCircumstances);
         ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("chose reason",choseReason);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.actionClickStepClick("click on الموافقة ",addCircumstancesAgreeButton);
         ActionsHelper.driverWait(7000);
         driver.get().navigate().refresh();
         ActionsHelper.driverWait(4000);
         ActionsHelper.scrollTo(changeCircumstancesButton);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(5000);
         if (ActionsHelper.element(changeCircumstancesButton).isEnabled())
         {
             logManager.ERROR("must be disabled",false);
