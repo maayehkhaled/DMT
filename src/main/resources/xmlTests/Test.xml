@@ -25,11 +25,24 @@
             <class name="com.qpros.test.ReassessmentReject"/>
         </classes>
     </test>
-<test name="Exptionel case">
+    
+    <test name="Exceptional Case">
     <classes>
         <class name="com.qpros.test.ExceptionalCase"/>
     </classes>
-</test>
+    </test>
+    
+    <test name="Enforcement Scenario">
+        <classes>
+            <class name="com.qpros.test.EnforcementCase"></class>
+        </classes>
+    </test>
+    
+    <test name="PEP Scenario">
+        <classes>
+            <class name="com.qpros.test.PEPScenario"></class>
+        </classes>
+    </test>
 
 </suite>
 

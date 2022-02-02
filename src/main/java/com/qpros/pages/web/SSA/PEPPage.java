@@ -16,7 +16,8 @@ public class PEPPage extends Base {
 
     private By familyFileTab= By.xpath("//a[contains(@id,'ctl04_RichWidgets_wt6_block_wtMenuItem_wt11')]");
     private By sspLink=By.xpath("//a[contains(@id,'ctl03_wt71')]");
-    private By userEIDLink=By.xpath("//a[contains(@id,'ctl03_wtlnk_Expandview')]");
+    private By firstUserEIDLink=By.xpath("//a[contains(@id,'ctl03_wtlnk_Expandview')]");
+    private By secondUserEID=By.xpath("//a[contains(@id,'ctl04_wtlnk_Expandview')]");
     private By jobInfoBtn=By.xpath("//div[contains(@id,'wt9_block_wtImageWrapper')]");
     //Edit Screen
     private By editBtn=By.xpath("//input[contains(@id,'EnableEdit')]");
@@ -64,21 +65,30 @@ public class PEPPage extends Base {
     private By englishCertificate=By.xpath("//select[contains(@id,'wtEnglishLangCert_input')]");
     private By multiLangDDL=By.xpath("//button[@class='ms-choice']");
     private By saveEditedCareerInfo=By.xpath("//input[contains(@id,'wtSubmitButton')]");
+    private By acceptBtn=By.xpath("//input[contains(@id,'wtButton1_wt15')]");
 
+    public void openJobInfo() {
+        logManager.STEP("Open job information", "The user will open job information section for specific user");
+        ActionsHelper.retryClick(familyFileTab, 30);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(sspLink, 30);
+    }
 
-    public void openJobInfo(){
-        logManager.STEP("Open job information","The user will open job information section for specific user");
-        ActionsHelper.retryClick(familyFileTab,30);
+    public void clickOnFirstEID(){
         ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(sspLink,30);
+        ActionsHelper.retryClick(firstUserEIDLink,30);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(userEIDLink,30);
+    }
+
+    public void clickOnSecondEID(){
         ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(jobInfoBtn,30);
+        ActionsHelper.retryClick(secondUserEID,30);
+        ActionsHelper.driverWait(2000);
     }
 
     public void editJobInfo(){
         logManager.STEP("Click Edit","The user click on Edit button");
+        ActionsHelper.retryClick(jobInfoBtn,30);
         ActionsHelper.retryClick(editBtn,30);
         ActionsHelper.driverWait(2000);
     }
@@ -193,7 +203,8 @@ public class PEPPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(moreInfoTextarea,"Test Automation");
         ActionsHelper.driverWait(2000);
-        //ActionsHelper.retryClick(saveEditedCareerInfo,30);
-        ActionsHelper.driverWait(10000);
+        ActionsHelper.retryClick(saveEditedCareerInfo,30);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(acceptBtn,30);
     }
 }

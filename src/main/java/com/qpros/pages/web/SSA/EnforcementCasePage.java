@@ -63,7 +63,7 @@ public class EnforcementCasePage extends Base {
     private By saveActionBtn=By.xpath("//input[contains(@id,'wtbtnCreateAction')]");
     //Edit Action Locators
     private By editActionBtn=By.id("InternalPortalTheme_wt247_block_wtMainContent_wtActionTable_ctl03_wtlnk_editaction");
-    private By agreeRdionBtn=By.xpath("//input[contains(@id,'wt12')]");
+    private By agreeRadioBtn=By.xpath("//input[contains(@id,'wt12')]");
     private By saveEditAction=By.xpath("//input[contains(@id,'wtbtnCreateAction')]");
     //Delete Action Locators
     private By deleteActionBtn=By.xpath("//a[contains(@id,'ctl04_wt667')]");
@@ -114,6 +114,7 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.driverWait(5000);
     }
     public int checkDeletedTableSize(){
+        logManager.STEP("Check the table size","Check the table size after delete record");
         WebElement actionsTable = driver.get().findElement(actionTable);
         List<WebElement> tableRows = actionsTable.findElements(By.tagName("tr"));
         return tableRows.size();
@@ -126,7 +127,7 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.retryClick(editActionBtn, 30);
         ActionsHelper.driverWait(4000);
         driver.get().switchTo().frame(0);
-        ActionsHelper.retryClick(agreeRdionBtn, 30);
+        ActionsHelper.retryClick(agreeRadioBtn, 30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(saveActionBtn, 30);
         ActionsHelper.driverWait(2000);
@@ -142,6 +143,7 @@ public class EnforcementCasePage extends Base {
      * 8.	Successful MSG should be displayed: Action created successfully
      */
     public void addAction(){
+        logManager.STEP("Add new action","The user will add new action for the created enforcement");
     ActionsHelper.retryClick(caseID,30);
     ActionsHelper.driverWait(2000);
     ActionsHelper.retryClick(addActionBtn,30);
@@ -160,9 +162,10 @@ public class EnforcementCasePage extends Base {
     }
 
     /**
-     * To open existence enforcement case
+     * To open existing enforcement case
      */
     public void openEnforcementCase(){
+        logManager.STEP("open existing enforcement case","The user will open existing enforcement case");
         ActionsHelper.retryClick(enforcementCaseLink, 30);
         ActionsHelper.driverWait(8000);
     }
@@ -171,6 +174,7 @@ public class EnforcementCasePage extends Base {
      * To create new enforcement case
      */
     public void createEnforcementCase() {
+        logManager.STEP("create new enforcement case","The user will create new enforcement case");
         ActionsHelper.retryClick(NewEnforcementCaseLink, 30);
         ActionsHelper.driverWait(8000);
 
@@ -211,9 +215,7 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.clickAction(logDescriptionTextbox);
         ActionsHelper.sendKeys(logDescriptionTextbox,"Log Description Automation ");
         ActionsHelper.driverWait(2000);
-
         getPopupsPage().uploadDocuments(driver.get().findElement(uploadFile),"test.pdf");
-
         ActionsHelper.driverWait(2000);
         ActionsHelper.waitUntilElementIsDisplayed(fileDescription,30);
         ActionsHelper.moveToElement(driver.get().findElement(fileDescription));
@@ -221,11 +223,11 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(createCaseBtn,30);
         ActionsHelper.driverWait(2000);
-
         ActionsHelper.retryClick(createCaseBtn,30);
     }
 
     public void editEnforcementCase() {
+        logManager.STEP("Click on edit btn","The user will edit existing enforcement case");
         ActionsHelper.scrollTo(editCaseBtn);
         ActionsHelper.retryClick(editCaseBtn, 30);
         ActionsHelper.driverWait(2000);
