@@ -2,6 +2,7 @@ package com.qpros.pages.web.SSA;
 
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
+import com.ssa.core.common.data.TestData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -41,7 +42,7 @@ public class ActivationOpportunitiesPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(opportunityDescriptionTextbox,"Automation description");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(startDateCalendar,"2/2/2022");
+        ActionsHelper.sendKeys(startDateCalendar,"3/2/2022");
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(locationDDl,"1");
         ActionsHelper.driverWait(2000);
@@ -55,8 +56,9 @@ public class ActivationOpportunitiesPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(saveBtn,30);
         ActionsHelper.driverWait(4000);
-        ActionsHelper.sendKeysWithClear(EIDTextbox,"784197821469414, 784201782027029");
+        ActionsHelper.sendKeysWithClear(EIDTextbox,TestData.pepUserEID +"\n" +TestData.opportoionityEID);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(addMemberBtn,30);
+        ActionsHelper.driverWait(4000);
     }
     }
