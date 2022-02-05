@@ -31,4 +31,7 @@ public interface StaticValues {
     public String countryPalestine="12";
     public String secondCountryEgypt="13";
     public String csDept="26";
+    public String acceptOppStatus="10";
+    public String noAnswerOppStatus="14";
+    public String acceptNoDocOppStatus="19";
 }

@@ -25,16 +25,32 @@ public class ManageOffersHousehold extends Base {
         this.setUpBrowser();
     }
 
-    LoginPage loginPage = new LoginPage(driver.get());
-    ManageOffersHouseholdPage managePage = new ManageOffersHouseholdPage(driver.get());
-
-    @Test(description = "Household Portfolio ", priority = 1,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
-    public void AddActivationOpportunity() {
+    public void startMethod(){
         driver.get().navigate().to(urls.agentLogin);
         loginPage.loginWithUser(UserType.CM2);
         managePage.searchForEID();
-        managePage.openEmpowermentPlan();
-        managePage.editPartnerComment();
+    }
+
+    LoginPage loginPage = new LoginPage(driver.get());
+    ManageOffersHouseholdPage managePage = new ManageOffersHouseholdPage(driver.get());
+
+    @Test(description = "First Time Edit", priority = 1,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
+    public void validateFirstTimeEdit(){
+        startMethod();
+        managePage.firstTimeEdit();
+    }
+    @Test(description = "Second Time Edit", priority = 2,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
+    public void validateSecondTimeEdit() {
+        startMethod();
+        managePage.secondTimeEdit();
+    }
+
+    @Test(description = "Edit Status To Reject", priority = 3,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
+    public void validateEditStatusOnly(){
+        startMethod();
+        managePage.editStatusOnly();
     }
 }
