@@ -4,6 +4,7 @@ import com.qpros.common.web.Base;
 import com.qpros.common.web.Util;
 import com.qpros.helpers.ActionsHelper;
 import com.qpros.pages.web.SSA.commonSSA.Popups;
+import com.ssa.core.common.data.StaticValues;
 import com.ssa.core.common.data.TestData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -40,10 +41,9 @@ public class ClaimantApplicationPage extends Base {
     private By uploadDocumentBtn = By.xpath("//label[@class=\"button custom-file-upload\"]");
     private By addBillSaveBtn = By.xpath("//input[@id=\"CloneOfWebPatterns_wt16_block_wtMainContent_wtbtn_Submit\"]");
     private By sendAnApplicationBusinessRecord = By.xpath("//input[@id=\"DCDWebPortalTheme_wtClaimant_block_wtMainContent_CloneOfWebPatterns_wtVerticalTabsContainer_block_wtContent6_wtbtn_Tab5Submit\"]");
-    private By approvalCheckboxesId = By.xpath("//form[@action=\"PopupDisclaimer2.aspx\"]//div//div//div//div[2]//div//div//div//div//div//input");
-    private By agreeBtn = By.xpath("//input[@value=\"أوافق\"]");
+    private By agreeBtn = By.xpath("//input[@value='أوافق']");
     private By updateFamilyData =  By.xpath("//*[@id='DCDTheme_wt24_block_wtMainContent_DCD_Activation_CommonModules_CW_wt46_block_wtIcon']");
-    private By chosePremiseNumber=By.xpath("//option[@value='9403']");
+    private By chosePremiseNumber=By.xpath("//option[@value="+ StaticValues.choseValue +"]");
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     Popups popUp = new Popups(driver.get());
 

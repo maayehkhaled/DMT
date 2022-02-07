@@ -70,13 +70,13 @@ public class ApproveApplicationModule extends Base {
             //login with super user
             loginPage.loginWithUser(UserType.Superuser);
             this.logManager.STEP(" Login by super user, and assign the application to specialist from ادارة المراجعين ", "");
-            logManager.WARN("must be login with super user");
+
             //start assign process by selecting specialist 2 with appication id
             auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), refCode);
             agentPage.logOut();
             //login with specialist 2
             loginPage.loginWithUser(UserType.Specialist2);
-            logManager.WARN("must be login with Specialist2 user");
+
 
             ActionsHelper.driverWait(8000);
             String seniorSpecialist = agentPage.specialistApproval(refCode,incOrDecApp);
@@ -107,16 +107,15 @@ public class ApproveApplicationModule extends Base {
                 committeeName = committeeName.replace("\n", "");
                 if (committeeName.contains(UserType.Committee100.getUserName())) {
                     loginPage.loginWithUser(UserType.Committee100);
-                    logManager.WARN("must be login with Committee100 user");
                 } else {
                     loginPage.loginWithUser(UserType.Committee1);
-                    logManager.WARN("must be login with Committee1 user");
+
                 }
                 ActionsHelper.driverWait(2000);
 
                 agentPage.committeeSpecialistApproval(refCode);
                 //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
-                ActionsHelper.driverWait(2000);
+                ActionsHelper.driverWait(5000);
 
                 agentPage.logOut();
             }

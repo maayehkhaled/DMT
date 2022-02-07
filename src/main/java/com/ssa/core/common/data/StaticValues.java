@@ -1,5 +1,7 @@
 package com.ssa.core.common.data;
 
+import com.qpros.helpers.FileUtils;
+
 public interface StaticValues {
 
 
@@ -12,6 +14,8 @@ public interface StaticValues {
     int leftLimit = 97; // letter 'a'
     int rightLimit = 122; // letter 'z'
     int targetStringLength = 10;
+    String choseValue="9403";
+    String refCode= FileUtils.readFile("refCodeFile.txt").get(0);
     public int index=0;
     public String generatedString="";
     public String DateTimeFormatYearMonthDay="yyyy/MM/dd";

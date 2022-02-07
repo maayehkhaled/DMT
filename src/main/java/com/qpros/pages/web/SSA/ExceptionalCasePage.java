@@ -69,11 +69,11 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.retryClick(exceptionalCaseLink,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(addNewEntity,30);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(5000);
         driver.get().switchTo().frame(0);
         ActionsHelper.sendKeys(referralEntityNameTextbox,"08 Jan Automation Referral Entity");
         ActionsHelper.retryClick(saveReferralNameBtn,30);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.sendKeys(firstApprovalCalendar,"04/01/2022");
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(referralCalendar,"06/01/2022");

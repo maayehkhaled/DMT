@@ -39,7 +39,7 @@ public class ExceptionalCase extends Base{
         loginPage.loginWithUser(UserType.Specialist2);
         exceptionalPage.openExceptionalCase();
     }
-
+/*
     @Test(description = "Validate More Than 500 Chars", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void validateMaxChar() {
@@ -121,5 +121,5 @@ public class ExceptionalCase extends Base{
         exceptionalPage.enterHeadOfFamilyData("784-1991-4064300-0","01/01/1937");
         exceptionalPage.addWrongRelativeInfo();
         exceptionalPage.deleteWrongDependent();
-    }
+    }*/
 }
