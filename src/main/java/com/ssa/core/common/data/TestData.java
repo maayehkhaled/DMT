@@ -37,5 +37,5 @@ public interface TestData {
 
     String enforcementCaseEID="784195843653981";
     String pepUserEID="784197821469414";
-    String opportoionityEID="784201782027029";
+    String opportunityEID ="784201782027029";
 }
