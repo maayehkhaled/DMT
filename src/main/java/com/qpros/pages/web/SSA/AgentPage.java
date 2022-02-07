@@ -619,16 +619,7 @@ public class AgentPage extends Base {
         return getAssigneeNameFromAllApplications(refCode);
     }
 
-    /**
-     * logout from payment page
-     */
-    public void logOut2()
-    {
-
-        ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickStepClick("click on logout",userNameBeforeLogout);
-        ActionsHelper.driverWait(4000);
-    }
+   
 
     /**
      * to get assignee user
