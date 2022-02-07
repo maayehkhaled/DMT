@@ -11,6 +11,8 @@ import com.ssa.core.common.data.TestData;
 import com.ssa.core.common.locators.urls;
 import lombok.Getter;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -31,8 +33,6 @@ public class AssessmentPaymentPage extends Base {
     LoginPage loginPage = new LoginPage(driver.get());
     AgentPage agentPage = new AgentPage(driver.get());
     Random rng = new java.util.Random();
-     String refCode = "SSP-22864";
-
     //Locators
     private final By paymentMenuItem = By.xpath("//a[.='المدفوعات']");
     private final By paymentsTableSubMenuItem = By.xpath("//div[.='جداول الدفع']");
@@ -97,7 +97,7 @@ public class AssessmentPaymentPage extends Base {
     private final By tableClass=By.className("TableRecords_OddLine");
     private final By closeCardTable=By.xpath("//table[contains(@id,'wtDCDPrepaidCardTable')]");
     private final By applicationCloseCard=By.xpath("//span[contains(@class,'fa-times fa-lg')]");
-    private final By applicationChoseChangeCardStatusAPI=By.xpath("//option[text()='Change card status API']");
+    private final By applicationChoseChangeCardStatusAPI=By.xpath("//li[text()='Change Card Status API']");
     private final By applicationChoseApprovalOfOverPayment=By.xpath("//option[text()='Approval of OverPayment']");
     private final By applicationChoseApprovalOfUnderPayment=By.xpath("//option[text()='Approval of UnderPayment']");
     private final By applicationApprovalOfPaymentStatus=By.xpath("//option[text()='Approval of Payment Status']");
@@ -127,11 +127,10 @@ public class AssessmentPaymentPage extends Base {
     private final By addOverPaymentValue=By.className("ThemeGrid_Width4");
     private final By clickONSchudelType=By.xpath("//div[@class='hiddenFilters']/div[@class='ThemeGrid_Width3']/select[@class='OSFillParent']");
     private final By choseSchdulePayment=By.xpath("//option[text()='Variance Payment']");
+
     //Actions
     public void differenceBetweenDate() throws ParseException {
-        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
-
-
+        logManager.STEP("payment sceniro 1 ","this method to create payment sceniro 1");
         ActionsHelper.driverWait(2000);
         clickOnSchedulePayment();
         ActionsHelper.scrollTo(applicationTableResult);
@@ -160,9 +159,9 @@ public class AssessmentPaymentPage extends Base {
             logManager.INFO("Checking for the EID  [" +tableBody.get(2).getText()+"] for the Payment Table Data is correct ",false);
 
         }
-        if(!refCode.equalsIgnoreCase(tableBody.get(0).getText()))
+        if(!StaticValues.refCode.equalsIgnoreCase(tableBody.get(0).getText()))
         {
-            logManager.ERROR("Actual Date  [" +tableBody.get(0).getText()+ "]  while expected result should ["+refCode+"] the  [" +tableBody.get(0).getText()+"] does not equal  ["+refCode+"]  ", false);
+            logManager.ERROR("Actual Date  [" +tableBody.get(0).getText()+ "]  while expected result should ["+StaticValues.refCode+"] the  [" +tableBody.get(0).getText()+"] does not equal  ["+StaticValues.refCode+"]  ", false);
 
         }
         else
@@ -306,6 +305,7 @@ public class AssessmentPaymentPage extends Base {
     }
     public void createTaskInstruction()
     {
+        logManager.STEP("method to create task","this method to create task instruction from PaymentSectionHead user");
         ActionsHelper.actionClickStepClick("click on قائمة المهام ",applicationTaskList);//step 55
         ActionsHelper.driverWait(4000);
         selectCurrentDateAndSendItToTask();
@@ -318,6 +318,7 @@ public class AssessmentPaymentPage extends Base {
     }
     public void createInstruction()
     {
+        logManager.STEP("create task method","this task for create a task from PaymentSeniorSpecialist and توليد المعلومات");
         ActionsHelper.actionClickStepClick("click on المدفوعات",paymentMenuItem);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("click on تعليمات الدفع",applicationPaymentInstruction);
@@ -338,6 +339,7 @@ public class AssessmentPaymentPage extends Base {
     }
     public void addTaskAndCheckFromData()
     {
+        logManager.STEP("create task and check from ملخص البطاقه","this method to create task for card sceniro using PaymentSectionHead user ");
         ActionsHelper.actionClickStepClick("click on قائمة المهام ",applicationTaskList);
         ActionsHelper.driverWait(5000);
         selectCurrentDateAndSendItToTask();
@@ -377,7 +379,8 @@ public class AssessmentPaymentPage extends Base {
     }
     public void requestManualCard()
     {
-        ActionsHelper.driverWait(3000);
+        logManager.STEP("card crated successfuly","this method to create new card using PaymentSeniorSpecialist user");
+        ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("click on card",applicationCard);
 
         ActionsHelper.driverWait(3000);
@@ -409,6 +412,7 @@ public class AssessmentPaymentPage extends Base {
     }
     public void clickOnTakeAction()
     {
+        logManager.STEP("take the action ","this method to Accepet Task AND Agree to the Take action");
         ActionsHelper.actionClickStepClick("click on Task status",applicationTaskStatus);
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("chose task status",applicationChoseTaskStatus);
@@ -443,8 +447,7 @@ public class AssessmentPaymentPage extends Base {
     }
     public void openNewTap()
     {
-        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
-
+        logManager.STEP("open new payment on new tap","this method to check from card status on new tap");
         ActionsHelper.driverWait(3000);
         ((JavascriptExecutor)driver.get()).executeScript("window.open()");
         ArrayList<String> tabs = new ArrayList<String>(driver.get().getWindowHandles());
@@ -493,8 +496,7 @@ public class AssessmentPaymentPage extends Base {
 
     public void clickOnSchedulePayment()
     {
-        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
-
+        logManager.STEP("search on application","this method for search on application");
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click on المدفوعات", paymentMenuItem);
         ActionsHelper.actionClickStepClick("click on جداول الدفع ", paymentsTableSubMenuItem);
@@ -502,7 +504,7 @@ public class AssessmentPaymentPage extends Base {
     }
     public void clickOnCardAndCardProcedures()
     {
-        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+        logManager.STEP("go to اجراءات البطاقات","this method for go to اجراءات البطاقات");
 
         ActionsHelper.actionClickStepClick("click on card",applicationCard);
         ActionsHelper.driverWait(2000);
@@ -512,8 +514,7 @@ public class AssessmentPaymentPage extends Base {
 
     public void paymentScenario2()
     {
-        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
-
+        logManager.STEP("change card status","this method to changed card status");
 
         requestManualCard();
 
@@ -584,9 +585,9 @@ public class AssessmentPaymentPage extends Base {
     }
     public void paymentScenario3()
     {
-        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+        logManager.STEP("close card ","this method to close card");
 
-        requestManualCard();
+      requestManualCard();
         addTaskAndCheckFromData();
         logOut();
       loginByPaymentSeniorSpecialist();
@@ -602,7 +603,8 @@ public class AssessmentPaymentPage extends Base {
         driver.get().switchTo().frame(0);
         ActionsHelper.actionClickStepClick("click on تاكيد",applicationSubmitButton);
         ActionsHelper.driverWait(5000);
-
+        driver.get().navigate().refresh();
+        ActionsHelper.driverWait(2000);
         logOut();
         loginByPaymentSectionHead();
         ActionsHelper.driverWait(4000);
@@ -610,6 +612,7 @@ public class AssessmentPaymentPage extends Base {
         ActionsHelper.driverWait(5000);
         selectCurrentDateAndSendItToTask();
         ActionsHelper.sendKeys(applicationTaskSearch,"Change card status API");
+        ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("chose Change card status API",applicationChoseChangeCardStatusAPI);
         ActionsHelper.driverWait(2000);
         fillTaskSourceAndSearchAndClickSubmit();
@@ -632,10 +635,7 @@ public class AssessmentPaymentPage extends Base {
     }
     public void clickOnRequestManualCardAndCheckFromPlusIcon()
     {
-        ActionsHelper.scrollTo(applicationManualCardTable);
         ActionsHelper.driverWait(4000);
-        clickOnCardAndCardProcedures();
-
         ActionsHelper.navigate(urls.requestNewCard);
         ActionsHelper.driverWait(4000);
         searchOnApplication();
@@ -652,7 +652,8 @@ public class AssessmentPaymentPage extends Base {
     }
 public void paymentScenario5()
 {
-    refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+    logManager.STEP("Create Variances – Overpayment  ","this method to Create Variances – Overpayment  for card");
+
 
     requestManualCard();
     addTaskAndCheckFromData();
@@ -726,6 +727,7 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentAndVariancePayment()
     {
+        logManager.STEP("go to مدفوعات التباين","this method to go المدفوعات التباين");
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickStepClick("click on المدفوعات",paymentMenuItem);
         ActionsHelper.actionClickStepClick("click on مدفوعات التباين",applicationVariancePayment);
@@ -734,7 +736,7 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario6()
     {
-        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
+        logManager.STEP("Create Variances – downpayment  ","this method to Create Variances – downpayment  for card");
 
         requestManualCard();
         addTaskAndCheckFromData();
@@ -804,18 +806,20 @@ ActionsHelper.driverWait(2000);
     }
     public void loginByPaymentSectionHead()
     {
+        logManager.STEP("login by PaymentSectionHead ","login by PaymentSectionHead");
     ActionsHelper.driverWait(5000);
 
     loginPage.loginWithUser(UserType.PaymentSectionHead);
     }
     public void loginByPaymentSeniorSpecialist()
     {
-        ActionsHelper.driverWait(7000);
+        logManager.STEP("login by PaymentSeniorSpecialist ","login by PaymentSeniorSpecialist");
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
     }
 
     public void selectCurrentDateAndSendItToTask()
     {
+
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern(StaticValues.DateTimeFormatDayMonthYear);
     LocalDateTime now = LocalDateTime.now();
     System.out.println(dtf.format(now));
@@ -840,11 +844,13 @@ ActionsHelper.driverWait(2000);
 
         return newDate;
     }
+
     public void searchOnApplication()
     {
+        logManager.STEP("search on Application(ssp)","this method to search on ssp");
         ActionsHelper.element(applicationIDSearchBox).clear();
         ActionsHelper.driverWait(5000);
-        ActionsHelper.sendKeys(applicationIDSearchBox, refCode);
+        ActionsHelper.sendKeys(applicationIDSearchBox, StaticValues.refCode);
         ActionsHelper.retryClick(applicationIDSearchBox, 30);
         ActionsHelper.actionClickStepClick("click on search ", applicationIDSearchButton);
         ActionsHelper.driverWait(5000);
@@ -854,8 +860,7 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario4()
     {
-        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
-
+    logManager.STEP("block card","this method to check block card sceniro");
         requestManualCard();
         addTaskAndCheckFromData();
         logOut();
@@ -870,8 +875,11 @@ ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("click on close card",applicationBlockCardButton);
         ActionsHelper.driverWait(4000);
         driver.get().switchTo().frame(0);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("click on تاكيد",applicationSubmitButton);
-
+        ActionsHelper.driverWait(5000);
+        driver.get().navigate().refresh();
+        ActionsHelper.driverWait(2000);
         logOut();
         loginByPaymentSectionHead();
         ActionsHelper.driverWait(4000);
@@ -901,6 +909,7 @@ ActionsHelper.driverWait(2000);
     }
     public void clickOnCardAndCardSummary()
     {
+        logManager.STEP("go to ملخص البطاقة","this method to go to ملخص البطاقه");
         ActionsHelper.actionClickStepClick("click on البطاقات",applicationCard);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("click on ملخص البطاقة ",applicationCardSummary);
@@ -908,8 +917,7 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario7()
     {
-        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
-
+        logManager.STEP("Update Payments Instructions ","this method to Update Payments Instructions ");
         requestManualCard();
         addTaskAndCheckFromData();
         logOut();
@@ -974,6 +982,7 @@ ActionsHelper.driverWait(2000);
     }
     public void saveStatusAndGoToPayment()
     {
+        logManager.STEP("save card status and go to payment","this method to save status and go to payment ");
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("click on save",applicationSavedUpdate);
         ActionsHelper.driverWait(3000);
@@ -988,6 +997,7 @@ ActionsHelper.driverWait(2000);
     }
     public void updateInstruction()
     {
+        logManager.STEP("update instruction","this method too go update instruction page and click on it ");
        ActionsHelper.navigate(urls.updateInstruction);
         ActionsHelper.driverWait(5000);
         searchOnApplication();
@@ -997,8 +1007,7 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario10()
     {
-        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
-
+        logManager.STEP("Update Payments Status – Terminate payment ","this method to Update Payments Status – Terminate payment ");
         requestManualCard();
         ActionsHelper.driverWait(3000);
         addTaskAndCheckFromData();
@@ -1029,8 +1038,7 @@ ActionsHelper.driverWait(2000);
 
     public void paymentScenario8()
     {
-        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
-
+        logManager.STEP("Update Payments Status – Hold payment  ","this method to Update Payments Status – Hold payment  ");
         requestManualCard();
 
         addTaskAndCheckFromData();
@@ -1061,6 +1069,7 @@ ActionsHelper.driverWait(2000);
     }
     public void acceptPaymentAndCheckFromStatus()
     {
+        logManager.STEP("accept paymet ","this method to continue accepet payment and check from status ");
      driver.get().switchTo().frame(0);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("click on تاكيد",applicationSubmit);
@@ -1091,8 +1100,7 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario9()
     {
-        refCode=FileUtils.readFile("refCodeFile.txt").get(0);
-
+        logManager.STEP("Update Payments Status – Release payment ","this method to Update Payments Status – Release payment ");
         logOut();
         ActionsHelper.driverWait(5000);
         loginByPaymentSeniorSpecialist();

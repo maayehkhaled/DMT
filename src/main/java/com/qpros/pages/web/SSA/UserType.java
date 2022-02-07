@@ -19,7 +19,9 @@ public enum UserType {
     PaymentSpecialist("PaymentSpecialist", "123456"),
     PaymentSeniorAccountant("PaymentSeniorAccountant", "123456"),
     FinanceTeam("FinanceTeam", "123456"),
-    CmUser("CM2","123456");
+    CmUser("CM2","123456"),
+    ProgramManager("ProgramManager","ProgramManager");
+
 
     public String getUserName() {
         return userName;

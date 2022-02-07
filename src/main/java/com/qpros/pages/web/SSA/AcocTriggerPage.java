@@ -41,6 +41,7 @@ public class AcocTriggerPage extends Base {
      */
     public void addCommunication()
     {
+        logManager.STEP("add Communication method ","this method to add Communication information for ex EID/summery /msg AFTER Added this info system should added a record to the communication table");
         ActionsHelper.driverWait(4000);
         refCode= FileUtils.readFile("refCodeFile.txt").get(0);
         ActionsHelper.actionClickStepClick("click on ملف الاسره",familyFile);
@@ -89,6 +90,8 @@ public class AcocTriggerPage extends Base {
      */
     public void addComment()
     {
+        logManager.STEP("add Comment method ","this method to add comment  information for ex EID/comment type  /msg AFTER Added this info system should added a record to the comment table");
+
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("click on اضافة تعليق ",addCommentButton);
         ActionsHelper.driverWait(3000);
@@ -131,6 +134,8 @@ public class AcocTriggerPage extends Base {
      */
     public void addChangeCircumstances()
     {
+        logManager.STEP("add تغيير الظروف ","this method to add تغيير الظروف information for ex الاسم/سبب تغيير الظروف  AFTER Added this info system should تغيير الظروف button disabled");
+
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("click on اضافة ظروف",changeCircumstancesButton);
         driver.get().switchTo().frame(0);

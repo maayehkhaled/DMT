@@ -36,6 +36,9 @@ public class COCPage extends Base {
     LoginPage loginPage = new LoginPage(driver.get());
     Steps step = new Steps(driver.get());
 
+    /**
+     * This method to go cocPage
+     */
     public void navigateToCoc(){
         logManager.STEP("Navigate to COC", "Navigate to https://uat.ssa.gov.ae/DCDBusinessParameters/CoC.aspx");
        ActionsHelper.driverWait(3000);
@@ -63,6 +66,7 @@ public class COCPage extends Base {
             ActionsHelper.driverWait(5000);
             logManager.INFO("Accept coc msg ",false);
         } catch (Exception e) {
+            logManager.WARN("does not interact with popup msg");
         }
         ActionsHelper.driverWait(5000);
         driver.get().navigate().to(urls.tasksList);

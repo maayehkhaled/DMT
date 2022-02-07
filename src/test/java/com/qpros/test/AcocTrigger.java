@@ -33,14 +33,14 @@ public class AcocTrigger extends Base {
         this.setUpBrowser();
     }
     @Test(
-            description = "ACOC TRIGGER 1", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
+            description = " Add communication", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
     public void addCommunication() throws JsonProcessingException, InterruptedException, AWTException {
         approveApplicationModule.approveApplication(false);
         ActionsHelper.navigate(urls.agentLogin);
         loginPage.loginWithUser(UserType.CmUser);
         acocTriggerPage.addCommunication();
     }
-    @Test(description = "ACOC TRIGGER 2", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
+    @Test(description = "add Comment", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
     public void addComment() throws JsonProcessingException, InterruptedException, AWTException {
         approveApplicationModule.approveApplication(false);
         ActionsHelper.navigate(urls.agentLogin);
@@ -48,7 +48,7 @@ public class AcocTrigger extends Base {
         acocTriggerPage.addCommunication();
         acocTriggerPage.addComment();
     }
-    @Test(description = "ACOC TRIGGER 2", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
+    @Test(description = "add Change Circumstances", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
     public void addChangeCircumstances() throws JsonProcessingException, InterruptedException, AWTException {
         approveApplicationModule.approveApplication(false);
         ActionsHelper.navigate(urls.agentLogin);
