@@ -506,6 +506,7 @@ public class AgentPage extends Base {
         } catch (Exception e) {
             ActionsHelper.actionClickScrollStepClick("Click logout", logout2);
         }
+
     }
     /**
      *
@@ -513,6 +514,16 @@ public class AgentPage extends Base {
      *    * @param applicationRef This is SSP of the app
      *    return to return for any user assignee
      */
+
+    public void logOut2()
+    {
+
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("click on logout",userNameBeforeLogout);
+        ActionsHelper.driverWait(4000);
+    }
+
+
 
     public String specialistRejectApplication(String applicationRef) {
 
