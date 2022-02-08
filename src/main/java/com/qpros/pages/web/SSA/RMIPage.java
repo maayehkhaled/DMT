@@ -10,6 +10,7 @@ import com.ssa.core.common.data.TestData;
 import com.ssa.core.common.locators.urls;
 import com.ssa.core.service.SubmitApplicationService;
 import com.ssa.core.service.VerifyEligibilityService;
+import io.appium.java_client.touch.ActionOptions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -40,7 +41,7 @@ public class RMIPage extends Base {
     private By dropdownMenuReason = By.xpath("//select[@id=\"DCDAgentPortalTheme_wt10_block_wtMainContent_wtddl_ReasonIn\"]");
 
     private By firstElementAfterSearch = By.cssSelector(".ThemeGrid_Width4:nth-child(1)"); //Contains app ref number and clickable
-
+    private By launchReassessBtn=By.xpath("//input[contains(@id,'LaunchReassess')]");
 
 public void firstAssessment() throws JsonProcessingException, InterruptedException, AWTException {
 
@@ -137,11 +138,15 @@ public void rmiReassessment() throws AWTException {
     ActionsHelper.selectOption(dropdownMenuSelectSupervisor, "12");
     ActionsHelper.selectByValue(ActionsHelper.element(dropdownMenuReason), "1");
 
+    ActionsHelper.sendKeys(driver.get().findElement(By.xpath("//textarea[contains(@id,'wtMainContent_wttxt_CommentIn')]")),"New comment for reassessment");
+    ActionsHelper.retryClick(launchReassessBtn,30);
+    ActionsHelper.driverWait(3000);
+
     agentPage.logOut();
     ActionsHelper.driverWait(5000);
     logManager.STEP("7. Login by the supervisor", "");
-    loginPage.loginWithUser(UserType.SeniorSpecialist2);
-
+    loginPage.loginWithUser(UserType.SeniorSpecialist1);
+    //ActionsHelper.sendKeys(By.xpath("//input[contains(@id,'SearcFrom')]"), TestData.EID + Keys.ENTER);
     logManager.STEP("8. Look for SSP and click on it to view tis details page", "");
     logManager.STEP("9. Click on application to view the details page", "");
     logManager.STEP("10. Go through steps and select ارسالة مرة اخرى then submit", "");
@@ -175,7 +180,4 @@ public void rmiReassessment() throws AWTException {
     ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
 
 }
-
-
-
 }

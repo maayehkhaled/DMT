@@ -12,15 +12,14 @@ public enum UserType {
     SeniorSpecialist100("SeniorSpecialist100", "SeniorSpecialist100"),
     Committee100("Committee100", "Committee100"),
     Committee1("Committee1", "Committee1"),
-    Committee2("Committee2","Committee2"),
     ApplicationDirector1("ApplicationDirector1", "ApplicationDirector1"),
     PaymentSeniorSpecialist("PaymentSeniorSpecialist", "123456"),
     PaymentSectionHead("PaymentSectionHead", "123456"),
     PaymentSpecialist("PaymentSpecialist", "123456"),
     PaymentSeniorAccountant("PaymentSeniorAccountant", "123456"),
+    CM2("CM2","123456"),
+    ProgramManager("ProgramManager","ProgramManager"),
     FinanceTeam("FinanceTeam", "123456"),
-    CmUser("CM2","123456"),
-    ProgramManager("ProgramManager","ProgramManager");
 
 
     public String getUserName() {
