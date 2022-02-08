@@ -9,39 +9,62 @@
         <listener class-name="com.qpros.common.LogManager"/>
     </listeners>
 
-   <test name ="reassessment approve application">
+
+    <test name="SSA 1st assessment Run">
+        <classes>
+            <class name="com.qpros.test.ApproveApplication"/>
+            <class name="com.qpros.test.RejectApplication"/>
+        </classes>
+    </test>
+
+    <test name="SSA Reassessment Run">
+        <classes>
+            <class name="com.qpros.test.ReassessmentIncreaseApprove"/>
+            <class name="com.qpros.test.ReassessmentDecreaseApprove"/>
+            <class name="com.qpros.test.ReassessmentApprove"/>
+            <class name="com.qpros.test.ReassessmentReject"/>
+        </classes>
+    </test>
+
+    <test name="Exceptional Case Scenario">
+    <classes>
+        <class name="com.qpros.test.ExceptionalCase"/>
+    </classes>
+    </test>
+
+    <test name="Enforcement Scenario">
+        <classes>
+            <class name="com.qpros.test.EnforcementCase"></class>
+        </classes>
+    </test>
+
+    <test name="PEP Scenario">
+        <classes>
+            <class name="com.qpros.test.PEPScenario"></class>
+        </classes>
+    </test>
+
+
+    <test name="Activation Opportunities Scenario">
         <classes>
 
             <class name="com.qpros.test.ApproveApplication"></class>
             <class name="com.qpros.test.RejectApplication"></class>
             <class name="com.qpros.test.ReassessmentApprove"></class>
             <class name="com.qpros.test.AcocTrigger"></class>
-            <class name="com.qpros.test.payments.AssessmentPayment"></class>
-                    
+            <class name="com.qpros.test.payments.AssessmentPayment"><methods><exclude name="newSchedulesNewCard"></exclude> <exclude
+                    name="updatePaymentsInstructions"></exclude></methods> </class>
+            <class name="com.qpros.test.AddPartner"></class>
+
         </classes>
     </test>
-    <!--
-        <test name ="reassessment decrease">
-            <classes>
-                <class name="com.qpros.test.ReassessmentDecreaseApprove"></class>
-            </classes>
-        </test>-->
-    <!--    <test name="SSA 1st assessment Run">-->
-<!--        <classes>-->
-<!--            <class name="com.qpros.test.ApproveApplication"/>-->
-<!--            <class name="com.qpros.test.RejectApplication"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
-<!--    <test name="SSA Reassessment Run">-->
-<!--        <classes>-->
-<!--            <class name="com.qpros.test.ReassessmentIncreaseApprove"/>-->
-<!--            <class name="com.qpros.test.ReassessmentDecreaseApprove"/>-->
-<!--            <class name="com.qpros.test.ReassessmentApprove"/>-->
-<!--            <class name="com.qpros.test.ReassessmentReject"/>-->
-<!--        </classes>-->
-<!--    </test>-->
 
 
+    <test name="List Of Beneficiaries Scenario">
+        <classes>
+            <class name="com.qpros.test.ListOfBeneficiaries"></class>
+        </classes>
+
+    </test>
 </suite>
 
