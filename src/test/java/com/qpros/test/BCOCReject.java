@@ -55,6 +55,7 @@ public class BCOCReject extends Base {
     AuditorsManagementPage auditorsManagementPage = new AuditorsManagementPage(driver.get());
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
+    ClaimantApplicationPage claimantPage = new ClaimantApplicationPage(driver.get());
     private static final Pattern p = Pattern.compile("(^[^\\s]+)");
     Matcher matcher;
     public String committeeName;
@@ -63,21 +64,15 @@ public class BCOCReject extends Base {
     public void rmiBCOCStep() throws JsonProcessingException, AWTException, InterruptedException {
 
         //1st assessment - Approve
-        approveApplicationModule.approveApplication(false);
+    //   approveApplicationModule.approveApplication(false);
         // approveApplicationModule.approveExistingApplication(ApproveApplicationModule.refCode);
         logManager.STEP("2. Login to beneficiary side with the EID", "the Beneficiary User conduct login using EID" + TestData.EID);
         ActionsHelper.navigate(urls.claimantLogin);
         claimantLogin.claimantLogin(TestData.EID);
-        claimantApplicationPage.clickOnChangeInLivingCircumstances();
-        claimantApplicationPage.personalInformation();
-        claimantApplicationPage.familyInformation();
-        claimantApplicationPage.addressAndContactInformation();
-        claimantApplicationPage.incomeAndPensionData();
-        claimantApplicationPage.support();
-        claimantApplicationPage.businessRecord();
+        claimantPage.bcocApprove();
         ActionsHelper.retryClick(By.xpath("//input[@class='Button MenuButton LogoutButton']"), 30);
 
-       approveApplicationModule.afterBcocApprovalProcess();
+       approveApplicationModule.afterBCOCRejectProcess();
 
     }
 

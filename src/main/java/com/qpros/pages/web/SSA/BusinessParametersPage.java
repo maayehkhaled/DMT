@@ -27,8 +27,8 @@ public class BusinessParametersPage extends Base {
 //wtbtn_RunSpecificCodes
     private By feedbackMessage = By.xpath("//span[@class=\"Feedback_Message_Text\"]");
 
-    public void releaseAppliaction(String refNo) {
-        ActionsHelper.driverWait(8000);
+    public void releaseAppliaction(String refNo){
+        ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Expand fields",buttonShowDetails);
         ActionsHelper.driverWait(7000);
         ActionsHelper.actionClickStepClick("Input SSP code: " + refNo, applicationRef);
@@ -41,14 +41,14 @@ public class BusinessParametersPage extends Base {
         ActionsHelper.waitForExpectedElement(feedbackMessage, 30);
         Boolean message = feedbackMessageNotification.feedbackMessage().contains("released");
         if (message){
+            ActionsHelper.driverWait(4000);
             ActionsHelper.actionClickStepClick("Start Process", startProcessButton);
-            ActionsHelper.driverWait(7000);
+            ActionsHelper.driverWait(5000);
             driver.get().switchTo().alert().accept();
+            ActionsHelper.driverWait(5000);
         }
         ActionsHelper.waitForExpectedElement(feedbackMessage, 30);
-        ActionsHelper.driverWait(3000);
         Boolean message1 = feedbackMessageNotification.feedbackMessage().contains("Update scheduled");
         Assert.assertTrue(message1);
     }
-
 }

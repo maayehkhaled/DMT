@@ -3,6 +3,8 @@ package com.qpros.pages.web.SSA.modules;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
+import com.qpros.helpers.FileUtils;
+import com.qpros.helpers.ReadWriteHelper;
 import com.qpros.pages.web.SSA.*;
 import com.qpros.quanta.Status;
 import com.qpros.quanta.markuputils.MarkupHelper;
@@ -43,8 +45,7 @@ public class ApproveApplicationModule extends Base {
 
 
     public void approveApplication(boolean incOrDecApp) throws JsonProcessingException, AWTException, InterruptedException {
-        //deleteId.requestService();
-        //URL: https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx
+        deleteId.requestService();
         driver.get().navigate().to(urls.agentLogin);
         logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
         logManager.INFO("Verify Eligibility Service Call", false);
@@ -61,7 +62,9 @@ public class ApproveApplicationModule extends Base {
 
             //read the referance code application is
             refCode = submitApplicationService.getresponse(submitApplicationService).applicationSummary.referenceNumber;
-            refCode.replace("\uE007","");;
+            refCode.replace("\uE007","");
+            FileUtils.createFile("refCodeFile.txt",refCode);
+
             homePage.navigateToLogin();
 
             //login with super user
@@ -73,6 +76,8 @@ public class ApproveApplicationModule extends Base {
             agentPage.logOut();
             //login with specialist 2
             loginPage.loginWithUser(UserType.Specialist2);
+
+
             ActionsHelper.driverWait(8000);
             String seniorSpecialist = agentPage.specialistApproval(refCode,incOrDecApp);
             ActionsHelper.driverWait(8000);
@@ -93,6 +98,7 @@ public class ApproveApplicationModule extends Base {
             if (committeeName.contains("ApplicationDirector")) {
                 committeeName = committeeName.replace("Manager", "").replace("\n", "");
                 loginPage.loginWithUser(UserType.valueOf(committeeName));
+                logManager.WARN("must be login with seniorSpecialistApproval user");
                 agentPage.seniorSpecialistApproval(refCode);
                 driver.get().navigate().to(urls.tasksList);
                 ActionsHelper.driverWait(2000);
@@ -104,12 +110,13 @@ public class ApproveApplicationModule extends Base {
                     loginPage.loginWithUser(UserType.Committee100);
                 } else {
                     loginPage.loginWithUser(UserType.Committee1);
+
                 }
                 ActionsHelper.driverWait(2000);
 
                 agentPage.committeeSpecialistApproval(refCode);
                 //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
-                ActionsHelper.driverWait(2000);
+                ActionsHelper.driverWait(5000);
 
                 agentPage.logOut();
             }
@@ -192,6 +199,7 @@ public class ApproveApplicationModule extends Base {
         logManager.STEP("14. Login by super user, and assign the application to specialist from ادارة المراجعين", "Login by super user, and assign the application to specialist from ادارة المراجعين ");
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Superuser);
+       // String ref=refCode=FileUtils.readFile("refCodeFile.txt").get(0);
         auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), refCode);
         agentPage.logOut();
         logManager.STEP("15. Login by the specialist", "Login by the specialist");
@@ -257,5 +265,35 @@ public class ApproveApplicationModule extends Base {
          */
 
 
+    }
+    public void afterBCOCRejectProcess() throws InterruptedException, AWTException {
+        homePage.navigateToLogin();
+
+        //login with super user
+        loginPage.loginWithUser(UserType.Superuser);
+        this.logManager.STEP(" Login by super user, and assign the application to specialist from ادارة المراجعين ", "");
+
+        //start assign process by selecting specialist 2 with appication id
+        String ref=FileUtils.readFile("refCodeFile.txt").get(0);
+        auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), ref);
+
+        agentPage.logOut();
+        //login with specialist 100
+        loginPage.loginWithUser(UserType.Specialist2);
+        ActionsHelper.driverWait(8000);
+        String seniorSpecialist = agentPage.specialistRejectApplication(refCode);
+        ActionsHelper.driverWait(8000);
+        System.out.println("Senior Specialist : " + seniorSpecialist);
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
+        ActionsHelper.driverWait(8000);
+        agentPage.seniorSpecialistRejectApplication(refCode);
+        ActionsHelper.driverWait(8000);
+        System.out.println("Senior Specialist : " + seniorSpecialist);
+        agentPage.logOut();
+        loginPage.loginWithUser(UserType.Superuser);
+        driver.get().navigate().to(urls.businessParameters);
+        businessParametersPage.releaseAppliaction(refCode);
+        agentPage.logOut();
     }
 }

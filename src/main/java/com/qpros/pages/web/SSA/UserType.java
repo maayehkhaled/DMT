@@ -19,7 +19,7 @@ public enum UserType {
     PaymentSeniorAccountant("PaymentSeniorAccountant", "123456"),
     CM2("CM2","123456"),
     ProgramManager("ProgramManager","ProgramManager"),
-    FinanceTeam("FinanceTeam", "123456");
+    FinanceTeam("FinanceTeam", "123456"),
 
 
     public String getUserName() {

@@ -21,4 +21,5 @@ public interface urls {
     String closeCard="https://uat.ssa.gov.ae/DCDPaymentsFrontEndN_/ChangeCardStatus.aspx";
     String activationOpportunities="https://uat.ssa.gov.ae/DCD_Activation_AgentFrontEndN/ActivationOpportunitiesPortfolio.aspx";
 
+    String updateInstruction="https://uat.ssa.gov.ae/DCDPaymentsFrontEndN_/UpdatePaymentsInstructions.aspx";
 }
