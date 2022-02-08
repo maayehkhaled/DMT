@@ -2,7 +2,6 @@ package com.qpros.pages.web.SSA;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
-import com.qpros.helpers.FileUtils;
 import com.qpros.pages.web.SSA.commonSSA.Popups;
 import com.ssa.core.service.SubmitApplicationService;
 import lombok.Getter;
@@ -13,14 +12,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import java.awt.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
-
 public class ExceptionalCasePage extends Base{
     public ExceptionalCasePage(WebDriver driver) {
         PageFactory.initElements(Base.driver.get(), this);
     }
+
+    LocalDateTime datetime1 = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    String formatDateTime = datetime1.format(format);
 
     Popups PopupsPage=new Popups(driver.get());
     AgentPage agentPage=new AgentPage(driver.get());
@@ -96,12 +100,13 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.retryClick(addNewEntity,30);
         ActionsHelper.driverWait(2000);
         driver.get().switchTo().frame(0);
-        ActionsHelper.sendKeys(referralEntityNameTextbox,"08 Jan Automation Referral Entity");
+        ActionsHelper.sendKeys(referralEntityNameTextbox,"Februaryy Automation Referral Entity");
         ActionsHelper.retryClick(saveReferralNameBtn,30);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(firstApprovalCalendar,"04/01/2022");
+        ActionsHelper.sendKeys(caseDescriptionTextarea,"description here");
+
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(referralCalendar,"06/01/2022");
+        ActionsHelper.sendKeys(referralCalendar,formatDateTime+ Keys.ENTER);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(2000);
@@ -114,9 +119,9 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(caseDescriptionTextarea,"Automation case description");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(firstApprovalCalendar,"04/01/2022");
+        ActionsHelper.sendKeys(firstApprovalCalendar,formatDateTime+ Keys.ENTER);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(referralCalendar,"06/01/2022");
+        ActionsHelper.sendKeys(referralCalendar,formatDateTime+ Keys.ENTER);
         ActionsHelper.driverWait(4000);
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(4000);
@@ -217,7 +222,7 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(8000);
         ActionsHelper.sendKeysWithClear(firstDependentEIDTextbox,"784198680432055");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeysWithClear(dependentDOB,"29/01/1986");
+        ActionsHelper.sendKeysWithClear(dependentDOB,formatDateTime);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(relationDDL,"5");
         ActionsHelper.driverWait(2000);
@@ -300,7 +305,7 @@ public class ExceptionalCasePage extends Base{
         if(driver.get().findElement(By.xpath("//td[contains(@id,'wtBenefitRequestsListRow5')]")).getText()=="Specialist100")
         {
             ActionsHelper.retryClick(appIdLink,30);
-            ActionsHelper.driverWait(2000);
+
         }
         else
             driver.get().navigate().refresh();

@@ -26,7 +26,7 @@
         </classes>
     </test>
     
-    <test name="Exceptional Case">
+    <test name="Exceptional Case Scenario">
     <classes>
         <class name="com.qpros.test.ExceptionalCase"/>
     </classes>
@@ -44,5 +44,17 @@
         </classes>
     </test>
 
+    <test name="Activation Opportunities Scenario">
+        <classes>
+            <class name="com.qpros.test.ActivationOpportunities"></class>
+        </classes>
+    </test>
+
+    <test name="List Of Beneficiaries Scenario">
+        <classes>
+            <class name="com.qpros.test.ListOfBeneficiaries"></class>
+        </classes>
+
+    </test>
 </suite>
 

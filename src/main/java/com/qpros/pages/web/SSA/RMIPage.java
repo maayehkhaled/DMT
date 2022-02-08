@@ -146,7 +146,7 @@ public void rmiReassessment() throws AWTException {
     ActionsHelper.driverWait(5000);
     logManager.STEP("7. Login by the supervisor", "");
     loginPage.loginWithUser(UserType.SeniorSpecialist1);
-    ActionsHelper.sendKeys(By.xpath("//input[contains(@id,'SearcFrom')]"), TestData.EID + Keys.ENTER);
+    //ActionsHelper.sendKeys(By.xpath("//input[contains(@id,'SearcFrom')]"), TestData.EID + Keys.ENTER);
     logManager.STEP("8. Look for SSP and click on it to view tis details page", "");
     logManager.STEP("9. Click on application to view the details page", "");
     logManager.STEP("10. Go through steps and select ارسالة مرة اخرى then submit", "");

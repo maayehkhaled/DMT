@@ -4,6 +4,7 @@ import com.qpros.common.web.Base;
 import com.qpros.pages.web.SSA.*;
 import com.qpros.reporting.QuantaTestManager;
 import com.ssa.core.common.locators.urls;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -12,6 +13,9 @@ import org.testng.annotations.Test;
 
 import java.awt.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Listeners(com.qpros.common.LogManager.class)
 
 public class ExceptionalCase extends Base{
@@ -34,15 +38,15 @@ public class ExceptionalCase extends Base{
         //exceptionalPage.chooseReferralEntity();
     }
 
-    @Test(description = "Open Exceptional case", priority = 1,
+    @Test(description = "Open Exceptional case", priority = 2,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
-    public void openExceptionalCase() {
+    public void validateOpenExceptionalCase() {
         driver.get().navigate().to(urls.agentLogin);
         loginPage.loginWithUser(UserType.Specialist2);
         exceptionalPage.openExceptionalCase();
     }
 
-    @Test(description = "Validate More Than 500 Chars", priority = 1,
+    @Test(description = "Validate More Than 500 Chars", priority = 11,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void validateMaxChar() {
         startPage();
@@ -50,7 +54,7 @@ public class ExceptionalCase extends Base{
         Assert.assertEquals(exceptionalPage.countMaxChars(),500);
     }
 
-    @Test(description = "Validate Less Than 500 Chars", priority = 1,
+    @Test(description = "Validate Less Than 500 Chars", priority = 3,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void validateMinChar() {
         startPage();
@@ -58,16 +62,16 @@ public class ExceptionalCase extends Base{
         Assert.assertTrue(exceptionalPage.countMinChars()<500);
     }
 
-    @Test(description = "Enter wrong EID for HOH and wrong date", priority = 1,
+    @Test(description = "Enter wrong EID for HOH and wrong date", priority = 4,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void validateEnterWrongData() {
     startPage();
     exceptionalPage.chooseReferralEntity();
-    exceptionalPage.enterHeadOfFamilyData("000-0000-0000000-0","01/01/1922");
+    exceptionalPage.enterHeadOfFamilyData("000-0000-0000000-0",formatDateTime+ Keys.ENTER);
     Assert.assertEquals(exceptionalPage.getValidationMsg(),"إذا كانت المعلومات أعلاه غير صحيحة، يرجى التواصل مع الهيئة الاتحادية للهوية والجنسية بشأن خلاصة القيد.");
     }
 
-    @Test(description = "Enter correct EID for HOH and correct date", priority = 1,
+    @Test(description = "Enter correct EID for HOH and correct date", priority = 5,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void validateEnterCorrectData() {
         startPage();
@@ -76,7 +80,7 @@ public class ExceptionalCase extends Base{
         Assert.assertEquals(exceptionalPage.getValidationMsg(),"تم التحقق من رقم الهوية الإماراتية وتاريخ الميلاد");
     }
 
-    @Test(description = "Enter Email with invalid format", priority = 1,
+    @Test(description = "Enter Email with invalid format", priority = 6,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void invalidHOFEmail() {
         startPage();
@@ -85,7 +89,7 @@ public class ExceptionalCase extends Base{
         Assert.assertEquals(exceptionalPage.invalidHOFEmail(),"بريد إلكتروني خاطئ");
     }
 
-    @Test(description = "Enter valid Email format and delete mobile number", priority = 1,
+    @Test(description = "Enter valid Email format and delete mobile number", priority =7,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void validHOFEmail() {
         startPage();
@@ -95,7 +99,7 @@ public class ExceptionalCase extends Base{
         Assert.assertEquals(exceptionalPage.enterValidHOFEmail(),"رقم الجوال غير صالح. يجب أن يكون رقمًا إماراتيًا صالحًا به 7 أرقام وأحد البادئات التالية 050, 052, 055, 056, 054, 058");
     }
 
-    @Test(description = "Enter Relatives EID and DOB", priority = 1,
+    @Test(description = "Enter Relatives EID and DOB", priority = 8,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void validateAddRelatives(){
         startPage();
@@ -104,18 +108,21 @@ public class ExceptionalCase extends Base{
         //exceptionalPage.enterValidHOFEmail();
         exceptionalPage.addRelatives();
     }
+    LocalDateTime datetime1 = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    String formatDateTime = datetime1.format(format);
 
-    @Test(description = "Enter Relatives EID and DOB", priority = 1,
+    @Test(description = "Enter Relatives EID and DOB", priority = 9,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void validateAddWrongRelativeInfo(){
         startPage();
         exceptionalPage.chooseReferralEntity();
-        exceptionalPage.enterHeadOfFamilyData("784-1991-4064300-0","01/01/1937");
+        exceptionalPage.enterHeadOfFamilyData("784-1991-4064300-0",formatDateTime+ Keys.ENTER);
         exceptionalPage.addWrongRelativeInfo();
         Assert.assertEquals(exceptionalPage.validationMsgForWrongRelative(),"إذا كانت المعلومات أعلاه غير صحيحة، يرجى التواصل مع الهيئة الاتحادية للهوية والجنسية بشأن خلاصة القيد.");
     }
 
-    @Test(description = "Click Delete The Wrong Relative Data", priority = 1,
+    @Test(description = "Click Delete The Wrong Relative Data", priority = 10,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void validateDeleteWrongDependent(){
         startPage();
