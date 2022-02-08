@@ -473,7 +473,6 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(3000);
-
     }
 
     /**
@@ -555,7 +554,7 @@ public class AgentPage extends Base {
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
-            logManager.WARN("must reject the app ");
+            logManager.DEBUG("must reject the app ");
         }
         ActionsHelper.driverWait(3000);
         driver.get().switchTo().frame(0);

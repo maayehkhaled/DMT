@@ -15,6 +15,9 @@
             <class name="com.qpros.test.ApproveApplication"></class>
             <class name="com.qpros.test.RejectApplication"></class>
             <class name="com.qpros.test.ReassessmentApprove"></class>
+            <class name="com.qpros.test.AcocTrigger"></class>
+            <class name="com.qpros.test.payments.AssessmentPayment"></class>
+                    
         </classes>
     </test>
     <!--
