@@ -46,7 +46,7 @@ public class EnforcementCase extends Base {
         enforcementPage.searchByEID();
         enforcementPage.editEnforcementCase();
         String enforcementSuccessMsgText= enforcementPage.getEnforcementSuccessMsg();
-        Assert.assertEquals("تم تحديث الحالة بنجاح",enforcementSuccessMsgText);
+        Assert.assertEquals(enforcementSuccessMsgText,"تم تحديث الحالة بنجاح");
     }
 
     @Test(description = "Add Action", priority = 1,
