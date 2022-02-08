@@ -2,12 +2,11 @@ package com.qpros.pages.web.SSA;
 
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
+import com.ssa.core.common.data.StaticValues;
 import com.ssa.core.common.data.TestData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-
-import javax.swing.*;
 
 public class ActivationOpportunitiesPage extends Base {
     public ActivationOpportunitiesPage(WebDriver driver) {
@@ -26,11 +25,12 @@ public class ActivationOpportunitiesPage extends Base {
     private By minAgeTextbox=By.xpath("//input[contains(@id,'wtMinAge_Input')]");
     private By maxAgeTextbox=By.xpath("//input[contains(@id,'maxage3')]");
     private By saveBtn=By.xpath("//input[contains(@id,'Save')]");
-    private By successMsg=By.className("Feedback_Message_Success"); ////span[contains(@id,'wtSanitizedHtml3')]
+    private By successMsg=By.className("Feedback_Message_Success");
     private By EIDTextbox=By.xpath("//textarea");
     private By addMemberBtn=By.xpath("//input[contains(@id,'AddIndividual')]");
 
     public void clickAddOpportunity() {
+        logManager.STEP("Add New Opportunities and recommend it to EID","The user adds tow Opportunities and recommend it to EID");
         ActionsHelper.retryClick(addOpportunityBtn, 30);
         ActionsHelper.driverWait(2000);
         driver.get().switchTo().frame(0);
@@ -50,13 +50,13 @@ public class ActivationOpportunitiesPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(genderDDL,"2");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(minAgeTextbox,"18");
+        ActionsHelper.sendKeys(minAgeTextbox, StaticValues.minAge);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(maxAgeTextbox,"60");
+        ActionsHelper.sendKeys(maxAgeTextbox,StaticValues.maxAge);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(saveBtn,30);
         ActionsHelper.driverWait(4000);
-        ActionsHelper.sendKeysWithClear(EIDTextbox,TestData.pepUserEID +"\n" +TestData.opportoionityEID);
+        ActionsHelper.sendKeysWithClear(EIDTextbox,TestData.pepUserEID +"\n" +TestData.opportunityEID);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(addMemberBtn,30);
         ActionsHelper.driverWait(4000);

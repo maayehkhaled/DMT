@@ -34,4 +34,9 @@ public interface StaticValues {
     public String acceptOppStatus="10";
     public String noAnswerOppStatus="14";
     public String acceptNoDocOppStatus="19";
+    public String SSP="SSP-7026";
+    public String oppName="215";
+    public String defaultOppName="__ossli_0";
+    public String minAge="18";
+    public String maxAge="60";
 }

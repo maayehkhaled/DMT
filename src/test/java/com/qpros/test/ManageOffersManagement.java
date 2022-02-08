@@ -1,6 +1,6 @@
+package com.qpros.test;
 import com.qpros.common.web.Base;
 import com.qpros.pages.web.SSA.LoginPage;
-import com.qpros.pages.web.SSA.ManageOffersHouseholdPage;
 import com.qpros.pages.web.SSA.ManageOffersManagementPage;
 import com.qpros.pages.web.SSA.UserType;
 import com.qpros.reporting.QuantaTestManager;
@@ -46,12 +46,19 @@ public class ManageOffersManagement extends Base {
         managePage.changeStatus();
     }
 
-    @Test(description = "add Partner Comment", priority = 1,
+    @Test(description = "add Partner Comment", priority = 3,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
-    public void addPartnerComment() {
+    public void validateAddPartnerComment() {
         startMethod();
         managePage.clickOnEID();
         managePage.addPartnerComment();
     }
 
+    @Test(description = "validate View All Info", priority = 4,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
+    public void validateViewAllInfo() {
+        startMethod();
+        managePage.clickOnEID();
+        managePage.viewAllInfo();
+    }
 }
