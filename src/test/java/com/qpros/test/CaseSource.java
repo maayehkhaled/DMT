@@ -29,23 +29,25 @@ public class CaseSource extends Base{
     LoginPage loginPage = new LoginPage(driver.get());
     CaseAdministrationPage adminCase=new CaseAdministrationPage(driver.get());
 
+    public void startMethod(){
+        driver.get().navigate().to(urls.agentLogin);
+        loginPage.loginWithUser(UserType.CaseManagerHead);
+    }
     @Test(description = "Add new case source", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void addCaseSource()  {
-        driver.get().navigate().to(urls.agentLogin);
-        loginPage.loginWithUser(UserType.CaseManagerHead);
+        startMethod();
         adminCase.createNewCase(adminCase.getAddNewSource(),adminCase.getSaveNewRow());
         String successMsgTxt= adminCase.getSuccessMsg();
-        Assert.assertEquals("تم إضافة مصدر الحالة بنجاح",successMsgTxt);
+        Assert.assertEquals(successMsgTxt,"تم إضافة مصدر الحالة بنجاح");
     }
 
-    @Test(description = "Add new social issue", priority = 1,
+    @Test(description = "Add new social issue", priority = 2,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void addSocialType()  {
-        driver.get().navigate().to(urls.agentLogin);
-        loginPage.loginWithUser(UserType.CaseManagerHead);
+        startMethod();
         adminCase.createNewCase(adminCase.getSocialIssueLink(),adminCase.getSaveNewRow());
         String successMsgText=adminCase.getSuccessMsg();
-        Assert.assertEquals("تم إضافة نوع المسألة الاجتماعية بنجاح",successMsgText);
+        Assert.assertEquals(successMsgText,"تم إضافة نوع المسألة الاجتماعية بنجاح");
     }
 }

@@ -50,8 +50,8 @@ public class EnforcementCasePage extends Base {
     private By searchBtn=By.xpath("//input[contains(@id,'wtbtn_Search')]");
     private By editCaseBtn=By.xpath("//a[contains(@id,'ctl03_wtlnk_editcase')]");
     private By saveChanges=By.xpath("//input[contains(@id,'wtbtnCreateCase')]");
-    private By successMsg=By.className("Feedback_Message_Success");
-
+    private By successMsg=By.id("InternalPortalTheme_wt274_block_WebPatterns_wt23_block_RichWidgets_wt9_block_wtSanitizedHtml3");
+    //private By successMsg=By.className("Feedback_Message_Success");
     //Add action Locators
     private By caseID=By.xpath("//a[contains(@id,'ctl03_wtlnk_CaseId')]");
     private By addActionBtn=By.xpath("//a[contains(@id,'AddAction')]");
@@ -62,11 +62,11 @@ public class EnforcementCasePage extends Base {
     private By actionDescriptionTextbox=By.xpath("//textarea[contains(@id,'ActionDescription')]");
     private By saveActionBtn=By.xpath("//input[contains(@id,'wtbtnCreateAction')]");
     //Edit Action Locators
-    private By editActionBtn=By.id("InternalPortalTheme_wt247_block_wtMainContent_wtActionTable_ctl03_wtlnk_editaction");
+    private By editActionBtn=By.xpath("//a[@id='InternalPortalTheme_wt251_block_wtMainContent_wtActionTable_ctl03_wtlnk_editaction']");
     private By agreeRadioBtn=By.xpath("//input[contains(@id,'wt12')]");
     private By saveEditAction=By.xpath("//input[contains(@id,'wtbtnCreateAction')]");
     //Delete Action Locators
-    private By deleteActionBtn=By.xpath("//a[contains(@id,'ctl04_wt667')]");
+    private By deleteActionBtn=By.xpath("//a[contains(@id,'ctl03_wt679')]");
     private By deletedRecord=By.xpath("//td[contains(@id,'ctl04_wtActionTableRow1')]");
     private By actionTable=By.xpath("//table[contains(@id,'wtActionTable')]");
     //Add Logs Locators
@@ -76,15 +76,11 @@ public class EnforcementCasePage extends Base {
     private By actionNumber=By.xpath("//select[contains(@id,'ActionId')]");
     private By saveLogBtn=By.xpath("//input[contains(@id,'wtbtnCreateLog')]");
     //Delete Logs Locators
-    private By deleteLogBtn=By.xpath("//a[contains(@id,'wt143')]");
-
+    private By  deleteLogBtn=By.xpath("//a[contains(@id,'ctl03_wt146')]");
     public void deleteLogs(){
         logManager.STEP("Delete Enforcement Case Log","The User Will Delete The Created Log For Existent Enforcement Case");
         ActionsHelper.retryClick(caseID,30);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(addLogLink,30);
-        ActionsHelper.driverWait(2000);
-        driver.get().switchTo().frame(0);
         ActionsHelper.retryClick(deleteLogBtn,30);
         ActionsHelper.driverWait(2000);
     }
@@ -109,7 +105,7 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.retryClick(caseID,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(deleteActionBtn,30);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(6000);
         driver.get().switchTo().alert().accept();
         ActionsHelper.driverWait(5000);
     }
@@ -125,7 +121,7 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.retryClick(caseID,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(editActionBtn, 30);
-        ActionsHelper.driverWait(4000);
+        ActionsHelper.driverWait(8000);
         driver.get().switchTo().frame(0);
         ActionsHelper.retryClick(agreeRadioBtn, 30);
         ActionsHelper.driverWait(2000);
@@ -176,7 +172,7 @@ public class EnforcementCasePage extends Base {
     public void createEnforcementCase() {
         logManager.STEP("create new enforcement case","The user will create new enforcement case");
         ActionsHelper.retryClick(NewEnforcementCaseLink, 30);
-        ActionsHelper.driverWait(8000);
+        ActionsHelper.driverWait(2000);
 
         driver.get().switchTo().frame(0);
         ActionsHelper.driverWait(8000);
@@ -230,7 +226,7 @@ public class EnforcementCasePage extends Base {
         logManager.STEP("Click on edit btn","The user will edit existing enforcement case");
         ActionsHelper.scrollTo(editCaseBtn);
         ActionsHelper.retryClick(editCaseBtn, 30);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(6000);
         driver.get().switchTo().frame(0);
         ActionsHelper.driverWait(8000);
         ActionsHelper.scrollTo(caseDescriptionTextbox);
@@ -247,21 +243,5 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.sendKeys(eIdTexebox, TestData.enforcementCaseEID);
         ActionsHelper.retryClick(searchBtn, 30);
         ActionsHelper.driverWait(8000);
-    }
-
-        public String getEnforcementSuccessMsg(){
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.clickAction(successMsg);
-        int count=0;
-        while(!ActionsHelper.isElementPresent(successMsg)){
-            ActionsHelper.driverWait(1000);
-            count=count+1;
-            if(count>=5){
-                break;
-            }
-        }
-        logManager.WARN("Success MSG is not shown");
-        String successMsgTxt=driver.get().findElement(successMsg).getText();
-        return(successMsgTxt);
     }
 }

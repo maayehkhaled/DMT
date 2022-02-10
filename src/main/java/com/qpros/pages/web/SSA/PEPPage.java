@@ -86,7 +86,7 @@ public class PEPPage extends Base {
         ActionsHelper.driverWait(2000);
     }
 
-    public void editJobInfo(){
+    public void clickEditJobInfo(){
         logManager.STEP("Click Edit","The user click on Edit button");
         ActionsHelper.retryClick(jobInfoBtn,30);
         ActionsHelper.retryClick(editBtn,30);
@@ -114,8 +114,8 @@ public class PEPPage extends Base {
         ActionsHelper.selectOption(collegeDDL,StaticValues.masterDegree);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(deptDDL,StaticValues.csDept);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeysWithClear(graduationAVG,"4");
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.sendKeys(graduationAVG,StaticValues.masterDegree);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(masterGraduationYear,StaticValues.masterGraduation);
         ActionsHelper.driverWait(2000);
@@ -148,9 +148,9 @@ public class PEPPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(workLocation, "Q-Pros");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeysWithClear(yearsOfExperience, "5");
+        ActionsHelper.sendKeys(yearsOfExperience, StaticValues.graduationMonthOption);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeysWithClear(monthsOfExperience, "3");
+        ActionsHelper.sendKeys(monthsOfExperience, StaticValues.masterDegree);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(countryDDL, StaticValues.countryPalestine);
         ActionsHelper.driverWait(2000);

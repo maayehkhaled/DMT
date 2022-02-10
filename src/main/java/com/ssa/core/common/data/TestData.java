@@ -34,4 +34,10 @@ public interface TestData {
     String rmiReassessment = "";
 
     String rmiAppeal = "";
+
+    String enforcementCaseEID="784195843653981";
+
+    String pepUserEID="784197821469414";
+
+    String opportunityEID="784201782027029";
 }
