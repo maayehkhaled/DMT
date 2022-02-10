@@ -20,6 +20,7 @@ public enum UserType {
     CM2("CM2","123456"),
     ProgramManager("ProgramManager","ProgramManager"),
     FinanceTeam("FinanceTeam", "123456"),
+    Committee2("Committee2","Committee2");
 
 
     public String getUserName() {
