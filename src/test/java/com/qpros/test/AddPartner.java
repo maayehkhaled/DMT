@@ -37,7 +37,6 @@ public class AddPartner extends Base {
         ActionsHelper.navigate(urls.agentLogin);
         loginPage.loginWithUser(UserType.ProgramManager);
         addPartnerPage.addPartner();
-
     }
 
 }

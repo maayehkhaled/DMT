@@ -33,6 +33,8 @@ public class AssessmentPaymentPage extends Base {
     LoginPage loginPage = new LoginPage(driver.get());
     AgentPage agentPage = new AgentPage(driver.get());
     Random rng = new java.util.Random();
+
+
     //Locators
     private final By paymentMenuItem = By.xpath("//a[.='المدفوعات']");
     private final By paymentsTableSubMenuItem = By.xpath("//div[.='جداول الدفع']");
@@ -375,6 +377,9 @@ public class AssessmentPaymentPage extends Base {
             logManager.INFO("the card Id is    ["+tableBodyDataToCard.get(7).getText()+"] ",false);
 
         }
+        ActionsHelper.driverWait(2000);
+        driver.get().navigate().refresh();
+        ActionsHelper.driverWait(2000);
 
     }
     public void requestManualCard()
@@ -406,6 +411,8 @@ public class AssessmentPaymentPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("click on submit button",applicationSubmitButton);
         ActionsHelper.driverWait(10000);
+        driver.get().navigate().refresh();
+        ActionsHelper.driverWait(2000);
         logOut();
        loginByPaymentSectionHead();
         ActionsHelper.driverWait(4000);
@@ -519,6 +526,7 @@ public class AssessmentPaymentPage extends Base {
         requestManualCard();
 
         addTaskAndCheckFromData();
+
         logOut();
         loginByPaymentSeniorSpecialist();
         ActionsHelper.driverWait(4000);
@@ -536,7 +544,9 @@ public class AssessmentPaymentPage extends Base {
         driver.get().switchTo().frame(0);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("click on submit",applicationSubmit);
-        ActionsHelper.driverWait(7000);
+        ActionsHelper.driverWait(5000);
+        driver.get().navigate().refresh();
+        ActionsHelper.driverWait(3000);
         logOut();
         loginByPaymentSectionHead();
         ActionsHelper.driverWait(4000);
@@ -589,6 +599,7 @@ public class AssessmentPaymentPage extends Base {
 
       requestManualCard();
         addTaskAndCheckFromData();
+
         logOut();
       loginByPaymentSeniorSpecialist();
         ActionsHelper.driverWait(4000);
@@ -723,7 +734,9 @@ ActionsHelper.driverWait(2000);
         driver.get().switchTo().alert().accept();
         ActionsHelper.driverWait(4000);
         ActionsHelper.scrollTo(applicationCard);
-
+        ActionsHelper.driverWait(2000);
+        driver.get().navigate().refresh();
+        ActionsHelper.driverWait(2000);
     }
     public void paymentAndVariancePayment()
     {
@@ -767,6 +780,9 @@ ActionsHelper.driverWait(2000);
         ActionsHelper.driverWait(5000);
         ActionsHelper.navigate(urls.paymentList);
         ActionsHelper.driverWait(3000);
+
+        driver.get().navigate().refresh();
+        ActionsHelper.driverWait(2000);
         logOut();
 
         loginByPaymentSectionHead();
@@ -1101,6 +1117,9 @@ ActionsHelper.driverWait(2000);
     public void paymentScenario9()
     {
         logManager.STEP("Update Payments Status – Release payment ","this method to Update Payments Status – Release payment ");
+        ActionsHelper.driverWait(2000);
+        driver.get().navigate().refresh();
+        ActionsHelper.driverWait(2000);
         logOut();
         ActionsHelper.driverWait(5000);
         loginByPaymentSeniorSpecialist();

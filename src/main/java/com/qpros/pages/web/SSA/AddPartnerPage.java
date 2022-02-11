@@ -13,7 +13,6 @@ public class AddPartnerPage extends Base {
     public AddPartnerPage(WebDriver webDriver)
     {
         PageFactory.initElements(Base.driver.get(), this);
-
     }
     Faker faker=new Faker(new Random(24));
     public final By partnerMenu=By.xpath("//a[.='الشركاء']");
@@ -49,5 +48,6 @@ public class AddPartnerPage extends Base {
         ActionsHelper.driverWait(2000);
         driver.get().switchTo().alert().accept();
         ActionsHelper.driverWait(5000);
+
     }
 }
