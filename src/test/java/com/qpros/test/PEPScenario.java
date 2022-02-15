@@ -31,37 +31,14 @@ public class PEPScenario extends Base {
         loginPage.loginWithUser(UserType.CM2);
     }
 
-    @Test(description = "Edit First Member Data", priority = 1,
+    @Test(description = "Open First Member Data", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void openFirstMemberData() {
         startMethod();
         PEP.openJobInfo();
         PEP.clickOnFirstEID();
         PEP.clickEditJobInfo();
-    }
-    @Test(description = "edit First Member Date", priority = 2, dependsOnMethods = {"openFirstMemberData"},
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
-    public void editFirstMemberDate(){
-        PEP.editJobStatus();
-        PEP.editQualificationInfo();
-        PEP.editExperienceJobInfo();
-        PEP.addFirstWorkExperience();
-        PEP.addSecondWorkExperience();
-        PEP.editMoreInfo();
-    }
 
-    @Test(description = "Edit Second Member Data", priority = 3,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
-    public void openSecondMemberData() {
-        startMethod();
-        PEP.openJobInfo();
-        PEP.clickOnSecondEID();
-        PEP.clickEditJobInfo();
-    }
-    @Test(description = "Edit Second Member Data", priority = 4,dependsOnMethods = {"openSecondMemberData"},
-         retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
-    public void editSecondMemberData() {
-       //validateOpenJobInfo
         PEP.editJobStatus();
         PEP.editQualificationInfo();
         PEP.editExperienceJobInfo();
