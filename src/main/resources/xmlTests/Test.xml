@@ -9,6 +9,7 @@
         <listener class-name="com.qpros.common.LogManager"/>
     </listeners>
 
+
     <test name="SSA 1st assessment Run">
         <classes>
             <class name="com.qpros.test.ApproveApplication"/>
@@ -24,7 +25,7 @@
             <class name="com.qpros.test.ReassessmentReject"/>
         </classes>
     </test>
-
+    
     <test name="Exceptional Case Scenario">
     <classes>
         <class name="com.qpros.test.ExceptionalCase"/>
@@ -36,7 +37,7 @@
             <class name="com.qpros.test.EnforcementCase"></class>
         </classes>
     </test>
-
+    
     <test name="PEP Scenario">
         <classes>
             <class name="com.qpros.test.PEPScenario"></class>
@@ -55,19 +56,19 @@
         </classes>
 
     </test>
-    
+
     <test name="Case Source Scenario">
         <classes>
             <class name="com.qpros.test.CaseSource"></class>
         </classes>
     </test>
-    
+
     <test name="Manage Offers Household">
         <classes>
             <class name="com.qpros.test.ManageOffersHousehold"></class>
         </classes>
     </test>
-    
+
     <test name="Manage Offers Management">
         <classes>
             <class name="com.qpros.test.ManageOffersManagement"></class>

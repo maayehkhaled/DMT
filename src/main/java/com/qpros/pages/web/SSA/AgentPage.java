@@ -571,7 +571,7 @@ public class AgentPage extends Base {
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
-            logManager.WARN("must reject the app ");
+            logManager.DEBUG("must reject the app ");
         }
         ActionsHelper.driverWait(3000);
         driver.get().switchTo().frame(0);

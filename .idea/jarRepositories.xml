@@ -2,11 +2,6 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
-      <option name="id" value="QPROS-Artifact" />
-      <option name="name" value="QPROS-Artifact" />
-      <option name="url" value="https://pkgs.dev.azure.com/QProsAutomationFramework/aae4c54c-9a59-441c-8e36-57f024201af4/_packaging/QPROS-Artifact/maven/v1" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Central Repository" />
       <option name="url" value="https://repo.maven.apache.org/maven2" />
