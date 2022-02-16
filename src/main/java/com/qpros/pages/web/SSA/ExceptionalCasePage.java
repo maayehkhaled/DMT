@@ -1,8 +1,11 @@
 package com.qpros.pages.web.SSA;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.javafaker.Faker;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.qpros.pages.web.SSA.commonSSA.Popups;
+import com.ssa.core.common.data.TestData;
+import com.ssa.core.common.locators.urls;
 import com.ssa.core.service.SubmitApplicationService;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,9 +14,12 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
+
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 @Getter
 @Setter
@@ -25,17 +31,20 @@ public class ExceptionalCasePage extends Base{
     LocalDateTime datetime1 = LocalDateTime.now();
     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     String formatDateTime = datetime1.format(format);
+    Faker faker=new Faker(new Random(24));
 
     Popups PopupsPage=new Popups(driver.get());
     AgentPage agentPage=new AgentPage(driver.get());
     SubmitApplicationService submitApplicationService = new SubmitApplicationService();
     LoginPage loginPage = new LoginPage(driver.get());
+    BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
+    PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
 
     private By exceptionalCaseLink= By.xpath("//a[contains(@id,'wt160')]");
     private By addNewEntity=By.xpath("//input[contains(@id,'openPopup')]");
     private By referralEntityNameTextbox=By.xpath("//input[contains(@id,'ReferralEntityName')]");
     private By saveReferralNameBtn=By.xpath("//input[contains(@id,'SaveBtn')]");
-    private By caseDescriptionTextarea=By.xpath("//textarea[contains(@id,'wttxt_ReferralCaseInput')]");
+    private By caseDescriptionTextarea=By.xpath("//textarea[contains(@id,'ReferralCaseInput')]");
     private By firstApprovalCalendar=By.xpath("//input[contains(@id,'wt558_block_wtInput_wtdt_PreliminaryApprovalDate')]");
     private By referralCalendar=By.xpath("//input[contains(@id,'wt354_block_wtInput_wtdt_DateOfRefferal')]");
     private By nextBtn=By.xpath("//input[contains(@id,'NextBtn')]");
@@ -85,6 +94,7 @@ public class ExceptionalCasePage extends Base{
     private By allListTbl=By.xpath("//table[contains(@id,'wtBenefitRequestsList')]");
     private By appIdLink=By.xpath("//a[contains(@id,'ApplicationReview')]");
     private By assignedToLbl=By.className("display-block");
+    private By previousViewLink=By.xpath("//a[contains(@id,'wt57')]");
 
     String myLongData= "sadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassad" +
             "assadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadas" +
@@ -95,24 +105,28 @@ public class ExceptionalCasePage extends Base{
     String shortData="sadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassa";
 
     public void openExceptionalCase(){
+        //faker=new Faker();
         ActionsHelper.retryClick(exceptionalCaseLink,30);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(addNewEntity,30);
+       /* ActionsHelper.retryClick(addNewEntity,30);
         ActionsHelper.driverWait(2000);
         driver.get().switchTo().frame(0);
-        ActionsHelper.sendKeys(referralEntityNameTextbox,"Februaryy Automation Referral Entity");
-        ActionsHelper.retryClick(saveReferralNameBtn,30);
+        ActionsHelper.sendKeys(referralEntityNameTextbox,faker.lorem().sentence(1));
+        ActionsHelper.retryClick(saveReferralNameBtn,30);*/
+        ActionsHelper.selectOption(referralEntityDDL,"83");
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(caseDescriptionTextarea,"description here");
-
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.sendKeys(firstApprovalCalendar,formatDateTime+ Keys.ENTER);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.sendKeys(referralCalendar,formatDateTime+ Keys.ENTER);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(2000);
     }
 
     public void chooseReferralEntity(){
+        logManager.STEP("Choose From Refferal DDL", "The user chooses  one referral entity to start the exceptional request");
         ActionsHelper.retryClick(exceptionalCaseLink,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(referralEntityDDL,"74");
@@ -126,7 +140,9 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(4000);
     }
+
     public void enterHeadOfFamilyData(String eid, String birthDate){
+        logManager.STEP("Enter HOF EID and DOB","The user enters HOF Data");
         ActionsHelper.clickAction(hohEIDTextbox);
         ActionsHelper.sendKeys(hohEIDTextbox,eid);
         ActionsHelper.driverWait(3000);
@@ -144,8 +160,7 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(referralEntityDDL,"74");
         ActionsHelper.driverWait(2000);
-        //need to solve this problem
-        //ActionsHelper.sendKeys(caseDescriptionTextarea,myLongData);
+        ActionsHelper.sendKeys(caseDescriptionTextarea,faker.lorem().sentence(10));
         ActionsHelper.driverWait(2000);
         String s1=(driver.get().findElement(caseDescriptionTextarea)).getAttribute("value");
         return s1.length();
@@ -181,13 +196,7 @@ public class ExceptionalCasePage extends Base{
     }
 
     public void addRelatives() {
-        if (driver.get().findElement(deleteFirstDependent).isDisplayed()) {
-            ActionsHelper.retryClick(deleteFirstDependent, 30);
-            driver.get().switchTo().alert().accept();
-        } else if (driver.get().findElement(deleteSecondDependent).isDisplayed()) {
-            ActionsHelper.retryClick(deleteSecondDependent, 30);
-            driver.get().switchTo().alert().accept();
-        } else {
+
             ActionsHelper.driverWait(4000);
             ActionsHelper.clickAction(firstDependentEIDTextbox);
             ActionsHelper.sendKeys(firstDependentEIDTextbox, "784-1991-4063100-5");
@@ -213,7 +222,7 @@ public class ExceptionalCasePage extends Base{
             ActionsHelper.retryClick(nextBtn, 30);
             ActionsHelper.driverWait(2000);
             driver.get().switchTo().alert().accept();
-        }
+
     }
 
     public void addWrongRelativeInfo(){
@@ -240,13 +249,14 @@ public class ExceptionalCasePage extends Base{
     }
 
     public void createFullExceptionalCase(){
+        logManager.STEP("Complete Creating Exceptional Case","The user complete all required steps to create the exceptional case");
         ActionsHelper.scrollTo(nextBtn);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(2000);
-        addRelatives();
+        //addRelatives();
         ActionsHelper.driverWait(3000);
-        ActionsHelper.selectOption(familyResidentDDL,"4666034082-88-015-2-63");
+        ActionsHelper.selectByIndex(driver.get().findElement(familyResidentDDL),0);
         ActionsHelper.driverWait(2000);
         ActionsHelper.clickAction(nextBtn);
         ActionsHelper.driverWait(2000);
@@ -258,7 +268,7 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(5000);
         ActionsHelper.sendKeys(driver.get().findElement(By.xpath("//input[contains(@id,'ctl00_wttxt_Comment')]")),"PDF File");
         ActionsHelper.driverWait(3000);
-        getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"PNGForAutomation.png");
+       /* getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"PNGForAutomation.png");
         ActionsHelper.sendKeys(driver.get().findElement(By.xpath("//input[contains(@id,'ctl02_wttxt_Comment')]")),"PNG File");
         ActionsHelper.driverWait(3000);
         getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"JPGForAutomation.jpg");
@@ -274,7 +284,7 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.retryClick(driver.get().findElement(By.xpath("//a[contains(@id,'ctl08_wtlnk_delete')]")), 30);
         ActionsHelper.driverWait(3000);
         getPopupsPage().uploadDocuments(driver.get().findElement(supportDocsLink),"MoreThan500MB.docx");
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(5000);*/
 
         //ActionsHelper.retryClick(driver.get().findElement(By.id("InternalPortalTheme_wt24_block_WebPatterns_wt23_block_RichWidgets_wt9_block_wt33")),30 );
         //ActionsHelper.driverWait(2000);
@@ -297,49 +307,68 @@ public class ExceptionalCasePage extends Base{
         //validation msg : //span[contains(@id,'wtSanitizedHtml2')]
     }
 
-    public void searchForId()throws JsonProcessingException, AWTException, InterruptedException{
+    public void searchForId(){
+        logManager.STEP("Search for HOF EID Then Open The Exceptional Case","The user open the exceptional case to start approvals");
         ActionsHelper.retryClick(allListLink,30);
-        ActionsHelper.sendKeys(searchForIdTextbox,"784199140633000"+ Keys.ENTER);
-        ActionsHelper.driverWait(10000);
-
-        if(driver.get().findElement(By.xpath("//td[contains(@id,'wtBenefitRequestsListRow5')]")).getText()=="Specialist100")
-        {
-            ActionsHelper.retryClick(appIdLink,30);
-
-        }
-        else
-            driver.get().navigate().refresh();
-        /*ActionsHelper.waitUntilElementIsDisplayed(assignedToLbl);
-        return driver.get().findElement(assignedToLbl).getText();*/
-    }
-
-    public void completeApprovals(){
+        ActionsHelper.sendKeys(searchForIdTextbox, TestData.EID + Keys.ENTER);
+        ActionsHelper.driverWait(6000);
+        ActionsHelper.retryClick(appIdLink,30);
+        ActionsHelper.driverWait(3000);
+        clickPreviousView();
+        ActionsHelper.driverWait(2000);
         agentPage.logOut();
+    }
+
+    public void clickPreviousView(){
+        ActionsHelper.retryClick(previousViewLink,30);
+        ActionsHelper.driverWait(3000);
+    }
+    public void completeApprovals(){
+        logManager.STEP("Start Specialist Approval After 10 Minutes Of Creating The Exceptional Case","The user login with specialist to approve the exceptional case");
+
         loginPage.loginWithUser(UserType.Specialist100);
-        ActionsHelper.driverWait(50000);
-        ActionsHelper.retryClick(allListLink,30);
-        ActionsHelper.driverWait(10000);
+        ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(allListLink,30);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(searchForIdTextbox,"784-1991-4063300-0"+ Keys.ENTER);
+
+        ActionsHelper.sendKeys(searchForIdTextbox,TestData.EID+ Keys.ENTER);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(appIdLink,30);
-        //agentPage.specialistApproval("784199140633000",incOrDecApp);
+        ActionsHelper.driverWait(2000);
+        clickPreviousView();
+        agentPage.specialistApproval(TestData.EID);
     }
 
-    public String  checkRequestAssigned(){
-        WebElement allListTable = driver.get().findElement(allListTbl);
-        WebElement tableCell = allListTable.findElement(By.xpath("//tbody//td[contains(@id,'ctl03_wtBenefitRequestsListRow5')]"));
-        ActionsHelper.driverWait(10000);
-        ActionsHelper.retryClick(appIdLink,30);
-        return tableCell.getText();
-    }
-    public String checkIsComplex(){
-        return driver.get().findElement(By.xpath("//span[contains(@id,'wtisComplex2')]")).getText();
+    public void completeSeniorSpecialistApprovals() {
+        logManager.STEP("Start SeniorSpecialist Approval For The Exceptional Case", "The user login with SeniorSpecialist100 to approve the exceptional case");
+
+        loginPage.loginWithUser(UserType.SeniorSpecialist100);
+        ActionsHelper.driverWait(2000);
+        clickPreviousView();
+        ActionsHelper.driverWait(2000);
+        agentPage.seniorSpecialistApproval(TestData.EID + Keys.ENTER);
     }
 
-    public String bigFileValidationMsg(){
-        return (driver.get().findElement(By.xpath("//span[contains(@id,'wtSanitizedHtml2')]"))).getText();
-        //return driver.get().findElement(By.xpath("//div[contains(@class,'Feedback_Message_Error')]")).getText();
+    public void completeCommitteeApproval() {
+        logManager.STEP("Start Committee Approval", "The user login with Committee2 to approve the exceptional case");
+
+        loginPage.loginWithUser(UserType.Committee2);
+        ActionsHelper.driverWait(2000);
+        clickPreviousView();
+        ActionsHelper.driverWait(2000);
+        agentPage.committeeSpecialistApproval(TestData.EID );
+    }
+
+    public void paymentSteps(){
+        driver.get().navigate().to(urls.agentLogin);
+        loginPage.loginWithUser(UserType.Superuser);
+        ActionsHelper.navigate(urls.businessParameters);
+        ActionsHelper.driverWait(3000);
+        businessParametersPage.releaseAppliaction(TestData.EID);
+        agentPage.logOut();
+        driver.get().navigate().to(urls.paymentList);
+        loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
+        Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(TestData.EID));
+        agentPage.logOut2();
     }
 }

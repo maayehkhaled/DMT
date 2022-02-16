@@ -30,8 +30,8 @@ public class AgentPage extends Base {
     private final By increaseNextButton=By.xpath("//div[contains(@class,'Button ForwardButton')]");
     private final By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt573_block_wtActions_wtbtn_Next6\"]");
     private final By clickNext=By.xpath("//input[@value='التالي']");
-    private final By agentClickNextFinal = By.className("ForwardButton");
-    private final By agentClickNext = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
+    private final By agentClickNextFinal = By.xpath("//div[contains(@class,'ForwardButton')]");
+    private final By agentClickNext = By.xpath("//input[contains(@id,'Next6')]");
     private final By agentClickNext56StepFinal = By.xpath("//*[@id=\"InternalPortalTheme_wt397_block_wtActions_wtOperationBtnContainer\"]/div[2]");
     private final By applicationListFirstApplicationSpecialistName = By.xpath("//tbody//tr//td//div[@class=\"FlexColContainer\"]//span[1]");
     private final By approveButton = By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']"); //Only one action was needed
@@ -54,6 +54,7 @@ public class AgentPage extends Base {
     private final By logout2 = By.xpath("//div[contains(@id,'Logout')]");
     private final By appealApplicationCheckbox = By.xpath("//input[@id=\"InternalPortalTheme_wt85_block_wtFilterContainer_wt67\"]");
     private final By  reValueButton=By.xpath("//input[@type='checkbox']");
+    private By previousViewLink=By.xpath("//a[contains(@id,'wt57')]");
 
     /**
      * TO CREATE APPROVAL USING specialist USER
@@ -82,6 +83,9 @@ public class AgentPage extends Base {
         ActionsHelper.actionClickStepClick("Approve step 4", agentApproveStepFinal);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click next Step 4", agentClickNextFinal);
+        ActionsHelper.driverWait(4000);
+        //
+        ActionsHelper.retryClick(By.xpath("//input[contains(@id,'Next6')]"),30);
         ActionsHelper.driverWait(4000);
         System.out.println("Attempting step 5");
         ActionsHelper.retryClick(finalButtonApprove, 4);
@@ -375,6 +379,7 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(6000);
+        ActionsHelper.retryClick(previousViewLink,30);
         ActionsHelper.scrollTo(seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
@@ -471,9 +476,9 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(8000);
+        ActionsHelper.retryClick(previousViewLink,30);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(3000);
-
     }
 
     /**

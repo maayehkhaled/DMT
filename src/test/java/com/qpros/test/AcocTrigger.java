@@ -37,14 +37,14 @@ public class AcocTrigger extends Base {
     public void addCommunication() throws JsonProcessingException, InterruptedException, AWTException {
         approveApplicationModule.approveApplication(false);
         ActionsHelper.navigate(urls.agentLogin);
-        loginPage.loginWithUser(UserType.CmUser);
+        loginPage.loginWithUser(UserType.CM2);
         acocTriggerPage.addCommunication();
     }
     @Test(description = "add Comment", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
     public void addComment() throws JsonProcessingException, InterruptedException, AWTException {
         approveApplicationModule.approveApplication(false);
         ActionsHelper.navigate(urls.agentLogin);
-        loginPage.loginWithUser(UserType.CmUser);
+        loginPage.loginWithUser(UserType.CM2);
         acocTriggerPage.addCommunication();
         acocTriggerPage.addComment();
     }
@@ -52,7 +52,7 @@ public class AcocTrigger extends Base {
     public void addChangeCircumstances() throws JsonProcessingException, InterruptedException, AWTException {
         approveApplicationModule.approveApplication(false);
         ActionsHelper.navigate(urls.agentLogin);
-        loginPage.loginWithUser(UserType.CmUser);
+        loginPage.loginWithUser(UserType.CM2);
         acocTriggerPage.addCommunication();
         acocTriggerPage.addComment();
         acocTriggerPage.addChangeCircumstances();

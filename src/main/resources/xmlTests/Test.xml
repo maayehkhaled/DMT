@@ -9,7 +9,6 @@
         <listener class-name="com.qpros.common.LogManager"/>
     </listeners>
 
-
     <test name="SSA 1st assessment Run">
         <classes>
             <class name="com.qpros.test.ApproveApplication"/>
@@ -25,7 +24,7 @@
             <class name="com.qpros.test.ReassessmentReject"/>
         </classes>
     </test>
-    
+
     <test name="Exceptional Case Scenario">
     <classes>
         <class name="com.qpros.test.ExceptionalCase"/>
