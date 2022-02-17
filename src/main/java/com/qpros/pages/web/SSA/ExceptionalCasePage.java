@@ -3,6 +3,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.javafaker.Faker;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
+import com.qpros.helpers.FileUtils;
 import com.qpros.pages.web.SSA.commonSSA.Popups;
 import com.ssa.core.common.data.TestData;
 import com.ssa.core.common.locators.urls;
@@ -28,6 +29,7 @@ public class ExceptionalCasePage extends Base{
         PageFactory.initElements(Base.driver.get(), this);
     }
 
+    public static String refCode;
     LocalDateTime datetime1 = LocalDateTime.now();
     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     String formatDateTime = datetime1.format(format);
@@ -248,7 +250,7 @@ public class ExceptionalCasePage extends Base{
         driver.get().switchTo().alert().accept();
     }
 
-    public void createFullExceptionalCase(){
+    public void createFullExceptionalCase() {
         logManager.STEP("Complete Creating Exceptional Case","The user complete all required steps to create the exceptional case");
         ActionsHelper.scrollTo(nextBtn);
         ActionsHelper.driverWait(2000);
@@ -303,17 +305,24 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(8000);
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(8000);
+
         //ActionsHelper.retryClick(driver.get().findElement(By.xpath("//div[contains(@id,'wtNextButtonContainer')]")),30 );
         //validation msg : //span[contains(@id,'wtSanitizedHtml2')]
     }
 
-    public void searchForId(){
+    public void searchForId()  {
         logManager.STEP("Search for HOF EID Then Open The Exceptional Case","The user open the exceptional case to start approvals");
         ActionsHelper.retryClick(allListLink,30);
         ActionsHelper.sendKeys(searchForIdTextbox, TestData.EID + Keys.ENTER);
         ActionsHelper.driverWait(6000);
+        refCode=driver.get().findElement(By.xpath("//td[@id='InternalPortalTheme_wt360_block_wtMainContent_wtBenefitRequestsList_ctl03_wtBenefitRequestsListRow1']")).getText();
         ActionsHelper.retryClick(appIdLink,30);
         ActionsHelper.driverWait(3000);
+        //read the referance code application is
+        //refCode = submitApplicationService.getresponse(submitApplicationService).applicationSummary.referenceNumber;
+
+        refCode.replace("\uE007","");
+        FileUtils.createFile("refCodeFile.txt",refCode);
         clickPreviousView();
         ActionsHelper.driverWait(2000);
         agentPage.logOut();
@@ -331,12 +340,12 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.retryClick(allListLink,30);
         ActionsHelper.driverWait(2000);
 
-        ActionsHelper.sendKeys(searchForIdTextbox,TestData.EID+ Keys.ENTER);
+        ActionsHelper.sendKeys(searchForIdTextbox,refCode+ Keys.ENTER);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(appIdLink,30);
         ActionsHelper.driverWait(2000);
         clickPreviousView();
-        agentPage.specialistApproval(TestData.EID);
+        agentPage.specialistApproval(refCode);
     }
 
     public void completeSeniorSpecialistApprovals() {
@@ -346,7 +355,7 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(2000);
         clickPreviousView();
         ActionsHelper.driverWait(2000);
-        agentPage.seniorSpecialistApproval(TestData.EID + Keys.ENTER);
+        agentPage.seniorSpecialistApproval(refCode);
     }
 
     public void completeCommitteeApproval() {
@@ -356,7 +365,7 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(2000);
         clickPreviousView();
         ActionsHelper.driverWait(2000);
-        agentPage.committeeSpecialistApproval(TestData.EID );
+        agentPage.committeeSpecialistApproval(refCode);
     }
 
     public void paymentSteps(){
@@ -364,11 +373,11 @@ public class ExceptionalCasePage extends Base{
         loginPage.loginWithUser(UserType.Superuser);
         ActionsHelper.navigate(urls.businessParameters);
         ActionsHelper.driverWait(3000);
-        businessParametersPage.releaseAppliaction(TestData.EID);
+        businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
         driver.get().navigate().to(urls.paymentList);
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
-        Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(TestData.EID));
+        Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
         agentPage.logOut2();
     }
 }
