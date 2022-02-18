@@ -24,6 +24,8 @@ public class AgentPage extends Base {
     private final By agentSendAgainStepFinal = By.xpath("//*[contains(@id,'wtActions_wtcurrentSectionMoreinfo')]"); //Contains app ref number and clickable
     private final By agentRejectButtonFinal = By.xpath("//*[contains(@id,'wtActions_wtrbReject')]");
     private final By rejectBtn = By.xpath("//input[@value=\"مرفوض - رفض\"]");
+    //        17/2
+    private final By OldVersionButton = By.xpath("//a[.='عرض هذا الطلب في الإصدار القديم']");
 //TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]
     private final By approveApp=By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']");
     private final By nextButton=By.xpath("//*[contains(@class,'ForwardButton')]");
@@ -66,7 +68,7 @@ public class AgentPage extends Base {
         ActionsHelper.waitForExpectedElement(firstElementAfterSearch);
         ActionsHelper.driverWait(500);
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Approve step 1", agentApproveStepFinal);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click next Step 1", agentClickNextFinal);
@@ -277,6 +279,9 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(10000);
+        //        17/2
+        ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Approve Personal Information", agentApproveStepFinal);
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Click next Step 1", agentClickNextFinal);
@@ -375,6 +380,9 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(6000);
+        //        17/2
+        ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.scrollTo(seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
@@ -471,7 +479,18 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(8000);
+//        17/2
+        ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.retryClick(finalButtonApprove, 3);
+        logManager.STEP("Approving the application","Click the conSpecialist2firm button");
+        try {
+            driver.get().switchTo().alert().accept();
+        } catch (Exception e) {
+            logManager.WARN("could not interact with popup msg");
+        }
         ActionsHelper.driverWait(3000);
     }
 
