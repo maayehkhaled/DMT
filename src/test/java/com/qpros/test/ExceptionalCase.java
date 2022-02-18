@@ -4,15 +4,13 @@ import com.qpros.common.web.Base;
 import com.qpros.pages.web.SSA.*;
 import com.qpros.pages.web.SSA.modules.ApproveApplicationModule;
 import com.qpros.reporting.QuantaTestManager;
-import com.ssa.core.common.data.TestData;
 import com.ssa.core.common.locators.urls;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import java.awt.*;
+
 import java.io.IOException;
 @Listeners(com.qpros.common.LogManager.class)
 
@@ -40,23 +38,21 @@ public class ExceptionalCase extends Base{
     public void validateEnterCorrectData() throws JsonProcessingException {
         startPage();
         exceptionalPage.chooseReferralEntity();
-        exceptionalPage.enterHeadOfFamilyData("784199140660300","16/07/1983");
+        exceptionalPage.enterHeadOfFamilyData("784199361849591","19/03/1993");
         exceptionalPage.createFullExceptionalCase();
     }
 
     @Test(description = "Specialist Approval", priority = 2,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
-    public void validateApprovals() throws JsonProcessingException {
+    public void validateApprovals()  {
         startPage();
         exceptionalPage.searchForId();
         exceptionalPage.completeApprovals();
     }
 
-    //SeniorSpecialist100
-    //Supervisor
     @Test(description = "Senior Specialist Approval", priority = 3,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
-    public void validateSeniorSpecialistApprovals() throws JsonProcessingException {
+    public void validateSeniorSpecialistApprovals() {
         startPage();
         exceptionalPage.searchForId();
         exceptionalPage.completeSeniorSpecialistApprovals();
@@ -64,16 +60,15 @@ public class ExceptionalCase extends Base{
 
     @Test(description = "Committee Approval", priority = 4,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
-    public void validateCommitteeApprovals() throws JsonProcessingException {
+    public void validateCommitteeApprovals()  {
         startPage();
         exceptionalPage.searchForId();
-        //approve.approveExistingApplication(TestData.EID);
         exceptionalPage.completeCommitteeApproval();
     }
 
     @Test(description = "Committee Approval", priority = 5,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
-    public void validateSuperuserApprovals() throws JsonProcessingException {
+    public void validateSuperuserApprovals()  {
         startPage();
         exceptionalPage.searchForId();
         exceptionalPage.paymentSteps();

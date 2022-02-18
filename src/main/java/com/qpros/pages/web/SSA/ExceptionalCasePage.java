@@ -1,5 +1,5 @@
 package com.qpros.pages.web.SSA;
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.github.javafaker.Faker;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
@@ -13,11 +13,10 @@ import lombok.Setter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -98,15 +97,8 @@ public class ExceptionalCasePage extends Base{
     private By assignedToLbl=By.className("display-block");
     private By previousViewLink=By.xpath("//a[contains(@id,'wt57')]");
 
-    String myLongData= "sadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassad" +
-            "assadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadas" +
-            "sadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassad" +
-            "assadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadass" +
-            "adassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassada" +
-            "ssadassadassadassadassadassadassadassadassadass";
-    String shortData="sadassadassadassadassadassadassadassadassadassadassadassadassadassadassadassa";
-
     public void openExceptionalCase(){
+        logManager.STEP("Add New referral Entity","The user add new referral entity");
         //faker=new Faker();
         ActionsHelper.retryClick(exceptionalCaseLink,30);
         ActionsHelper.driverWait(2000);
@@ -128,7 +120,7 @@ public class ExceptionalCasePage extends Base{
     }
 
     public void chooseReferralEntity(){
-        logManager.STEP("Choose From Refferal DDL", "The user chooses  one referral entity to start the exceptional request");
+        logManager.STEP("Choose From Referral DDL", "The user chooses  one referral entity to start the exceptional request");
         ActionsHelper.retryClick(exceptionalCaseLink,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(referralEntityDDL,"74");
@@ -144,7 +136,7 @@ public class ExceptionalCasePage extends Base{
     }
 
     public void enterHeadOfFamilyData(String eid, String birthDate){
-        logManager.STEP("Enter HOF EID and DOB","The user enters HOF Data");
+        logManager.STEP("Enter Head OF Family EID and DOB","The user enters HOF Data");
         ActionsHelper.clickAction(hohEIDTextbox);
         ActionsHelper.sendKeys(hohEIDTextbox,eid);
         ActionsHelper.driverWait(3000);
@@ -158,6 +150,8 @@ public class ExceptionalCasePage extends Base{
     }
 
     public int countMaxChars(){
+        faker=new Faker();
+        logManager.STEP("Add case description more than 500 chars","The system not accepts more than 500 chars in case description textbox");
         ActionsHelper.retryClick(exceptionalCaseLink,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(referralEntityDDL,"74");
@@ -168,16 +162,19 @@ public class ExceptionalCasePage extends Base{
         return s1.length();
     }
     public int countMinChars(){
+        faker=new Faker();
+        logManager.STEP("Add case description less than 500 chars","The system accepts less than 500 chars in case description textbox");
         ActionsHelper.retryClick(exceptionalCaseLink,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(referralEntityDDL,"74");
-        ActionsHelper.sendKeys(caseDescriptionTextarea,shortData);
+        ActionsHelper.sendKeys(caseDescriptionTextarea,faker.lorem().sentence(5));
         ActionsHelper.driverWait(2000);
         String s1=(driver.get().findElement(caseDescriptionTextarea)).getAttribute("value");
         return s1.length();
     }
 
     public String invalidHOFEmail(){
+        logManager.STEP("Enter Invalid Email","The user enter Invalid email for head of family");
         ActionsHelper.sendKeys(exceptionalCaseEmail,"123HI");
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(familyDetailsNetBtn,30);
@@ -187,6 +184,7 @@ public class ExceptionalCasePage extends Base{
     }
 
     public String enterValidHOFEmail() {
+        logManager.STEP("Enter Valid Email","The user enter valid email for head of family");
         ActionsHelper.scrollTo(hOFmobileNo);
         driver.get().findElement(hOFmobileNo).clear();
         ActionsHelper.driverWait(2000);
@@ -198,7 +196,7 @@ public class ExceptionalCasePage extends Base{
     }
 
     public void addRelatives() {
-
+            logManager.STEP("Add Correct Data For Relatives","The user add correct EID and DOB for the relatives");
             ActionsHelper.driverWait(4000);
             ActionsHelper.clickAction(firstDependentEIDTextbox);
             ActionsHelper.sendKeys(firstDependentEIDTextbox, "784-1991-4063100-5");
@@ -224,11 +222,10 @@ public class ExceptionalCasePage extends Base{
             ActionsHelper.retryClick(nextBtn, 30);
             ActionsHelper.driverWait(2000);
             driver.get().switchTo().alert().accept();
-
     }
 
     public void addWrongRelativeInfo(){
-            //log.step
+        logManager.STEP("Add Wrong Data For Relatives","The user add wrong DOB and wrong EID in relatives info");
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(8000);
         ActionsHelper.sendKeysWithClear(firstDependentEIDTextbox,"784198680432055");
@@ -305,9 +302,6 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(8000);
         ActionsHelper.retryClick(nextBtn,30);
         ActionsHelper.driverWait(8000);
-
-        //ActionsHelper.retryClick(driver.get().findElement(By.xpath("//div[contains(@id,'wtNextButtonContainer')]")),30 );
-        //validation msg : //span[contains(@id,'wtSanitizedHtml2')]
     }
 
     public void searchForId()  {
@@ -318,8 +312,6 @@ public class ExceptionalCasePage extends Base{
         refCode=driver.get().findElement(By.xpath("//td[@id='InternalPortalTheme_wt360_block_wtMainContent_wtBenefitRequestsList_ctl03_wtBenefitRequestsListRow1']")).getText();
         ActionsHelper.retryClick(appIdLink,30);
         ActionsHelper.driverWait(3000);
-        //read the referance code application is
-        //refCode = submitApplicationService.getresponse(submitApplicationService).applicationSummary.referenceNumber;
 
         refCode.replace("\uE007","");
         FileUtils.createFile("refCodeFile.txt",refCode);
@@ -360,7 +352,6 @@ public class ExceptionalCasePage extends Base{
 
     public void completeCommitteeApproval() {
         logManager.STEP("Start Committee Approval", "The user login with Committee2 to approve the exceptional case");
-
         loginPage.loginWithUser(UserType.Committee2);
         ActionsHelper.driverWait(2000);
         clickPreviousView();
