@@ -127,7 +127,7 @@ public class ApproveApplicationModule extends Base {
             ActionsHelper.navigate(urls.businessParameters);
             ActionsHelper.driverWait(3000);
             businessParametersPage.releaseAppliaction(refCode);
-            agentPage.logOut();
+            agentPage.logOut2();
             driver.get().navigate().to(urls.paymentList);
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
             Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));

@@ -32,8 +32,8 @@ public class AgentPage extends Base {
     private final By increaseNextButton=By.xpath("//div[contains(@class,'Button ForwardButton')]");
     private final By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt573_block_wtActions_wtbtn_Next6\"]");
     private final By clickNext=By.xpath("//input[@value='التالي']");
-    private final By agentClickNextFinal = By.className("ForwardButton");
-    private final By agentClickNext = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
+    private final By agentClickNextFinal = By.xpath("//div[contains(@class,'ForwardButton')]");
+    private final By agentClickNext = By.xpath("//input[@class='Button Button ForwardButton Button ForwardButton']");
     private final By agentClickNext56StepFinal = By.xpath("//*[@id=\"InternalPortalTheme_wt397_block_wtActions_wtOperationBtnContainer\"]/div[2]");
     private final By applicationListFirstApplicationSpecialistName = By.xpath("//tbody//tr//td//div[@class=\"FlexColContainer\"]//span[1]");
     private final By approveButton = By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']"); //Only one action was needed
@@ -380,6 +380,7 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(6000);
+        ActionsHelper.retryClick(previousViewLink,30);
         //        17/2
         ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
         ActionsHelper.driverWait(4000);
@@ -482,6 +483,7 @@ public class AgentPage extends Base {
 //        17/2
         ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
         ActionsHelper.driverWait(4000);
+        ActionsHelper.retryClick(previousViewLink,30);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(3000);
         ActionsHelper.retryClick(finalButtonApprove, 3);
