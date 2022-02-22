@@ -42,4 +42,9 @@ public class UpdateSelfDeclaredBankStatements {
         return om.readValue(submitApplicationService.response.getBody(), Root.class);
     }
 
+    public static void main(String[] args) throws JsonProcessingException {
+        UpdateSelfDeclaredBankStatements updateSelfDeclaredBankStatements = new UpdateSelfDeclaredBankStatements();
+        updateSelfDeclaredBankStatements.requestService();
+        //System.out.print(updateSelfDeclaredBankStatements.getResponse(updateSelfDeclaredBankStatements).statusCode);
+    }
 }

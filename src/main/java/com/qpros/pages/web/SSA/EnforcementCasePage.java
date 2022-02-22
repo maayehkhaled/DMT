@@ -1,5 +1,6 @@
 package com.qpros.pages.web.SSA;
 
+import com.github.javafaker.Faker;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.qpros.pages.web.SSA.commonSSA.Popups;
@@ -13,6 +14,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
+import java.util.Random;
+
 @Getter
 @Setter
 public class EnforcementCasePage extends Base {
@@ -21,6 +24,7 @@ public class EnforcementCasePage extends Base {
     }
 
     Popups PopupsPage=new Popups(driver.get());
+    Faker faker=new Faker(new Random());
 
     private By enforcementCaseLink = By.xpath("//a[contains(@id,'ctl24_RichWidgets_wt6_block_wtMenuItem_wt11')]");
     private By NewEnforcementCaseLink = By.xpath("//div[contains(@class,'Longbutton')]");
@@ -50,8 +54,8 @@ public class EnforcementCasePage extends Base {
     private By searchBtn=By.xpath("//input[contains(@id,'wtbtn_Search')]");
     private By editCaseBtn=By.xpath("//a[contains(@id,'ctl03_wtlnk_editcase')]");
     private By saveChanges=By.xpath("//input[contains(@id,'wtbtnCreateCase')]");
-    private By successMsg=By.id("InternalPortalTheme_wt274_block_WebPatterns_wt23_block_RichWidgets_wt9_block_wtSanitizedHtml3");
-    //private By successMsg=By.className("Feedback_Message_Success");
+    private By successMsg=By.xpath("//span[@class='Feedback_Message_Text']");
+
     //Add action Locators
     private By caseID=By.xpath("//a[contains(@id,'ctl03_wtlnk_CaseId')]");
     private By addActionBtn=By.xpath("//a[contains(@id,'AddAction')]");
@@ -77,15 +81,19 @@ public class EnforcementCasePage extends Base {
     private By saveLogBtn=By.xpath("//input[contains(@id,'wtbtnCreateLog')]");
     //Delete Logs Locators
     private By  deleteLogBtn=By.xpath("//a[contains(@id,'ctl03_wt146')]");
+
     public void deleteLogs(){
         logManager.STEP("Delete Enforcement Case Log","The User Will Delete The Created Log For Existent Enforcement Case");
         ActionsHelper.retryClick(caseID,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(deleteLogBtn,30);
         ActionsHelper.driverWait(2000);
+        driver.get().switchTo().alert().accept();
+        ActionsHelper.driverWait(2000);
     }
     public void addLogs(){
         logManager.STEP("Add Enforcement Case Log","The User Will Add New Log For Existent Enforcement Case");
+        faker=new Faker();
         ActionsHelper.retryClick(caseID,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(addLogLink,30);
@@ -93,7 +101,7 @@ public class EnforcementCasePage extends Base {
         driver.get().switchTo().frame(0);
         ActionsHelper.selectOption(logTypeDDL,StaticValues.enforcementLogType);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(logDescriptionText,"Automation Log Description");
+        ActionsHelper.sendKeys(logDescriptionText,"Automation Log Description"+faker.lorem().sentence(1));
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(actionTodayBtn,StaticValues.actionToday);
         ActionsHelper.driverWait(2000);
@@ -140,7 +148,8 @@ public class EnforcementCasePage extends Base {
      */
     public void addAction(){
         logManager.STEP("Add new action","The user will add new action for the created enforcement");
-    ActionsHelper.retryClick(caseID,30);
+        faker=new Faker();
+        ActionsHelper.retryClick(caseID,30);
     ActionsHelper.driverWait(2000);
     ActionsHelper.retryClick(addActionBtn,30);
     ActionsHelper.driverWait(2000);
@@ -151,7 +160,7 @@ public class EnforcementCasePage extends Base {
     ActionsHelper.driverWait(2000);
     ActionsHelper.retryClick(actionTodayBtn,30);
     ActionsHelper.driverWait(2000);
-    ActionsHelper.sendKeys(actionDescriptionTextbox,"action automation new");
+    ActionsHelper.sendKeys(actionDescriptionTextbox,"Action Description " +faker.lorem().sentence(1));
     ActionsHelper.driverWait(2000);
     ActionsHelper.retryClick(saveActionBtn,30);
     ActionsHelper.driverWait(2000);
@@ -171,6 +180,7 @@ public class EnforcementCasePage extends Base {
      */
     public void createEnforcementCase() {
         logManager.STEP("create new enforcement case","The user will create new enforcement case");
+        faker=new Faker();
         ActionsHelper.retryClick(NewEnforcementCaseLink, 30);
         ActionsHelper.driverWait(2000);
 
@@ -190,11 +200,11 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.selectOption(infoSourceDDL,StaticValues.infoSource);
         ActionsHelper.driverWait(2000);
 
-        ActionsHelper.sendKeys(caseDescriptionTextbox,"My new Test Automation");
+        ActionsHelper.sendKeys(caseDescriptionTextbox,"Case Description "+faker.lorem().sentence(1));
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(recommendedTextbox,"Recommendation Action Automation");
+        ActionsHelper.sendKeys(recommendedTextbox,"Recommended "+faker.lorem().sentence(2));
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(justificationTextbox,"Insert Justification for action recommendation Automation");
+        ActionsHelper.sendKeys(justificationTextbox,"Justification "+faker.lorem().sentence(3));
         ActionsHelper.driverWait(2000);
 
         ActionsHelper.retryClick(actionDueDateCalendar,30);
@@ -209,7 +219,7 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.driverWait(2000);
 
         ActionsHelper.clickAction(logDescriptionTextbox);
-        ActionsHelper.sendKeys(logDescriptionTextbox,"Log Description Automation ");
+        ActionsHelper.sendKeys(logDescriptionTextbox,"Log Description "+faker.lorem().sentence(1));
         ActionsHelper.driverWait(2000);
         getPopupsPage().uploadDocuments(driver.get().findElement(uploadFile),"test.pdf");
         ActionsHelper.driverWait(2000);
@@ -224,13 +234,14 @@ public class EnforcementCasePage extends Base {
 
     public void editEnforcementCase() {
         logManager.STEP("Click on edit btn","The user will edit existing enforcement case");
+        faker=new Faker();
         ActionsHelper.scrollTo(editCaseBtn);
         ActionsHelper.retryClick(editCaseBtn, 30);
         ActionsHelper.driverWait(6000);
         driver.get().switchTo().frame(0);
         ActionsHelper.driverWait(8000);
         ActionsHelper.scrollTo(caseDescriptionTextbox);
-        ActionsHelper.sendKeysWithClear(caseDescriptionTextbox, "Automation Edit Case Description");
+        ActionsHelper.sendKeysWithClear(caseDescriptionTextbox, "Case Description "+faker.lorem().sentence(1));
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(saveChanges, 30);
         ActionsHelper.driverWait(8000);

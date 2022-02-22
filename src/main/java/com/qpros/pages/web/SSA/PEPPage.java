@@ -1,13 +1,10 @@
 package com.qpros.pages.web.SSA;
-
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.ssa.core.common.data.StaticValues;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 
 public class PEPPage extends Base {
     public PEPPage(WebDriver driver) {
@@ -38,7 +35,7 @@ public class PEPPage extends Base {
     private By joblessMonthDDL=By.xpath("//select[contains(@id,'wtMonthUnemployedsince')]");
     private By joblessYearDDL=By.xpath("//select[contains(@id,'wtYears')]");
     private By lastMonthAppJobDDL=By.xpath("//select[contains(@id,'wtMonthsLastAppliedJob')]");
-    private By lastYearAppJobDDL=By.xpath("//select[@id='InternalPortalTheme_wt24_block_wtMainContent_wt14_CloneOfWebPatterns_wtTabs_block_wtContent6_wt28_wtAdditionPersonalInfo_WebPatterns_wt234_block_wtContent_wtYear']");
+    private By lastYearAppJobDDL=By.xpath("//div[@class='additional-personal-info']//div[@class='SectionExpandable_content']/div[3]//div[3]//select");
     private By ministryApproval=By.xpath("//input[contains(@id,'Yes_Radio4')]");
 
     //Work experience
@@ -58,8 +55,8 @@ public class PEPPage extends Base {
     private By saveJobExperience=By.xpath("//a[@class='SaveRowAction']");
     private By moreInfoTextarea=By.xpath("//textarea[contains(@id,'Input')]");
     //More Info
-    private By weightTextbox=By.xpath("//input[contains(@id,'wt171')]");
-    private By lengthTextbox=By.xpath("//input[contains(@id,'wt333')]");
+    private By lengthTextbox=By.xpath("//input[contains(@id,'wt168')]");
+    private By weightTextbox=By.xpath("//input[contains(@id,'wt326')]");
     private By driveLicenseRadioBtn=By.xpath("//input[contains(@id,'wtDriverLicense_Yes_Radio')]");
     private By driveLicenseTypeDDL=By.xpath("//select[contains(@id,'type')]");
     private By driveLicenseSaveBtn=By.xpath("//a[contains(@id,'saveBtn')]");
@@ -177,9 +174,9 @@ public class PEPPage extends Base {
     public void editMoreInfo(){
         logManager.STEP("Edit More Info About The User","The user Edit all enabled info in More Info section");
         ActionsHelper.driverWait(3000);
-        ActionsHelper.sendKeys(weightTextbox,StaticValues.weight);
+        ActionsHelper.sendKeys(weightTextbox, StaticValues.weight);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(lengthTextbox,StaticValues.length);
+        ActionsHelper.sendKeys(lengthTextbox, StaticValues.length);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(driveLicenseRadioBtn,30);
         ActionsHelper.driverWait(2000);

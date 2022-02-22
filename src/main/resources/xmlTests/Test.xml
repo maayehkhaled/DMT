@@ -9,7 +9,17 @@
         <listener class-name="com.qpros.common.LogManager"/>
     </listeners>
 
-
+    <test name="approve/Payment Scenario">
+        <classes>
+            <class name="com.qpros.test.ApproveApplication"></class>
+            <class name="com.qpros.test.RejectApplication"></class>
+            <class name="com.qpros.test.ReassessmentApprove"></class>
+            <class name="com.qpros.test.AcocTrigger"></class>
+            <class name="com.qpros.test.payments.AssessmentPayment"><methods><exclude name="newSchedulesNewCard"></exclude> <exclude
+                    name="updatePaymentsInstructions"></exclude><exclude name="blockCard"></exclude></methods> </class>
+            <class name="com.qpros.test.AddPartner"></class>
+        </classes>
+    </test>
     <test name="SSA 1st assessment Run">
         <classes>
             <class name="com.qpros.test.ApproveApplication"/>

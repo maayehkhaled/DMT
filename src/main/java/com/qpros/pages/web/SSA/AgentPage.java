@@ -31,7 +31,7 @@ public class AgentPage extends Base {
     private final By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt573_block_wtActions_wtbtn_Next6\"]");
     private final By clickNext=By.xpath("//input[@value='التالي']");
     private final By agentClickNextFinal = By.xpath("//div[contains(@class,'ForwardButton')]");
-    private final By agentClickNext = By.xpath("//input[contains(@id,'Next6')]");
+    private final By agentClickNext = By.xpath("//input[@class='Button Button ForwardButton Button ForwardButton']");
     private final By agentClickNext56StepFinal = By.xpath("//*[@id=\"InternalPortalTheme_wt397_block_wtActions_wtOperationBtnContainer\"]/div[2]");
     private final By applicationListFirstApplicationSpecialistName = By.xpath("//tbody//tr//td//div[@class=\"FlexColContainer\"]//span[1]");
     private final By approveButton = By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']"); //Only one action was needed

@@ -33,14 +33,14 @@ public class EnforcementCase extends Base {
     }
 
     @Test(description = "Add new Enforcement case source", priority = 1,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void addEnforcementCase() {
         startPage();
         enforcementPage.createEnforcementCase();
     }
 
     @Test(description = "Edit Enforcement case ", priority = 2,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void editEnforcementCase() {
         startPage();
         enforcementPage.searchByEID();
@@ -48,7 +48,7 @@ public class EnforcementCase extends Base {
     }
 
     @Test(description = "Add Action", priority = 3,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void addAction() {
         startPage();
         enforcementPage.searchByEID();
@@ -56,7 +56,7 @@ public class EnforcementCase extends Base {
     }
 
     @Test(description = "Edit Action", priority = 4,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void editAction() {
         startPage();
         enforcementPage.searchByEID();
@@ -64,7 +64,7 @@ public class EnforcementCase extends Base {
     }
 
     @Test(description = "Delete Action", priority = 5, dependsOnMethods = {"addAction"},
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void deleteAction() {
         startPage();
         enforcementPage.searchByEID();
@@ -73,7 +73,7 @@ public class EnforcementCase extends Base {
     }
 
     @Test(description = "Add Logs", priority = 6,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void addLogs() {
         startPage();
         enforcementPage.searchByEID();
@@ -81,7 +81,7 @@ public class EnforcementCase extends Base {
     }
 
     @Test(description = "Delete Logs", priority = 7,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void deleteLogs() {
         startPage();
         enforcementPage.searchByEID();

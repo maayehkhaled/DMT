@@ -4,13 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.ssa.core.model.Root;
-import com.ssa.core.model.SelfDeclaredIncomeModel;
+import com.ssa.core.model.WealthIncomeModel;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 
-import java.lang.reflect.Array;
-
-public class UpdateSelfDeclaredIncome {
+public class UpdateWealthIncome {
     public HttpResponse<String> response;
 
     public String toJson(Object obj) throws JsonProcessingException {
@@ -22,7 +20,7 @@ public class UpdateSelfDeclaredIncome {
         Unirest.config().reset();
         Unirest.config().connectTimeout(7000);
         Unirest.config().verifySsl(false);
-        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/UpdateSelfDeclaredIncome")
+        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/UpdateWealthIncome")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
                 .body(requestBody())
@@ -31,19 +29,19 @@ public class UpdateSelfDeclaredIncome {
     }
 
     public String requestBody() throws JsonProcessingException {
-        SelfDeclaredIncomeModel declaredIncome=new SelfDeclaredIncomeModel();
-        declaredIncome.emiratesId="";
-        declaredIncome.selfDeclaredIncome.get(0).emiratesId="";
-        declaredIncome.selfDeclaredIncome.get(0).incomeType="";
-        declaredIncome.selfDeclaredIncome.get(0).incomeSource="";
-        declaredIncome.selfDeclaredIncome.get(0).isUnemployed=true;
-        declaredIncome.selfDeclaredIncome.get(0).amount=13.5;
-        declaredIncome.selfDeclaredIncome.get(0).frequency="";
-        declaredIncome.selfDeclaredIncome.get(0).description="";
-        declaredIncome.selfDeclaredIncome.get(0).attachmentList.get(0).binaryFile="";
-        declaredIncome.selfDeclaredIncome.get(0).attachmentList.get(0).contentType="";
-        declaredIncome.selfDeclaredIncome.get(0).attachmentList.get(0).filename="";
-        return toJson(declaredIncome);
+        WealthIncomeModel wealthIncomeModel=new WealthIncomeModel();
+        wealthIncomeModel.emiratesId="";
+        wealthIncomeModel.wealthIncome.get(0).emiratesId="";
+        wealthIncomeModel.wealthIncome.get(0).wealthType="";
+        wealthIncomeModel.wealthIncome.get(0).wealthDescription="";
+        wealthIncomeModel.wealthIncome.get(0).isBusinessActive=true;
+        wealthIncomeModel.wealthIncome.get(0).incomeAmount=5000;
+        wealthIncomeModel.wealthIncome.get(0).incomeFrequency="";
+        wealthIncomeModel.wealthIncome.get(0).attachmentList.get(0).binaryFile="";
+        wealthIncomeModel.wealthIncome.get(0).attachmentList.get(0).contentType="";
+        wealthIncomeModel.wealthIncome.get(0).attachmentList.get(0).contentType="";
+        System.out.println(wealthIncomeModel);
+        return toJson(wealthIncomeModel);
     }
 
     public Root getResponse(UpdateLivingOn submitApplicationService) throws JsonProcessingException {
@@ -52,8 +50,8 @@ public class UpdateSelfDeclaredIncome {
     }
 
     public static void main(String[] args) throws JsonProcessingException {
-        UpdateSelfDeclaredIncome updateSelfDeclaredIncome = new UpdateSelfDeclaredIncome();
-        updateSelfDeclaredIncome.requestService();
-        //System.out.print(updateSelfDeclaredIncome.getResponse(updateSelfDeclaredIncome).statusCode);
+        UpdateWealthIncome updateWealthIncome = new UpdateWealthIncome();
+        updateWealthIncome.requestService();
+        //System.out.print(updateWealthIncome.getResponse(updateWealthIncome).statusCode);
     }
 }
