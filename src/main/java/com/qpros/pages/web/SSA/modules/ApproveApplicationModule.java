@@ -117,8 +117,9 @@ public class ApproveApplicationModule extends Base {
                 agentPage.committeeSpecialistApproval(refCode);
                 //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
                 ActionsHelper.driverWait(5000);
-
                 agentPage.logOut();
+                agentPage.logOut();
+
             }
 
             driver.get().navigate().to(urls.agentLogin);
