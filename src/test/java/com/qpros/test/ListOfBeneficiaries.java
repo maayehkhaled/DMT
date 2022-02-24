@@ -37,7 +37,15 @@ public class ListOfBeneficiaries extends Base {
     public void validateOpenBeneficiariesList() {
         startMethod();
         beneficiaryList.openBeneficiariesList();
+        //beneficiaryList.clickMoreFilter();
         beneficiaryList.searchBeneficiaryEID();
-        beneficiaryList.clickMoreFilter();
+    }
+
+    @Test(description = "Count Beneficiaries List", priority = 2,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
+    public void countBeneficiariesList() {
+        startMethod();
+        beneficiaryList.openBeneficiariesList();
+        beneficiaryList.countAll();
     }
 }

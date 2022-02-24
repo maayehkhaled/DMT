@@ -1,5 +1,6 @@
 package com.qpros.pages.web.SSA;
 
+import com.github.javafaker.Faker;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.ssa.core.common.data.StaticValues;
@@ -8,10 +9,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
+
 public class ActivationOpportunitiesPage extends Base {
     public ActivationOpportunitiesPage(WebDriver driver) {
         PageFactory.initElements(Base.driver.get(), this);
     }
+    Faker faker=new Faker();
+    LocalDateTime datetime1 = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    String formatDateTime = datetime1.format(format);
 
     private By addOpportunityBtn= By.xpath("//input[contains(@id,'AddOpportunity')]");
     private By opportunityTypyDDL=By.xpath("//select[contains(@id,'wtddl_Opportunity')]"); //2
@@ -30,25 +39,26 @@ public class ActivationOpportunitiesPage extends Base {
     private By addMemberBtn=By.xpath("//input[contains(@id,'AddIndividual')]");
 
     public void clickAddOpportunity() {
+        faker=new Faker();
         logManager.STEP("Add New Opportunities and recommend it to EID","The user adds tow Opportunities and recommend it to EID");
         ActionsHelper.retryClick(addOpportunityBtn, 30);
         ActionsHelper.driverWait(2000);
         driver.get().switchTo().frame(0);
-        ActionsHelper.selectOption(opportunityTypyDDL, "2");
+        ActionsHelper.selectOption(opportunityTypyDDL, StaticValues.IELTS);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.selectOption(partnerDDL, "2");
+        ActionsHelper.selectOption(partnerDDL, StaticValues.IELTS);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(opportunityNameTextbox,"Automation opp name");
+        ActionsHelper.sendKeys(opportunityNameTextbox,"Automation opp name " +faker.lorem().sentence(1));
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(opportunityDescriptionTextbox,"Automation description");
+        ActionsHelper.sendKeys(opportunityDescriptionTextbox,"Automation description " +faker.lorem().sentence(2));
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(startDateCalendar,"3/2/2022");
+        //ActionsHelper.sendKeysWithClear(startDateCalendar,formatDateTime);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(locationDDl,"1");
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(programCapacityTextbox,"200");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.selectOption(genderDDL,"2");
+        ActionsHelper.selectOption(genderDDL,StaticValues.IELTS);
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(minAgeTextbox, StaticValues.minAge);
         ActionsHelper.driverWait(2000);

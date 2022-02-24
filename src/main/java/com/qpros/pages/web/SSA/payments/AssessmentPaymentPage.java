@@ -1023,13 +1023,13 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario10()
     {
-        logManager.STEP("Update Payments Status – Terminate payment ","this method to Update Payments Status – Terminate payment ");
+       /* logManager.STEP("Update Payments Status – Terminate payment ","this method to Update Payments Status – Terminate payment ");
         requestManualCard();
         ActionsHelper.driverWait(3000);
         addTaskAndCheckFromData();
         logOut();
         ActionsHelper.driverWait(5000);
-        loginByPaymentSeniorSpecialist();
+        loginByPaymentSeniorSpecialist();*/
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickStepClick("CLICK on المدفوعات",paymentMenuItem);
         ActionsHelper.actionClickStepClick("click on اجراءات الدفع ",applicationPaymentAction);

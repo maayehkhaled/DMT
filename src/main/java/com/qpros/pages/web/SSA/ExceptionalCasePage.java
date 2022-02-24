@@ -78,7 +78,7 @@ public class ExceptionalCasePage extends Base{
     private By deleteFirstDependent=By.xpath("//a[contains(@id,'ctl00_wt551')]");
     private By deleteSecondDependent=By.xpath("//a[contains(@id,'ctl02_wt551')]");
     //Screen V
-    private By familyResidentDDL=By.xpath("//select[@id='InternalPortalTheme_wt24_block_wtMainContent_wtddl_LivingOnLocationList']");
+    private By familyResidentDDL=By.xpath("//select[contains(@name,'LivingOnLocationList3')]");
     //InternalPortalTheme_wt24_block_wtMainContent_wtddl_LivingOnLocationList
     private By supportDocsLink=By.className("dottedBorder");
     private By uploadMoreSupportDocs=By.xpath("//input[contains(@id,'Upload201200')]");
@@ -255,7 +255,8 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(2000);
         //addRelatives();
         ActionsHelper.driverWait(3000);
-        ActionsHelper.selectByIndex(driver.get().findElement(familyResidentDDL),0);
+        //ActionsHelper.selectByIndex(driver.get().findElement(familyResidentDDL),1);
+        ActionsHelper.selectOption(familyResidentDDL,"Automation Referral Entity Name-حالة استثنائية");
         ActionsHelper.driverWait(2000);
         ActionsHelper.clickAction(nextBtn);
         ActionsHelper.driverWait(2000);
@@ -364,7 +365,7 @@ public class ExceptionalCasePage extends Base{
         loginPage.loginWithUser(UserType.Superuser);
         ActionsHelper.navigate(urls.businessParameters);
         ActionsHelper.driverWait(3000);
-        businessParametersPage.releaseAppliaction(refCode);
+        businessParametersPage.releaseApplication(refCode);
         agentPage.logOut();
         driver.get().navigate().to(urls.paymentList);
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);

@@ -38,20 +38,20 @@ public class ManageOffersManagement extends Base {
         managePage.clickOnEID();
     }
 
-    @Test(description = "Change opportunity Status", priority = 2,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
-    public void validateChangeStatus() {
-        startMethod();
-        managePage.clickOnEID();
-        managePage.changeStatus();
-    }
-
-    @Test(description = "add Partner Comment", priority = 3,
+    @Test(description = "add Partner Comment", priority = 2,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void validateAddPartnerComment() {
         startMethod();
         managePage.clickOnEID();
         managePage.addPartnerComment();
+    }
+
+    @Test(description = "Change opportunity Status", priority = 3,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
+    public void validateChangeStatus() {
+        startMethod();
+        managePage.clickOnEID();
+        managePage.changeStatus();
     }
 
     @Test(description = "validate View All Info", priority = 4,

@@ -23,7 +23,7 @@ public interface StaticValues {
     public String actionAssignedAutomationOption="1708";
     public String enforcementType="21";
     public String infoSource="54";
-    public String enforcementLogType="43";
+    public String enforcementLogType="1";
     public String actionToday="184";
     public String graduationMonthOption="5";
     public String graduationYearOption="2022";
@@ -36,10 +36,10 @@ public interface StaticValues {
     public String secondCountryEgypt="13";
     public String csDept="26";
     public String acceptOppStatus="10";
-    public String noAnswerOppStatus="14";
+    public String noAnswerOppStatus="19";
     public String acceptNoDocOppStatus="19";
     public String SSP="SSP-7026";
-    public String oppName="215";
+    public String oppName="177";
     public String defaultOppName="__ossli_0";
     public String minAge="18";
     public String maxAge="60";

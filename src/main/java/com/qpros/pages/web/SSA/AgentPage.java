@@ -27,7 +27,7 @@ public class AgentPage extends Base {
     //        17/2
     private final By OldVersionButton = By.xpath("//a[.='عرض هذا الطلب في الإصدار القديم']");
 //TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]
-    private final By approveApp=By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']");
+    private final By approveApp=By.cssSelector("[value='الموافقة']");
     private final By nextButton=By.xpath("//*[contains(@class,'ForwardButton')]");
     private final By increaseNextButton=By.xpath("//div[contains(@class,'Button ForwardButton')]");
     private final By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt573_block_wtActions_wtbtn_Next6\"]");
@@ -380,7 +380,7 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(6000);
-        ActionsHelper.retryClick(previousViewLink,30);
+        //ActionsHelper.retryClick(previousViewLink,30);
         //        17/2
         ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
         ActionsHelper.driverWait(4000);
@@ -390,7 +390,7 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(10000);
         ActionsHelper.scrollTo(approveApp);
         ActionsHelper.driverWait(6000);
-        ActionsHelper.actionClickStepClick("click on next button",approveApp);
+        ActionsHelper.actionClickStepClick("Click on next button",approveApp);
         // ActionsHelper.waitForExpectedElement(summaryNextBtn);
         //ActionsHelper.scrollTo(agentClickNext56StepFinal);
         ActionsHelper.driverWait(10000);
@@ -483,16 +483,13 @@ public class AgentPage extends Base {
 //        17/2
         ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
         ActionsHelper.driverWait(4000);
-        ActionsHelper.retryClick(previousViewLink,30);
+        //ActionsHelper.retryClick(previousViewLink,30);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(3000);
         ActionsHelper.retryClick(finalButtonApprove, 3);
+        ActionsHelper.driverWait(3000);
         logManager.STEP("Approving the application","Click the conSpecialist2firm button");
-        try {
-            driver.get().switchTo().alert().accept();
-        } catch (Exception e) {
-            logManager.WARN("could not interact with popup msg");
-        }
+        driver.get().switchTo().alert().accept();
         ActionsHelper.driverWait(3000);
     }
 
@@ -552,6 +549,8 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(2000);
+        ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Reject step 1", agentRejectButtonFinal);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click next Step 1", agentClickNextFinal);
@@ -612,6 +611,8 @@ public class AgentPage extends Base {
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Reject application", seniorApproveRejectButton);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Confirm Rejection", seniorApproveRejectButtonConfirmation);

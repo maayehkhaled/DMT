@@ -30,7 +30,8 @@ public class RejectApplicationModule extends Base {
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
     DeleteEmirateId deleteEmirateId=new DeleteEmirateId();
-    String refCode = "SSP-20375";
+   public String refCode ;
+   //String refCode = "SSP-20375";
     public void RejectApplication() throws Exception {
         //URL: https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx
         deleteEmirateId.requestService();
@@ -77,7 +78,7 @@ public class RejectApplicationModule extends Base {
             //String refCode = "SSP-10679";
             loginPage.loginWithUser(UserType.Superuser);
             driver.get().navigate().to(urls.businessParameters);
-            businessParametersPage.releaseAppliaction(refCode);
+            businessParametersPage.releaseApplication(refCode);
             agentPage.logOut();
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
             Assert.assertFalse(paymentSpecialistPage.checkPaymentExistence(refCode));
@@ -102,7 +103,7 @@ public class RejectApplicationModule extends Base {
         //String refCode = "SSP-10679";
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseAppliaction(refCode);
+        businessParametersPage.releaseApplication(refCode);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         Assert.assertFalse(paymentSpecialistPage.checkPaymentExistence(refCode));

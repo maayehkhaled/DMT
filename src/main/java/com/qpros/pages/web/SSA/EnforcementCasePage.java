@@ -103,8 +103,8 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(logDescriptionText,"Automation Log Description"+faker.lorem().sentence(1));
         ActionsHelper.driverWait(2000);
-        ActionsHelper.selectOption(actionTodayBtn,StaticValues.actionToday);
-        ActionsHelper.driverWait(2000);
+        /*ActionsHelper.selectOption(actionTodayBtn,StaticValues.actionToday);
+        ActionsHelper.driverWait(2000);*/
         ActionsHelper.retryClick(saveLogBtn,30);
         ActionsHelper.driverWait(2000);
     }
@@ -113,7 +113,7 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.retryClick(caseID,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(deleteActionBtn,30);
-        ActionsHelper.driverWait(6000);
+        ActionsHelper.driverWait(4000);
         driver.get().switchTo().alert().accept();
         ActionsHelper.driverWait(5000);
     }
