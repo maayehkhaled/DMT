@@ -39,6 +39,7 @@ public class ListOfBeneficiaries extends Base {
         beneficiaryList.openBeneficiariesList();
         //beneficiaryList.clickMoreFilter();
         beneficiaryList.searchBeneficiaryEID();
+        beneficiaryList.searchBeneficiarySSP();
     }
 
     @Test(description = "Count Beneficiaries List", priority = 2,

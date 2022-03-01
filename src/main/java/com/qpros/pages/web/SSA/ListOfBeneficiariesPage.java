@@ -29,37 +29,37 @@ public class ListOfBeneficiariesPage extends Base {
     private By countOffers=By.xpath("//a[contains(@id,'wtisCalculate11')]");
 
     public void countAll(){
-        ActionsHelper.retryClick(countPersons,30);
-        ActionsHelper.driverWait(10000);
-        ActionsHelper.retryClick(countPersonsWFiles,30);
-        ActionsHelper.driverWait(10000);
-        ActionsHelper.retryClick(countFamilies,30);
-        ActionsHelper.driverWait(10000);
-        ActionsHelper.retryClick(countFamiliesWFiles,30);
-        ActionsHelper.driverWait(10000);
-        ActionsHelper.retryClick(countEmiratis,30);
-        ActionsHelper.driverWait(10000);
-        ActionsHelper.retryClick(countOffers,30);
+        ActionsHelper.scrollTo(countPersons);
+        ActionsHelper.driverWait(6000);
+        ActionsHelper.clickAction(By.xpath("//span[text()='حساب أرقام كافة البطاقات']"));
+        ActionsHelper.driverWait(20000);
+        logManager.INFO("All calculations",false);
         ActionsHelper.driverWait(10000);
     }
 
     public void openBeneficiariesList(){
         logManager.STEP("Open The List Of Beneficiaries","The user opens Beneficiaries page");
         ActionsHelper.retryClick(beneficiariesListLink,30);
+        logManager.INFO("Click on List Of Beneficiaries",Boolean.FALSE);
         ActionsHelper.driverWait(2000);
     }
 
     public void searchBeneficiaryEID() {
         logManager.STEP("Search Beneficiary EID", "The user searches for specific Beneficiary EID");
         ActionsHelper.sendKeys(eidTextbox, TestData.pepUserEID+Keys.ENTER);
-        ActionsHelper.driverWait(8000);
+        ActionsHelper.driverWait(6000);
         ActionsHelper.scrollTo(eidLink);
-        ActionsHelper.driverWait(2000);
+        logManager.INFO("Scroll to Beneficiary EID",Boolean.FALSE);
+        ActionsHelper.driverWait(4000);
+    }
+    public void searchBeneficiarySSP() {
         logManager.STEP("Search Beneficiary SSP", "The user searches for specific Beneficiary SSP");
-        ActionsHelper.sendKeysWithClear(eidTextbox, StaticValues.SSP+Keys.ENTER);
-        ActionsHelper.driverWait(8000);
+        driver.get().findElement(eidTextbox).clear();
+        ActionsHelper.sendKeys(eidTextbox, StaticValues.SSP+Keys.ENTER);
+        ActionsHelper.driverWait(6000);
         ActionsHelper.scrollTo(sspLink);
-        ActionsHelper.driverWait(8000);
+        logManager.INFO("Scroll to Beneficiary EID",Boolean.FALSE);
+        ActionsHelper.driverWait(4000);
     }
 
     public void clickMoreFilter() {
