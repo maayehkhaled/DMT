@@ -32,5 +32,7 @@ public class ActivationOpportunities extends Base {
         driver.get().navigate().to(urls.activationOpportunities);
         loginPage.loginWithUser(UserType.ProgramManager);
         activation.clickAddOpportunity();
+        activation.createdRequest();
+        activation.openCreatedOpportunity();
     }
 }
