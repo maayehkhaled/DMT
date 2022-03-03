@@ -80,7 +80,9 @@ public class EnforcementCasePage extends Base {
     private By actionNumber=By.xpath("//select[contains(@id,'ActionId')]");
     private By saveLogBtn=By.xpath("//input[contains(@id,'wtbtnCreateLog')]");
     //Delete Logs Locators
-    private By  deleteLogBtn=By.xpath("//a[contains(@id,'ctl03_wt146')]");
+    private By deleteLogBtn=By.xpath("//a[contains(@id,'ctl03_wt146')]");
+    private By createdCase=By.xpath("//div[3]/div[5]/div/div[2]/div/div/div[6]/span/table/tbody/tr[1]/td[1]/a");
+    private By createdNewCase=By.xpath("//a[text()='التالي']");
 
     public void deleteLogs(){
         logManager.STEP("Delete Enforcement Case Log","The User Will Delete The Created Log For Existent Enforcement Case");
@@ -90,6 +92,11 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.driverWait(2000);
         driver.get().switchTo().alert().accept();
         ActionsHelper.driverWait(2000);
+        logManager.INFO("Agree delete",false);
+        driver.get().navigate().refresh();
+        ActionsHelper.scrollupTo(driver.get().findElement(By.xpath("//div[contains(@class,'Footer')]")));
+        ActionsHelper.driverWait(4000);
+        logManager.INFO("Action Completed",false);
     }
     public void addLogs(){
         logManager.STEP("Add Enforcement Case Log","The User Will Add New Log For Existent Enforcement Case");
@@ -107,6 +114,10 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.driverWait(2000);*/
         ActionsHelper.retryClick(saveLogBtn,30);
         ActionsHelper.driverWait(2000);
+        driver.get().navigate().refresh();
+        ActionsHelper.scrollupTo(driver.get().findElement(By.xpath("//div[contains(@class,'Footer')]")));
+        ActionsHelper.driverWait(4000);
+        logManager.INFO("Action Completed",false);
     }
     public void deleteAction() {
         logManager.STEP("Delete The Created Action","The User Will Delete The Action Created Before For Existent Enforcement Case");
@@ -116,6 +127,10 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.driverWait(4000);
         driver.get().switchTo().alert().accept();
         ActionsHelper.driverWait(5000);
+        driver.get().navigate().refresh();
+        ActionsHelper.scrollupTo(driver.get().findElement(createdNewCase));
+        ActionsHelper.driverWait(4000);
+        logManager.INFO("Action Completed",false);
     }
     public int checkDeletedTableSize(){
         logManager.STEP("Check the table size","Check the table size after delete record");
@@ -135,6 +150,10 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(saveActionBtn, 30);
         ActionsHelper.driverWait(2000);
+        driver.get().navigate().refresh();
+        ActionsHelper.scrollupTo(driver.get().findElement(createdNewCase));
+        ActionsHelper.driverWait(4000);
+        logManager.INFO("Action Completed",false);
     }
 
     /**
@@ -163,7 +182,12 @@ public class EnforcementCasePage extends Base {
     ActionsHelper.sendKeys(actionDescriptionTextbox,"Action Description " +faker.lorem().sentence(1));
     ActionsHelper.driverWait(2000);
     ActionsHelper.retryClick(saveActionBtn,30);
+    logManager.INFO("Save",false);
     ActionsHelper.driverWait(2000);
+    driver.get().navigate().refresh();
+    ActionsHelper.scrollupTo(driver.get().findElement(createdNewCase));
+    ActionsHelper.driverWait(2000);
+    logManager.INFO("The new created action",false);
     }
 
     /**
@@ -230,6 +254,11 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.retryClick(createCaseBtn,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(createCaseBtn,30);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(enforcementCaseLink, 30);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(createdCase,30);
+        logManager.INFO("Created Enforcement Case",false);
     }
 
     public void editEnforcementCase() {
@@ -245,6 +274,10 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(saveChanges, 30);
         ActionsHelper.driverWait(8000);
+        ActionsHelper.retryClick(enforcementCaseLink, 30);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(createdCase,30);
+        logManager.INFO("The edited request",false);
     }
 
     public void searchByEID(){
