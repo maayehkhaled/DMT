@@ -185,8 +185,8 @@ public class EnforcementCasePage extends Base {
     logManager.INFO("Save",false);
     ActionsHelper.driverWait(2000);
     driver.get().navigate().refresh();
-    ActionsHelper.scrollupTo(driver.get().findElement(createdNewCase));
-    ActionsHelper.driverWait(2000);
+    /*ActionsHelper.scrollupTo(driver.get().findElement(createdNewCase));
+    ActionsHelper.driverWait(2000);*/
     logManager.INFO("The new created action",false);
     }
 

@@ -21,8 +21,8 @@ public class ManageOffersHouseholdPage extends Base {
     private By planBtn=By.xpath("//div[contains(@id,'wt133_block_wtImageWrapper')]");
     private By editPlanBtn=By.xpath("//a[contains(@id,'ctl38_WebPatterns_wt133_block_wtTitle_wtOpportunityActions21')]");
 
-    private By editFirstTimeBtn=By.xpath("//span[26]//span[@class='fa fa-fw fa-sliders fa-2x']");
-    private By editSecondTimeBtn=By.xpath("//span[25]//span[@class='fa fa-fw fa-pencil-square-o fa-lg']");
+    private By editFirstTimeBtn=By.xpath("//span[43]//span[@class='fa fa-fw fa-sliders fa-2x']");
+    private By editSecondTimeBtn=By.xpath("//span[43]//span[@class='fa fa-fw fa-pencil-square-o fa-lg']");
     private By opportunityStatusDDL=By.xpath("//select[contains(@id,'DDOpportunityStatus')]");
     private By communicationDDL=By.xpath("//select[contains(@id,'DDSourceofCommunication')]");
     private By commentTextarea=By.xpath("//textarea[contains(@id,'Comment')]");

@@ -31,11 +31,12 @@ public class ManageOffersManagement extends Base {
     LoginPage loginPage = new LoginPage(driver.get());
     ManageOffersManagementPage managePage = new ManageOffersManagementPage(driver.get());
 
-    @Test(description = "Specific EID", priority = 1,
+    @Test(description = "Change status to accept", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void validateClickOnEID() {
         startMethod();
         managePage.clickOnEID();
+        managePage.changeDisplayStatus();
     }
 
     @Test(description = "add Partner Comment", priority = 2,

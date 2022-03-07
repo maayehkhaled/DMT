@@ -1,5 +1,6 @@
 package com.qpros.pages.web.SSA;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.javafaker.Faker;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
@@ -7,6 +8,7 @@ import com.qpros.helpers.FileUtils;
 import com.qpros.pages.web.SSA.commonSSA.Popups;
 import com.ssa.core.common.data.TestData;
 import com.ssa.core.common.locators.urls;
+import com.ssa.core.service.DeleteEmirateId;
 import com.ssa.core.service.SubmitApplicationService;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +42,7 @@ public class ExceptionalCasePage extends Base{
     LoginPage loginPage = new LoginPage(driver.get());
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
+    DeleteEmirateId deleteId = new DeleteEmirateId();
 
     private By exceptionalCaseLink= By.xpath("//a[contains(@id,'wt160')]");
     private By addNewEntity=By.xpath("//input[contains(@id,'openPopup')]");
@@ -119,7 +122,8 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(2000);
     }
 
-    public void chooseReferralEntity(){
+    public void chooseReferralEntity() throws JsonProcessingException {
+        deleteId.requestService();
         logManager.STEP("Choose From Referral DDL", "The user chooses  one referral entity to start the exceptional request");
         ActionsHelper.retryClick(exceptionalCaseLink,30);
         ActionsHelper.driverWait(2000);

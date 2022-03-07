@@ -89,7 +89,6 @@ public class ActivationOpportunitiesPage extends Base {
     }
 
     public void openCreatedOpportunity(){
-
         driver.get().navigate().to("https://uat.ssa.gov.ae/DCD_Activation_AgentFrontEndN/ExpandedFamilyMemberViewPage.aspx?ApplicationStatus=2&ApplicationID=1397&NameInArabic=%d8%b5%d8%a7%d9%84%d8%ad+%d8%b3%d9%8a%d9%81+%d8%ad%d9%85%d8%af+%d8%b9%d9%84%d9%89+%d8%a7%d9%84%d8%b3%d9%86%d8%a7%d9%86%d9%89&ActivityId=0&IndividualIsActive=True&EmiratesId=784197821469414&(Not.Licensed.For.Production)=");
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(By.cssSelector("#InternalPortalTheme_wt24_block_wtMainContent_wt14_CloneOfWebPatterns_wtTabs_block_wtTab11_DCD_Activation_Theme_wt133_block_wtImage img"),30);
@@ -97,7 +96,7 @@ public class ActivationOpportunitiesPage extends Base {
         //ActionsHelper.retryClick(By.xpath("[src='/DCD_Activation_Theme/tabs/manage-activation.svg']"),30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.scrollTo(planFooter);
-        ActionsHelper.driverWait(6000);
+        ActionsHelper.driverWait(8000);
         logManager.INFO("Created Opportunity after assigning",false);
     }
     }

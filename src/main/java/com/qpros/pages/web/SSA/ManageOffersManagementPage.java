@@ -17,16 +17,15 @@ public class ManageOffersManagementPage extends Base {
     private By offersLink=By.xpath("//a[contains(@id,'ctl10_RichWidgets_wt6_block_wtMenuItem_wt11')]");
     private By searchEID=By.xpath("//div[@class='paddingR10 fontweight16 hoverBlue']");
     private By EidTextbox=By.xpath("//input[contains(@id,'wttxt_Eid')]");
-    private By EidLink=By.xpath("//a[contains(@id,'ctl00_WebPatterns_wt9_block_wtTitle_wtlnk_Expandview')]");
     private By settingsBtn=By.xpath("//div[contains(@id,'ctl00_WebPatterns_wt10_block_wtTitle_wtMenu')]");
     private By changeOfferStatusLink=By.xpath("//div[.='تغيير حالة العرض']");
-    private By actionDDL=By.xpath("//select[contains(@name,'OpportunityStatus')]"); //("[title='يرجى تحديد الإجراء']");
+    private By actionDDL=By.xpath("//select[contains(@id,'wt221_block_wtMainContent_wtddl_OpportunityStatus')]"); //("[title='يرجى تحديد الإجراء']");
     private By saveBtn=By.xpath("//input[contains(@id,'Save')]");
     private By msgToUser=By.xpath("//textarea[contains(@id,'Sms')]");
     private By partnerNoteLink=By.xpath("//*[text()='إضافة ملاحظات الشريك']");
     private By partnerCommentTextarea=By.xpath("//textarea[contains(@id,'FeedbackTextArea')]");
     private By viewInfoArrow=By.xpath("//div[@class='halfFit1  topOnly']/span[@class='ListRecords']/div[1]//div[@class='hoverImg']");
-
+    private By displayStatus=By.xpath("//div[@class='ballonhover ballonall']//div[.='تغيير حالة العرض']");
 
     public void clickOnEID() {
         logManager.STEP("Search For EID","The user searches for specific EID");
@@ -36,8 +35,23 @@ public class ManageOffersManagementPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(EidTextbox, TestData.pepUserEID + Keys.ENTER);
         ActionsHelper.driverWait(4000);
-        /*ActionsHelper.retryClick(EidLink,30);
-        ActionsHelper.driverWait(2000);*/
+    }
+
+    public void changeDisplayStatus(){
+        logManager.STEP("Change Display Status","The user changes the display status to accept");
+        Actions actions = new Actions(driver.get());
+        actions.moveToElement(driver.get().findElement(settingsBtn)).build().perform();
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(displayStatus,30);
+        ActionsHelper.driverWait(2000);
+        driver.get().switchTo().frame(0);
+        ActionsHelper.selectOption(actionDDL,"10");
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.sendKeys(msgToUser,"Message to user .. Accept");
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(saveBtn,30);
+        ActionsHelper.driverWait(6000);
+        logManager.INFO("Accepted",false);
     }
 
         public void changeStatus(){
