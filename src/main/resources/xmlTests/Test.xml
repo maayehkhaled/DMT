@@ -21,7 +21,7 @@
             <class name="com.qpros.test.AddPartner"></class>
         </classes>
     </test>
-
+<!--
     <test name="SSA 1st assessment Run">
         <classes>
             <class name="com.qpros.test.ApproveApplication"/>
@@ -63,6 +63,6 @@
             <class name="com.qpros.test.ListOfBeneficiaries"></class>
         </classes>
 
-    </test>
+    </test>-->
 </suite>
 
