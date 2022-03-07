@@ -15,11 +15,13 @@ public interface StaticValues {
     int rightLimit = 122; // letter 'z'
     int targetStringLength = 10;
     String choseValue="9403";
-    String refCode= FileUtils.readFile("refCodeFile.txt").get(0);
+     String refCode= FileUtils.readFile("refCodeFile.txt").get(0);
     public int index=0;
     public String generatedString="";
     public String DateTimeFormatYearMonthDay="yyyy/MM/dd";
     public String DateTimeFormatDayMonthYear="dd/MM/yyyy";
+    public String getDay="dd";
+    public String getmonth="mm";
     public String actionAssignedAutomationOption="1708";
     public String enforcementType="21";
     public String infoSource="54";
