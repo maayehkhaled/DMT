@@ -21,13 +21,12 @@ public class GetFamilyDataService {
                 .asString();
     }
 
+
     public String requestBody() throws JsonProcessingException {
         return "{\n" +
                 "     \"EmiratesId\": \""+TestData.EID+"\"\n" +
                 " \n" +
                 "}";
-
-
     }
 
     public GetFamilyData getresponse(GetFamilyDataService submitApplicationService) throws JsonProcessingException {

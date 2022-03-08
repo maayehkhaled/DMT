@@ -8,7 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="SSA" />
+        <module name="QPros-testing-framework" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="QPros-testing-framework" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
