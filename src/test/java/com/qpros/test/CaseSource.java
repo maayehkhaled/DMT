@@ -37,17 +37,19 @@ public class CaseSource extends Base{
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void addCaseSource()  {
         startMethod();
-        adminCase.createNewCase(adminCase.getAddNewSource(),adminCase.getSaveNewRow());
+        adminCase.createNewCase(adminCase.getAddNewSource(),adminCase.getSaveNewRow(),adminCase.getElementToScroll());
         String successMsgTxt= adminCase.getSuccessMsg();
         Assert.assertEquals(successMsgTxt,"تم إضافة مصدر الحالة بنجاح");
+        adminCase.lastStep(adminCase.getElementToScroll());
     }
 
     @Test(description = "Add new social issue", priority = 2,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void addSocialType()  {
         startMethod();
-        adminCase.createNewCase(adminCase.getSocialIssueLink(),adminCase.getSaveNewRow());
+        adminCase.createNewCase(adminCase.getSocialIssueLink(),adminCase.getSaveNewRow(),adminCase.getSocialEleScroll());
         String successMsgText=adminCase.getSuccessMsg();
         Assert.assertEquals(successMsgText,"تم إضافة نوع المسألة الاجتماعية بنجاح");
+        adminCase.lastStep(adminCase.getSocialEleScroll());
     }
 }

@@ -24,7 +24,7 @@ public class CaseAdministrationPage extends Base{
 
     Faker faker=new Faker(new Random());
 
-    private By casesManagementLink = By.xpath("//a[.='إدارة الحالات']");
+    private By casesManagementLink = By.xpath("//a[text()='إدارة الحالات']");
     private By addNewSource = By.xpath("//a[contains(@id,'wtSocialSourcesList_AddRow')]");
     private By sourceTextbox=By.xpath("//input[contains(@id,'rows_ctl28_wttxt_Social_Referral_Source_Name')]");
     private By sourceCheckbox=By.xpath("//input[contains(@id,'rows_ctl28_wtchk_Social_Referral_Source_IsActive')]");
@@ -45,19 +45,39 @@ public class CaseAdministrationPage extends Base{
     private By caseRecourse=By.xpath("//input[contains(@class,'InEditMode')]");
     private By caseLogLink=By.xpath("//a[contains(@id,'wtSocialReferralLogTypeList_AddRow')]");
     private By checkBox=By.xpath("//input[contains(@class,'InEditMode')]");
+    private By lastCase=By.xpath("//input[contains(@id,'ctl32_wttxt_Social_Referral_LogType_Description')]");
+    private By elementToScroll=By.xpath("//input[contains(@id,'wt19_block_wtContent_wtbtn_Search3')]");
+    private By socialEleScroll=By.xpath("//input[contains(@id,'wt16_block_wtContent_wtbtn_Search3')]");
 
-    public void createNewCase(By newCase,By saveRecord){
+    public void createNewCase(By newCase,By saveRecord,By scrollElement){
         faker=new Faker();
-        ActionsHelper.retryClick(casesManagementLink,30);
-        ActionsHelper.driverWait(8000);
-        ActionsHelper.retryClick(newCase,30);
+        ActionsHelper.clickAction(casesManagementLink);
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.scrollupTo(driver.get().findElement(scrollElement));
         ActionsHelper.driverWait(2000);
-
+        ActionsHelper.clickAction(newCase);
+        //ActionsHelper.retryClick(newCase,30);
+        ActionsHelper.driverWait(2000);
+        //logManager.INFO("Click add new source",false);
         ActionsHelper.sendKeys(driver.get().findElements(caseRecourse).get(0), "My new automation "+faker.lorem().sentence(1));
+        ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(driver.get().findElements(checkBox).get(1),30);
-        ActionsHelper.driverWait(1000);
+        // ActionsHelper.clickAction(checkBox);
+        logManager.INFO("Check box",false);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.retryClick(saveRecord,30);
-        ActionsHelper.driverWait(8000);
+        logManager.INFO("Save all",false);
+        //logManager.INFO("Click Save New Case Source",false);
+        ActionsHelper.driverWait(4000);
+        logManager.INFO("Success Msg",false);
+    }
+
+    public void lastStep(By scrollEle){
+        ActionsHelper.clickAction(casesManagementLink);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.scrollupTo(driver.get().findElement(scrollEle));
+        ActionsHelper.driverWait(4000);
+        logManager.INFO("The new source",false);
     }
 
     public String getSuccessMsg(){

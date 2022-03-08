@@ -55,8 +55,8 @@ public class PEPPage extends Base {
     private By saveJobExperience=By.xpath("//a[@class='SaveRowAction']");
     private By moreInfoTextarea=By.xpath("//textarea[contains(@id,'Input')]");
     //More Info
-    private By lengthTextbox=By.xpath("//input[contains(@id,'wt168')]");
-    private By weightTextbox=By.xpath("//input[contains(@id,'wt326')]");
+    private By lengthTextbox=By.cssSelector("[placeholder='ادخل الطول بالسنتيمتر']");
+    private By weightTextbox=By.cssSelector("[placeholder='ادخل الوزن بالكيلوغرام']");
     private By driveLicenseRadioBtn=By.xpath("//input[contains(@id,'wtDriverLicense_Yes_Radio')]");
     private By driveLicenseTypeDDL=By.xpath("//select[contains(@id,'type')]");
     private By driveLicenseSaveBtn=By.xpath("//a[contains(@id,'saveBtn')]");
@@ -64,6 +64,9 @@ public class PEPPage extends Base {
     private By multiLangDDL=By.xpath("//button[@class='ms-choice']");
     private By saveEditedCareerInfo=By.xpath("//input[contains(@id,'wtSubmitButton')]");
     private By acceptBtn=By.xpath("//input[contains(@id,'wtButton1_wt15')]");
+    private By arabicLang=By.xpath("//input[@value='25']");
+    private By athyobLang=By.xpath("//input[@value='59']");
+    private By aramLang=By.xpath("//input[@value='56']");
 
     public void openJobInfo() {
         logManager.STEP("Open job information", "The user will open job information section for specific user");
@@ -107,7 +110,7 @@ public class PEPPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(deptDDL,StaticValues.csDept);
         ActionsHelper.driverWait(4000);
-        ActionsHelper.sendKeysWithClear(graduationAVG,StaticValues.masterDegree);
+        ActionsHelper.sendKeys(graduationAVG,StaticValues.masterDegree);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(institutionDDL,StaticValues.csDept);
         ActionsHelper.driverWait(2000);
@@ -174,12 +177,12 @@ public class PEPPage extends Base {
     public void editMoreInfo(){
         logManager.STEP("Edit More Info About The User","The user Edit all enabled info in More Info section");
         ActionsHelper.driverWait(3000);
-        ActionsHelper.sendKeys(weightTextbox, StaticValues.weight);
-        ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(lengthTextbox, StaticValues.length);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(driveLicenseRadioBtn,30);
+        ActionsHelper.sendKeys(weightTextbox, StaticValues.weight);
         ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(driveLicenseRadioBtn,30);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.selectOption(driveLicenseTypeDDL,StaticValues.IELTS);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(driveLicenseSaveBtn,30);
@@ -188,13 +191,13 @@ public class PEPPage extends Base {
         ActionsHelper.driverWait(4000);
         //Other Languages DDL
         ActionsHelper.retryClick(multiLangDDL,30);
-        ActionsHelper.scrollTo(By.xpath("//input[@value='25']"));
-        ActionsHelper.retryClick(By.xpath("//input[@value='25']"),30);
+        ActionsHelper.scrollTo(arabicLang);
+        ActionsHelper.retryClick(arabicLang,30);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(By.xpath("//input[@value='59']"),30);
+        ActionsHelper.retryClick(athyobLang,30);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.scrollTo(By.xpath("//input[@value='56']"));
-        ActionsHelper.retryClick(By.xpath("//input[@value='56']"),30);
+        ActionsHelper.scrollTo(aramLang);
+        ActionsHelper.retryClick(aramLang,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeysWithClear(moreInfoTextarea,"Test Automation");
         ActionsHelper.driverWait(2000);
@@ -202,6 +205,25 @@ public class PEPPage extends Base {
         ActionsHelper.driverWait(2000);
         driver.get().switchTo().frame(0);
         ActionsHelper.retryClick(acceptBtn,30);
+        ActionsHelper.driverWait(6000);
+    }
+
+    public void openCreatedRequest(){
+        ActionsHelper.scrollTo(jobInfoBtn);
         ActionsHelper.driverWait(2000);
+        ActionsHelper.actionClickStepClick(" التفاصيل المهنية",jobInfoBtn);
+        ActionsHelper.driverWait(6000);
+        ActionsHelper.scrollTo(graduationYear);
+        ActionsHelper.driverWait(4000);
+        logManager.INFO("الحالة الوظيفية",false);
+        ActionsHelper.scrollTo(experienceRadioBtn);
+        ActionsHelper.driverWait(4000);
+        logManager.INFO("المؤهلات",false);
+        ActionsHelper.scrollTo(ministryApproval);
+        ActionsHelper.driverWait(4000);
+        logManager.INFO("الخبرات",false);
+        ActionsHelper.scrollTo(lengthTextbox);
+        ActionsHelper.driverWait(4000);
+        logManager.INFO("المعلومات الأخرى",false);
     }
 }

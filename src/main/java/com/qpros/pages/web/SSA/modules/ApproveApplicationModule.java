@@ -88,7 +88,7 @@ public class ApproveApplicationModule extends Base {
             loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
             ActionsHelper.driverWait(5000);
             committeeName = agentPage.seniorSpecialistApproval(refCode);
-            System.out.println("seniorSpecial: " + committeeName);
+            System.out.println("Committee: " + committeeName);
             driver.get().navigate().to(urls.tasksList);
 
             //committeeName = committeeName.replace("Committee", "").replace("\n", "");
@@ -118,16 +118,15 @@ public class ApproveApplicationModule extends Base {
                 //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
                 ActionsHelper.driverWait(5000);
                 agentPage.logOut();
-                agentPage.logOut();
+                //agentPage.logOut();
 
             }
 
             driver.get().navigate().to(urls.agentLogin);
             loginPage.loginWithUser(UserType.Superuser);
-            ActionsHelper.navigate(urls.businessParameters);
-            ActionsHelper.driverWait(3000);
-            businessParametersPage.releaseAppliaction(refCode);
-            agentPage.logOut2();
+            driver.get().navigate().to(urls.businessParameters);
+            businessParametersPage.releaseApplication(refCode);
+            agentPage.logOut();
             driver.get().navigate().to(urls.paymentList);
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
             Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
@@ -188,7 +187,7 @@ public class ApproveApplicationModule extends Base {
         //String refCode = "SSP-10679";
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseAppliaction(refCode);
+        businessParametersPage.releaseApplication(refCode);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
@@ -255,7 +254,7 @@ public class ApproveApplicationModule extends Base {
         //String refCode = "SSP-10679";
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseAppliaction(refCode);
+        businessParametersPage.releaseApplication(refCode);
         agentPage.logOut();
         //Comment this line so we can test the application approval process without failing
         /*
@@ -294,7 +293,7 @@ public class ApproveApplicationModule extends Base {
         agentPage.logOut();
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseAppliaction(refCode);
+        businessParametersPage.releaseApplication(refCode);
         agentPage.logOut();
     }
 }

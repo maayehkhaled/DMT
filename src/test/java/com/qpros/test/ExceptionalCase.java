@@ -4,6 +4,7 @@ import com.qpros.common.web.Base;
 import com.qpros.pages.web.SSA.*;
 import com.qpros.pages.web.SSA.modules.ApproveApplicationModule;
 import com.qpros.reporting.QuantaTestManager;
+import com.ssa.core.common.data.TestData;
 import com.ssa.core.common.locators.urls;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -38,7 +39,7 @@ public class ExceptionalCase extends Base{
     public void validateEnterCorrectData() throws JsonProcessingException {
         startPage();
         exceptionalPage.chooseReferralEntity();
-        exceptionalPage.enterHeadOfFamilyData("784199361849591","19/03/1993");
+        exceptionalPage.enterHeadOfFamilyData(TestData.EID,"01/01/1937");
         exceptionalPage.createFullExceptionalCase();
     }
 

@@ -1,5 +1,6 @@
 package com.qpros.pages.web.SSA;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.javafaker.Faker;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
@@ -7,6 +8,7 @@ import com.qpros.helpers.FileUtils;
 import com.qpros.pages.web.SSA.commonSSA.Popups;
 import com.ssa.core.common.data.TestData;
 import com.ssa.core.common.locators.urls;
+import com.ssa.core.service.DeleteEmirateId;
 import com.ssa.core.service.SubmitApplicationService;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +42,7 @@ public class ExceptionalCasePage extends Base{
     LoginPage loginPage = new LoginPage(driver.get());
     BusinessParametersPage businessParametersPage = new BusinessParametersPage(driver.get());
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
+    DeleteEmirateId deleteId = new DeleteEmirateId();
 
     private By exceptionalCaseLink= By.xpath("//a[contains(@id,'wt160')]");
     private By addNewEntity=By.xpath("//input[contains(@id,'openPopup')]");
@@ -78,7 +81,7 @@ public class ExceptionalCasePage extends Base{
     private By deleteFirstDependent=By.xpath("//a[contains(@id,'ctl00_wt551')]");
     private By deleteSecondDependent=By.xpath("//a[contains(@id,'ctl02_wt551')]");
     //Screen V
-    private By familyResidentDDL=By.xpath("//select[@id='InternalPortalTheme_wt24_block_wtMainContent_wtddl_LivingOnLocationList']");
+    private By familyResidentDDL=By.xpath("//select[contains(@name,'LivingOnLocationList3')]");
     //InternalPortalTheme_wt24_block_wtMainContent_wtddl_LivingOnLocationList
     private By supportDocsLink=By.className("dottedBorder");
     private By uploadMoreSupportDocs=By.xpath("//input[contains(@id,'Upload201200')]");
@@ -119,7 +122,8 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(2000);
     }
 
-    public void chooseReferralEntity(){
+    public void chooseReferralEntity() throws JsonProcessingException {
+        deleteId.requestService();
         logManager.STEP("Choose From Referral DDL", "The user chooses  one referral entity to start the exceptional request");
         ActionsHelper.retryClick(exceptionalCaseLink,30);
         ActionsHelper.driverWait(2000);
@@ -255,7 +259,8 @@ public class ExceptionalCasePage extends Base{
         ActionsHelper.driverWait(2000);
         //addRelatives();
         ActionsHelper.driverWait(3000);
-        ActionsHelper.selectByIndex(driver.get().findElement(familyResidentDDL),0);
+        //ActionsHelper.selectByIndex(driver.get().findElement(familyResidentDDL),1);
+        ActionsHelper.selectOption(familyResidentDDL,"Automation Referral Entity Name-حالة استثنائية");
         ActionsHelper.driverWait(2000);
         ActionsHelper.clickAction(nextBtn);
         ActionsHelper.driverWait(2000);
@@ -364,7 +369,7 @@ public class ExceptionalCasePage extends Base{
         loginPage.loginWithUser(UserType.Superuser);
         ActionsHelper.navigate(urls.businessParameters);
         ActionsHelper.driverWait(3000);
-        businessParametersPage.releaseAppliaction(refCode);
+        businessParametersPage.releaseApplication(refCode);
         agentPage.logOut();
         driver.get().navigate().to(urls.paymentList);
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);

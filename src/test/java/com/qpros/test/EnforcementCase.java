@@ -80,7 +80,7 @@ public class EnforcementCase extends Base {
         enforcementPage.addLogs();
     }
 
-    @Test(description = "Delete Logs", priority = 7,
+    @Test(description = "Delete Logs", priority = 7,dependsOnMethods = {"addLogs"},
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void deleteLogs() {
         startPage();
