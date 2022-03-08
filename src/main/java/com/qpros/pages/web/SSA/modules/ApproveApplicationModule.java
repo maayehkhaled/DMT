@@ -117,8 +117,9 @@ public class ApproveApplicationModule extends Base {
                 agentPage.committeeSpecialistApproval(refCode);
                 //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
                 ActionsHelper.driverWait(5000);
-
                 agentPage.logOut();
+                agentPage.logOut();
+
             }
 
             driver.get().navigate().to(urls.agentLogin);
@@ -126,7 +127,7 @@ public class ApproveApplicationModule extends Base {
             ActionsHelper.navigate(urls.businessParameters);
             ActionsHelper.driverWait(3000);
             businessParametersPage.releaseAppliaction(refCode);
-            agentPage.logOut();
+            agentPage.logOut2();
             driver.get().navigate().to(urls.paymentList);
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
             Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));

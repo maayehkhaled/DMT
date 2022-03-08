@@ -26,30 +26,19 @@ public class PEPScenario extends Base {
     LoginPage loginPage = new LoginPage(driver.get());
     PEPPage PEP = new PEPPage(driver.get());
 
-    @Test(description = "Edit First Member Data", priority = 1,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
-    public void editFirstMemberData() {
+    public void startMethod(){
         driver.get().navigate().to(urls.agentLogin);
         loginPage.loginWithUser(UserType.CM2);
-        PEP.openJobInfo();
-        PEP.clickOnFirstEID();
-        PEP.editJobInfo();
-        PEP.editJobStatus();
-        PEP.editQualificationInfo();
-        PEP.editExperienceJobInfo();
-        PEP.addFirstWorkExperience();
-        PEP.addSecondWorkExperience();
-        PEP.editMoreInfo();
     }
 
-    @Test(description = "Edit Second Member Data", priority = 2,
-         retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
-    public void editSecondMemberData() {
-        driver.get().navigate().to(urls.agentLogin);
-        loginPage.loginWithUser(UserType.CM2);
+    @Test(description = "Open First Member Data", priority = 1,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
+    public void openFirstMemberData() {
+        startMethod();
         PEP.openJobInfo();
-        PEP.clickOnSecondEID();
-        PEP.editJobInfo();
+        PEP.clickOnFirstEID();
+        PEP.clickEditJobInfo();
+
         PEP.editJobStatus();
         PEP.editQualificationInfo();
         PEP.editExperienceJobInfo();

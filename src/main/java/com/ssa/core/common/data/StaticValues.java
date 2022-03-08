@@ -45,4 +45,6 @@ public interface StaticValues {
     public String defaultOppName="__ossli_0";
     public String minAge="18";
     public String maxAge="60";
+    public String weight="80";
+    public String length="180";
 }

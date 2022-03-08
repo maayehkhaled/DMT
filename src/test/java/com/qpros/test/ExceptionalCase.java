@@ -1,13 +1,15 @@
 package com.qpros.test;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qpros.common.web.Base;
 import com.qpros.pages.web.SSA.*;
+import com.qpros.pages.web.SSA.modules.ApproveApplicationModule;
 import com.qpros.reporting.QuantaTestManager;
 import com.ssa.core.common.locators.urls;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
 
 import java.io.IOException;
 @Listeners(com.qpros.common.LogManager.class)
@@ -24,14 +26,54 @@ public class ExceptionalCase extends Base{
     }
 
     LoginPage loginPage = new LoginPage(driver.get());
+    ApproveApplicationModule approve=new ApproveApplicationModule(driver.get());
     ExceptionalCasePage exceptionalPage=new ExceptionalCasePage(driver.get());
 
     public void startPage(){
         driver.get().navigate().to(urls.agentLogin);
         loginPage.loginWithUser(UserType.Specialist2);
-        //exceptionalPage.chooseReferralEntity();
+    }
+    @Test(description = "Enter correct EID for HOH and correct date", priority = 1,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
+    public void validateEnterCorrectData() throws JsonProcessingException {
+        startPage();
+        exceptionalPage.chooseReferralEntity();
+        exceptionalPage.enterHeadOfFamilyData("784199361849591","19/03/1993");
+        exceptionalPage.createFullExceptionalCase();
     }
 
+    @Test(description = "Specialist Approval", priority = 2,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
+    public void validateApprovals()  {
+        startPage();
+        exceptionalPage.searchForId();
+        exceptionalPage.completeApprovals();
+    }
+
+    @Test(description = "Senior Specialist Approval", priority = 3,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
+    public void validateSeniorSpecialistApprovals() {
+        startPage();
+        exceptionalPage.searchForId();
+        exceptionalPage.completeSeniorSpecialistApprovals();
+    }
+
+    @Test(description = "Committee Approval", priority = 4,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
+    public void validateCommitteeApprovals()  {
+        startPage();
+        exceptionalPage.searchForId();
+        exceptionalPage.completeCommitteeApproval();
+    }
+
+    @Test(description = "Committee Approval", priority = 5,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
+    public void validateSuperuserApprovals()  {
+        startPage();
+        exceptionalPage.searchForId();
+        exceptionalPage.paymentSteps();
+    }
+    /*
     @Test(description = "Open Exceptional case", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void openExceptionalCase() {
@@ -39,12 +81,12 @@ public class ExceptionalCase extends Base{
         loginPage.loginWithUser(UserType.Specialist2);
         exceptionalPage.openExceptionalCase();
     }
-/*
+
     @Test(description = "Validate More Than 500 Chars", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void validateMaxChar() {
         startPage();
-        //ChooseFromDDLexceptionalPage.openExceptionalCase();
+        exceptionalPage.openExceptionalCase();
         Assert.assertEquals(exceptionalPage.countMaxChars(),500);
     }
 
