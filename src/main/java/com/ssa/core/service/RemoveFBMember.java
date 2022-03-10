@@ -28,6 +28,36 @@ public class RemoveFBMember {
                 .asString();
         System.out.println(response.getBody());
     }
+    public void requestServiceWithEid(String Eid) throws JsonProcessingException {
+        Unirest.config().reset();
+        Unirest.config().connectTimeout(7000);
+        Unirest.config().verifySsl(false);
+        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/RemoveFBMember")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
+                .body(requestBodyWithEid(Eid))
+                .asString();
+        System.out.println(response.getBody());
+    }
+    public String requestBodyWithEid(String Eid) throws JsonProcessingException {
+
+//        Data Body To Be Sent
+
+//        {
+//            "EmiratesId": "string",
+//            "ToRemoveEmiratesId": "string",
+//            "RemovalReasonKey": "string",
+//            "RemovalReasonDescription": "string"
+//        }
+
+        RemoveFBMemberModel member= new RemoveFBMemberModel();
+        member.emiratesId ="";
+        member.toRemoveEmiratesId="";
+        member.removalReasonKey="";
+        member.removalReasonDescription="";
+//        System.out.println(toJson(member));
+        return toJson(member);
+    }
 
     public String requestBody() throws JsonProcessingException {
 
@@ -54,10 +84,10 @@ public class RemoveFBMember {
         return om.readValue(submitApplicationService.response.getBody(), Root.class);
     }
 
-//    public static void main(String[] args) throws JsonProcessingException {
-//        VerifyEligibilityService submitApplicationService = new VerifyEligibilityService();
-//        submitApplicationService.requestService();
-//        System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
-//    }
+    public static void main(String[] args) throws JsonProcessingException {
+        RemoveFBMember submitApplicationService = new RemoveFBMember();
+        submitApplicationService.requestService();
+        System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
+    }
 
 }

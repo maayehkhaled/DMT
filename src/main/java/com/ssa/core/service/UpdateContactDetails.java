@@ -31,20 +31,6 @@ public class UpdateContactDetails {
 
     public String requestBody() throws JsonProcessingException {
 
-//        Data Body To Be Sent
-//       {
-//          "EmiratesId": "string",
-//          "HouseholdContactDetails":
-//          [
-//          {
-//          "EmiratesId": "string",
-//          "MobileNumber":"string",
-//          "Email": "string",
-//          "SecondaryNumber": "string"
-//          }
-//          ]
-//          }
-
         UpdateContactDetailsModel member= new UpdateContactDetailsModel();
         member.emiratesId ="";
         member.householdContactDetails.get(0).emiratesId="";
@@ -55,15 +41,38 @@ public class UpdateContactDetails {
         return toJson(member);
     }
 
+    public void requestServiceWithParam(String eid) throws JsonProcessingException {
+        Unirest.config().reset();
+        Unirest.config().connectTimeout(7000);
+        Unirest.config().verifySsl(false);
+        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/UpdateContactDetails")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
+                .body(requestBodyWithEid(eid))
+                .asString();
+        System.out.println(response.getBody());
+    }
+
+    public String requestBodyWithEid(String eid) throws JsonProcessingException {
+        UpdateContactDetailsModel member= new UpdateContactDetailsModel();
+        member.emiratesId ="";
+        member.householdContactDetails.get(0).emiratesId="";
+        member.householdContactDetails.get(0).mobileNumber="";
+        member.householdContactDetails.get(0).email="";
+        member.householdContactDetails.get(0).secondaryNumber="";
+        System.out.println(toJson(member));
+        return toJson(member);
+    }
+
     public Root getresponse(UpdateContactDetails submitApplicationService) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
         return om.readValue(submitApplicationService.response.getBody(), Root.class);
     }
 
-//    public static void main(String[] args) throws JsonProcessingException {
-//        VerifyEligibilityService submitApplicationService = new VerifyEligibilityService();
-//        submitApplicationService.requestService();
-//        System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
-//    }
+    public static void main(String[] args) throws JsonProcessingException {
+        UpdateContactDetails submitApplicationService = new UpdateContactDetails();
+        submitApplicationService.requestService();
+        System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
+    }
 
 }

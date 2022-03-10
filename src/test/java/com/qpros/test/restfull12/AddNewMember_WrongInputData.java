@@ -5,10 +5,10 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import com.qpros.common.web.Base;
 import com.qpros.reporting.QuantaTestManager;
+import com.ssa.core.service.AddNewMember;
 import com.ssa.core.service.CancelApplication;
-import com.ssa.core.service.GetFamilyData;
+import com.ssa.core.service.RemoveFBMember;
 import com.ssa.core.service.VerifyEligibilityService;
-import lombok.SneakyThrows;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -19,11 +19,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 @Listeners(com.qpros.common.LogManager.class)
-
-public class GetFamilyDataConfirmed extends Base{
-
+public class AddNewMember_WrongInputData extends Base {
     VerifyEligibilityService verifyEligibilityService = new VerifyEligibilityService();
-    GetFamilyData getFamilyData=new GetFamilyData();
+    AddNewMember addWrongData=new AddNewMember();
     CancelApplication cancelApplication=new CancelApplication();
 
     @BeforeClass
@@ -36,36 +34,44 @@ public class GetFamilyDataConfirmed extends Base{
         this.setUpBrowser();
     }
 
-    @SneakyThrows
-    @Test(description = "Get Data Of Confirmed Family", priority = 1,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void getFamily()  {
-        logManager.STEP("Read Test Data from Source","");
-        //TODO ExcelFileUtils
-        String emirateId="";
-        int count=0;
-        CSVReader csvReader= null;
+    //CSV
+    String emirateId = "";
+
+    public void readCSV() {
+        int count = 0;
+        CSVReader csvReader = null;
         try {
             csvReader = new CSVReader(new FileReader("src/main/resources/DataProvider/data.csv"));
-            String [] nextLine;
-            while((nextLine= csvReader.readNext())!=null&& count<=10){
+            String[] nextLine;
+            while ((nextLine = csvReader.readNext()) != null && count <= 20) {
                 count++;
-                emirateId=nextLine[1];
+                emirateId = nextLine[1];
             }
 
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
+    }
 
+    @Test(description = "Verify Eligibility", priority = 1,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
+    public void VerifyEligibility() throws JsonProcessingException {
         logManager.STEP("The User Trigger Verify Eligibility Service","");
         verifyEligibilityService.requestServiceWithParam(emirateId);
         Assert.assertTrue(verifyEligibilityService.getresponse(verifyEligibilityService).application.isEligible);
-
-        logManager.STEP("Get Data Of Confirmed Family","");
-        getFamilyData.requestServiceWithParam(emirateId);
-        getFamilyData.getresponse(getFamilyData);
-
-        logManager.STEP("Cancel Family Application","");
+        Assert.assertEquals(verifyEligibilityService.getresponse(verifyEligibilityService).headOfFamilyBook.emiratesId,emirateId);
+    }
+    @Test(description = "Add New Member Wrong Data", priority = 2,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
+    public void AddNewMemberWrongData() throws JsonProcessingException {
+        logManager.STEP("The User Trigger Add New Member Service","");
+        addWrongData.requestServiceWithParam(emirateId);
+        addWrongData.getResponse(addWrongData);
+    }
+    @Test(description = "Cancel Application Successfully", priority = 3,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
+    public void CancelApplication() throws JsonProcessingException {
+        logManager.STEP("The User Trigger Cancel Application Service","");
         cancelApplication.requestServiceWithParam(emirateId);
         Assert.assertEquals(cancelApplication.getresponse(cancelApplication).responseStatus.statusCode,200);
     }

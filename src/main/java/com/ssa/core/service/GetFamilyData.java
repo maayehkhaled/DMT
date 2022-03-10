@@ -50,11 +50,6 @@ public class GetFamilyData {
 
     public String requestBody() throws JsonProcessingException {
 
-//        Data Body To Be Sent
-//        {
-//            "EmiratesId": "string",
-//        }
-
         FamilyData member= new FamilyData();
         member.emiratesId ="";
         System.out.println(toJson(member));

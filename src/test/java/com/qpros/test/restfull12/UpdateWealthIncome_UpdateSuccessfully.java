@@ -5,10 +5,9 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import com.qpros.common.web.Base;
 import com.qpros.reporting.QuantaTestManager;
-import com.ssa.core.service.CancelApplication;
-import com.ssa.core.service.GetFamilyData;
+import com.ssa.core.model.VerifyEligibility;
+import com.ssa.core.service.UpdateWealthIncome;
 import com.ssa.core.service.VerifyEligibilityService;
-import lombok.SneakyThrows;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -19,12 +18,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 @Listeners(com.qpros.common.LogManager.class)
+public class UpdateWealthIncome_UpdateSuccessfully extends Base{
 
-public class GetFamilyDataConfirmed extends Base{
-
-    VerifyEligibilityService verifyEligibilityService = new VerifyEligibilityService();
-    GetFamilyData getFamilyData=new GetFamilyData();
-    CancelApplication cancelApplication=new CancelApplication();
+    UpdateWealthIncome updateWealthIncome=new UpdateWealthIncome();
+    VerifyEligibilityService verifyEligibilityService=new VerifyEligibilityService();
 
     @BeforeClass
     public void initSuite() {
@@ -35,38 +32,33 @@ public class GetFamilyDataConfirmed extends Base{
     public synchronized void setTestSuite() throws IOException {
         this.setUpBrowser();
     }
-
-    @SneakyThrows
-    @Test(description = "Get Data Of Confirmed Family", priority = 1,
+    @Test(description = "Verify Eligibility", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void getFamily()  {
-        logManager.STEP("Read Test Data from Source","");
-        //TODO ExcelFileUtils
-        String emirateId="";
-        int count=0;
-        CSVReader csvReader= null;
+    public void VerifyEligibility() throws JsonProcessingException {
+        logManager.STEP("Read Test Data from Source", "");
+        //
+        String emirateId = "";
+        int count = 0;
+        CSVReader csvReader = null;
         try {
             csvReader = new CSVReader(new FileReader("src/main/resources/DataProvider/data.csv"));
-            String [] nextLine;
-            while((nextLine= csvReader.readNext())!=null&& count<=10){
+            String[] nextLine;
+            while ((nextLine = csvReader.readNext()) != null && count <= 88) {
                 count++;
-                emirateId=nextLine[1];
+                emirateId = nextLine[1];
             }
 
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
 
-        logManager.STEP("The User Trigger Verify Eligibility Service","");
+        logManager.STEP("The User Trigger Verify Eligibility Service", "");
         verifyEligibilityService.requestServiceWithParam(emirateId);
         Assert.assertTrue(verifyEligibilityService.getresponse(verifyEligibilityService).application.isEligible);
+        Assert.assertEquals(verifyEligibilityService.getresponse(verifyEligibilityService).headOfFamilyBook.emiratesId, emirateId);
 
-        logManager.STEP("Get Data Of Confirmed Family","");
-        getFamilyData.requestServiceWithParam(emirateId);
-        getFamilyData.getresponse(getFamilyData);
 
-        logManager.STEP("Cancel Family Application","");
-        cancelApplication.requestServiceWithParam(emirateId);
-        Assert.assertEquals(cancelApplication.getresponse(cancelApplication).responseStatus.statusCode,200);
     }
+    //UpdateWealthIncome
+
 }
