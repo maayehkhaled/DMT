@@ -42,12 +42,18 @@ public class CaseAdministrationPage extends Base{
     private By partnerSocialTextbox=By.xpath("//input[contains(@id,'wtSocialPartnerList_rows_ctl14_wttxt_Social_Referral_LogType_Description')]");
     private By partnerSocialCheckbox=By.xpath("//input[contains(@id,'wtSocialPartnerList_rows_ctl14_wtchk_Social_Referral_LogType_IsActive')]");
 
+    private By logCaseLink=By.xpath("//a[.='ضافة نوع سِجِل جديد']");
+    private By enforcementCaseLink=By.xpath("//a[.='إضافة نوع عدم امتثال جديد']");
+
     private By caseRecourse=By.xpath("//input[contains(@class,'InEditMode')]");
     private By caseLogLink=By.xpath("//a[contains(@id,'wtSocialReferralLogTypeList_AddRow')]");
     private By checkBox=By.xpath("//input[contains(@class,'InEditMode')]");
     private By lastCase=By.xpath("//input[contains(@id,'ctl32_wttxt_Social_Referral_LogType_Description')]");
     private By elementToScroll=By.xpath("//input[contains(@id,'wt19_block_wtContent_wtbtn_Search3')]");
     private By socialEleScroll=By.xpath("//input[contains(@id,'wt16_block_wtContent_wtbtn_Search3')]");
+    private By partnerSocialScroll=By.xpath("//input[contains(@id,'wt32_WebPatterns_wt53_block_wtContent_wtbtn_Search3')]");
+    private By caseLogScroll=By.xpath("//input[contains(@id,'wt2_block_wtContent_wtbtn_Search3')]");
+    private By footerScroll=By.cssSelector(".Rows");
 
     public void createNewCase(By newCase,By saveRecord,By scrollElement){
         faker=new Faker();
@@ -76,7 +82,7 @@ public class CaseAdministrationPage extends Base{
         ActionsHelper.clickAction(casesManagementLink);
         ActionsHelper.driverWait(2000);
         ActionsHelper.scrollupTo(driver.get().findElement(scrollEle));
-        ActionsHelper.driverWait(4000);
+        ActionsHelper.driverWait(8000);
         logManager.INFO("The new source",false);
     }
 

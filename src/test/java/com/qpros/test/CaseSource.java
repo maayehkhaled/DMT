@@ -52,4 +52,34 @@ public class CaseSource extends Base{
         Assert.assertEquals(successMsgText,"تم إضافة نوع المسألة الاجتماعية بنجاح");
         adminCase.lastStep(adminCase.getSocialEleScroll());
     }
+
+    @Test(description = "Add new partner social issue", priority = 3,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+    public void AddPartner_SocialIssue()  {
+        startMethod();
+        adminCase.createNewCase(adminCase.getPartnerSocialLink(),adminCase.getSaveNewRow(),adminCase.getPartnerSocialScroll());
+        String successMsgText=adminCase.getSuccessMsg();
+        Assert.assertEquals(successMsgText,"تم إضافة شريك المسألة الاجتماعية بنجاح");
+        adminCase.lastStep(adminCase.getPartnerSocialScroll());
+    }
+
+    @Test(description = "Add new Case Log", priority = 4,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+    public void addCaseLog()  {
+        startMethod();
+        adminCase.createNewCase(adminCase.getLogCaseLink(),adminCase.getSaveNewRow(),adminCase.getCaseLogScroll());
+        String successMsgText=adminCase.getSuccessMsg();
+        Assert.assertEquals(successMsgText,"تم إضافة نوع السجل بنجاح");
+        adminCase.lastStep(adminCase.getPartnerSocialScroll());
+    }
+//enforcementCaseLink
+@Test(description = "Add new Enforcement Type", priority = 5,
+        retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+public void addEnforcementType()  {
+    startMethod();
+    adminCase.createNewCase(adminCase.getEnforcementCaseLink(),adminCase.getSaveNewRow(),adminCase.getFooterScroll());
+    String successMsgText=adminCase.getSuccessMsg();
+    Assert.assertEquals(successMsgText,"تم إضافة نوع عدم الامتثال بنجاح");
+    adminCase.lastStep(adminCase.getPartnerSocialScroll());
+}
 }

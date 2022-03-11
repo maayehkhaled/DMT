@@ -260,7 +260,9 @@ public class ExceptionalCasePage extends Base{
         //addRelatives();
         ActionsHelper.driverWait(3000);
         //ActionsHelper.selectByIndex(driver.get().findElement(familyResidentDDL),1);
-        ActionsHelper.selectOption(familyResidentDDL,"Automation Referral Entity Name-حالة استثنائية");
+        //ActionsHelper.selectOption(familyResidentDDL,"Automation Referral Entity Name-حالة استثنائية");
+        //4666034083-88-015-2-63
+        ActionsHelper.selectOption(familyResidentDDL,"Automation Referral Entity Name  -  حالة استثنائية");
         ActionsHelper.driverWait(2000);
         ActionsHelper.clickAction(nextBtn);
         ActionsHelper.driverWait(2000);
@@ -369,7 +371,7 @@ public class ExceptionalCasePage extends Base{
         loginPage.loginWithUser(UserType.Superuser);
         ActionsHelper.navigate(urls.businessParameters);
         ActionsHelper.driverWait(3000);
-        businessParametersPage.releaseApplication(refCode);
+        businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
         driver.get().navigate().to(urls.paymentList);
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);

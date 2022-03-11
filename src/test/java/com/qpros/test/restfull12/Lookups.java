@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 @Listeners(com.qpros.common.LogManager.class)
 public class Lookups extends Base {
@@ -49,6 +50,10 @@ public class Lookups extends Base {
         }
         lookups.requestServiceWithParam("SocialSupportRequest","1",lookupName);
         Assert.assertEquals(lookups.getresponse(lookups).lookupTablesList.get(0).lookupTableName,"SourceOfIncome");
+        Assert.assertEquals(lookups.getresponse(lookups).responseStatus.statusCode,200);
+        //Assert.assertTrue((lookups.getresponse(lookups).lookupTablesList.get(0).lookupValueList.get(6).nameEN).contains("Private sector"));
+//Assert.assertTrue((lookups.getresponse(lookups).lookupTablesList.get(0).lookupValueList.get(0).nameEN).contains());
+//https://www.baeldung.com/java-stream-filter-lambda
     }
 
     @Test(description = "Get Lookup_Income Type", priority = 2,

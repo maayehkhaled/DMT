@@ -3,6 +3,7 @@ package com.ssa.core.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class WealthIncome {
     @JsonProperty("EmiratesId")
@@ -14,9 +15,9 @@ public class WealthIncome {
     @JsonProperty("IsBusinessActive")
     public boolean isBusinessActive;
     @JsonProperty("IncomeAmount")
-    public double incomeAmount;
+    public int incomeAmount;
     @JsonProperty("IncomeFrequency")
     public String incomeFrequency;
     @JsonProperty("AttachmentList")
-    public ArrayList<AttachmentList> attachmentList;
+    public List<AttachmentList> attachmentList;
 }

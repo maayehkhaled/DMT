@@ -39,7 +39,7 @@ public class ExceptionalCase extends Base{
     public void validateEnterCorrectData() throws JsonProcessingException {
         startPage();
         exceptionalPage.chooseReferralEntity();
-        exceptionalPage.enterHeadOfFamilyData(TestData.EID,"01/01/1937");
+        exceptionalPage.enterHeadOfFamilyData(TestData.EID,"16/07/1983");
         exceptionalPage.createFullExceptionalCase();
     }
 

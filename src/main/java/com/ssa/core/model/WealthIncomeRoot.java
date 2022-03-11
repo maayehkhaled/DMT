@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WealthIncomeRoot {
-
     @JsonProperty("EmiratesId")
     public String emiratesId;
     @JsonProperty("WealthIncome")
     public List<WealthIncome> wealthIncome;
-
-
+    //response status added because of error msg
+    @JsonProperty("ResponseStatus")
+    public ResponseStatus responseStatus;
 }

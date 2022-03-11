@@ -3,6 +3,7 @@ package com.ssa.core.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.ssa.core.model.AttachmentList;
 import com.ssa.core.model.Root;
 import com.ssa.core.model.WealthIncome;
 import com.ssa.core.model.WealthIncomeRoot;
@@ -42,16 +43,19 @@ public class UpdateWealthIncome {
     }
     public String requestBodyWithParam(String eid) throws JsonProcessingException {
         WealthIncomeRoot wealthIncomeRoot =new WealthIncomeRoot();
-        wealthIncomeRoot.emiratesId="";
-        wealthIncomeRoot.wealthIncome.get(0).emiratesId="";
-        wealthIncomeRoot.wealthIncome.get(0).wealthType="";
-        wealthIncomeRoot.wealthIncome.get(0).wealthDescription="";
-        wealthIncomeRoot.wealthIncome.get(0).isBusinessActive=true;
-        wealthIncomeRoot.wealthIncome.get(0).incomeAmount=5000;
-        wealthIncomeRoot.wealthIncome.get(0).incomeFrequency="";
-        wealthIncomeRoot.wealthIncome.get(0).attachmentList.get(0).binaryFile="";
-        wealthIncomeRoot.wealthIncome.get(0).attachmentList.get(0).contentType="";
-        wealthIncomeRoot.wealthIncome.get(0).attachmentList.get(0).contentType="";
+        WealthIncome wealthIncome=new WealthIncome();
+        AttachmentList attachmentList=new AttachmentList();
+        wealthIncomeRoot.emiratesId=eid;
+
+        wealthIncome.emiratesId=eid;
+        wealthIncome.wealthType="Property";
+        wealthIncome.wealthDescription="Property";
+        wealthIncome.isBusinessActive=true;
+        wealthIncome.incomeAmount=50;
+        wealthIncome.incomeFrequency="monthly";
+        attachmentList.binaryFile="0110";
+        attachmentList.contentType="pdf";
+        attachmentList.filename="test";
         System.out.println(wealthIncomeRoot);
         return toJson(wealthIncomeRoot);
     }
@@ -76,10 +80,10 @@ public class UpdateWealthIncome {
         ObjectMapper om = new ObjectMapper();
         return om.readValue(submitApplicationService.response.getBody(), WealthIncomeRoot.class);
     }
-
+/*
     public static void main(String[] args) throws JsonProcessingException {
         UpdateWealthIncome updateWealthIncome = new UpdateWealthIncome();
         updateWealthIncome.requestService();
         System.out.print(updateWealthIncome.getResponse(updateWealthIncome).wealthIncome);
-    }
+    }*/
 }
