@@ -27,6 +27,32 @@ public class UpdateWealthIncome {
                 .asString();
         System.out.println(response.getBody());
     }
+    public void requestServiceWithEid(String Eid) throws JsonProcessingException {
+        Unirest.config().reset();
+        Unirest.config().connectTimeout(7000);
+        Unirest.config().verifySsl(false);
+        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/UpdateWealthIncome")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
+                .body(requestBodyWithEid(Eid))
+                .asString();
+        System.out.println(response.getBody());
+    }
+    public String requestBodyWithEid(String Eid) throws JsonProcessingException {
+        WealthIncomeModel wealthIncomeModel=new WealthIncomeModel();
+        wealthIncomeModel.emiratesId=Eid;
+        wealthIncomeModel.wealthIncome.get(0).emiratesId="";
+        wealthIncomeModel.wealthIncome.get(0).wealthType="";
+        wealthIncomeModel.wealthIncome.get(0).wealthDescription="";
+        wealthIncomeModel.wealthIncome.get(0).isBusinessActive=true;
+        wealthIncomeModel.wealthIncome.get(0).incomeAmount=5000;
+        wealthIncomeModel.wealthIncome.get(0).incomeFrequency="";
+        wealthIncomeModel.wealthIncome.get(0).attachmentList.get(0).binaryFile="";
+        wealthIncomeModel.wealthIncome.get(0).attachmentList.get(0).contentType="";
+        wealthIncomeModel.wealthIncome.get(0).attachmentList.get(0).contentType="";
+        System.out.println(wealthIncomeModel);
+        return toJson(wealthIncomeModel);
+    }
 
     public String requestBody() throws JsonProcessingException {
         WealthIncomeModel wealthIncomeModel=new WealthIncomeModel();
@@ -44,7 +70,7 @@ public class UpdateWealthIncome {
         return toJson(wealthIncomeModel);
     }
 
-    public Root getResponse(UpdateLivingOn submitApplicationService) throws JsonProcessingException {
+    public Root getResponse(UpdateWealthIncome submitApplicationService) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
         return om.readValue(submitApplicationService.response.getBody(), Root.class);
     }

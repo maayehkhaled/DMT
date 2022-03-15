@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.ssa.core.model.AddNewMemberModel;
-import com.ssa.core.model.Premise;
 import com.ssa.core.model.Root;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
@@ -44,11 +43,12 @@ public class AddNewMember {
     }
     public String requestBodyWithEID(String eid)  {
         AddNewMemberModel addNewMember=new AddNewMemberModel();
-        addNewMember.emiratesId="";
-        addNewMember.toAddEmiratesId="";
-        addNewMember.relationshipToHoHKey="";
-        addNewMember.dateOfBirth="";
-        addNewMember.secondDocument="";
+        addNewMember.emiratesId=eid;
+        addNewMember.toAddEmiratesId="784199140631005";
+        addNewMember.relationshipToHoHKey="Son";
+        addNewMember.dateOfBirth="2018-01-08";
+        addNewMember.secondDocument="Test.pdf";
+        System.out.print(toJson(addNewMember));
         return toJson(addNewMember);
     }
 
@@ -63,7 +63,7 @@ public class AddNewMember {
         return toJson(addNewMember);
     }
 
-    public Root getResponse(UpdateLivingOn submitApplicationService) throws JsonProcessingException {
+    public Root getResponse(AddNewMember submitApplicationService) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
         return om.readValue(submitApplicationService.response.getBody(), Root.class);
     }

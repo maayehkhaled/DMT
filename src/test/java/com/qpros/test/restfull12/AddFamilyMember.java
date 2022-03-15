@@ -25,6 +25,8 @@ public class AddFamilyMember extends Base {
     VerifyEligibilityService verifyEligibilityService = new VerifyEligibilityService();
     AddNewMember addMember=new AddNewMember();
     CancelApplication cancelApp=new CancelApplication();
+    String emirateId="";
+    int count=0;
     @BeforeClass
     public void initSuite() {
         QuantaTestManager.startTestSuite(getClass().getSimpleName());
@@ -40,38 +42,54 @@ public class AddFamilyMember extends Base {
     @Test(description = "Confirm Single Addition", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
     public void confirmSingleAddition() throws JsonProcessingException {
-        logManager.STEP("Read Test Data from Source","");
-        //TODO ExcelFileUtils
-        String emirateId="";
-        int count=0;
-        CSVReader csvReader= null;
-        try {
-             csvReader = new CSVReader(new FileReader("src/main/resources/DataProvider/data.csv"));
-            String [] nextLine;
-            while((nextLine= csvReader.readNext())!=null&& count<=0){
-                count++;
-                emirateId=nextLine[1];
-            }
-
-
-        } catch (IOException | CsvValidationException e) {
-            e.printStackTrace();
-        }
-
-        logManager.STEP("The User Trigger Verify Eligibility Service","");
-        verifyEligibilityService.requestServiceWithParam(emirateId);
-        Assert.assertTrue(verifyEligibilityService.getresponse(verifyEligibilityService).application.isEligible);
-        Assert.assertEquals(verifyEligibilityService.getresponse(verifyEligibilityService).headOfFamilyBook.emiratesId,emirateId);
-/*
-        logManager.STEP("Add new member","");
-        addMember.requestServiceWithParam("784197519436477");
-        addMember.requestBodyWithEID();
-
-        logManager.STEP("Cancel application","");
-        cancelApp.requestService();
-        cancelApp.requestBody(*/
+        getData();
+        verifyEligibility();
+        addMember();
+        cancelApp();
     }
+        public void getData() {
+            logManager.STEP("Read Test Data from Source","");
+            //TODO ExcelFileUtils
 
+            CSVReader csvReader= null;
+            try {
+                csvReader = new CSVReader(new FileReader("src/main/resources/DataProvider/data.csv"));
+                String [] nextLine;
+                while((nextLine= csvReader.readNext())!=null&& count<=0){
+                    count++;
+                    emirateId=nextLine[1];
+                }
+
+
+            } catch (IOException | CsvValidationException e) {
+                e.printStackTrace();
+            }
+        }
+        public void verifyEligibility() throws JsonProcessingException {
+            logManager.STEP("The User Trigger Verify Eligibility Service","");
+            verifyEligibilityService.requestServiceWithParam(emirateId);
+            Assert.assertTrue(verifyEligibilityService.getresponse(verifyEligibilityService).application.isEligible);
+            Assert.assertEquals(verifyEligibilityService.getresponse(verifyEligibilityService).claimant.isHoFB,true);
+            Assert.assertEquals(verifyEligibilityService.getresponse(verifyEligibilityService).application.hasDataIssues,false);
+            Assert.assertEquals(verifyEligibilityService.getresponse(verifyEligibilityService).responseStatus.statusCode,200);
+        }
+        public void addMember() throws JsonProcessingException {
+        logManager.STEP("Add new member","");
+        addMember.requestServiceWithParam(emirateId);
+        Assert.assertEquals(addMember.getResponse(addMember).responseStatus.statusCode,200);
+        Assert.assertTrue(addMember.getResponse(addMember).application.isEligible);
+
+
+        Assert.assertEquals(addMember.getResponse(addMember).application.hasDataIssues,false);
+
+        }
+public void cancelApp() throws JsonProcessingException {
+    logManager.STEP("Cancel application","");
+    cancelApp.requestServiceWithEid(emirateId);
+    Assert.assertEquals(cancelApp.getresponse(cancelApp).responseStatus.statusCode,200);
+    Assert.assertEquals(cancelApp.getresponse(cancelApp).responseStatus.message,"Success");
+
+}
 }
 
 

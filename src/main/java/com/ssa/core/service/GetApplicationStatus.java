@@ -28,7 +28,17 @@ public class GetApplicationStatus {
                 .asString();
         System.out.println(response.getBody());
     }
-
+    public void requestServiceWithEid(String Eid) throws JsonProcessingException {
+        Unirest.config().reset();
+        Unirest.config().connectTimeout(7000);
+        Unirest.config().verifySsl(false);
+        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/GetApplicationStatus")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
+                .body(requestBodyWithEid(Eid))
+                .asString();
+        System.out.println(response.getBody());
+    }
     public String requestBody() throws JsonProcessingException {
 
 //        Data Body To Be Sent
@@ -43,6 +53,27 @@ public class GetApplicationStatus {
 
         GetApplicationStatusModel member= new GetApplicationStatusModel();
         member.emiratesId ="";
+        member.signedContract.binaryFile="";
+        member.signedContract.contentType="";
+        member.signedContract.filename="";
+        member.callADLocker=true;
+//        System.out.println(toJson(member));
+        return toJson(member);
+    }
+    public String requestBodyWithEid(String Eid) throws JsonProcessingException {
+
+//        Data Body To Be Sent
+//        {
+//            "EmiratesId": "string",
+//            "SignedContract": {
+//                    "BinaryFile": "string",
+//                    "ContentType": "string",
+//                    "Filename": "string" },
+//            "CallADLocker": true
+//        }
+
+        GetApplicationStatusModel member= new GetApplicationStatusModel();
+        member.emiratesId =Eid;
         member.signedContract.binaryFile="";
         member.signedContract.contentType="";
         member.signedContract.filename="";
