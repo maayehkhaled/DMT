@@ -20,7 +20,7 @@ import java.io.IOException;
 
 @Listeners(com.qpros.common.LogManager.class)
 
-public class GetFamilyDataConfirmed extends Base{
+public class GetFamilyDataModelConfirmed extends Base{
 
     VerifyEligibilityService verifyEligibilityService = new VerifyEligibilityService();
     GetFamilyData getFamilyData=new GetFamilyData();

@@ -3,9 +3,8 @@ package com.ssa.core.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.ssa.core.common.data.TestData;
-import com.ssa.core.model.BillData;
 import com.ssa.core.model.FamilyData;
+import com.ssa.core.model.GetFamilyDataModel;
 import com.ssa.core.model.Root;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
@@ -56,9 +55,9 @@ public class GetFamilyData {
         return toJson(member);
     }
 
-    public Root getresponse(GetFamilyData submitApplicationService) throws JsonProcessingException {
+    public GetFamilyDataModel getresponse(GetFamilyData submitApplicationService) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
-        return om.readValue(submitApplicationService.response.getBody(), Root.class);
+        return om.readValue(submitApplicationService.response.getBody(), GetFamilyDataModel.class);
     }
 
     public static void main(String[] args) throws JsonProcessingException {
