@@ -1,5 +1,6 @@
 package com.qpros.pages.web.SSA;
 
+import com.github.javafaker.Faker;
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.ssa.core.common.data.StaticValues;
@@ -8,10 +9,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
+
 public class ActivationOpportunitiesPage extends Base {
     public ActivationOpportunitiesPage(WebDriver driver) {
         PageFactory.initElements(Base.driver.get(), this);
     }
+    Faker faker=new Faker();
+    LocalDateTime datetime1 = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    String formatDateTime = datetime1.format(format);
 
     private By addOpportunityBtn= By.xpath("//input[contains(@id,'AddOpportunity')]");
     private By opportunityTypyDDL=By.xpath("//select[contains(@id,'wtddl_Opportunity')]"); //2
@@ -28,37 +37,66 @@ public class ActivationOpportunitiesPage extends Base {
     private By successMsg=By.className("Feedback_Message_Success");
     private By EIDTextbox=By.xpath("//textarea");
     private By addMemberBtn=By.xpath("//input[contains(@id,'AddIndividual')]");
+    private By thirdPage=By.xpath("//a[text()='3']");
+    private By footer=By.xpath("//div[@class='Footer']");
+    private By planFooter=By.xpath("//div[contains(@class,'Panel_footer')]");
 
     public void clickAddOpportunity() {
+        faker=new Faker();
         logManager.STEP("Add New Opportunities and recommend it to EID","The user adds tow Opportunities and recommend it to EID");
         ActionsHelper.retryClick(addOpportunityBtn, 30);
         ActionsHelper.driverWait(2000);
+        //logManager.Capture();
         driver.get().switchTo().frame(0);
-        ActionsHelper.selectOption(opportunityTypyDDL, "2");
+        ActionsHelper.selectOption(opportunityTypyDDL, StaticValues.IELTS);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.selectOption(partnerDDL, "2");
+        //logManager.Capture();
+        ActionsHelper.selectOption(partnerDDL, StaticValues.partner);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(opportunityNameTextbox,"Automation opp name");
+        ActionsHelper.sendKeys(opportunityNameTextbox,"Automation opp name " +faker.lorem().sentence(1));
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(opportunityDescriptionTextbox,"Automation description");
+        ActionsHelper.sendKeys(opportunityDescriptionTextbox,"Automation description " +faker.lorem().sentence(2));
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(startDateCalendar,"3/2/2022");
+        //ActionsHelper.sendKeysWithClear(startDateCalendar,formatDateTime);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(locationDDl,"1");
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(programCapacityTextbox,"200");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.selectOption(genderDDL,"2");
+        ActionsHelper.selectOption(genderDDL,StaticValues.IELTS);
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(minAgeTextbox, StaticValues.minAge);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(maxAgeTextbox,StaticValues.maxAge);
+        ActionsHelper.sendKeys(maxAgeTextbox, StaticValues.maxAge);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(saveBtn,30);
         ActionsHelper.driverWait(4000);
         ActionsHelper.sendKeysWithClear(EIDTextbox,TestData.pepUserEID +"\n" +TestData.opportunityEID);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(addMemberBtn,30);
+        ActionsHelper.driverWait(10000);
+    }
+
+    public void createdRequest(){
+        driver.get().navigate().refresh();
         ActionsHelper.driverWait(4000);
+        ActionsHelper.scrollTo(footer);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(thirdPage,30);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.scrollTo(footer);
+        logManager.INFO("Created opportunity",false);
+    }
+
+    public void openCreatedOpportunity(){
+        driver.get().navigate().to("https://uat.ssa.gov.ae/DCD_Activation_AgentFrontEndN/ExpandedFamilyMemberViewPage.aspx?ApplicationStatus=2&ApplicationID=1397&NameInArabic=%d8%b5%d8%a7%d9%84%d8%ad+%d8%b3%d9%8a%d9%81+%d8%ad%d9%85%d8%af+%d8%b9%d9%84%d9%89+%d8%a7%d9%84%d8%b3%d9%86%d8%a7%d9%86%d9%89&ActivityId=0&IndividualIsActive=True&EmiratesId=784197821469414&(Not.Licensed.For.Production)=");
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(By.cssSelector("#InternalPortalTheme_wt24_block_wtMainContent_wt14_CloneOfWebPatterns_wtTabs_block_wtTab11_DCD_Activation_Theme_wt133_block_wtImage img"),30);
+        //ActionsHelper.retryClick(By.cssSelector("[src='/DCD_Activation_Theme/tabs/manage-activation.svg']"));
+        //ActionsHelper.retryClick(By.xpath("[src='/DCD_Activation_Theme/tabs/manage-activation.svg']"),30);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.scrollTo(planFooter);
+        ActionsHelper.driverWait(8000);
+        logManager.INFO("Created Opportunity after assigning",false);
     }
     }

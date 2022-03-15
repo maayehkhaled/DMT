@@ -2,11 +2,9 @@ package com.qpros.test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qpros.common.web.Base;
-import com.qpros.helpers.ActionsHelper;
 import com.qpros.pages.web.SSA.*;
 import com.qpros.pages.web.SSA.modules.ApproveApplicationModule;
 import com.qpros.reporting.QuantaTestManager;
-import com.ssa.core.common.locators.urls;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;

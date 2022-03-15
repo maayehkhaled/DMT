@@ -41,7 +41,7 @@ public class ApproveApplicationModule extends Base {
     private static final Pattern p = Pattern.compile("(^[^\\s]+)");
     Matcher matcher;
     public String committeeName;
-    public static String refCode;
+    public static String refCode="SSP-28495";
 
 
     public void approveApplication(boolean incOrDecApp) throws JsonProcessingException, AWTException, InterruptedException {
@@ -62,8 +62,8 @@ public class ApproveApplicationModule extends Base {
 
             //read the referance code application is
             refCode = submitApplicationService.getresponse(submitApplicationService).applicationSummary.referenceNumber;
-            refCode.replace("\uE007","");
-            FileUtils.createFile("refCodeFile.txt",refCode);
+            refCode.replace("\uE007", "");
+            FileUtils.createFile("refCodeFile.txt", refCode);
 
             homePage.navigateToLogin();
 
@@ -79,7 +79,7 @@ public class ApproveApplicationModule extends Base {
 
 
             ActionsHelper.driverWait(8000);
-            String seniorSpecialist = agentPage.specialistApproval(refCode,incOrDecApp);
+            String seniorSpecialist = agentPage.specialistApproval(refCode, incOrDecApp);
             ActionsHelper.driverWait(8000);
             System.out.println("Senior Specialist : " + seniorSpecialist);
             agentPage.logOut();
@@ -88,7 +88,7 @@ public class ApproveApplicationModule extends Base {
             loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
             ActionsHelper.driverWait(5000);
             committeeName = agentPage.seniorSpecialistApproval(refCode);
-            System.out.println("seniorSpecial: " + committeeName);
+            System.out.println("Committee: " + committeeName);
             driver.get().navigate().to(urls.tasksList);
 
             //committeeName = committeeName.replace("Committee", "").replace("\n", "");
@@ -104,7 +104,7 @@ public class ApproveApplicationModule extends Base {
                 ActionsHelper.driverWait(2000);
                 agentPage.logOut();
             } else {
-                System.out.println("this is comettee nammeeee here plz " +committeeName);
+                System.out.println("this is comettee nammeeee here plz " + committeeName);
                 committeeName = committeeName.replace("\n", "");
                 if (committeeName.contains(UserType.Committee100.getUserName())) {
                     loginPage.loginWithUser(UserType.Committee100);
@@ -118,16 +118,15 @@ public class ApproveApplicationModule extends Base {
                 //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
                 ActionsHelper.driverWait(5000);
                 agentPage.logOut();
-                agentPage.logOut();
+                //agentPage.logOut();
 
             }
 
             driver.get().navigate().to(urls.agentLogin);
             loginPage.loginWithUser(UserType.Superuser);
-            ActionsHelper.navigate(urls.businessParameters);
-            ActionsHelper.driverWait(3000);
+            driver.get().navigate().to(urls.businessParameters);
             businessParametersPage.releaseAppliaction(refCode);
-            agentPage.logOut2();
+            agentPage.logOut();
             driver.get().navigate().to(urls.paymentList);
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
             Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
@@ -135,7 +134,6 @@ public class ApproveApplicationModule extends Base {
         }
 
     }
-
     public void approveExistingApplication(String refCode) throws AWTException, InterruptedException {
         loginPage.loginWithUser(UserType.Specialist2);
         ActionsHelper.driverWait(5000);

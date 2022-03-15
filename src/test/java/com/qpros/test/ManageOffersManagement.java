@@ -31,27 +31,28 @@ public class ManageOffersManagement extends Base {
     LoginPage loginPage = new LoginPage(driver.get());
     ManageOffersManagementPage managePage = new ManageOffersManagementPage(driver.get());
 
-    @Test(description = "Specific EID", priority = 1,
+    @Test(description = "Change status to accept", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void validateClickOnEID() {
         startMethod();
         managePage.clickOnEID();
+        managePage.changeDisplayStatus();
     }
 
-    @Test(description = "Change opportunity Status", priority = 2,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
-    public void validateChangeStatus() {
-        startMethod();
-        managePage.clickOnEID();
-        managePage.changeStatus();
-    }
-
-    @Test(description = "add Partner Comment", priority = 3,
+    @Test(description = "add Partner Comment", priority = 2,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void validateAddPartnerComment() {
         startMethod();
         managePage.clickOnEID();
         managePage.addPartnerComment();
+    }
+
+    @Test(description = "Change opportunity Status", priority = 3,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
+    public void validateChangeStatus() {
+        startMethod();
+        managePage.clickOnEID();
+        managePage.changeStatus();
     }
 
     @Test(description = "validate View All Info", priority = 4,

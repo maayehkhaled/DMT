@@ -38,12 +38,12 @@ public class PEPScenario extends Base {
         PEP.openJobInfo();
         PEP.clickOnFirstEID();
         PEP.clickEditJobInfo();
-
         PEP.editJobStatus();
         PEP.editQualificationInfo();
         PEP.editExperienceJobInfo();
         PEP.addFirstWorkExperience();
         PEP.addSecondWorkExperience();
         PEP.editMoreInfo();
+        PEP.openCreatedRequest();
     }
 }

@@ -14,20 +14,21 @@ public class ManageOffersHouseholdPage extends Base {
         PageFactory.initElements(Base.driver.get(), this);
     }
 
-    private By houseHoldingTab=By.xpath("//a[contains(@id,'ctl04_RichWidgets_wt6_block_wtMenuItem_wt11')]");
+    private By houseHoldingTab=By.xpath("//a[text()='ملف الأسرة']");  //("//a[contains(@id,'ctl04_RichWidgets_wt6_block_wtMenuItem_wt11')]");
     private By eidTextbox= By.xpath("//input[contains(@id,'EmiratesId')]");
     private By userIdLink=By.xpath("//a[contains(@id,'ctl03_wt71')]");
     private By oppUserEIDLink=By.xpath("//a[contains(@id,'ctl03_wtlnk_Expandview')]");
     private By planBtn=By.xpath("//div[contains(@id,'wt133_block_wtImageWrapper')]");
     private By editPlanBtn=By.xpath("//a[contains(@id,'ctl38_WebPatterns_wt133_block_wtTitle_wtOpportunityActions21')]");
 
-    private By editFirstTimeBtn=By.xpath("//a[@id='InternalPortalTheme_wt24_block_wtMainContent_wt14_CloneOfWebPatterns_wtTabs_block_wtContent11_wt77_wtOpportunitiesToApproveTable1_ctl36_WebPatterns_wt139_block_wtTitle_wtOpportunityActions21']/div/span");
-    private By editSecondTimeBtn=By.xpath("//a[@id='InternalPortalTheme_wt24_block_wtMainContent_wt14_CloneOfWebPatterns_wtTabs_block_wtContent11_wt77_wtOpportunitiesToApproveTable1_ctl38_WebPatterns_wt139_block_wtTitle_wtOpportunityActions18']/div/span");
+    private By editFirstTimeBtn=By.xpath("//span[43]//span[@class='fa fa-fw fa-sliders fa-2x']");
+    private By editSecondTimeBtn=By.xpath("//span[43]//span[@class='fa fa-fw fa-pencil-square-o fa-lg']");
     private By opportunityStatusDDL=By.xpath("//select[contains(@id,'DDOpportunityStatus')]");
     private By communicationDDL=By.xpath("//select[contains(@id,'DDSourceofCommunication')]");
     private By commentTextarea=By.xpath("//textarea[contains(@id,'Comment')]");
     private By smsTextarea=By.xpath("//textarea[contains(@id,'Sms')]");
     private By saveBtn=By.xpath("//input[contains(@id,'Save')]");
+    private By saveBtn2 =By.xpath("//a[contains(@id,'ctl48_WebPatterns_wt139_block_wtTitle')]");
     private By partnerDDL=By.xpath("//select[contains(@id,'FeedbackCategory')]");
     private By partnerComment=By.xpath("//textarea[contains(@id,'FeedbackTextArea')]");
     private By viewDetailsBtn=By.xpath("//div[contains(@id,'ctl38_WebPatterns_wt133_block_wtSectionExpandableArea')]/div/div[2]/span");
@@ -70,9 +71,10 @@ public class ManageOffersHouseholdPage extends Base {
         driver.get().switchTo().frame(0);
         ActionsHelper.selectOption(opportunityStatusDDL,StaticValues.noAnswerOppStatus);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeysWithClear(commentTextarea,"Automation comment no answer");
+        ActionsHelper.sendKeys(commentTextarea,"Automation comment no attachments abc");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(noAnswerMsg,"No answer till now please call us123");
+        ActionsHelper.sendKeys(noAnswerMsg,"No attachments till now please call us123 abc");
+        ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(saveBtn,30);
         ActionsHelper.driverWait(2000);
     }
@@ -82,13 +84,15 @@ public class ManageOffersHouseholdPage extends Base {
         ActionsHelper.retryClick(editSecondTimeBtn,30);
         ActionsHelper.driverWait(2000);
         driver.get().switchTo().frame(0);
-        ActionsHelper.selectOption(opportunityStatusDDL,StaticValues.acceptNoDocOppStatus);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.selectOption(partnerDDL,StaticValues.masterDegree);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(partnerComment,"Partner Comment yyy..5/2.");
+        //ActionsHelper.selectOption(opportunityStatusDDL,StaticValues.acceptNoDocOppStatus);
+        ActionsHelper.scrollTo(partnerDDL);
+        ActionsHelper.selectByValue(driver.get().findElement(partnerDDL),StaticValues.joblessJan);
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.sendKeysWithClear(partnerComment,"Partner Comment 24/2");
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.scrollTo(saveBtn);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(saveBtn,30);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(6000);
     }
 }
