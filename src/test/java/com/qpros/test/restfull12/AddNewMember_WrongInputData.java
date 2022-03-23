@@ -67,6 +67,8 @@ public class AddNewMember_WrongInputData extends Base {
         logManager.STEP("The User Trigger Add New Member Service","");
         addWrongData.requestServiceWithParam(emirateId);
         addWrongData.getResponse(addWrongData);
+        //the idea to add wrong DOB ??
+
     }
     @Test(description = "Cancel Application Successfully", priority = 3,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})

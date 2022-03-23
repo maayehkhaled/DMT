@@ -2,7 +2,7 @@ package com.qpros.pages.web.SSA.applicationreview;
 
 import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
-import com.ssa.core.model.GetFamilyData;
+import com.ssa.core.model.GetFamilyDataModel;
 import com.ssa.core.model.Household;
 import com.ssa.core.utils.Helpers;
 import org.openqa.selenium.By;
@@ -20,9 +20,9 @@ public class PersonalInformation extends Base {
     private By nationality = By.xpath("//*[@id=\"DCDAgentPortalTheme_wt362_block_wtMainContent_CloneOfWebPatterns_wttabs_block_wtContent1_wt243_wtDCDApplicationIndividualForm\"]/div[8]/span");
 
 
-    public void checkPersonalInformation(GetFamilyData getFamilyData) {
+    public void checkPersonalInformation(GetFamilyDataModel getFamilyDataModel) {
         Household household;
-        household = getFamilyData.household.stream().filter(household1 -> Boolean.toString(household1.isHoFB).equalsIgnoreCase("true")
+        household = getFamilyDataModel.household.stream().filter(household1 -> Boolean.toString(household1.isHoFB).equalsIgnoreCase("true")
         ).findAny().get();
         try {
             Assert.assertEquals(driver.get().findElement(emiratesId).getText(), household.emiratesId);

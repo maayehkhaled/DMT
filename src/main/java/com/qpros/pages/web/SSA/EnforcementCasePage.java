@@ -47,7 +47,7 @@ public class EnforcementCasePage extends Base {
     //Log Description Automation
     private By uploadFile=By.xpath("//div[contains(@class,'emptyMargin')]");
     private By fileDescription=By.id("InternalPortalTheme_wt107_block_wtMainContent_wtCacheFiles_ctl00_wttxt_Comment");
-    private By createCaseBtn = By.xpath("//input[contains(@id,'wtButton1_wtbtnCreateCase')]");
+    private By createCaseBtn = By.xpath("//input[contains(@id,'wtbtnCreateCase')]");
 
     private By searchRequestLink=By.xpath("//div[contains(@id,'wtCont_searchsection')]");
     private By eIdTexebox=By.xpath("//input[contains(@id,'SSPEmiratesID')]");
@@ -194,8 +194,9 @@ public class EnforcementCasePage extends Base {
      * To open existing enforcement case
      */
     public void openEnforcementCase(){
-        logManager.STEP("open existing enforcement case","The user will open existing enforcement case");
+        logManager.STEP("Click on Enforcement Case Link","The user will redirect to the enforcement cases page");
         ActionsHelper.retryClick(enforcementCaseLink, 30);
+        logManager.INFO("Click Enforcement Case Link",false);
         ActionsHelper.driverWait(8000);
     }
 
@@ -203,7 +204,7 @@ public class EnforcementCasePage extends Base {
      * To create new enforcement case
      */
     public void createEnforcementCase() {
-        logManager.STEP("create new enforcement case","The user will create new enforcement case");
+        logManager.STEP("Create New Enforcement Case","The user will create new enforcement case");
         faker=new Faker();
         ActionsHelper.retryClick(NewEnforcementCaseLink, 30);
         ActionsHelper.driverWait(2000);
@@ -247,18 +248,19 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.driverWait(2000);
         getPopupsPage().uploadDocuments(driver.get().findElement(uploadFile),"test.pdf");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.waitUntilElementIsDisplayed(fileDescription,30);
+        //ActionsHelper.waitUntilElementIsDisplayed(fileDescription,30);
         ActionsHelper.moveToElement(driver.get().findElement(fileDescription));
         ActionsHelper.sendKeys(fileDescription,"Uploaded File Description");
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(4000);
         ActionsHelper.retryClick(createCaseBtn,30);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(createCaseBtn,30);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(enforcementCaseLink, 30);
+        logManager.INFO("Click Create Enforcement Case",false);
+        ActionsHelper.driverWait(4000);
+        //ActionsHelper.retryClick(enforcementCaseLink, 30);
+        driver.get().navigate().refresh();
+        logManager.INFO("All Enforcement cases",false);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(createdCase,30);
-        logManager.INFO("Created Enforcement Case",false);
+        logManager.INFO("Preview The Created Enforcement Case",false);
     }
 
     public void editEnforcementCase() {

@@ -59,14 +59,22 @@ public class GetFamilyDataModelConfirmed extends Base{
 
         logManager.STEP("The User Trigger Verify Eligibility Service","");
         verifyEligibilityService.requestServiceWithParam(emirateId);
+        Assert.assertEquals(verifyEligibilityService.getresponse(verifyEligibilityService).responseStatus.statusCode,200);
+        //Contains familybook ??
+
+        Assert.assertFalse(verifyEligibilityService.getresponse(verifyEligibilityService).application.hasDataIssues);
         Assert.assertTrue(verifyEligibilityService.getresponse(verifyEligibilityService).application.isEligible);
 
         logManager.STEP("Get Data Of Confirmed Family","");
         getFamilyData.requestServiceWithParam(emirateId);
-        getFamilyData.getresponse(getFamilyData);
+        //200 ??
+        //Contains familybooknumber ??
+        //$.Household[0].IsRemoved false ??
+        //$.Application.HasDataIssues false ??
 
         logManager.STEP("Cancel Family Application","");
         cancelApplication.requestServiceWithParam(emirateId);
         Assert.assertEquals(cancelApplication.getresponse(cancelApplication).responseStatus.statusCode,200);
+        Assert.assertTrue(cancelApplication.getresponse(cancelApplication).responseStatus.message.contains("Success"));
     }
 }

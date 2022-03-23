@@ -65,6 +65,7 @@ public class AddNewMember_NoProofFound extends Base {
     public void AddNewMemberWrongData() throws JsonProcessingException {
         logManager.STEP("The User Trigger Add New Member Service","");
         addWrongData.requestServiceWithParam(emirateId);
+        //the idea to add specific relation ship e.x: HUSBAND'S FATHER"  ??
         addWrongData.getResponse(addWrongData);
     }
     @Test(description = "Cancel Application Successfully", priority = 3,

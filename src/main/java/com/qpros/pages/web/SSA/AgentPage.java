@@ -280,8 +280,8 @@ public class AgentPage extends Base {
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(10000);
         //        17/2
-        ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
-        ActionsHelper.driverWait(4000);
+        //ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
+        //ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("Approve Personal Information", agentApproveStepFinal);
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Click next Step 1", agentClickNextFinal);
@@ -382,7 +382,7 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(6000);
         //ActionsHelper.retryClick(previousViewLink,30);
         //        17/2
-        ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
+        //ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
         ActionsHelper.driverWait(4000);
         ActionsHelper.scrollTo(seniorSpecialsitApproveAll1Final);
         ActionsHelper.driverWait(4000);
@@ -481,7 +481,7 @@ public class AgentPage extends Base {
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(8000);
 //        17/2
-        ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
+        //ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
         ActionsHelper.driverWait(4000);
         //ActionsHelper.retryClick(previousViewLink,30);
         ActionsHelper.actionClickScrollStepClick("Click approve all", seniorSpecialsitApproveAll1Final);

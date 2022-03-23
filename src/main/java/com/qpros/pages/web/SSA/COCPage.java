@@ -126,7 +126,7 @@ public class COCPage extends Base {
             loginPage.loginWithUser(UserType.Superuser);
             ActionsHelper.navigate(urls.businessParameters);
             ActionsHelper.driverWait(3000);
-            businessParametersPage.releaseApplication(refCode);
+            businessParametersPage.releaseAppliaction(refCode);
             agentPage.logOut();
             driver.get().navigate().to(urls.paymentList);
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
@@ -164,7 +164,7 @@ public class COCPage extends Base {
         agentPage.logOut();
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseApplication(refCode);
+        businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
 
         driver.get().navigate().to(urls.paymentList);
@@ -206,7 +206,7 @@ public class COCPage extends Base {
         driver.get().navigate().to(urls.tasksList);
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseApplication(refCode);
+        businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
@@ -243,7 +243,7 @@ public class COCPage extends Base {
         driver.get().navigate().to(urls.tasksList);
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseApplication(refCode);
+        businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));

@@ -125,7 +125,7 @@ public class ApproveApplicationModule extends Base {
             driver.get().navigate().to(urls.agentLogin);
             loginPage.loginWithUser(UserType.Superuser);
             driver.get().navigate().to(urls.businessParameters);
-            businessParametersPage.releaseApplication(refCode);
+            businessParametersPage.releaseAppliaction(refCode);
             agentPage.logOut();
             driver.get().navigate().to(urls.paymentList);
             loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
@@ -187,7 +187,7 @@ public class ApproveApplicationModule extends Base {
         //String refCode = "SSP-10679";
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseApplication(refCode);
+        businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
         Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
@@ -254,7 +254,7 @@ public class ApproveApplicationModule extends Base {
         //String refCode = "SSP-10679";
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseApplication(refCode);
+        businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
         //Comment this line so we can test the application approval process without failing
         /*
@@ -293,7 +293,7 @@ public class ApproveApplicationModule extends Base {
         agentPage.logOut();
         loginPage.loginWithUser(UserType.Superuser);
         driver.get().navigate().to(urls.businessParameters);
-        businessParametersPage.releaseApplication(refCode);
+        businessParametersPage.releaseAppliaction(refCode);
         agentPage.logOut();
     }
 }

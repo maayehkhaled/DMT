@@ -26,11 +26,14 @@ public class ActivationOpportunities extends Base {
     LoginPage loginPage = new LoginPage(driver.get());
     ActivationOpportunitiesPage activation=new ActivationOpportunitiesPage(driver.get());
 
-    @Test(description = "Add Activation Opportunity", priority = 1,
+    @Test(description = "Add Activation Opportunities and recommend it to EID", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void AddActivationOpportunity() {
         driver.get().navigate().to(urls.activationOpportunities);
         loginPage.loginWithUser(UserType.ProgramManager);
+        //logManager.INFO("1.Login as CaseManagerHead",false);
+        //loginPage.loginWithUser(UserType.CaseManagerHead);
+
         activation.clickAddOpportunity();
         activation.createdRequest();
         activation.openCreatedOpportunity();

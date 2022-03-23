@@ -57,6 +57,7 @@ public class CaseAdministrationPage extends Base{
 
     public void createNewCase(By newCase,By saveRecord,By scrollElement){
         faker=new Faker();
+        logManager.INFO("Click on Case Administration from the menu.",false);
         ActionsHelper.clickAction(casesManagementLink);
         ActionsHelper.driverWait(4000);
         ActionsHelper.scrollupTo(driver.get().findElement(scrollElement));
