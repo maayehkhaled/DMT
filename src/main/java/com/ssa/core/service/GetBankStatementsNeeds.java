@@ -3,12 +3,13 @@ package com.ssa.core.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.qpros.common.web.Base;
 import com.ssa.core.model.GetApplicationSummaryModel;
 import com.ssa.core.model.Root;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 
-public class GetBankStatementsNeeds {
+public class GetBankStatementsNeeds extends Base {
     public HttpResponse<String> response;
 
     public String toJson(Object obj) throws JsonProcessingException {
@@ -25,7 +26,7 @@ public class GetBankStatementsNeeds {
                 .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
                 .body(requestBody())
                 .asString();
-        System.out.println(response.getBody());
+        logManager.CodeBLOCK(response.getBody());
     }
     public void requestServiceWithEid(String eid) throws JsonProcessingException {
         Unirest.config().reset();
@@ -36,7 +37,7 @@ public class GetBankStatementsNeeds {
                 .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
                 .body(requestBodyWithEid(eid))
                 .asString();
-        System.out.println(response.getBody());
+        logManager.CodeBLOCK(response.getBody());
     }
     public String requestBodyWithEid(String eid) throws JsonProcessingException {
         GetApplicationSummaryModel member= new GetApplicationSummaryModel();

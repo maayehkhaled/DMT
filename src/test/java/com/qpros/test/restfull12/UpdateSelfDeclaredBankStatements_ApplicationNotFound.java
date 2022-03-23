@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import com.qpros.common.web.Base;
+import com.ssa.core.service.UpdateSelfDeclaredBankStatements;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 
 @Listeners(com.qpros.common.LogManager.class)
 public class UpdateSelfDeclaredBankStatements_ApplicationNotFound extends Base {
+    UpdateSelfDeclaredBankStatements updateSelfDeclaredBankStatements=new UpdateSelfDeclaredBankStatements();
 
     @Test(description = "Update Self Declared Bank Statements_Application Not Found", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
@@ -32,6 +34,9 @@ public class UpdateSelfDeclaredBankStatements_ApplicationNotFound extends Base {
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
-///////////////
+        updateSelfDeclaredBankStatements.requestServiceWithParam(emirateId);
+        updateSelfDeclaredBankStatements.getResponse(updateSelfDeclaredBankStatements);
+        //200
+        //could not retrieve
     }
 }

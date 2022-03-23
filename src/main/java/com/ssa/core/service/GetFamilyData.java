@@ -55,15 +55,15 @@ public class GetFamilyData {
         return toJson(member);
     }
 
-    public GetFamilyDataModel getresponse(GetFamilyData submitApplicationService) throws JsonProcessingException {
+    public FamilyData getresponse(GetFamilyData submitApplicationService) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
-        return om.readValue(submitApplicationService.response.getBody(), GetFamilyDataModel.class);
+        return om.readValue(submitApplicationService.response.getBody(), FamilyData.class);
     }
-
+/*
     public static void main(String[] args) throws JsonProcessingException {
         GetFamilyData submitApplicationService = new GetFamilyData();
         submitApplicationService.requestService();
         System.out.print(submitApplicationService.getresponse(submitApplicationService).application.messageEN);
     }
-
+*/
 }

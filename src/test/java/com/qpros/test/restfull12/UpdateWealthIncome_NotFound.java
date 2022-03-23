@@ -32,9 +32,9 @@ public class UpdateWealthIncome_NotFound extends Base {
     public synchronized void setTestSuite() throws IOException {
         this.setUpBrowser();
     }
-    @Test(description = "Update Wealth Income", priority = 1,
+    @Test(description = "Update Wealth Income NotFound", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void UpdateWealthIncome() throws JsonProcessingException {
+    public void UpdateWealthIncomeNotFound() throws JsonProcessingException {
         logManager.STEP("Read Test Data from Source", "");
         //
         String emirateId = "";

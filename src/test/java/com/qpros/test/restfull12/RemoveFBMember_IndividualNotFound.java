@@ -19,10 +19,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 @Listeners(com.qpros.common.LogManager.class)
-public class RemoveFBMember_IndividualNotFound extends Base{
+public class RemoveFBMember_IndividualNotFound extends Base {
     VerifyEligibilityService verifyEligibilityService = new VerifyEligibilityService();
-    RemoveFBMember removeMember=new RemoveFBMember();
-    CancelApplication cancelApplication=new CancelApplication();
+    RemoveFBMember removeMember = new RemoveFBMember();
+    CancelApplication cancelApplication = new CancelApplication();
 
     @BeforeClass
     public void initSuite() {
@@ -34,10 +34,13 @@ public class RemoveFBMember_IndividualNotFound extends Base{
         this.setUpBrowser();
     }
 
-    //CSV
-    String emirateId = "";
 
-    public void readCSV() {
+    @SneakyThrows
+    @Test(description = "RemoveFBMember_Individual", priority = 1,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
+    public void RemoveFBMemberIndividual() {
+        //CSV
+        String emirateId = "";
 
         int count = 0;
         CSVReader csvReader = null;
@@ -52,32 +55,18 @@ public class RemoveFBMember_IndividualNotFound extends Base{
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
-    }
 
-    @SneakyThrows
-    @Test(description = "Verify Eligibility", priority = 1,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void VerifyEligibility(){
-        logManager.STEP("The User Trigger Verify Eligibility Service","");
+        logManager.STEP("The User Trigger Verify Eligibility Service", "");
         verifyEligibilityService.requestServiceWithParam(emirateId);
         Assert.assertTrue(verifyEligibilityService.getresponse(verifyEligibilityService).application.isEligible);
-        Assert.assertEquals(verifyEligibilityService.getresponse(verifyEligibilityService).headOfFamilyBook.emiratesId,emirateId);
+        Assert.assertEquals(verifyEligibilityService.getresponse(verifyEligibilityService).headOfFamilyBook.emiratesId, emirateId);
 
-    }
-    @Test(description = "Remove FB Member", priority = 2,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void RemoveFBMember() throws JsonProcessingException {
         logManager.STEP("The User Trigger Remove FB Member Service","");
         removeMember.requestServiceWithEid(emirateId);
         removeMember.getresponse(removeMember);
 
-    }
-    @Test(description = "Cancel Application Successfully", priority = 3,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void CancelApplication() throws JsonProcessingException {
         logManager.STEP("The User Trigger Cancel Application Service","");
         cancelApplication.requestServiceWithParam(emirateId);
         Assert.assertEquals(cancelApplication.getresponse(cancelApplication).responseStatus.statusCode,200);
-    }
-
+}
 }

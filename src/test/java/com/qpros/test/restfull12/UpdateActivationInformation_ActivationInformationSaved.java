@@ -16,16 +16,17 @@ import java.io.FileReader;
 import java.io.IOException;
 
 @Listeners(com.qpros.common.LogManager.class)
-public class UpdateActivationInformation_ActivationInformationSaved extends Base{
+public class UpdateActivationInformation_ActivationInformationSaved extends Base {
     //Verify
     VerifyEligibilityService verifyEligibilityService = new VerifyEligibilityService();
     //GetActivationInformation
-    GetActivationInformation getActivationInfo=new GetActivationInformation();
+    GetActivationInformation getActivationInfo = new GetActivationInformation();
     //UpdateActivationInformation
-    UpdateActivationInformation updateActivationInfo=new UpdateActivationInformation();
+    UpdateActivationInformation updateActivationInfo = new UpdateActivationInformation();
     //GetActivationInformation2
     //Cancel
-    CancelApplication cancelApp=new CancelApplication();
+    CancelApplication cancelApp = new CancelApplication();
+
     @BeforeClass
     public void initSuite() {
         QuantaTestManager.startTestSuite(getClass().getSimpleName());
@@ -35,11 +36,12 @@ public class UpdateActivationInformation_ActivationInformationSaved extends Base
     public synchronized void setTestSuite() throws IOException {
         this.setUpBrowser();
     }
+
     String emirateId = "";
 
-    @Test(description = "Verify Eligibility", priority = 1,
+    @Test(description = "Update Activation Information Activation", priority = 1,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void verifyEligibility() throws JsonProcessingException {
+    public void UpdateActivationInformationActivation() throws JsonProcessingException {
         logManager.STEP("Read Test Data from Source", "");
         //
 
@@ -61,30 +63,23 @@ public class UpdateActivationInformation_ActivationInformationSaved extends Base
         verifyEligibilityService.requestServiceWithParam(emirateId);
         Assert.assertTrue(verifyEligibilityService.getresponse(verifyEligibilityService).application.isEligible);
         Assert.assertEquals(verifyEligibilityService.getresponse(verifyEligibilityService).headOfFamilyBook.emiratesId, emirateId);
-    }
 
-    @Test(description = "Get Activation Information", priority = 2, dependsOnMethods = "verifyEligibility",
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void getActivationInformation() throws JsonProcessingException {
-        logManager.STEP("The User Trigger Get Activation Information Service", "");
-        getActivationInfo.requestServiceWithParam(emirateId);
-        getActivationInfo.getresponse(getActivationInfo);
-    }
+        getActivationInfo();
 
-    @Test(description = "Update Activation Information", priority = 3, dependsOnMethods = "getActivationInformation",
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void updateActivationInformation() throws JsonProcessingException {
         logManager.STEP("The User Trigger Update Activation Information Service", "");
         updateActivationInfo.requestServiceWithParam(emirateId);
         updateActivationInfo.getresponse(updateActivationInfo);
-        getActivationInformation();
-    }
+        getActivationInfo();
+        //getActivationInformation();
 
-    @Test(description = "Cancel Application", priority = 4, dependsOnMethods = "updateActivationInformation",
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void cancelApplication() throws JsonProcessingException {
+
         logManager.STEP("The User Trigger Cancel Application Service", "");
         cancelApp.requestServiceWithParam(emirateId);
         cancelApp.getresponse(cancelApp);
     }
+    public void getActivationInfo() throws JsonProcessingException {
+        logManager.STEP("The User Trigger Get Activation Information Service", "");
+        getActivationInfo.requestServiceWithParam(emirateId);
+        getActivationInfo.getresponse(getActivationInfo);
     }
+}
