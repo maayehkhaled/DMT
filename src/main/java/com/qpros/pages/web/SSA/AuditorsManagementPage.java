@@ -68,13 +68,14 @@ public class AuditorsManagementPage extends Base {
         ActionsHelper.driverWait(500);
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
-        logManager.STEP("Input Ref", "Inputs the reference nubmer: " + refNumber);
+        logManager.INFO("Input Ref"+refNumber+"", false);
         ActionsHelper.sendKeys(inputRef, refNumber);
         ActionsHelper.driverWait(8000);
         ActionsHelper.actionClickStepClick("Clicks the save button", clickSave);
         ActionsHelper.driverWait(6000);
-        ActionsHelper.waitForExpectedElement(feedBackMessage, 30);
-        if (feedbackMessage.feedbackMessage().equals("تم إعادة تعيين الطلبات بنجاح"))
+        /*driver.get().switchTo().alert().accept();//
+        ActionsHelper.waitForExpectedElement(feedBackMessage, 30);*/
+     /*   if (feedbackMessage.feedbackMessage().equals("تم إعادة تعيين الطلبات بنجاح"))
         {
             try {
                 driver.get().switchTo().alert().accept();
@@ -86,7 +87,7 @@ public class AuditorsManagementPage extends Base {
             ActionsHelper.sendKeys(inputRef, refNumber);
             ActionsHelper.driverWait(8000);
             ActionsHelper.actionClickStepClick("Clicks the save button", clickSave);
-        }
+        }*/
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
