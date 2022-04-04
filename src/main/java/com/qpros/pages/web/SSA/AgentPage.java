@@ -23,7 +23,7 @@ public class AgentPage extends Base {
     private final By agentApproveStepFinal = By.xpath("//input[contains(@id,'wtActions_wtApproveCurrentSection')]"); //Contains app ref number and clickable
     private final By agentSendAgainStepFinal = By.xpath("//*[contains(@id,'wtActions_wtcurrentSectionMoreinfo')]"); //Contains app ref number and clickable
     private final By agentRejectButtonFinal = By.xpath("//*[contains(@id,'wtActions_wtrbReject')]");
-    private final By rejectBtn = By.xpath("//input[@value=\"مرفوض - رفض\"]");
+    private final By rejectBtn = By.xpath("//input[@value='مرفوض - رفض']");
     //        17/2
     private final By OldVersionButton = By.xpath("//a[.='عرض هذا الطلب في الإصدار القديم']");
 //TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]

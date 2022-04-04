@@ -71,6 +71,7 @@ public class AuditorsManagementPage extends Base {
         logManager.INFO("Input Ref"+refNumber+"", false);
         ActionsHelper.sendKeys(inputRef, refNumber);
         ActionsHelper.driverWait(8000);
+        ActionsHelper.scrollupTo(driver.get().findElement(clickSave));
         ActionsHelper.actionClickStepClick("Clicks the save button", clickSave);
         ActionsHelper.driverWait(6000);
         /*driver.get().switchTo().alert().accept();//
