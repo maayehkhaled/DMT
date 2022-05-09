@@ -63,7 +63,7 @@ public class EnforcementCase extends Base {
         enforcementPage.editAction();
     }
 
-    @Test(description = "Delete Action", priority = 5, dependsOnMethods = {"addAction"},
+    @Test(description = "Delete Action", priority = 5, dependsOnMethods = {"addAction"} , alwaysRun=true,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void deleteAction() {
         startPage();

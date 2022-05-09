@@ -57,6 +57,7 @@ public class PEPPage extends Base {
     //More Info
     private By lengthTextbox=By.cssSelector("[placeholder='ادخل الطول بالسنتيمتر']");
     private By weightTextbox=By.cssSelector("[placeholder='ادخل الوزن بالكيلوغرام']");
+    private By nationalService=By.id("InternalPortalTheme_wt24_block_wtMainContent_wt14_CloneOfWebPatterns_wtTabs_block_wtContent6_wt28_wtAdditionPersonalInfo_WebPatterns_wt326_block_wtContent_wtNationalService_I_Finished");
     private By driveLicenseRadioBtn=By.xpath("//input[contains(@id,'wtDriverLicense_Yes_Radio')]");
     private By driveLicenseTypeDDL=By.xpath("//select[contains(@id,'type')]");
     private By driveLicenseSaveBtn=By.xpath("//a[contains(@id,'saveBtn')]");
@@ -181,6 +182,8 @@ public class PEPPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(weightTextbox, StaticValues.weight);
         ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(nationalService,30);
+        ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(driveLicenseRadioBtn,30);
         ActionsHelper.driverWait(4000);
         ActionsHelper.selectOption(driveLicenseTypeDDL,StaticValues.IELTS);
@@ -209,6 +212,7 @@ public class PEPPage extends Base {
     }
 
     public void openCreatedRequest(){
+        ActionsHelper.driverWait(6000);
         ActionsHelper.scrollTo(jobInfoBtn);
         ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick(" التفاصيل المهنية",jobInfoBtn);

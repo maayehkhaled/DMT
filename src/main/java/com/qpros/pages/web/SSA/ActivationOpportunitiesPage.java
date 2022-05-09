@@ -46,18 +46,15 @@ public class ActivationOpportunitiesPage extends Base {
         logManager.STEP("Add New Opportunities and recommend it to EID","The user adds tow Opportunities and recommend it to EID");
         ActionsHelper.retryClick(addOpportunityBtn, 30);
         ActionsHelper.driverWait(2000);
-        //logManager.Capture();
         driver.get().switchTo().frame(0);
         ActionsHelper.selectOption(opportunityTypyDDL, StaticValues.IELTS);
         ActionsHelper.driverWait(2000);
-        //logManager.Capture();
         ActionsHelper.selectOption(partnerDDL, StaticValues.partner);
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(opportunityNameTextbox,"Automation opp name " +faker.lorem().sentence(1));
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(opportunityDescriptionTextbox,"Automation description " +faker.lorem().sentence(2));
         ActionsHelper.driverWait(2000);
-        //ActionsHelper.sendKeysWithClear(startDateCalendar,formatDateTime);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(locationDDl,"1");
         ActionsHelper.driverWait(2000);
@@ -71,7 +68,7 @@ public class ActivationOpportunitiesPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(saveBtn,30);
         ActionsHelper.driverWait(4000);
-        ActionsHelper.sendKeysWithClear(EIDTextbox,TestData.pepUserEID +"\n" +TestData.opportunityEID);
+        ActionsHelper.sendKeysWithClear(EIDTextbox,TestData.opportunityEID);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(addMemberBtn,30);
         ActionsHelper.driverWait(10000);
@@ -92,8 +89,6 @@ public class ActivationOpportunitiesPage extends Base {
         driver.get().navigate().to("https://uat.ssa.gov.ae/DCD_Activation_AgentFrontEndN/ExpandedFamilyMemberViewPage.aspx?ApplicationStatus=2&ApplicationID=1397&NameInArabic=%d8%b5%d8%a7%d9%84%d8%ad+%d8%b3%d9%8a%d9%81+%d8%ad%d9%85%d8%af+%d8%b9%d9%84%d9%89+%d8%a7%d9%84%d8%b3%d9%86%d8%a7%d9%86%d9%89&ActivityId=0&IndividualIsActive=True&EmiratesId=784197821469414&(Not.Licensed.For.Production)=");
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(By.cssSelector("#InternalPortalTheme_wt24_block_wtMainContent_wt14_CloneOfWebPatterns_wtTabs_block_wtTab11_DCD_Activation_Theme_wt133_block_wtImage img"),30);
-        //ActionsHelper.retryClick(By.cssSelector("[src='/DCD_Activation_Theme/tabs/manage-activation.svg']"));
-        //ActionsHelper.retryClick(By.xpath("[src='/DCD_Activation_Theme/tabs/manage-activation.svg']"),30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.scrollTo(planFooter);
         ActionsHelper.driverWait(8000);

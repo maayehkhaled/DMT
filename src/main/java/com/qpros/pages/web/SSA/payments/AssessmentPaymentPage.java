@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -141,11 +142,11 @@ public class AssessmentPaymentPage extends Base {
         ActionsHelper.driverWait(3000);
         List<WebElement> tableBody=driver.get().findElements(By.className("TableRecords_OddLine"));
 
-      /*  long monthsBetween = ChronoUnit.MONTHS.between(
+       /* long monthsBetween = ChronoUnit.MONTHS.between(
                 YearMonth.from(LocalDate.parse(convertDate(tableBody.get(3).getText()))), //3 then 4
                 YearMonth.from(LocalDate.parse(convertDate(tableBody.get(4).getText())).plus(1, ChronoUnit.DAYS).atStartOfDay())
         );*/
-        /*long monthsBetween = ChronoUnit.MONTHS.between(
+        long monthsBetween = ChronoUnit.MONTHS.between(
                 LocalDate.parse(convertDate(tableBody.get(3).getText())).withDayOfMonth(1),
                 LocalDate.parse(convertDate(tableBody.get(4).getText())).plus(1, ChronoUnit.DAYS).atStartOfDay().withDayOfMonth(1)
         );
@@ -156,7 +157,7 @@ public class AssessmentPaymentPage extends Base {
             ActionsHelper.isElementPresent(tableBody.get(3)); //3
             ActionsHelper.isElementPresent(tableBody.get(4)); //4
             logManager.INFO("Checking for the differance for the Payment schedule is 12 Months ",false);
-        }*/
+        }
         if(!TestData.EID.equalsIgnoreCase(tableBody.get(1).getText()))
         {
             logManager.ERROR("Actual Date  [" +tableBody.get(2).getText()+ "]  while expected result should ["+TestData.EID+"] the  [" +tableBody.get(2).getText()+"] does not equal  ["+TestData.EID+"]  ", false);
@@ -872,9 +873,9 @@ ActionsHelper.driverWait(2000);
         DateTimeFormatter f = new DateTimeFormatterBuilder().appendPattern(StaticValues.DateTimeFormatDayMonthYear)
                 .toFormatter();
 
-        LocalDate parsedDate = LocalDate.parse(strDate, f);
-        DateTimeFormatter f2 = DateTimeFormatter.ofPattern(StaticValues.DateTimeFormatDayMonthYear);
+        LocalDate parsedDate = LocalDate.parse(strDate,f);
 
+        DateTimeFormatter f2=DateTimeFormatter.ofPattern(StaticValues.DateTimeFormatDayMonthYear);
         String newDate = parsedDate.format(f2);
 
         return newDate;
@@ -1042,13 +1043,13 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario10()
     {
-       /* logManager.STEP("Update Payments Status – Terminate payment ","this method to Update Payments Status – Terminate payment ");
+        logManager.STEP("Update Payments Status – Terminate payment ","this method to Update Payments Status – Terminate payment ");
         requestManualCard();
         ActionsHelper.driverWait(3000);
         addTaskAndCheckFromData();
         logOut();
         ActionsHelper.driverWait(5000);
-        loginByPaymentSeniorSpecialist();*/
+        loginByPaymentSeniorSpecialist();
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickStepClick("CLICK on المدفوعات",paymentMenuItem);
         ActionsHelper.actionClickStepClick("click on اجراءات الدفع ",applicationPaymentAction);

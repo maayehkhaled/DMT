@@ -22,6 +22,7 @@ public class ManageOffersHouseholdPage extends Base {
     private By editPlanBtn=By.xpath("//a[contains(@id,'ctl38_WebPatterns_wt133_block_wtTitle_wtOpportunityActions21')]");
 
     private By editFirstTimeBtn=By.xpath("//span[43]//span[@class='fa fa-fw fa-sliders fa-2x']");
+    private By scrollToEle=By.xpath("//div[@class='SubTitle_Section']");
     private By editSecondTimeBtn=By.xpath("//span[43]//span[@class='fa fa-fw fa-pencil-square-o fa-lg']");
     private By opportunityStatusDDL=By.xpath("//select[contains(@id,'DDOpportunityStatus')]");
     private By communicationDDL=By.xpath("//select[contains(@id,'DDSourceofCommunication')]");
@@ -33,12 +34,14 @@ public class ManageOffersHouseholdPage extends Base {
     private By partnerComment=By.xpath("//textarea[contains(@id,'FeedbackTextArea')]");
     private By viewDetailsBtn=By.xpath("//div[contains(@id,'ctl38_WebPatterns_wt133_block_wtSectionExpandableArea')]/div/div[2]/span");
     private By noAnswerMsg=By.xpath("//textarea[contains(@id,'wttxt_Sms')]");
+    private By suggestedTask=By.xpath("//span[contains(text(),'موصى به')]");
 
     public void searchForEID(){
         logManager.STEP("Search For EID","The user searches for EID then click Tamkeen");
         ActionsHelper.retryClick(houseHoldingTab,30);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(eidTextbox, TestData.pepUserEID+ Keys.ENTER);
+        //ActionsHelper.sendKeys(eidTextbox, TestData.pepUserEID+ Keys.ENTER);
+        ActionsHelper.sendKeys(eidTextbox, TestData.opportunityEID+ Keys.ENTER);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(userIdLink,30);
         ActionsHelper.driverWait(2000);
@@ -50,19 +53,26 @@ public class ManageOffersHouseholdPage extends Base {
 
     public void firstTimeEdit(){
         logManager.STEP("First Edit For The Opportunity","The user click edit to manage opportunity ");
-        ActionsHelper.retryClick(editFirstTimeBtn,30);
-        ActionsHelper.driverWait(2000);
-        driver.get().switchTo().frame(0);
-        ActionsHelper.selectOption(opportunityStatusDDL,StaticValues.acceptOppStatus);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.selectOption(communicationDDL, StaticValues.IELTS);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(commentTextarea,"Automation comment....");
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(smsTextarea,"Automation MSG..");
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(saveBtn,30);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.scrollTo(scrollToEle);
+        if(driver.get().findElement(suggestedTask).isDisplayed()) {
+            ActionsHelper.retryClick(editFirstTimeBtn, 30);
+            ActionsHelper.driverWait(2000);
+            driver.get().switchTo().frame(0);
+            ActionsHelper.selectOption(opportunityStatusDDL, StaticValues.acceptOppStatus);
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.selectOption(communicationDDL, StaticValues.IELTS);
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.sendKeys(commentTextarea, "Automation comment....");
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.sendKeys(smsTextarea, "Automation MSG..");
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.retryClick(saveBtn, 30);
+            ActionsHelper.driverWait(2000);
+        }
+        else {
+            System.out.println("No New Opportunity For This EID");
+            driver.get().close();
+        }
     }
     public void editStatusOnly(){
         logManager.STEP("Edit Opportunity Status","The user click edit to edit opportunity status ");

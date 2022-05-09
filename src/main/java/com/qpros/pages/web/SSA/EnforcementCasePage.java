@@ -2,6 +2,7 @@ package com.qpros.pages.web.SSA;
 
 import com.github.javafaker.Faker;
 import com.qpros.common.web.Base;
+import com.qpros.common.web.Util;
 import com.qpros.helpers.ActionsHelper;
 import com.qpros.pages.web.SSA.commonSSA.Popups;
 import com.ssa.core.common.data.StaticValues;
@@ -69,6 +70,7 @@ public class EnforcementCasePage extends Base {
     private By editActionBtn=By.xpath("//a[@id='InternalPortalTheme_wt251_block_wtMainContent_wtActionTable_ctl03_wtlnk_editaction']");
     private By agreeRadioBtn=By.xpath("//input[contains(@id,'wt12')]");
     private By saveEditAction=By.xpath("//input[contains(@id,'wtbtnCreateAction')]");
+    private By scrollToDoneElement=By.xpath("//tr[1]//div[@class='imgSpace']/div[.='مُنجز']");
     //Delete Action Locators
     private By deleteActionBtn=By.xpath("//a[contains(@id,'ctl03_wt679')]");
     private By deletedRecord=By.xpath("//td[contains(@id,'ctl04_wtActionTableRow1')]");
@@ -83,6 +85,8 @@ public class EnforcementCasePage extends Base {
     private By deleteLogBtn=By.xpath("//a[contains(@id,'ctl03_wt146')]");
     private By createdCase=By.xpath("//div[3]/div[5]/div/div[2]/div/div/div[6]/span/table/tbody/tr[1]/td[1]/a");
     private By createdNewCase=By.xpath("//a[text()='التالي']");
+    ////div[text()='إضافة سِجِل جديد']
+
 
     public void deleteLogs(){
         logManager.STEP("Delete Enforcement Case Log","The User Will Delete The Created Log For Existent Enforcement Case");
@@ -121,16 +125,19 @@ public class EnforcementCasePage extends Base {
     }
     public void deleteAction() {
         logManager.STEP("Delete The Created Action","The User Will Delete The Action Created Before For Existent Enforcement Case");
-        ActionsHelper.retryClick(caseID,30);
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.scrollTo(caseID);
+        logManager.INFO("Scroll To Case",false);
+        ActionsHelper.actionClickStepClick("Click on case id",caseID);
+        logManager.INFO("Open specific case",false);
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.scrollTo(deleteActionBtn);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(deleteActionBtn,30);
+        ActionsHelper.actionClickStepClick("Click on delete action button",deleteActionBtn);
         ActionsHelper.driverWait(4000);
         driver.get().switchTo().alert().accept();
-        ActionsHelper.driverWait(5000);
-        driver.get().navigate().refresh();
-        ActionsHelper.scrollupTo(driver.get().findElement(createdNewCase));
         ActionsHelper.driverWait(4000);
-        logManager.INFO("Action Completed",false);
+        logManager.INFO("Action Deleted",false);
     }
     public int checkDeletedTableSize(){
         logManager.STEP("Check the table size","Check the table size after delete record");
@@ -151,7 +158,7 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.retryClick(saveActionBtn, 30);
         ActionsHelper.driverWait(2000);
         driver.get().navigate().refresh();
-        ActionsHelper.scrollupTo(driver.get().findElement(createdNewCase));
+        ActionsHelper.scrollupTo(driver.get().findElement(scrollToDoneElement));
         ActionsHelper.driverWait(4000);
         logManager.INFO("Action Completed",false);
     }
@@ -185,8 +192,8 @@ public class EnforcementCasePage extends Base {
     logManager.INFO("Save",false);
     ActionsHelper.driverWait(2000);
     driver.get().navigate().refresh();
-    /*ActionsHelper.scrollupTo(driver.get().findElement(createdNewCase));
-    ActionsHelper.driverWait(2000);*/
+    ActionsHelper.scrollupTo(driver.get().findElement(addLogLink));
+    ActionsHelper.driverWait(2000);
     logManager.INFO("The new created action",false);
     }
 
@@ -240,15 +247,15 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.selectOption(enforcementLogTypeDDL,StaticValues.enforcementLogType);
         ActionsHelper.driverWait(2000);
 
-        ActionsHelper.sendKeysWithClear(logDateCalendar,"30/12/2021");
+        ActionsHelper.sendKeysWithClear(logDateCalendar,Util.formattedCurrentDate(StaticValues.DateTimeFormatDayMonthYear));
+
         ActionsHelper.driverWait(2000);
 
         ActionsHelper.clickAction(logDescriptionTextbox);
         ActionsHelper.sendKeys(logDescriptionTextbox,"Log Description "+faker.lorem().sentence(1));
         ActionsHelper.driverWait(2000);
-        getPopupsPage().uploadDocuments(driver.get().findElement(uploadFile),"test.pdf");
+        getPopupsPage().uploadDocuments(driver.get().findElement(uploadFile),StaticValues.fileName);
         ActionsHelper.driverWait(2000);
-        //ActionsHelper.waitUntilElementIsDisplayed(fileDescription,30);
         ActionsHelper.moveToElement(driver.get().findElement(fileDescription));
         ActionsHelper.sendKeys(fileDescription,"Uploaded File Description");
         ActionsHelper.driverWait(4000);
@@ -273,12 +280,17 @@ public class EnforcementCasePage extends Base {
         ActionsHelper.driverWait(8000);
         ActionsHelper.scrollTo(caseDescriptionTextbox);
         ActionsHelper.sendKeysWithClear(caseDescriptionTextbox, "Case Description "+faker.lorem().sentence(1));
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.actionClickStepClick("Click save button",saveChanges);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(saveChanges, 30);
-        ActionsHelper.driverWait(8000);
-        ActionsHelper.retryClick(enforcementCaseLink, 30);
+        driver.get().navigate().to("https://uat.ssa.gov.ae/DCD_Activation_Social_Referral/EnforcementCaseList.aspx");
         ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(createdCase,30);
+        ActionsHelper.actionClickStepClick("Click edit button",editCaseBtn);
+        ActionsHelper.driverWait(2000);
+        driver.get().switchTo().frame(0);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.scrollupTo(driver.get().findElement(caseDescriptionTextbox));
+        ActionsHelper.driverWait(2000);
         logManager.INFO("The edited request",false);
     }
 
