@@ -65,14 +65,35 @@ public class CancelApplication {
         return toJson(member);
     }
 
+
+    public void requestServiceWithParam(String eid) throws JsonProcessingException {
+        Unirest.config().reset();
+        Unirest.config().connectTimeout(7000);
+        Unirest.config().verifySsl(false);
+        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/CancelApplication")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
+                .body(requestBodyWithEID(eid))
+                .asString();
+        System.out.println(response.getBody());
+    }
+
+    public String requestBodyWithEID(String eid) throws JsonProcessingException {
+        CancelApplicationModel member= new CancelApplicationModel();
+        member.emiratesId =eid;
+        System.out.println(toJson(member));
+        return toJson(member);
+    }
+
+
     public Root getresponse(CancelApplication submitApplicationService) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
         return om.readValue(submitApplicationService.response.getBody(), Root.class);
     }
 
-//    public static void main(String[] args) throws JsonProcessingException {
-//        VerifyEligibilityService submitApplicationService = new VerifyEligibilityService();
-//        submitApplicationService.requestService();
-//        System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
-//    }
+    public static void main(String[] args) throws JsonProcessingException {
+        VerifyEligibilityService submitApplicationService = new VerifyEligibilityService();
+        submitApplicationService.requestService();
+        System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
+    }
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class GetFamilyData {
+public class GetFamilyDataModel {
     @JsonProperty("ResponseStatus")
     public ResponseStatus responseStatus;
     @JsonProperty("Application")

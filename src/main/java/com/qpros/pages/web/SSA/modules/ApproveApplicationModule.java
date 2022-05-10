@@ -85,6 +85,7 @@ public class ApproveApplicationModule extends Base {
             agentPage.logOut();
             //login with senior specialist
             ActionsHelper.driverWait(5000);
+            logManager.STEP("Login By senior specialist","");
             loginPage.loginWithUser(UserType.valueOf(seniorSpecialist));
             ActionsHelper.driverWait(5000);
             committeeName = agentPage.seniorSpecialistApproval(refCode);

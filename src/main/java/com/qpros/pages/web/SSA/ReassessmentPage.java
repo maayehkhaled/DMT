@@ -41,7 +41,8 @@ public class ReassessmentPage extends Base {
     public double newAmount;
 
 
-    private By reassessmentBtn = By.linkText("إعادة التقييم");
+    //private By reassessmentBtn = By.linkText("إعادة التقييم");
+    private By reassessmentBtn=By.xpath("//a[contains(@id,'wt128')]");
     private By committeeSearchApplicationField = By.xpath("//input[@id=\"DCDAgentPortalTheme_wt10_block_wtFilterContainer_wttxt_Search\"]");
     private By applicationCheckBox = By.xpath("//input[contains(@id,'wtBenefitRequests')]");
     private By dropdownMenuSelectSupervisor = By.xpath("//select[@id=\"DCDAgentPortalTheme_wt10_block_wtMainContent_wtddl_useridIn\"]");

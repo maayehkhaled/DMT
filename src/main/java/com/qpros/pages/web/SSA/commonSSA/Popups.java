@@ -30,7 +30,8 @@ public class Popups extends Base {
     private WebElement feedbackMessageError;
     @FindBy(xpath = "//div[@class=\"Feedback_Message_Success\"]//span[@class=\"Feedback_Message_Text\"]")
     private WebElement feedbackMessageSuccess;
-    private By feedbackMessage = By.xpath("//span[@class=\"Feedback_Message_Text\"]");
+    private By feedbackMessage = By.xpath("//span[@class=Feedback_Message_Text]");
+    //private By feedbackMessage = By.xpath("//span[@class=\"Feedback_Message_Text\"]");
 
 
 

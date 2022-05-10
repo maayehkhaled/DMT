@@ -2,7 +2,7 @@ package com.qpros.pages.web.SSA.applicationreview;
 
 import com.qpros.helpers.ActionsHelper;
 import com.qpros.helpers.TableUtils;
-import com.ssa.core.model.GetFamilyData;
+import com.ssa.core.model.GetFamilyDataModel;
 import com.ssa.core.model.Household;
 import org.openqa.selenium.By;
 
@@ -18,7 +18,7 @@ public class ContactInformation {
     private By mobilePhone= By.xpath("//*[@id=\"DCDAgentPortalTheme_wt362_block_wtMainContent_CloneOfWebPatterns_wttabs_block_wtContent3_wt304_wtContactInfo\"]/tbody/tr[1]/td[5]");
 
 
-    public void checkContactInformation(GetFamilyData getFamilyData){
+    public void checkContactInformation(GetFamilyDataModel getFamilyDataModel){
         Household household;
         TableUtils.getWebElementTableRowCount(ActionsHelper.element(emiratesID));
 

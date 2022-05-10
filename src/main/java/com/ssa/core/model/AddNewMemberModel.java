@@ -12,7 +12,7 @@ public class AddNewMemberModel {
     public String relationshipToHoHKey;
     @JsonProperty("DateOfBirth")
     public String dateOfBirth;
-    @JsonProperty("SecondDocument")
-    public String secondDocument;
+    @JsonProperty("ReasonForAdding")
+    public String reasonForAdding;
 
 }

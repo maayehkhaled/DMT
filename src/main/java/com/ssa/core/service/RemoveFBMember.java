@@ -51,11 +51,12 @@ public class RemoveFBMember {
 //        }
 
         RemoveFBMemberModel member= new RemoveFBMemberModel();
-        member.emiratesId ="";
-        member.toRemoveEmiratesId="";
-        member.removalReasonKey="";
-        member.removalReasonDescription="";
-//        System.out.println(toJson(member));
+        member.emiratesId =Eid;
+        member.toRemoveEmiratesId="784200255608604";
+        member.removalReasonKey="Married";
+        member.removalReasonDescription="test";
+        System.out.println(toJson(member));
+
         return toJson(member);
     }
 
@@ -79,15 +80,15 @@ public class RemoveFBMember {
         return toJson(member);
     }
 
-    public Root getresponse(RemoveFBMember submitApplicationService) throws JsonProcessingException {
+    public RemoveFBMemberModel getresponse(RemoveFBMember submitApplicationService) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
-        return om.readValue(submitApplicationService.response.getBody(), Root.class);
+        return om.readValue(submitApplicationService.response.getBody(), RemoveFBMemberModel.class);
     }
 
-//    public static void main(String[] args) throws JsonProcessingException {
-//        VerifyEligibilityService submitApplicationService = new VerifyEligibilityService();
-//        submitApplicationService.requestService();
-//        System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
-//    }
+    public static void main(String[] args) throws JsonProcessingException {
+        RemoveFBMember submitApplicationService = new RemoveFBMember();
+        submitApplicationService.requestService();
+       // System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
+    }
 
 }

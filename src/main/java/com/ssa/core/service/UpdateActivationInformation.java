@@ -29,6 +29,47 @@ public class UpdateActivationInformation {
         System.out.println(response.getBody());
     }
 
+    public void requestServiceWithParam(String eid) throws JsonProcessingException {
+        Unirest.config().reset();
+        Unirest.config().connectTimeout(7000);
+        Unirest.config().verifySsl(false);
+        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/UpdateActivationInformation")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
+                .body(requestBody())
+                .asString();
+        System.out.println(response.getBody());
+    }
+    public String requestBodyWithEid(String eid) throws JsonProcessingException {
+        UpdateActivationInformationModel member= new UpdateActivationInformationModel();
+        member.emiratesId ="";
+        member.individualsList.get(0).emiratesId="";
+        member.individualsList.get(0).fullNameEN="";
+        member.individualsList.get(0).fullNameAR="";
+        member.individualsList.get(0).isCaretaker=true;
+        member.individualsList.get(0).careTypeList.get(0).careTypeKey="";
+        member.individualsList.get(0).isCurrentlyStudying=true;
+        member.individualsList.get(0).educationLevelKey="";
+        member.individualsList.get(0).graduationYear=0;
+        member.individualsList.get(0).areaOfStudyKey="";
+        member.individualsList.get(0).specializationKey="";
+        member.individualsList.get(0).specializationDescription="";
+        member.individualsList.get(0).englishCertificateKey="";
+        member.individualsList.get(0).englishCertificateScore=0.1;
+        member.individualsList.get(0).hasPreviousExperience=true;
+        member.individualsList.get(0).previousExpYear=0;
+        member.individualsList.get(0).previousExpMonth=0;
+        member.individualsList.get(0).experienceList.get(0).experienceTypeKey="";
+        member.individualsList.get(0).experienceList.get(0).company="";
+        member.individualsList.get(0).experienceList.get(0).startDate="2014-12-31";
+        member.individualsList.get(0).experienceList.get(0).endDate="2014-12-31";
+        member.individualsList.get(0).experienceList.get(0).isCurrentJob=true;
+        member.individualsList.get(0).nServiceStatusKey="";
+        member.individualsList.get(0).nServiceStatusRank=0;
+        System.out.println(toJson(member));
+        return toJson(member);
+    }
+
     public String requestBody() throws JsonProcessingException {
 
 //        Data Body To Be Sent
@@ -97,7 +138,7 @@ public class UpdateActivationInformation {
         member.individualsList.get(0).experienceList.get(0).isCurrentJob=true;
         member.individualsList.get(0).nServiceStatusKey="";
         member.individualsList.get(0).nServiceStatusRank=0;
-        //        System.out.println(toJson(member));
+                System.out.println(toJson(member));
         return toJson(member);
     }
 
@@ -106,10 +147,10 @@ public class UpdateActivationInformation {
         return om.readValue(submitApplicationService.response.getBody(), Root.class);
     }
 
-//    public static void main(String[] args) throws JsonProcessingException {
-//        VerifyEligibilityService submitApplicationService = new VerifyEligibilityService();
-//        submitApplicationService.requestService();
-//        System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
-//    }
+    public static void main(String[] args) throws JsonProcessingException {
+        UpdateActivationInformation submitApplicationService = new UpdateActivationInformation();
+        submitApplicationService.requestService();
+        System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
+    }
 
 }

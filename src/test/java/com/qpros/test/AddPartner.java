@@ -30,8 +30,7 @@ public class AddPartner extends Base {
     public synchronized void setTestSuite() throws IOException {
         this.setUpBrowser();
     }
-    @Test(
-            description = "Add partner ", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
+    @Test(description = "Add partner ", retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
     public void addPartner()
     {
         ActionsHelper.navigate(urls.agentLogin);

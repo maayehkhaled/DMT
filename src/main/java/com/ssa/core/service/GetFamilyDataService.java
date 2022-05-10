@@ -3,7 +3,7 @@ package com.ssa.core.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssa.core.common.data.TestData;
-import com.ssa.core.model.GetFamilyData;
+import com.ssa.core.model.GetFamilyDataModel;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 
@@ -21,18 +21,17 @@ public class GetFamilyDataService {
                 .asString();
     }
 
+
     public String requestBody() throws JsonProcessingException {
         return "{\n" +
                 "     \"EmiratesId\": \""+TestData.EID+"\"\n" +
                 " \n" +
                 "}";
-
-
     }
 
-    public GetFamilyData getresponse(GetFamilyDataService submitApplicationService) throws JsonProcessingException {
+    public GetFamilyDataModel getresponse(GetFamilyDataService submitApplicationService) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
-        return om.readValue(submitApplicationService.response.getBody(), GetFamilyData.class);
+        return om.readValue(submitApplicationService.response.getBody(), GetFamilyDataModel.class);
 
     }
     public static void main(String[] args) throws JsonProcessingException {

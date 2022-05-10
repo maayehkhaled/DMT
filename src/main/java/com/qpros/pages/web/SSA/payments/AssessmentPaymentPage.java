@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,7 +39,7 @@ public class AssessmentPaymentPage extends Base {
 
 
     //Locators
-    private final By paymentMenuItem = By.xpath("//a[.='المدفوعات']");
+    private final By paymentMenuItem = By.xpath("//a[contains(@id,'wt209')]");  //("//a[.='المدفوعات']");
     private final By paymentsTableSubMenuItem = By.xpath("//div[.='جداول الدفع']");
     private final By applicationIDSearchBox = By.cssSelector("[placeholder='رقم الطلب']");
     private final By applicationIDSearchButton = By.cssSelector("[value='بحث']");
@@ -84,6 +85,8 @@ public class AssessmentPaymentPage extends Base {
     private final By applicationPaymentList=By.xpath("//select[@id='DCDTheme_wtLayoutWB_block_wtFilters_wtcb_NextMonth']");
     private final By applicationChoseInclude=By.xpath("//option[text()='تتضمن']");
     private final By applicationInformationGeneration = By.xpath("//input[contains(@id,'wtGenerateInstructionBtn')]");
+    private final By removeAppInfo=By.xpath("//input[contains(@id,'wtCancelBtn')]");
+    private final By submitForApprovalBtn=By.xpath("//input[contains(@id,'Approval')]");
     private final By userNameBeforeLogout = By.className("logoutBorder1");
     private final By logo=By.xpath("//div[contains(@class,'Header_Menu_Container')]");
     private final By logout2 = By.xpath("//div[contains(@id,'Logout')]");
@@ -141,26 +144,30 @@ public class AssessmentPaymentPage extends Base {
         ActionsHelper.driverWait(3000);
         List<WebElement> tableBody=driver.get().findElements(By.className("TableRecords_OddLine"));
 
-        long monthsBetween = ChronoUnit.MONTHS.between(
-                YearMonth.from(LocalDate.parse(convertDate(tableBody.get(3).getText()))),
+       /* long monthsBetween = ChronoUnit.MONTHS.between(
+                YearMonth.from(LocalDate.parse(convertDate(tableBody.get(3).getText()))), //3 then 4
                 YearMonth.from(LocalDate.parse(convertDate(tableBody.get(4).getText())).plus(1, ChronoUnit.DAYS).atStartOfDay())
+        );*/
+        long monthsBetween = ChronoUnit.MONTHS.between(
+                LocalDate.parse(convertDate(tableBody.get(3).getText())).withDayOfMonth(1),
+                LocalDate.parse(convertDate(tableBody.get(4).getText())).plus(1, ChronoUnit.DAYS).atStartOfDay().withDayOfMonth(1)
         );
 
         if (monthsBetween != StaticValues.yearsFullMonths) {
-            logManager.ERROR("Actual Date Differance [" + monthsBetween + "] months while expected result should [12] months  between the dates [" + tableBody.get(3).getText() + "]-[" + tableBody.get(4).getText() + "]", false);
+            logManager.ERROR("Actual Date Differance [" + monthsBetween + "] months while expected result should [12] months  between the dates [" + tableBody.get(3).getText() + "]-[" + tableBody.get(4).getText() + "]", false); //4 //5
         }else {
-            ActionsHelper.isElementPresent(tableBody.get(3));
-            ActionsHelper.isElementPresent(tableBody.get(4));
+            ActionsHelper.isElementPresent(tableBody.get(3)); //3
+            ActionsHelper.isElementPresent(tableBody.get(4)); //4
             logManager.INFO("Checking for the differance for the Payment schedule is 12 Months ",false);
         }
-        if(!TestData.EID.equalsIgnoreCase(tableBody.get(2).getText()))
+        if(!TestData.EID.equalsIgnoreCase(tableBody.get(1).getText()))
         {
             logManager.ERROR("Actual Date  [" +tableBody.get(2).getText()+ "]  while expected result should ["+TestData.EID+"] the  [" +tableBody.get(2).getText()+"] does not equal  ["+TestData.EID+"]  ", false);
 
         }
         else
         {
-            logManager.INFO("Checking for the EID  [" +tableBody.get(2).getText()+"] for the Payment Table Data is correct ",false);
+            logManager.INFO("Checking for the EID  [" +tableBody.get(1).getText()+"] for the Payment Table Data is correct ",false);
 
         }
         if(!StaticValues.refCode.equalsIgnoreCase(tableBody.get(0).getText()))
@@ -173,7 +180,7 @@ public class AssessmentPaymentPage extends Base {
             logManager.INFO("Checking for the SSP [" +tableBody.get(0).getText()+ "] for the Payment Table Data is correct ",false);
 
         }
-            String removeComma=tableBody.get(6).getText().replace("،","");
+            String removeComma=tableBody.get(7).getText().replace("،","");
             double allAmount = Double.parseDouble(removeComma.substring(StaticValues.currencySubString,removeComma.length()));
             System.out.println(allAmount);
 
@@ -266,7 +273,9 @@ public class AssessmentPaymentPage extends Base {
         logOut();
         loginByPaymentSeniorSpecialist();
         ActionsHelper.driverWait(3000);
-       createInstruction();
+        createInstruction();
+        //removeInstructions();
+        submitForApproval();
         clickOnSchedulePayment();//from 47 to 50
         ActionsHelper.actionClickStepClick("click on عرض موسع",applicationExpendedView);
         ActionsHelper.driverWait(3000);
@@ -340,6 +349,17 @@ public class AssessmentPaymentPage extends Base {
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("click on توليد المعلومات",applicationInformationGeneration);
         ActionsHelper.driverWait(8000);
+    }
+    public void removeInstructions(){
+        ActionsHelper.actionClickStepClick("click on إزالة", removeAppInfo);
+        ActionsHelper.driverWait(8000);
+        driver.get().switchTo().alert().accept();
+        ActionsHelper.driverWait(5000);
+        createInstruction();
+    }
+    public void submitForApproval(){
+        ActionsHelper.actionClickStepClick("click on تقديم للحصول على الموافقة",submitForApprovalBtn);
+        ActionsHelper.driverWait(5000);
     }
     public void addTaskAndCheckFromData()
     {
@@ -857,9 +877,9 @@ ActionsHelper.driverWait(2000);
         DateTimeFormatter f = new DateTimeFormatterBuilder().appendPattern(StaticValues.DateTimeFormatDayMonthYear)
                 .toFormatter();
 
-        LocalDate parsedDate = LocalDate.parse(strDate, f);
-        DateTimeFormatter f2 = DateTimeFormatter.ofPattern(StaticValues.DateTimeFormatYearMonthDay);
+        LocalDate parsedDate = LocalDate.parse(strDate,f);
 
+        DateTimeFormatter f2=DateTimeFormatter.ofPattern(StaticValues.DateTimeFormatDayMonthYear);
         String newDate = parsedDate.format(f2);
 
         return newDate;
@@ -871,9 +891,9 @@ ActionsHelper.driverWait(2000);
         ActionsHelper.element(applicationIDSearchBox).clear();
         ActionsHelper.driverWait(5000);
         ActionsHelper.sendKeys(applicationIDSearchBox, StaticValues.refCode);
-        ActionsHelper.retryClick(applicationIDSearchBox, 30);
+        //ActionsHelper.retryClick(applicationIDSearchBox, 30);
         ActionsHelper.actionClickStepClick("click on search ", applicationIDSearchButton);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(8000);
 
 
 
@@ -1026,7 +1046,9 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario10()
     {
-       logManager.STEP("Update Payments Status – Terminate payment ","this method to Update Payments Status – Terminate payment ");
+
+        logManager.STEP("Update Payments Status – Terminate payment ","this method to Update Payments Status – Terminate payment ");
+
         requestManualCard();
 
         addTaskAndCheckFromData();

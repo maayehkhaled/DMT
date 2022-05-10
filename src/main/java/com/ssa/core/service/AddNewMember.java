@@ -44,11 +44,12 @@ public class AddNewMember {
     public String requestBodyWithEID(String eid)  {
         AddNewMemberModel addNewMember=new AddNewMemberModel();
         addNewMember.emiratesId=eid;
-        addNewMember.toAddEmiratesId="784199140631005";
-        addNewMember.relationshipToHoHKey="Son";
-        addNewMember.dateOfBirth="2018-01-08";
-        addNewMember.secondDocument="Test.pdf";
-        System.out.print(toJson(addNewMember));
+
+        addNewMember.toAddEmiratesId="784200613974136";
+        addNewMember.relationshipToHoHKey="son";
+        addNewMember.dateOfBirth="2006-09-21";
+        addNewMember.secondDocument="test.pdf";
+        System.out.println(toJson(addNewMember));
         return toJson(addNewMember);
     }
 
