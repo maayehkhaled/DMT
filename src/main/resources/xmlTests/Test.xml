@@ -11,6 +11,7 @@
 
     <test name="approve/Payment Scenario">
         <classes>
+
             <class name="com.qpros.test.ApproveApplication"></class>
             <class name="com.qpros.test.RejectApplication"></class>
             <class name="com.qpros.test.ReassessmentApprove"></class>
@@ -20,6 +21,7 @@
             <class name="com.qpros.test.AddPartner"></class>
         </classes>
     </test>
+<!--
     <test name="SSA 1st assessment Run">
         <classes>
             <class name="com.qpros.test.ApproveApplication"/>
@@ -35,54 +37,32 @@
             <class name="com.qpros.test.ReassessmentReject"/>
         </classes>
     </test>
-    
+
     <test name="Exceptional Case Scenario">
     <classes>
         <class name="com.qpros.test.ExceptionalCase"/>
     </classes>
     </test>
-    
+
     <test name="Enforcement Scenario">
         <classes>
             <class name="com.qpros.test.EnforcementCase"></class>
         </classes>
     </test>
-    
+
     <test name="PEP Scenario">
         <classes>
             <class name="com.qpros.test.PEPScenario"></class>
         </classes>
     </test>
 
-    <test name="Activation Opportunities Scenario">
-        <classes>
-            <class name="com.qpros.test.ActivationOpportunities"></class>
-        </classes>
-    </test>
+
 
     <test name="List Of Beneficiaries Scenario">
         <classes>
             <class name="com.qpros.test.ListOfBeneficiaries"></class>
         </classes>
 
-    </test>
-
-    <test name="Case Source Scenario">
-        <classes>
-            <class name="com.qpros.test.CaseSource"></class>
-        </classes>
-    </test>
-
-    <test name="Manage Offers Household">
-        <classes>
-            <class name="com.qpros.test.ManageOffersHousehold"></class>
-        </classes>
-    </test>
-
-    <test name="Manage Offers Management">
-        <classes>
-            <class name="com.qpros.test.ManageOffersManagement"></class>
-        </classes>
-    </test>
+    </test>-->
 </suite>
 

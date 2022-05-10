@@ -29,11 +29,12 @@ public class AgentPage extends Base {
 //TODO: Update with deployement          //input[@id="InternalPortalTheme_wt397_block_wtActions_wtbtn_Next6"]
     private final By approveApp=By.cssSelector("[value='الموافقة']");
     private final By nextButton=By.xpath("//div[contains(@class,'ForwardButton')]");
+
     private final By increaseNextButton=By.xpath("//div[contains(@class,'Button ForwardButton')]");
     private final By summaryNextBtn = By.xpath("//input[@id=\"InternalPortalTheme_wt573_block_wtActions_wtbtn_Next6\"]");
     private final By clickNext=By.xpath("//input[@value='التالي']");
-    private final By agentClickNextFinal = By.xpath("//div[contains(@class,'ForwardButton')]");
-    private final By agentClickNext = By.xpath("//input[@class='Button Button ForwardButton Button ForwardButton']");
+    private final By agentClickNextFinal = By.className("ForwardButton");
+    private final By agentClickNext = By.xpath("//input[@id=\"InternalPortalTheme_wt567_block_wtActions_wtbtn_Next6\"]");
     private final By agentClickNext56StepFinal = By.xpath("//*[@id=\"InternalPortalTheme_wt397_block_wtActions_wtOperationBtnContainer\"]/div[2]");
     private final By applicationListFirstApplicationSpecialistName = By.xpath("//tbody//tr//td//div[@class=\"FlexColContainer\"]//span[1]");
     private final By approveButton = By.xpath("//input[@class='Button Button ApproveButton Button ApproveButton']"); //Only one action was needed
@@ -57,6 +58,7 @@ public class AgentPage extends Base {
     private final By appealApplicationCheckbox = By.xpath("//input[@id=\"InternalPortalTheme_wt85_block_wtFilterContainer_wt67\"]");
     private final By  reValueButton=By.xpath("//input[contains(@id,'IsCommunicatedbyAssessor')]");
 
+
     /**
      * TO CREATE APPROVAL USING specialist USER
      * @param applicationRef This is SSP of the app
@@ -65,36 +67,40 @@ public class AgentPage extends Base {
     public String specialistApproval(String applicationRef) {
         logManager.STEP("Search application", "Inputs the reference number in the search field");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
-        ActionsHelper.waitForExpectedElement(firstElementAfterSearch);
-        ActionsHelper.driverWait(500);
+        ActionsHelper.waitForExpectedElement(firstElementAfterSearch, 30);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
-        ActionsHelper.driverWait(4000);
-        ActionsHelper.actionClickScrollStepClick("Approve step 1", agentApproveStepFinal);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickScrollStepClick("Approve Personal Information", agentApproveStepFinal);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Click next Step 1", agentClickNextFinal);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.actionClickStepClick("Approve step 2", agentApproveStepFinal);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Approve Family Information", agentApproveStepFinal);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Click next Step 2", agentClickNextFinal);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.actionClickStepClick("Approve step 3", agentApproveStepFinal);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Approve Address", agentApproveStepFinal);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Click next Step 3", agentClickNextFinal);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.actionClickStepClick("Approve step 4", agentApproveStepFinal);
-        ActionsHelper.driverWait(5000);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Approve Income Info", agentApproveStepFinal);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Click next Step 4", agentClickNextFinal);
-        ActionsHelper.driverWait(4000);
+        ActionsHelper.driverWait(12000);
+
         System.out.println("Attempting step 5");
-        ActionsHelper.retryClick(finalButtonApprove, 4);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("Click Next Step 5", nextButton);
         System.out.println("Attempting step 6");
-        ActionsHelper.retryClick(finalButtonApprove, 3);
-        logManager.STEP("Approving the application","Click the confirm button");
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.retryClick(finalButtonApprove, 10);
+        logManager.STEP("Approving the application", "Click the confirm button");
         try {
             driver.get().switchTo().alert().accept();
         } catch (Exception e) {
-            logManager.WARN("could not interact with popup msg");
+            logManager.WARN("must be approve the app ");
         }
         return getAssigneeNameFromAllApplications(applicationRef);
     }
@@ -284,6 +290,7 @@ public class AgentPage extends Base {
         //        17/2
         //ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
         //ActionsHelper.driverWait(4000);
+
         ActionsHelper.actionClickScrollStepClick("Approve Personal Information", agentApproveStepFinal);
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Click next Step 1", agentClickNextFinal);
@@ -335,6 +342,8 @@ public class AgentPage extends Base {
         ActionsHelper.scrollupTo(driver.get().findElement(firstElementAfterSearch));
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(10000);
+        ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickScrollStepClick("click on اعادة التقييم",reValueButton);
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickScrollStepClick("Approve Personal Information", agentApproveStepFinal);
@@ -381,6 +390,7 @@ public class AgentPage extends Base {
         //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/AllApplications.aspx");
         ActionsHelper.driverWait(3000);
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
+
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
 
@@ -425,6 +435,7 @@ public class AgentPage extends Base {
         ActionsHelper.scrollTo(approveApp);
         ActionsHelper.driverWait(6000);
         ActionsHelper.actionClickStepClick("Click on next button",approveApp);
+
         // ActionsHelper.waitForExpectedElement(summaryNextBtn);
         //ActionsHelper.scrollTo(agentClickNext56StepFinal);
         ActionsHelper.driverWait(10000);
@@ -489,8 +500,10 @@ public class AgentPage extends Base {
         ActionsHelper.sendKeys(seniorSpecialistSearchApplication, refCode + Keys.ENTER);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickScrollStepClick("Click on reassessment",reassessmentCheckBox);
-        ActionsHelper.driverWait(1000);
+        ActionsHelper.driverWait(7000);
         ActionsHelper.actionClickScrollStepClick("Click approve all", approveAll);
         ActionsHelper.driverWait(10000);
         ActionsHelper.waitForExpectedElement(approvalBtn);
@@ -558,6 +571,7 @@ public class AgentPage extends Base {
             logManager.WARN("must be approve the app ");
         }
 
+
     }
 
     /**
@@ -615,9 +629,10 @@ public class AgentPage extends Base {
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
-        ActionsHelper.driverWait(4000);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
+        ActionsHelper.driverWait(10000);
+
         ActionsHelper.actionClickScrollStepClick("Reject step 1", agentRejectButtonFinal);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickStepClick("Click next Step 1", agentClickNextFinal);
@@ -675,11 +690,13 @@ public class AgentPage extends Base {
      */
 
     public String seniorSpecialistRejectApplication(String refCode) {
+        ActionsHelper.driverWait(5000);
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickStepClick("Click old version link", OldVersionButton);
-        ActionsHelper.driverWait(4000);
+
+        ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickScrollStepClick("Reject application", seniorApproveRejectButton);
         ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Confirm Rejection", seniorApproveRejectButtonConfirmation);

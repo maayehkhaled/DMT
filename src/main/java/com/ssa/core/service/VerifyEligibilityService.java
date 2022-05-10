@@ -22,7 +22,26 @@ public class VerifyEligibilityService {
                 .asString();
         System.out.println(response.getBody());
     }
-
+    public void requestServiceWithParam(String EID) throws JsonProcessingException {
+        Unirest.config().reset();
+        Unirest.config().connectTimeout(7000);
+        Unirest.config().verifySsl(false);
+        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/VerifyEligibility")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
+                .body(requestBodyWithEID(EID))
+                .asString();
+        System.out.println(response.getBody());
+    }
+    public String requestBodyWithEID(String EID) throws JsonProcessingException {
+        VerifyEligibility verifyEligibility = new VerifyEligibility();
+        verifyEligibility.setEmiratesId(EID);
+        verifyEligibility.setUAEPassMobileNumber("0551499312");
+        verifyEligibility.setUAEPassEmail("test@test.com");
+        verifyEligibility.setApplicationType("1st assessment");
+        System.out.println(verifyEligibility.toJson(verifyEligibility));
+        return verifyEligibility.toJson(verifyEligibility);
+    }
     public String requestBody() throws JsonProcessingException {
         VerifyEligibility verifyEligibility = new VerifyEligibility();
         verifyEligibility.setEmiratesId(TestData.EID);
@@ -32,6 +51,7 @@ public class VerifyEligibilityService {
         System.out.println(verifyEligibility.toJson(verifyEligibility));
         return verifyEligibility.toJson(verifyEligibility);
     }
+
 
     public void requestServiceWithParam(String EID) throws JsonProcessingException {
         Unirest.config().reset();
@@ -53,6 +73,7 @@ public class VerifyEligibilityService {
         System.out.println(verifyEligibility.toJson(verifyEligibility));
         return verifyEligibility.toJson(verifyEligibility);
     }
+
 
 
 

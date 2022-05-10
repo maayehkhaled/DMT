@@ -28,7 +28,59 @@ public class UpdateLivingOn {
                 .asString();
         System.out.println(response.getBody());
     }
+    public void requestServiceWithEid(String Eid) throws JsonProcessingException {
+        Unirest.config().reset();
+        Unirest.config().connectTimeout(7000);
+        Unirest.config().verifySsl(false);
+        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/UpdateLivingOn")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
+                .body(requestBodyWithEid(Eid))
+                .asString();
+        System.out.println(response.getBody());
+    }
+    public String requestBodyWithEid(String Eid) throws JsonProcessingException {
 
+//        Data Body To Be Sent
+//       {
+//          "EmiratesId": "string",
+//          "LivingOnPremises": {
+//          "RemovedPremisesList": [
+//      {
+//            "PremiseNumber": "string"
+//      }
+//    ],
+//          "SelfDeclaredLocation": [
+//      {
+        //        "PremiseNumber": 1234567891234567,
+        //        "MunicipalityKey": "string",
+        //        "DistrictKey": "string",
+        //        "CommunityKey": "string"
+//      }
+//    ],
+//          "LivingOnPremisesList": [
+//      {
+        //        "EmiratesId": "string",
+        //        "PremiseNumber": 1234567891234567,
+        //        "LivingOnOther": "string"
+//      }
+//    ]
+//  }
+//}
+
+        UpdateLivingOnModel member= new UpdateLivingOnModel();
+        member.emiratesId ="";
+        member.livingOnPremises.removedPremisesList.get(0).premiseNumber="";
+        member.livingOnPremises.selfDeclaredLocation.get(0).premiseNumber="1234567891234567";
+        member.livingOnPremises.selfDeclaredLocation.get(0).municipalityKey="";
+        member.livingOnPremises.selfDeclaredLocation.get(0).districtKey="";
+        member.livingOnPremises.selfDeclaredLocation.get(0).communityKey="";
+        member.livingOnPremises.livingOnPremisesList.get(0).emiratesId="";
+        member.livingOnPremises.livingOnPremisesList.get(0).premiseNumber="1234567891234567";
+        member.livingOnPremises.livingOnPremisesList.get(0).livingOnOther="";
+             System.out.println(toJson(member));
+        return toJson(member);
+    }
     public String requestBody() throws JsonProcessingException {
 
 //        Data Body To Be Sent

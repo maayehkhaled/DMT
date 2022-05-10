@@ -31,7 +31,6 @@ public class RejectApplicationModule extends Base {
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
     DeleteEmirateId deleteEmirateId=new DeleteEmirateId();
    public String refCode ;
-   //String refCode = "SSP-20375";
     public void RejectApplication() throws Exception {
         //URL: https://uat.ssa.gov.ae/DCDAgentPortalTheme/Login.aspx
         deleteEmirateId.requestService();

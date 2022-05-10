@@ -28,7 +28,43 @@ public class UpdateContactDetails {
                 .asString();
         System.out.println(response.getBody());
     }
+    public void requestServiceWithEid(String Eid) throws JsonProcessingException {
+        Unirest.config().reset();
+        Unirest.config().connectTimeout(7000);
+        Unirest.config().verifySsl(false);
+        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/UpdateContactDetails")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
+                .body(requestBodyWithEid(Eid))
+                .asString();
+        System.out.println(response.getBody());
+    }
 
+    public String requestBodyWithEid(String Eid) throws JsonProcessingException {
+
+//        Data Body To Be Sent
+//       {
+//          "EmiratesId": "string",
+//          "HouseholdContactDetails":
+//          [
+//          {
+//          "EmiratesId": "string",
+//          "MobileNumber":"string",
+//          "Email": "string",
+//          "SecondaryNumber": "string"
+//          }
+//          ]
+//          }
+
+        UpdateContactDetailsModel member= new UpdateContactDetailsModel();
+        member.emiratesId ="";
+        member.householdContactDetails.get(0).emiratesId="";
+        member.householdContactDetails.get(0).mobileNumber="";
+        member.householdContactDetails.get(0).email="";
+        member.householdContactDetails.get(0).secondaryNumber="";
+        //        System.out.println(toJson(member));
+        return toJson(member);
+    }
     public String requestBody() throws JsonProcessingException {
 
         UpdateContactDetailsModel member= new UpdateContactDetailsModel();

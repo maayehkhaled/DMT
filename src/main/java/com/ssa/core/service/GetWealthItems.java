@@ -29,6 +29,7 @@ public class GetWealthItems {
         System.out.println(response.getBody());
     }
     public void requestServiceWithParam(String eid) throws JsonProcessingException {
+
         Unirest.config().reset();
         Unirest.config().connectTimeout(7000);
         Unirest.config().verifySsl(false);
@@ -46,6 +47,7 @@ public class GetWealthItems {
         System.out.println(toJson(member));
         return toJson(member);
     }
+
     public String requestBody() throws JsonProcessingException {
 
 //        Data Body To Be Sent

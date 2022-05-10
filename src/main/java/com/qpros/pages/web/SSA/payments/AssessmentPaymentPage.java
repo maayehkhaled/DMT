@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 @Getter
@@ -34,6 +35,7 @@ public class AssessmentPaymentPage extends Base {
     LoginPage loginPage = new LoginPage(driver.get());
     AgentPage agentPage = new AgentPage(driver.get());
     Random rng = new java.util.Random();
+    List<PaymentsEntry> paymentsEntryList = new ArrayList<>();
 
 
     //Locators
@@ -188,7 +190,7 @@ public class AssessmentPaymentPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("click on عرض موسع",applicationExpendedView);
         ActionsHelper.driverWait(6000);
-
+        List<WebElement> fulltableBodyToDate=driver.get().findElements(By.xpath("//table[contains(@id,'wtMainContent_wtFullInformationTable')]"));
 
         System.out.println(ActionsHelper.element(applicationValue).getText());
          removeComma=ActionsHelper.element(applicationValue).getText().replace("،","");
@@ -452,7 +454,7 @@ public class AssessmentPaymentPage extends Base {
         ActionsHelper.driverWait(5000);
         ActionsHelper.scrollTo(applicationApproveButton);
         ActionsHelper.actionClickStepClick("click on الموافقة",applicationApproveButton);
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.driverWait(5000);
         driver.get().switchTo().alert().accept();
     }
     public void fillTaskSourceAndSearchAndClickSubmit()
@@ -707,7 +709,7 @@ ActionsHelper.driverWait(2000);
     selectCurrentDateAndSendItToTask();
     ActionsHelper.sendKeys(applicationTaskSearch,"Approval of OverPayment");
     ActionsHelper.actionClickStepClick("chose  Approval of over Payment",applicationChoseApprovalOfOverPayment);
-    ActionsHelper.driverWait(2000);
+    ActionsHelper.driverWait(5000);
     clickOnTakeAction();
     ActionsHelper.driverWait(7000);
     clickOnSchedulePayment();
@@ -771,7 +773,7 @@ ActionsHelper.driverWait(2000);
     {
         logManager.STEP("Create Variances – downpayment  ","this method to Create Variances – downpayment  for card");
 
-        requestManualCard();
+      requestManualCard();
         addTaskAndCheckFromData();
         logOut();
         loginByPaymentSeniorSpecialist();
@@ -853,6 +855,8 @@ ActionsHelper.driverWait(2000);
         loginPage.loginWithUser(UserType.PaymentSeniorSpecialist);
     }
 
+
+
     public void selectCurrentDateAndSendItToTask()
     {
 
@@ -931,17 +935,16 @@ ActionsHelper.driverWait(2000);
         ActionsHelper.scrollTo(applicationTableCardResult);
 
         List<WebElement> tableBodyDataAfterBlock=driver.get().findElements(By.className("TableRecords_OddLine"));
-        if(!tableBodyDataAfterBlock.get(10).getText().equalsIgnoreCase("Blocked By Customer"))
+        if(!tableBodyDataAfterBlock.get(10).getText().equalsIgnoreCase("Active"))
         {
 
-            logManager.ERROR("Actual Date  [" +tableBodyDataAfterBlock.get(10).getText()+ "]  while expected result should [Pending Closure From Bank]   ", false);
+            logManager.ERROR("Actual Date  [" +tableBodyDataAfterBlock.get(10).getText()+ "]  while expected result should [Active]   ", false);
 
         }
         else
         {
             logManager.INFO("the card status is    ["+tableBodyDataAfterBlock.get(10).getText()+"]" ,false);
         }
-        clickOnRequestManualCardAndCheckFromPlusIcon();
     }
     public void clickOnCardAndCardSummary()
     {
@@ -1043,9 +1046,11 @@ ActionsHelper.driverWait(2000);
     }
     public void paymentScenario10()
     {
+
         logManager.STEP("Update Payments Status – Terminate payment ","this method to Update Payments Status – Terminate payment ");
+
         requestManualCard();
-        ActionsHelper.driverWait(3000);
+
         addTaskAndCheckFromData();
         logOut();
         ActionsHelper.driverWait(5000);
@@ -1137,12 +1142,13 @@ ActionsHelper.driverWait(2000);
     public void paymentScenario9()
     {
         logManager.STEP("Update Payments Status – Release payment ","this method to Update Payments Status – Release payment ");
-        ActionsHelper.driverWait(2000);
-        driver.get().navigate().refresh();
-        ActionsHelper.driverWait(2000);
+        requestManualCard();
+
+        addTaskAndCheckFromData();
         logOut();
         ActionsHelper.driverWait(5000);
         loginByPaymentSeniorSpecialist();
+        ActionsHelper.driverWait(4000);
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickStepClick("click on المدفوعات",paymentMenuItem);
         ActionsHelper.driverWait(4000);

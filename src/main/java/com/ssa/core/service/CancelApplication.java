@@ -28,7 +28,30 @@ public class CancelApplication {
                 .asString();
         System.out.println(response.getBody());
     }
+    public void requestServiceWithEid(String Eid) throws JsonProcessingException {
+        Unirest.config().reset();
+        Unirest.config().connectTimeout(7000);
+        Unirest.config().verifySsl(false);
+        response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/CancelApplication")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
+                .body(requestBodyWithEid(Eid))
+                .asString();
+        System.out.println(response.getBody());
+    }
+    public String requestBodyWithEid(String Eid) throws JsonProcessingException {
 
+//        Data Body To Be Sent
+//        {
+//            "EmiratesId": "784195094203635",
+//        }
+
+        CancelApplicationModel member= new CancelApplicationModel();
+        member.emiratesId =Eid;
+        System.out.print(toJson(member));
+//        System.out.println(AddNewPremise.toJson(AddNewPremise));
+        return toJson(member);
+    }
     public String requestBody() throws JsonProcessingException {
 
 //        Data Body To Be Sent

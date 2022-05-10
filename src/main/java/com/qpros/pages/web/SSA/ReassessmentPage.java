@@ -63,6 +63,7 @@ public class ReassessmentPage extends Base {
     private By benefitAmount = By.xpath("//span[contains(@id,'wtContent5_wtBenefitAmount')]"); //Contains app ref number and clickable
     private By finalButtonApprove = By.cssSelector("[value='الموافقة']"); //Only one action was needed
     private By filterApplicationBtn = By.xpath("//input[@id=\"DCDAgentPortalTheme_wt10_block_wtFilterContainer_wtbtn_Filter\"]");
+    private final By openThePreviousForm=By.xpath("//a[.='عرض هذا الطلب في الإصدار القديم']");
     String refCode = "SSP-20375";
     private static final Pattern p = Pattern.compile("(^[^\\s]+)");
     Matcher matcher;
@@ -216,7 +217,11 @@ public void test()
             loginPage.loginWithUser(UserType.Committee2);
         }
         ActionsHelper.sendKeys(searchForApplication, approveApplicationModule.refCode + Keys.ENTER);
+        ActionsHelper.driverWait(5000);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
+        ActionsHelper.driverWait(5000);
+        ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
+        ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickScrollStepClick("Click on update Amount", updateAmountBtn);
         ActionsHelper.driverWait(3000);
         driver.get().switchTo().frame(0);

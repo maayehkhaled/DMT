@@ -3,8 +3,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import com.qpros.common.web.Base;
-import com.qpros.helpers.ExcelUtils;
-import com.qpros.helpers.FileUtils;
 import com.qpros.reporting.QuantaTestManager;
 import com.ssa.core.service.AddNewMember;
 import com.ssa.core.service.CancelApplication;
@@ -14,8 +12,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import java.awt.*;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 @Listeners(com.qpros.common.LogManager.class)
@@ -59,15 +55,12 @@ public class AddFamilyMember extends Base {
         verifyEligibilityService.requestServiceWithParam(emirateId);
         Assert.assertTrue(verifyEligibilityService.getresponse(verifyEligibilityService).application.isEligible);
         Assert.assertEquals(verifyEligibilityService.getresponse(verifyEligibilityService).headOfFamilyBook.emiratesId,emirateId);
-
-       /* logManager.STEP("Add new member","");
+        logManager.STEP("Add new member","");
         addMember.requestServiceWithParam(emirateId);
-        //addMember.getResponse(addMember).
-
+        addMember.getResponse(addMember);
         logManager.STEP("Cancel application","");
-        cancelApp.requestServiceWithParam(emirateId);*/
-//assert
+        cancelApp.requestServiceWithParam(emirateId);
+        cancelApp.getresponse(cancelApp);
     }
 }
-
 
