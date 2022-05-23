@@ -273,7 +273,7 @@ public class ApproveApplicationModule extends Base {
         loginPage.loginWithUser(UserType.Superuser);
         this.logManager.STEP(" Login by super user, and assign the application to specialist from ادارة المراجعين ", "");
 
-        //start assign process by selecting specialist 2 with appication id
+        //start assign process by selecting specialist 2 with application id
         String ref=FileUtils.readFile("refCodeFile.txt").get(0);
         auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), ref);
 

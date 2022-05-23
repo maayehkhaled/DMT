@@ -41,17 +41,19 @@ public class UpdateWealthIncome {
         System.out.println(response.getBody());
     }
     public String requestBodyWithEid(String Eid) throws JsonProcessingException {
-        WealthIncomeModel wealthIncomeModel=new WealthIncomeModel();
+        //WealthIncomeModel wealthIncomeModel=new WealthIncomeModel();
+        WealthIncome wealthIncomeModel=new WealthIncome();
         wealthIncomeModel.emiratesId=Eid;
-        wealthIncomeModel.wealthIncome.get(0).emiratesId="";
-        wealthIncomeModel.wealthIncome.get(0).wealthType="";
-        wealthIncomeModel.wealthIncome.get(0).wealthDescription="";
-        wealthIncomeModel.wealthIncome.get(0).isBusinessActive=true;
-        wealthIncomeModel.wealthIncome.get(0).incomeAmount=5000;
-        wealthIncomeModel.wealthIncome.get(0).incomeFrequency="";
-        wealthIncomeModel.wealthIncome.get(0).attachmentList.get(0).binaryFile="";
-        wealthIncomeModel.wealthIncome.get(0).attachmentList.get(0).contentType="";
-        wealthIncomeModel.wealthIncome.get(0).attachmentList.get(0).contentType="";
+        wealthIncomeModel.wealthDescription="";
+        wealthIncomeModel.emiratesId="";
+        wealthIncomeModel.wealthType="";
+        //wealthIncomeModel.wealthIncome.get(0).wealthDescription="";
+        wealthIncomeModel.isBusinessActive=true;
+        wealthIncomeModel.incomeAmount=5000;
+        wealthIncomeModel.incomeFrequency="";
+        wealthIncomeModel.attachmentList.get(0).binaryFile="";
+        wealthIncomeModel.attachmentList.get(0).contentType="";
+        wealthIncomeModel.attachmentList.get(0).contentType="";
         System.out.println(wealthIncomeModel);
         return toJson(wealthIncomeModel);
     }

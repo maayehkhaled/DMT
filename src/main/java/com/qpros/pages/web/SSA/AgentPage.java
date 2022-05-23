@@ -71,7 +71,7 @@ public class AgentPage extends Base {
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(10000);
-        ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
+        //ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickScrollStepClick("Approve Personal Information", agentApproveStepFinal);
         ActionsHelper.driverWait(10000);
@@ -342,7 +342,7 @@ public class AgentPage extends Base {
         ActionsHelper.scrollupTo(driver.get().findElement(firstElementAfterSearch));
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(10000);
-        ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
+       // ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickScrollStepClick("click on اعادة التقييم",reValueButton);
         ActionsHelper.driverWait(10000);
@@ -500,7 +500,7 @@ public class AgentPage extends Base {
         ActionsHelper.sendKeys(seniorSpecialistSearchApplication, refCode + Keys.ENTER);
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
+        //ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickScrollStepClick("Click on reassessment",reassessmentCheckBox);
         ActionsHelper.driverWait(7000);
@@ -625,12 +625,16 @@ public class AgentPage extends Base {
 
     public String specialistRejectApplication(String applicationRef) {
 
-        logManager.STEP("Search application", "Inputs the reference number in the search field");
+        logManager.STEP("lock for ssp under  قائمة المهام", "Inputs the reference number in the search field");
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, applicationRef + Keys.ENTER);
         ActionsHelper.driverWait(3000);
+        logManager.STEP("click on the Application","");
+
         ActionsHelper.actionClickStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
+        logManager.STEP("Go through rejection steps and submit, select reason of rejection","");
+
+        //ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
         ActionsHelper.driverWait(10000);
 
         ActionsHelper.actionClickScrollStepClick("Reject step 1", agentRejectButtonFinal);
@@ -690,12 +694,16 @@ public class AgentPage extends Base {
      */
 
     public String seniorSpecialistRejectApplication(String refCode) {
+        logManager.STEP("lock for ssp under  قائمة المهام", "Inputs the reference number in the search field");
+
         ActionsHelper.driverWait(5000);
         ActionsHelper.sendKeys(specalistSearchApplicationFinal, refCode + Keys.ENTER);
+        logManager.STEP("click on the Application","");
+
         ActionsHelper.actionClickScrollStepClick("Click the application", firstElementAfterSearch);
         ActionsHelper.driverWait(5000);
-
-        ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
+        logManager.STEP("reject the Application  By senior","");
+        //ActionsHelper.actionClickStepClick("open the previous form",openThePreviousForm);
         ActionsHelper.driverWait(10000);
         ActionsHelper.actionClickScrollStepClick("Reject application", seniorApproveRejectButton);
         ActionsHelper.driverWait(5000);

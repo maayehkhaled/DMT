@@ -39,18 +39,6 @@ public class GetFamilyData {
                 .asString();
         System.out.println(response.getBody());
     }
-    public String requestBodyWithEid(String Eid) throws JsonProcessingException {
-
-//        Data Body To Be Sent
-//        {
-//            "EmiratesId": "string",
-//        }
-
-        FamilyData member= new FamilyData();
-        member.emiratesId ="";
-//        System.out.println(toJson(member));
-        return toJson(member);
-    }
 
     public void requestServiceWithParam(String eid) throws JsonProcessingException {
         Unirest.config().reset();

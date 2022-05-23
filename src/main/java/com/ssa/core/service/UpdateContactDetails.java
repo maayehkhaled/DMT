@@ -40,31 +40,7 @@ public class UpdateContactDetails {
         System.out.println(response.getBody());
     }
 
-    public String requestBodyWithEid(String Eid) throws JsonProcessingException {
 
-//        Data Body To Be Sent
-//       {
-//          "EmiratesId": "string",
-//          "HouseholdContactDetails":
-//          [
-//          {
-//          "EmiratesId": "string",
-//          "MobileNumber":"string",
-//          "Email": "string",
-//          "SecondaryNumber": "string"
-//          }
-//          ]
-//          }
-
-        UpdateContactDetailsModel member= new UpdateContactDetailsModel();
-        member.emiratesId ="";
-        member.householdContactDetails.get(0).emiratesId="";
-        member.householdContactDetails.get(0).mobileNumber="";
-        member.householdContactDetails.get(0).email="";
-        member.householdContactDetails.get(0).secondaryNumber="";
-        //        System.out.println(toJson(member));
-        return toJson(member);
-    }
     public String requestBody() throws JsonProcessingException {
 
         UpdateContactDetailsModel member= new UpdateContactDetailsModel();

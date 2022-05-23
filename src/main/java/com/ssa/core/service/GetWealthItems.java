@@ -36,11 +36,11 @@ public class GetWealthItems {
         response = Unirest.post("https://uat.ssa.gov.ae/ApplicationWS_API/rest/SocialSupportSupportRequest/GetWealthItems")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Basic QVBJQWRtaW46MTIzNDU2")
-                .body(requestBodyWithPAram(eid))
+                .body(requestServiceWithEid(eid))
                 .asString();
         System.out.println(response.getBody());
     }
-    public String requestBodyWithPAram(String eid) throws JsonProcessingException {
+    public String requestServiceWithEid(String eid) throws JsonProcessingException {
         WealthItems member= new WealthItems();
         member.emiratesId ="";
         member.wealthType="Business Licence";

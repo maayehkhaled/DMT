@@ -16,12 +16,14 @@ public interface StaticValues {
     int targetStringLength = 10;
     String choseValue="9403";
      String refCode= FileUtils.readFile("refCodeFile.txt").get(0);
+    //String refCode="SSP-30728";
     public int index=0;
     public String generatedString="";
     public String DateTimeFormatYearMonthDay="yyyy/MM/dd";
-    public String DateTimeFormatDayMonthYear="dd/MM/yyyy";
+    //public String DateTimeFormatDayMonthYear="dd/MM/yyyy";
     public String getDay="dd";
     public String getmonth="mm";
+    public String DateTimeFormatDayMonthYear="dd/mm/yyyy";
     public String actionAssignedAutomationOption="1708";
     public String enforcementType="21";
     public String infoSource="54";
@@ -34,6 +36,7 @@ public interface StaticValues {
     public String joblessJan="5";
     public String joblessY="2019";
     public String IELTS="2";
+    public String partner="127";
     public String countryPalestine="12";
     public String secondCountryEgypt="13";
     public String csDept="26";
@@ -47,4 +50,5 @@ public interface StaticValues {
     public String maxAge="60";
     public String weight="80";
     public String length="180";
+    public String fileName="test.pdf";
 }

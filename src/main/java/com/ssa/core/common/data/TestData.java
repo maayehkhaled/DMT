@@ -1,7 +1,7 @@
 package com.ssa.core.common.data;
 
 public interface TestData {
-    String EID="784199140643000";//"784199140632000";
+    String EID="784199140633000"; //"784199140643000"; //"784199361849591"; //"784199140633000";
 
     String approveApplicationEID = "";
 
@@ -35,9 +35,10 @@ public interface TestData {
 
     String rmiAppeal = "";
 
-    String enforcementCaseEID="784195843653981";
+    String enforcementCaseEID="784197809487941";
 
     String pepUserEID="784197821469414";
 
-    String opportunityEID="784201782027029";
+    String opportunityEID="784198110924952"; //"784201782027029";
+    String secondOpportunityEID="784197906576489";
 }

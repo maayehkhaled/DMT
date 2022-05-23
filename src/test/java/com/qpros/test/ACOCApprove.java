@@ -56,7 +56,7 @@ public class ACOCApprove extends Base {
 
 
 
-    @Test(description = "ACOC - Reject", priority = 1,
+    @Test(description = "ACOC - Reject", priority = 2,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void acocReject() throws JsonProcessingException, AWTException, InterruptedException {
         approveApplicationModule.approveApplication(false);
@@ -67,7 +67,7 @@ public class ACOCApprove extends Base {
         //rejectApplicationModule.rejectExistingApplication(ApproveApplicationModule.refCode);
     }
 
-    @Test(description = "Refresh COC - Approve", priority = 1,
+    @Test(description = "Refresh COC - Approve", priority = 3,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void refreshCocApprove() throws JsonProcessingException, AWTException, InterruptedException {
         approveApplicationModule.approveApplication(false);
@@ -78,7 +78,7 @@ public class ACOCApprove extends Base {
         rejectApplicationModule.rejectExistingApplication(ApproveApplicationModule.refCode);
     }
 
-    @Test(description = "Refresh COC - Reject", priority = 1,
+    @Test(description = "Refresh COC - Reject", priority = 4,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
     public void refreshCocReject() throws JsonProcessingException, AWTException, InterruptedException {
         approveApplicationModule.approveApplication(false);

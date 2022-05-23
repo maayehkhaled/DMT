@@ -70,10 +70,10 @@ public class SubmitApplication {
         return om.readValue(submitApplicationService.response.getBody(), Root.class);
     }
 
-//    public static void main(String[] args) throws JsonProcessingException {
-//        VerifyEligibilityService submitApplicationService = new VerifyEligibilityService();
-//        submitApplicationService.requestService();
-//        System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
-//    }
+    public static void main(String[] args) throws JsonProcessingException {
+        VerifyEligibilityService submitApplicationService = new VerifyEligibilityService();
+        submitApplicationService.requestService();
+        System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
+    }
 
 }

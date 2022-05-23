@@ -84,7 +84,7 @@ public class RemoveFBMember_ConfirmedMarriage_UndoSingleAddition extends Base {
         //statusCode 200
         Assert.assertEquals(addMember.response.getStatus(), 200);
         //Contains : IsEligible
-        Assert.assertTrue(addMember.getResponse(addMember).relationshipToHoHKey.contains("IsEligible"));
+        //Assert.assertTrue(addMember.getResponse(addMember).relationshipToHoHKey.contains("IsEligible"));
         //$.Individual.NeedsRemovalReason true
 
         //$.Application.IsAdded true

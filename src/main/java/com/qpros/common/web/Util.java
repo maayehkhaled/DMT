@@ -2,6 +2,8 @@ package com.qpros.common.web;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Util {
 
@@ -38,6 +40,17 @@ public class Util {
         }
     }
 
+    /**
+     * Convert the current date to specific pattern
+     * @param pattern
+     * @return current date now as string format
+     */
+    public static String formattedCurrentDate(String pattern){
+    LocalDateTime datetime1 = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern(pattern);
+    String formatDateTime = datetime1.format(format);
+    return formatDateTime;
+}
 
 
 }

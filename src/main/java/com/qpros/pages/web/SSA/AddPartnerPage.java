@@ -51,11 +51,13 @@ public class AddPartnerPage extends Base {
         ActionsHelper.actionClickStepClick("click on الحفظ",saveButton);
         ActionsHelper.driverWait(2000);
         driver.get().switchTo().alert().accept();
-        ActionsHelper.driverWait(6000);
-        /*ActionsHelper.scrollupTo(driver.get().findElement(By.xpath("//a[contains(text(),'"+partnerNameFaker+"')]")));
-        logManager.INFO("The created partner",false);
+        ActionsHelper.driverWait(4000);
+        driver.get().navigate().refresh();
         ActionsHelper.driverWait(2000);
-        ActionsHelper.clickAction(By.xpath("//a[contains(text(),'"+partnerNameFaker+"'"));
-        ActionsHelper.driverWait(8000);*/
+        ActionsHelper.scrollupTo(driver.get().findElement(By.xpath("//a[contains(text(),'"+partnerNameFaker+"')]")));
+        logManager.INFO("The created partner",false);
+        ActionsHelper.driverWait(4000);
+        ActionsHelper.clickAction(By.xpath("//a[contains(text(),'"+partnerNameFaker+"')]"));
+        ActionsHelper.driverWait(6000);
     }
 }

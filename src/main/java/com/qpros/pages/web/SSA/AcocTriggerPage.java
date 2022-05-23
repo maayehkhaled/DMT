@@ -20,7 +20,7 @@ public class AcocTriggerPage extends Base {
     private final By clickOnSSP=By.xpath("//a[contains(@id,'wtDCDBenefitTable')]");
     private final By contact=By.xpath("//input[@value='التواصل']");
     private final By emrIdList=By.xpath("//select");
-    private final By choseEmrId=By.xpath("//option[text()='784199140643000']");
+    private final By choseEmrId=By.xpath("//option[text()='784200210397426']");
     private final By topic=By.xpath("//input[@class='OSFillParent']");
     private final By summary=By.xpath("//textarea[@class='OSFillParent']");
     private final By MSG=By.xpath("//textarea[@class='OSFillParent Mandatory']");
@@ -32,10 +32,21 @@ public class AcocTriggerPage extends Base {
     private final By numberOfComment=By.xpath("//*[@id='InternalPortalTheme_wt169_block_wtMainContent_wtDCDNoteTable_Wrapper']/div/div[3]/div");
     private final By changeCircumstancesButton=By.xpath("//input[@class='Button btn-blue']");
     private final By nameList=By.xpath("//select[contains(@id,'wtInput_wtddl_Emirated_Id')]");
-    private final By choseName=By.xpath("//option[text()='???? ???? ??? ???? ???????']");
+    private final By choseName=By.xpath("//option[text()='عادل خميس على سليم الزيدى']");
     private final By reasonCircumstances=By.xpath("//select[contains(@id,'wtInput_wtddl_ReasonValue')]");
     private final By choseReason=By.xpath("//option[text()='تم التعرف على دخل إضافي للأسرة أثناء المناقشات مع المستفيد']");
     private final By addCircumstancesAgreeButton=By.xpath("//input[@value='اضافة ']");
+    private By sspLink=By.xpath("//a[contains(@id,'ctl03_wt71')]");
+    private By firstUserEIDLink=By.xpath("//a[contains(@id,'ctl03_wtlnk_Expandview')]");
+    /**
+     * method to click on EID to open the request
+     */
+    public void clickOnFirstEID(){
+        ActionsHelper.retryClick(sspLink, 30);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(firstUserEIDLink,30);
+        ActionsHelper.driverWait(2000);
+    }
     /**
      * method to add التواصل
      */
@@ -43,14 +54,18 @@ public class AcocTriggerPage extends Base {
     {
         logManager.STEP("add Communication method ","this method to add Communication information for ex EID/summery /msg AFTER Added this info system should added a record to the communication table");
         ActionsHelper.driverWait(4000);
-        refCode= FileUtils.readFile("refCodeFile.txt").get(0);
+        //refCode= FileUtils.readFile("refCodeFile.txt").get(0);
         ActionsHelper.actionClickStepClick("click on ملف الاسره",familyFile);
-        ActionsHelper.driverWait(4000);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.retryClick(sspLink, 30);
+        ActionsHelper.driverWait(2000);
+        /* Will enable this code after approvals working
         ActionsHelper.sendKeys(searchOnSSP,refCode);
         ActionsHelper.driverWait(3000);
         ActionsHelper.actionClickStepClick("Click on البحث",searchButton);
         ActionsHelper.driverWait(2000);
         ActionsHelper.actionClickStepClick("go to صفحة التواصل",clickOnSSP);
+         */
       ActionsHelper.actionClickScrollStepClick("click on التواصل ",contact);
         ActionsHelper.driverWait(3000);
         driver.get().switchTo().frame(0);
@@ -69,7 +84,7 @@ public class AcocTriggerPage extends Base {
         ActionsHelper.driverWait(6000);
         driver.get().navigate().refresh();
         ActionsHelper.driverWait(2000);
-        ActionsHelper.scrollTo(numberOfRecord);
+        ActionsHelper.scrollupTo(driver.get().findElement(numberOfRecord));
         ActionsHelper.driverWait(2000);
         char record=ActionsHelper.element(numberOfRecord).getText().charAt(0);
         ActionsHelper.driverWait(2000);
@@ -113,7 +128,7 @@ public class AcocTriggerPage extends Base {
         ActionsHelper.driverWait(6000);
         driver.get().navigate().refresh();
         ActionsHelper.driverWait(2000);
-        ActionsHelper.scrollTo(numberOfComment);
+        ActionsHelper.scrollTo(numberOfRecord);
         ActionsHelper.driverWait(2000);
         char record=ActionsHelper.element(numberOfComment).getText().charAt(0);
         ActionsHelper.driverWait(2000);
@@ -135,7 +150,9 @@ public class AcocTriggerPage extends Base {
     public void addChangeCircumstances()
     {
         logManager.STEP("add تغيير الظروف ","this method to add تغيير الظروف information for ex الاسم/سبب تغيير الظروف  AFTER Added this info system should تغيير الظروف button disabled");
-
+        ActionsHelper.actionClickStepClick("click on ملف الاسره",familyFile);
+        ActionsHelper.driverWait(2000);
+        ActionsHelper.actionClickStepClick("click on تغيير الظروف",sspLink);
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickScrollStepClick("click on اضافة ظروف",changeCircumstancesButton);
         driver.get().switchTo().frame(0);

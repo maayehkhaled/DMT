@@ -19,10 +19,16 @@ public class PEPPage extends Base {
     //Edit Screen
     private By editBtn=By.xpath("//input[contains(@id,'EnableEdit')]");
     private By underProcessingCheckbox=By.xpath("//input[contains(@id,'wtIsUnderRecruitment_Input')]");
+    private By currentEducation=By.xpath("//select[contains(@id,'wtIsStudying_input')]");
+    private By socialCareCheckBox=By.xpath("//input[contains(@id,'wtIsCaregiver_Input')]");
+    private By careDDL=By.xpath("//select[contains(@id,'wtCare_Input')]");
     private By graduationMonth=By.xpath("//select[contains(@id,'wtGraduationMonth')]");
     private By graduationYear=By.xpath("//select[contains(@id,'wtGraduationYears')]");
-    private By editEducationBtn=By.xpath("//a[contains(@id,'ctl03_wtlnk_EditEducationBackground')]");
 
+    //
+    private By deleteCurrentEducation=By.xpath("//a[contains(@id,'wt27')]");
+    private By editEducationBtn=By.xpath("//a[contains(@id,'ctl03_wtlnk_EditEducationBackground')]");
+    private By degreeDDL=By.xpath("//select[contains(@id,'degree')]");
     private By collegeDDL=By.xpath("//select[contains(@id,'wtddlcollege')]");
     private By deptDDL=By.xpath("//select[contains(@id,'Major')]");
     private By institutionDDL=By.xpath("//select[contains(@id,'EducationalInstitute')]");
@@ -30,7 +36,7 @@ public class PEPPage extends Base {
     private By masterGraduationYear=By.xpath("//select[contains(@id,'GraduationalYear')]");
     private By saveGraduationInfo=By.xpath("//input[contains(@id,'Record')]");
 
-    private By degreeDDL=By.xpath("//select[contains(@id,'degree')]");
+
     private By experienceRadioBtn=By.xpath("//input[contains(@id,'Yes_Radio3')]");
     private By joblessMonthDDL=By.xpath("//select[contains(@id,'wtMonthUnemployedsince')]");
     private By joblessYearDDL=By.xpath("//select[contains(@id,'wtYears')]");
@@ -43,6 +49,7 @@ public class PEPPage extends Base {
     private By workExperienceTypeDDL=By.xpath("//select[contains(@id,'rows_ctl00_wtSSA_PreAssessmentForm_PreviousExperience_TypeOfExp')]");
     private By secondWorkExperienceTypeDDL=By.xpath("//select[contains(@id,'rows_ctl02_wtSSA_PreAssessmentForm_PreviousExperience_TypeOfExp')]");
     private By jobDescription=By.xpath("//input[contains(@id,'ctl00_wttxtSSA_PreAssessmentForm_PreviousExperience_Job_T')]");
+    //alternative locator //input[@class='OSFillParent Mandatory SmartInput InEditMode ReadOnly']
     private By secondJobDescription=By.xpath("//input[contains(@id,'ctl02_wttxtSSA_PreAssessmentForm_PreviousExperience_Job_T')]");
     private By workLocation=By.xpath("//input[contains(@id,'ctl00_wttxt_SSA_PreAssessmentForm_PreviousExperience_Emplo')]");
     private By secondWorkLocation=By.xpath("//input[contains(@id,'ctl02_wttxt_SSA_PreAssessmentForm_PreviousExperience_Emplo')]");
@@ -54,6 +61,11 @@ public class PEPPage extends Base {
     private By secondCountryDDL=By.xpath("//select[contains(@id,'ctl02_wtddl_SSA_PreAssessmentForm_PreviousExperience_Count')]");
     private By saveJobExperience=By.xpath("//a[@class='SaveRowAction']");
     private By moreInfoTextarea=By.xpath("//textarea[contains(@id,'Input')]");
+    //delete this first
+    private By deleteFirstExperience=By.xpath("//span[contains(@id,'ctl00_wtSSA_PreAssessmentForm_PreviousExperience_TypeOfExp-container')]");
+    private By deleteBtn=By.xpath("//a[@class='DeleteRowAction']");
+    private By deleteSecondExperience=By.xpath("//span[contains(@id,'ctl02_wtSSA_PreAssessmentForm_PreviousExperience_TypeOfExp-container')]");
+
     //More Info
     private By lengthTextbox=By.cssSelector("[placeholder='ادخل الطول بالسنتيمتر']");
     private By weightTextbox=By.cssSelector("[placeholder='ادخل الوزن بالكيلوغرام']");
@@ -70,7 +82,7 @@ public class PEPPage extends Base {
     private By aramLang=By.xpath("//input[@value='56']");
 
     public void openJobInfo() {
-        logManager.STEP("Open job information", "The user will open job information section for specific user");
+        logManager.STEP("Open job information المعلومات المهنية", "The user will open job information section for specific user");
         ActionsHelper.retryClick(familyFileTab, 30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(sspLink, 30);
@@ -83,46 +95,64 @@ public class PEPPage extends Base {
     }
 
     public void clickEditJobInfo(){
-        logManager.STEP("Click Edit","The user click on Edit button");
+        logManager.STEP("Click Edit تحرير استمارة التقييم المسبق","The user click on Edit button");
         ActionsHelper.retryClick(jobInfoBtn,30);
         ActionsHelper.retryClick(editBtn,30);
         ActionsHelper.driverWait(2000);
     }
 
     public void editJobStatus(){
-    logManager.STEP("Edit Job Status","The user Edit all enabled info in Job Status section");
+    logManager.STEP("Edit Job Status الحالة الوظيفية","The user Edit all enabled info in Job Status section");
+    if(driver.get().findElement(underProcessingCheckbox).isSelected()){
+
+    }
     ActionsHelper.retryClick(underProcessingCheckbox,30);
+    ActionsHelper.driverWait(2000);
+    ActionsHelper.selectOption(currentEducation,StaticValues.enforcementLogType);
     ActionsHelper.driverWait(2000);
     ActionsHelper.selectOption(graduationMonth, StaticValues.graduationMonthOption);
     ActionsHelper.driverWait(2000);
     ActionsHelper.selectOption(graduationYear,StaticValues.graduationYearOption);
     ActionsHelper.driverWait(2000);
-    ActionsHelper.selectOption(degreeDDL,StaticValues.masterDegree);
+    ActionsHelper.retryClick(socialCareCheckBox,30);
+    ActionsHelper.driverWait(2000);
+    ActionsHelper.selectOption(careDDL,StaticValues.enforcementLogType);
     ActionsHelper.driverWait(2000);
     }
 
-    public void editQualificationInfo(){
-        logManager.STEP("Edit Qualification Info","The user will choose Master Degree from Qualification section");
-        ActionsHelper.retryClick(editEducationBtn,30);
+    public void newQualification() {
+        ActionsHelper.selectOption(degreeDDL, StaticValues.masterDegree);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.selectOption(degreeDDL,StaticValues.masterDegree);
+        ActionsHelper.selectOption(collegeDDL, StaticValues.masterDegree);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.selectOption(collegeDDL,StaticValues.masterDegree);
+        ActionsHelper.selectOption(deptDDL, StaticValues.csDept);
+        ActionsHelper.driverWait(3000);
+        ActionsHelper.sendKeys(graduationAVG, StaticValues.masterDegree);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.selectOption(deptDDL,StaticValues.csDept);
-        ActionsHelper.driverWait(4000);
-        ActionsHelper.sendKeys(graduationAVG,StaticValues.masterDegree);
+        ActionsHelper.selectOption(institutionDDL, StaticValues.csDept);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.selectOption(institutionDDL,StaticValues.csDept);
+        ActionsHelper.selectOption(masterGraduationYear, StaticValues.masterGraduation);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.selectOption(masterGraduationYear,StaticValues.masterGraduation);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(saveGraduationInfo,30);
+        ActionsHelper.retryClick(saveGraduationInfo, 30);
         ActionsHelper.driverWait(2000);
     }
 
-    public void editExperienceJobInfo() {
-        logManager.STEP("Edit Experience Info", "The user Edit all enabled info in Experience section");
+    public void editQualificationInfo(){
+        logManager.STEP("Edit Qualification Info بيانات المؤهلات المنجزة","The user will choose Master Degree from Qualification section");
+        //ActionsHelper.retryClick(editEducationBtn,30);
+        //to cancel previous edu
+        if((driver.get().findElement(deleteCurrentEducation)).isEnabled()){
+            ActionsHelper.retryClick(deleteCurrentEducation,30);
+            ActionsHelper.driverWait(3000);
+            newQualification();
+        }
+        else{
+            newQualification();
+        }
+    }
+
+    public void addNewExperience(){
+        logManager.STEP("Edit Experience Info الخبرات الوظيفية", "The user Edit all enabled info in Experience section");
         ActionsHelper.retryClick(experienceRadioBtn, 30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(joblessMonthDDL, StaticValues.joblessJan);
@@ -137,50 +167,70 @@ public class PEPPage extends Base {
         ActionsHelper.driverWait(2000);
     }
 
+    public void editExperienceJobInfo() {
+        //if(driver.get().findElement(experienceRadioBtn).isSelected()){
+        if(driver.get().findElement(deleteFirstExperience).isDisplayed()) {
+            ActionsHelper.retryClick(deleteFirstExperience, 30);
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.retryClick(deleteBtn, 30);
+            ActionsHelper.driverWait(4000);
+        }
+            else if(driver.get().findElement(deleteSecondExperience).isDisplayed()){
+            ActionsHelper.retryClick(deleteSecondExperience,30);
+            ActionsHelper.driverWait(2000);
+            ActionsHelper.retryClick(deleteBtn,30);
+            ActionsHelper.driverWait(4000);
+        }
+        addNewExperience();
+
+        //method
+    }
+
     public void addFirstWorkExperience(){
         logManager.STEP("Add First Experience Info", "The user add first work experience");
         ActionsHelper.retryClick(addWorkExperienceLink, 30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(workExperienceTypeDDL, StaticValues.masterDegree);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.sendKeys(jobDescription, "Software Quality Engineer");
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.sendKeys(workLocation, "Q-Pros");
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeysWithClear(yearsOfExperience, StaticValues.graduationMonthOption);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(4000);
+        /*ActionsHelper.sendKeysWithClear(yearsOfExperience, StaticValues.graduationMonthOption);
+        ActionsHelper.driverWait(3000);*/
         ActionsHelper.sendKeysWithClear(monthsOfExperience, StaticValues.masterDegree);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.selectOption(countryDDL, StaticValues.countryPalestine);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.retryClick(saveJobExperience, 30);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(3000);
     }
     public void addSecondWorkExperience(){
         logManager.STEP("Add Second Experience Info", "The user add second work experience");
         ActionsHelper.retryClick(addWorkExperienceLink, 30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(secondWorkExperienceTypeDDL, StaticValues.masterDegree);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.sendKeys(secondJobDescription, "Software Quality Manager");
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.sendKeys(secondWorkLocation, "Second Q-Pros");
         ActionsHelper.driverWait(4000);
         ActionsHelper.sendKeysWithClear(secondYearsOfExperience, StaticValues.graduationMonthOption);
-        ActionsHelper.driverWait(4000);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.sendKeysWithClear(secondMonthsOfExperience, StaticValues.masterDegree);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.selectOption(secondCountryDDL, StaticValues.secondCountryEgypt);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.retryClick(saveJobExperience, 30);
-        ActionsHelper.driverWait(2000);
+        ActionsHelper.driverWait(3000);
     }
+
     public void editMoreInfo(){
         logManager.STEP("Edit More Info About The User","The user Edit all enabled info in More Info section");
         ActionsHelper.driverWait(3000);
-        ActionsHelper.sendKeys(lengthTextbox, StaticValues.length);
+        ActionsHelper.sendKeysWithClear(lengthTextbox, StaticValues.length);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.sendKeys(weightTextbox, StaticValues.weight);
+        ActionsHelper.sendKeysWithClear(weightTextbox, StaticValues.weight);
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(nationalService,30);
         ActionsHelper.driverWait(2000);

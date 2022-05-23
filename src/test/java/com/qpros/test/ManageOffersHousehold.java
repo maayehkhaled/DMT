@@ -38,7 +38,8 @@ public class ManageOffersHousehold extends Base {
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void validateFirstTimeEdit(){
         startMethod();
-        managePage.firstTimeEdit();
+        managePage.catchFromSpan();
+       // managePage.firstTimeEdit();
     }
     @Test(description = "Second Time Edit", priority = 2,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
