@@ -63,12 +63,7 @@ public class GetFamilyData {
                 .asString();
         System.out.println(response.getBody());
     }
-    public String requestBodyWithEid(String eid) throws JsonProcessingException {
-        FamilyData member= new FamilyData();
-        member.emiratesId =eid;
-        System.out.println(toJson(member));
-        return toJson(member);
-    }
+
 
     public String requestBody() throws JsonProcessingException {
 

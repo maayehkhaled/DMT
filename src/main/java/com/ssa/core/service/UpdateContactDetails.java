@@ -89,17 +89,6 @@ public class UpdateContactDetails {
         System.out.println(response.getBody());
     }
 
-    public String requestBodyWithEid(String eid) throws JsonProcessingException {
-        UpdateContactDetailsModel member= new UpdateContactDetailsModel();
-        member.emiratesId ="";
-        member.householdContactDetails.get(0).emiratesId="";
-        member.householdContactDetails.get(0).mobileNumber="";
-        member.householdContactDetails.get(0).email="";
-        member.householdContactDetails.get(0).secondaryNumber="";
-        System.out.println(toJson(member));
-        return toJson(member);
-    }
-
     public Root getresponse(UpdateContactDetails submitApplicationService) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
         return om.readValue(submitApplicationService.response.getBody(), Root.class);
