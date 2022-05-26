@@ -48,4 +48,6 @@ public class VerifyEligibilityService {
         System.out.print(submitApplicationService.getresponse(submitApplicationService).application.isEligible);
     }
 
+  public void requestServiceWithParam(String emirateId) {
+  }
 }

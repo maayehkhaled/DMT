@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.ssa.core.model.FamilyData;
-import com.ssa.core.model.GetFamilyDataModel;
-import com.ssa.core.model.Root;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 
@@ -38,6 +36,10 @@ public class GetFamilyData {
                 .body(requestBodyWithEid(Eid))
                 .asString();
         System.out.println(response.getBody());
+    }
+
+    private byte[] requestBodyWithEid(String eid) {
+        return new byte[0];
     }
 
     public void requestServiceWithParam(String eid) throws JsonProcessingException {

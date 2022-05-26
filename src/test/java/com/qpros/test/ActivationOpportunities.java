@@ -48,20 +48,20 @@ public class ActivationOpportunities extends Base {
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void validateFirstTimeEdit() {
         startMethod();
-        activation.firstTimeEdit();
+        //activation.firstTimeEdit();
     }
 
     @Test(description = "Second Time Edit", priority = 3,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void validateSecondTimeEdit() {
         startMethod();
-        activation.secondTimeEdit();
+        //activation.secondTimeEdit();
     }
 
     @Test(description = "Edit Status To Reject", priority = 4,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void validateEditStatusOnly(){
         startMethod();
-        activation.editStatusOnly();
+        //activation.editStatusOnly();
     }
 }

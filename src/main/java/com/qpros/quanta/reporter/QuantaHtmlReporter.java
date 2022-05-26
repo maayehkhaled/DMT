@@ -1,5 +1,6 @@
 package com.qpros.quanta.reporter;
 
+import com.qpros.quanta.model.SubCategory;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -7,7 +8,7 @@ import java.util.logging.Logger;
 
 import com.qpros.quanta.ReportAggregates;
 import com.qpros.quanta.model.Category;
-import com.qpros.quanta.model.SubCategory;
+//import com.qpros.quanta.model.SubCategory;
 import com.qpros.quanta.model.Test;
 import com.qpros.quanta.reporter.configuration.QuantaHtmlReporterConfiguration;
 
@@ -64,8 +65,8 @@ public class QuantaHtmlReporter extends BasicFileReporter {
         return REPORTER_NAME;
     }
 
-
-    @Override public void onSubCategoryAssigned(Test test, SubCategory subCategory) {
+    @Override
+    public void onSubCategoryAssigned(Test test, SubCategory subCategory) {
 
     }
 }

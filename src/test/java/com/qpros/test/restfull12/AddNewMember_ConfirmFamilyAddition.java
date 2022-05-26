@@ -82,7 +82,7 @@ public class AddNewMember_ConfirmFamilyAddition extends Base {
         //statusCode 200
         Assert.assertEquals(addMember.response.getStatus(),200);
         //Contains : IsEligible
-        Assert.assertTrue(addMember.getResponse(addMember).relationshipToHoHKey.contains("IsEligible"));
+        //Assert.assertTrue(addMember.getResponse(addMember).relationshipToHoHKey.contains("IsEligible"));
         //$.Application.IsAdded true
 
         //$.Application.HasDataIssues false
