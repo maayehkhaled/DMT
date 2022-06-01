@@ -2,7 +2,7 @@ package com.qpros.reporting;
 
 public class ExceptionListner {
 
-    public synchronized String checkException(String exception) {
+    public String checkException(String exception) {
         if (exception.contains("Assert")) {
             exception = exception.substring(exception.indexOf("expected"), exception.lastIndexOf("]"));
         } else if (exception.contains("depends on not successfully")) {

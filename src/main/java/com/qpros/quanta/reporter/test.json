@@ -1,0 +1,16 @@
+{
+  "value": {},
+  "\"xpath": [
+    [
+      "(.//*[normalize-space(text()) and normalize-space(.)='\"",
+      "\"'])[1]/following::span[1]\"",
+      "\"xpath=(.//*[normalize-space(text()) and normalize-space(.)='×'])[1]/following::span[13]\"",
+      "\"xpath=(.//*[normalize-space(text()) and normalize-space(.)='إزالة'])[1]/preceding::span[1]\"",
+      "\"xpath=(.//*[normalize-space(text()) and normalize-space(.)='\"",
+      "\" colombia'])[1]/preceding::span[1]\"",
+      "\"xpath=//*/text()[normalize-space(.)='Quality Professionals QPros · Caracas Center Yajouz St 8 Al Baladieh']/parent::*\"",
+      "\"xpath=//div[2]/div[2]/span\"",
+      "\"css=div.ClJ9Yb > span \""
+    ]
+  ]
+}

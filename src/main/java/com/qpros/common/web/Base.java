@@ -3,21 +3,27 @@ package com.qpros.common.web;
 
 import com.qpros.common.DriverType;
 import com.qpros.common.LogManager;
+import com.qpros.common.OsValidator;
 import com.qpros.helpers.ReadWriteHelper;
+import com.qpros.helpers.WebDriverInstaller;
 import io.appium.java_client.remote.MobileCapabilityType;
-import org.openqa.selenium.UnexpectedAlertBehaviour;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.rauschig.jarchivelib.ArchiveFormat;
+import org.rauschig.jarchivelib.ArchiverFactory;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeTest;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -26,21 +32,19 @@ import java.util.Map;
 public class Base {
 
     public static ThreadLocal<WebDriver> driver= new ThreadLocal<>();
-    public com.qpros.common.OsValidator OsValidator;
     public LogManager logManager = new LogManager(getClass().getSimpleName());
 
 
 
-    @BeforeTest(enabled = false) public synchronized void setUpBrowser() {
+    @BeforeTest(enabled = true) public synchronized void setUpBrowser() throws IOException {
         String OsType = OsValidator.getDeviceOs();
         DriverType browser = getBrowser();
         initiateDriver(OsType, browser);
         driver.get().navigate().to(ReadWriteHelper.ReadData("BaseURL"));
-
     }
 
 
-    public synchronized WebDriver initiateDriver(String deviceOsType, DriverType driverType) {
+    public synchronized WebDriver initiateDriver(String deviceOsType, DriverType driverType) throws IOException {
 
         switch (driverType) {
             case FIREFOX:
@@ -56,27 +60,43 @@ public class Base {
             case CHROME:
                 try {
                     setChromeBrowser(deviceOsType);
-                    Map<String, Object> prefs = new HashMap<>();
+                    Map<String, Object> prefs = new HashMap<String, Object>();
                     //Put this into prefs map to switch off browser notification
                     prefs.put("profile.default_content_setting_values.notifications", 2);
-                    prefs.put("credentials_enable_service", false);
-                    prefs.put("profile.password_manager_enabled", false);
                     //Create chrome options to set this prefs
                     ChromeOptions options = new ChromeOptions();
                     options.setExperimentalOption("prefs", prefs);
-                    options.addArguments("--ignore-certificate-errors");
                     options.addArguments("--disable-web-security");
                     options.addArguments("--allow-running-insecure-content");
+                    options.addArguments("--ignore-ssl-errors=yes");
+                    options.addArguments("--ignore-certificate-errors");
+                    if (ReadWriteHelper.ReadData("headless").equalsIgnoreCase("true")) {
+                        options.addArguments("--disable-gpu");
+                        options.addArguments("--headless");
+                        options.addArguments("window-size=1920x1080");
 
-                    options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
-                    options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+                    }
                     driver.set(new ChromeDriver(options));
-                    //Dimension targetSize = new Dimension(1920, 1080); //your screen resolution here
-                    //driver.get().manage().window().setSize(targetSize);
 
+
+                } catch (IllegalStateException | SessionNotCreatedException ex) {
+
+                    Runtime.getRuntime().exec("chromedriver.exe -v");
+                    try {
+                        if (deviceOsType.equalsIgnoreCase("windows")) {
+                            Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+                            new File("src/main/resources/browserDrivers/chromedriver/chromedriver.exe").delete();
+                        }else{
+                            new File("src/main/resources/browserDrivers/chromedriver/chromedriver").delete();
+                        }
+                    } catch (Exception exception) {
+
+                    }
+                    WebDriverInstaller.WebDriverSetup.downloadAndExtractWebDriver(DriverType.CHROME,deviceOsType, ArchiverFactory.createArchiver(ArchiveFormat.ZIP));
+                    initiateDriver(deviceOsType,getBrowser());
                 } catch (Throwable e) {
                     e.printStackTrace(System.out);
-                    Assert.fail("Please check Browser is exist Browser Unable to start");
+                    //Assert.fail("Please check Browser is exist Browser Unable to start");
                 }
                 break;
             case INTERNETEXPLORER: {
@@ -173,5 +193,3 @@ public class Base {
     }
 
 }
-
-
