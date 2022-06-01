@@ -3,12 +3,10 @@ package com.qpros.reporting;
 import com.qpros.quanta.QuantaReports;
 import com.qpros.quanta.QuantaTest;
 
-import java.lang.management.OperatingSystemMXBean;
 import java.util.HashMap;
 import java.util.Map;
 
 public class QuantaTestManager {
-
 
     static Map<Integer, QuantaTest> quantaSuiteTestMap = new HashMap<Integer, QuantaTest>();
     static Map<Integer, QuantaTest> quantaTestMap = new HashMap<Integer, QuantaTest>();

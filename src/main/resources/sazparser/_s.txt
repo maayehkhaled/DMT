@@ -1,3 +1,0 @@
-${httpVersion}
-${ResponseHeader}
-${Body}

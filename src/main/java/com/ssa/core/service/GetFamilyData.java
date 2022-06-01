@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.ssa.core.model.FamilyData;
+import com.ssa.core.model.GetFamilyDataModel;
+import com.ssa.core.model.Root;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 
@@ -38,10 +40,6 @@ public class GetFamilyData {
         System.out.println(response.getBody());
     }
 
-    private byte[] requestBodyWithEid(String eid) {
-        return new byte[0];
-    }
-
     public void requestServiceWithParam(String eid) throws JsonProcessingException {
         Unirest.config().reset();
         Unirest.config().connectTimeout(7000);
@@ -53,7 +51,12 @@ public class GetFamilyData {
                 .asString();
         System.out.println(response.getBody());
     }
-
+    public String requestBodyWithEid(String eid) throws JsonProcessingException {
+        FamilyData member= new FamilyData();
+        member.emiratesId =eid;
+        System.out.println(toJson(member));
+        return toJson(member);
+    }
 
     public String requestBody() throws JsonProcessingException {
 

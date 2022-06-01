@@ -61,6 +61,7 @@ public class AddFamilyMember extends Base {
 
         logManager.STEP("Add new member","");
         addMember.requestServiceWithParam(emirateId);
+        addMember.response.getStatus();
         addMember.getResponse(addMember);
         addMember.getResponse(addMember);
 
