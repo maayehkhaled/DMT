@@ -1,9 +1,8 @@
 package com.ssa.core.common.data;
 
 public interface TestData {
-    String EID=""; //"784199140643000"; //"784199361849591"; //"784199140633000";
-    //784199140633000 //784199140637000 //784195872616700 ->Ramy
-    //784199140647000->Shamsa       //784199140660700 ->MOHAMED ALHAMMADI
+    String EID="784199140633000"; //"784199140643000"; //"784199361849591"; //"784199140633000";
+
     String approveApplicationEID = "";
 
     String rejectApplicationEID = "";

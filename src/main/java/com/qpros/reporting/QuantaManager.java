@@ -9,10 +9,10 @@ import com.qpros.helpers.ActionsHelper;
 
 public class QuantaManager extends Base {
 
-    private static QuantaReports extent = new QuantaReports();
-    private static String reportFileName = "QPros-Automation_Report-" + ActionsHelper.getTodayDate() + "-" +
+    private static QuantaReports extent;
+    private static final String reportFileName = "QPros-Automation_Report-"+ ActionsHelper.getTodayDate() + "-" +
             System.currentTimeMillis() + ".html";
-    private static String path = System.getProperty("user.dir") + "/src/main/resources/Reports/";
+    private static final String path = System.getProperty("user.dir") + "/src/main/resources/Reports/";
 
     public static QuantaReports getInstance() {
         if (extent == null)
@@ -20,22 +20,21 @@ public class QuantaManager extends Base {
         return extent;
     }
 
-    public static synchronized QuantaReports createInstance() {
+    public static QuantaReports createInstance() {
         StateHelper.setStepState("reportName", reportFileName);
         QuantaHtmlReporter htmlReporter= new QuantaHtmlReporter(path + reportFileName);
-        //QuantaKlovReporter quantaKlovReporter= new QuantaKlovReporter("DU","Build");
-        //quantaKlovReporter.initMongoDbConnection("localhost", 27017);
-        //quantaKlovReporter.initKlovServerConnection("http://localhost");
         htmlReporter.config().setReportName("QPros-Test");
-        htmlReporter.setAnalysisStrategy(AnalysisStrategy.SUITE);
-        htmlReporter.config().setTheme(Theme.STANDARD);
+        htmlReporter.setAnalysisStrategy(AnalysisStrategy.TEST);
+        htmlReporter.config().setTheme( Theme.STANDARD);
         htmlReporter.config().setEncoding("utf-8");
-        extent.setAnalysisStrategy(AnalysisStrategy.SUITE);
-        extent.setSystemInfo("Operating System", System.getProperty("os.name"));
-        extent.setSystemInfo("Operating System Version", System.getProperty("os.version"));
-        extent.setSystemInfo("Run User", System.getProperty("user.name"));
-        extent.setSystemInfo("Java runtime", System.getProperty("java.runtime.version"));
-        extent.attachReporter(htmlReporter,htmlReporter);
+        extent = new QuantaReports();
+        extent.setSystemInfo("Operating System",System.getProperty("os.name"));
+        extent.setSystemInfo("Operating System Version",System.getProperty("os.version"));
+        extent.setSystemInfo("Operating system architecture",System.getProperty("os.arch"));
+        extent.setSystemInfo("Run User",System.getProperty("user.name"));
+        extent.setSystemInfo("Java runtime",System.getProperty("java.runtime.version"));
+        extent.setAnalysisStrategy(AnalysisStrategy.TEST);
+        extent.attachReporter(htmlReporter);
 
         return extent;
     }

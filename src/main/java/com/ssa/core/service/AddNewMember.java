@@ -48,8 +48,7 @@ public class AddNewMember {
         addNewMember.relationshipToHoHKey="son";
         addNewMember.dateOfBirth="2006-09-21";
         //addNewMember.secondDocument="test.pdf";
-        addNewMember.reasonForAdding="Reason For Adding";
-        //int statusCode=response.getStatus();
+        addNewMember.reasonForAdding="test.pdf";
         System.out.println(toJson(addNewMember));
         return toJson(addNewMember);
     }
@@ -74,6 +73,6 @@ public class AddNewMember {
     public static void main(String[] args) throws JsonProcessingException {
         AddNewMember addNewMember = new AddNewMember();
         addNewMember.requestService();
-        System.out.print(addNewMember.getResponse(addNewMember).responseStatus);
+        //System.out.print(updateSelfDeclaredIncome.getResponse(updateSelfDeclaredIncome).statusCode);
     }
 }
