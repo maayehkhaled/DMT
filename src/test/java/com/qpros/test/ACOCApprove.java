@@ -13,7 +13,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import javax.jws.soap.SOAPBinding;
+//import javax.jws.soap.SOAPBinding;
 import java.awt.*;
 import java.io.IOException;
 
@@ -30,9 +30,9 @@ public class ACOCApprove extends Base {
         this.setUpBrowser();
     }
     ApproveApplicationModule approveApplicationModule = new ApproveApplicationModule(driver.get());
-    ClaimantApplicationPage claimantApplicationPage = new ClaimantApplicationPage(driver.get());
+    //ClaimantApplicationPage claimantApplicationPage = new ClaimantApplicationPage(driver.get());
     RejectApplicationModule rejectApplicationModule = new RejectApplicationModule(driver.get());
-    ClaimantLogin claimantLogin = new ClaimantLogin(driver.get());
+    //ClaimantLogin claimantLogin = new ClaimantLogin(driver.get());
     COCPage cocPage = new COCPage(driver.get());
     SubmitApplicationService submitApplicationService = new SubmitApplicationService();
     VerifyEligibilityService verifyEligibilityService = new VerifyEligibilityService();
@@ -44,8 +44,8 @@ public class ACOCApprove extends Base {
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
 
     @Test(description = "ACOC - Approve", priority = 1,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
-    public void acocApprove() throws JsonProcessingException, InterruptedException, AWTException {
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
+    public void acocApprove() throws JsonProcessingException, AWTException, InterruptedException {
         approveApplicationModule.approveApplication(true);
         homePage.navigateToLogin();
         loginPage.loginWithUser(UserType.Committee1);
@@ -57,7 +57,7 @@ public class ACOCApprove extends Base {
 
 
     @Test(description = "ACOC - Reject", priority = 2,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
     public void acocReject() throws JsonProcessingException, AWTException, InterruptedException {
         approveApplicationModule.approveApplication(false);
         homePage.navigateToLogin();
@@ -68,7 +68,7 @@ public class ACOCApprove extends Base {
     }
 
     @Test(description = "Refresh COC - Approve", priority = 3,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
     public void refreshCocApprove() throws JsonProcessingException, AWTException, InterruptedException {
         approveApplicationModule.approveApplication(false);
         homePage.navigateToLogin();
@@ -79,7 +79,7 @@ public class ACOCApprove extends Base {
     }
 
     @Test(description = "Refresh COC - Reject", priority = 4,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"Daily"})
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class)
     public void refreshCocReject() throws JsonProcessingException, AWTException, InterruptedException {
         approveApplicationModule.approveApplication(false);
         homePage.navigateToLogin();

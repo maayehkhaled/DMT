@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.ssa.core.model.Root;
+import com.ssa.core.model.UpdateActivationInformationModel;
 import com.ssa.core.model.UpdateContactDetailsModel;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
@@ -64,8 +65,15 @@ public class UpdateContactDetails {
         System.out.println(response.getBody());
     }
 
-    private byte[] requestBodyWithEid(String eid) {
-        return new byte[0];
+    public String requestBodyWithEid(String eid) throws JsonProcessingException {
+        UpdateContactDetailsModel member= new UpdateContactDetailsModel();
+        member.emiratesId ="";
+        member.householdContactDetails.get(0).emiratesId="";
+        member.householdContactDetails.get(0).mobileNumber="";
+        member.householdContactDetails.get(0).email="";
+        member.householdContactDetails.get(0).secondaryNumber="";
+        System.out.println(toJson(member));
+        return toJson(member);
     }
 
     public Root getresponse(UpdateContactDetails submitApplicationService) throws JsonProcessingException {

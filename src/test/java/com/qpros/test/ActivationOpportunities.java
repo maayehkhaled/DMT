@@ -3,7 +3,6 @@ package com.qpros.test;
 import com.qpros.common.web.Base;
 import com.qpros.pages.web.SSA.ActivationOpportunitiesPage;
 import com.qpros.pages.web.SSA.LoginPage;
-import com.qpros.pages.web.SSA.ManageOffersHouseholdPage;
 import com.qpros.pages.web.SSA.UserType;
 import com.qpros.reporting.QuantaTestManager;
 import com.ssa.core.common.locators.urls;
@@ -26,7 +25,7 @@ public class ActivationOpportunities extends Base {
     }
     LoginPage loginPage = new LoginPage(driver.get());
     ActivationOpportunitiesPage activation=new ActivationOpportunitiesPage(driver.get());
-    ManageOffersHouseholdPage managePage = new ManageOffersHouseholdPage(driver.get());
+    //ManageOffersHouseholdPage managePage = new ManageOffersHouseholdPage(driver.get());
     public void startMethod(){
         driver.get().navigate().to(urls.agentLogin);
         loginPage.loginWithUser(UserType.CM2);
@@ -48,20 +47,20 @@ public class ActivationOpportunities extends Base {
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void validateFirstTimeEdit() {
         startMethod();
-        //activation.firstTimeEdit();
+        activation.firstTimeEdit();
     }
 
     @Test(description = "Second Time Edit", priority = 3,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void validateSecondTimeEdit() {
         startMethod();
-        //activation.secondTimeEdit();
+        activation.secondTimeEdit();
     }
 
     @Test(description = "Edit Status To Reject", priority = 4,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void validateEditStatusOnly(){
         startMethod();
-        //activation.editStatusOnly();
+        activation.editStatusOnly();
     }
 }

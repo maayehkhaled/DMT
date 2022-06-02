@@ -21,6 +21,7 @@ public class AddNewMember_ConfirmFamilyAddition extends Base {
     AddNewMember addMember=new AddNewMember();
     GetFamilyData getFamilyData=new GetFamilyData();
     CancelApplication cancelApp=new CancelApplication();
+    String emirateId = "";
 
     @BeforeClass
     public void initSuite() {
@@ -31,12 +32,9 @@ public class AddNewMember_ConfirmFamilyAddition extends Base {
     public synchronized void setTestSuite() throws IOException {
         this.setUpBrowser();
     }
-    @Test(description = "Verify Eligibility", priority = 1,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void verifyEligibility() throws JsonProcessingException {
+    public void getData() {
         logManager.STEP("Read Test Data from Source", "");
         //
-        String emirateId = "";
         int count = 0;
         CSVReader csvReader = null;
         try {
@@ -46,100 +44,52 @@ public class AddNewMember_ConfirmFamilyAddition extends Base {
                 count++;
                 emirateId = nextLine[1];
             }
-
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
+    }
+    @Test(description = "AddNewMember_ConfirmFamilyAddition ", priority = 1,
+            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
+    public void addNewMember_ConfirmFamilyAddition () throws JsonProcessingException {
+        getData();
+        //Call VE api
         logManager.STEP("The User Trigger Verify Eligibility Service", "");
         verifyEligibilityService.requestServiceWithParam(emirateId);
         Assert.assertEquals(verifyEligibilityService.getresponse(verifyEligibilityService).responseStatus.statusCode,200);
+        //verifyEligibilityService.response.getStatus();
         //contains: familybook
         Assert.assertTrue(verifyEligibilityService.getresponse(verifyEligibilityService).claimant.familyBookEmirateEN.contains("familybook"));
-    }
-    //AddNewMember_ConfirmSingleAddition
-    @Test(description = "AddNewMember_ConfirmSingleAddition", priority = 2,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void AddNewMember_ConfirmSingleAddition() throws JsonProcessingException {
-        logManager.STEP("Read Test Data from Source", "");
-        //
-        String emirateId = "";
-        int count = 0;
-        CSVReader csvReader = null;
-        try {
-            csvReader = new CSVReader(new FileReader("src/main/resources/DataProvider/data.csv"));
-            String[] nextLine;
-            while ((nextLine = csvReader.readNext()) != null && count <= 108) {
-                count++;
-                emirateId = nextLine[1];
-            }
+        Assert.assertTrue(verifyEligibilityService.getresponse(verifyEligibilityService).claimant.familyBookEmirateEN.equalsIgnoreCase("familybook"));
 
-        } catch (IOException | CsvValidationException e) {
-            e.printStackTrace();
-        }
+        //AddNewMember_ConfirmSingleAddition Call Add FM API
         logManager.STEP("The User Trigger AddNewMember_ConfirmSingleAddition Service", "");
         addMember.requestServiceWithParam(emirateId);
-        //addMember.getResponse(addMember);
+        //Assert.assertEquals(addMember.getResponse(addMember).responseStatus.statusCode,200);
         //statusCode 200
         Assert.assertEquals(addMember.response.getStatus(),200);
         //Contains : IsEligible
-        //Assert.assertTrue(addMember.getResponse(addMember).relationshipToHoHKey.contains("IsEligible"));
-        //$.Application.IsAdded true
-
+        Assert.assertTrue(addMember.getResponse(addMember).responseStatus.message.contains("IsEligible"));
+        Assert.assertTrue(addMember.getResponse(addMember).application.isEligible);
+        //$.Application.IsAdded true ?
+        Assert.assertTrue(addMember.getResponse(addMember).application.messageEN.contains("Is Added"));
         //$.Application.HasDataIssues false
-    }
-    //GetFamilyData_ConfirmedFamily
-    @Test(description = "GetFamilyData_ConfirmedFamily", priority = 3,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void GetFamilyData_ConfirmedFamily() throws JsonProcessingException {
-        logManager.STEP("Read Test Data from Source", "");
-        //
-        String emirateId = "";
-        int count = 0;
-        CSVReader csvReader = null;
-        try {
-            csvReader = new CSVReader(new FileReader("src/main/resources/DataProvider/data.csv"));
-            String[] nextLine;
-            while ((nextLine = csvReader.readNext()) != null && count <= 108) {
-                count++;
-                emirateId = nextLine[1];
-            }
+        Assert.assertFalse(addMember.getResponse(addMember).application.hasDataIssues);
 
-        } catch (IOException | CsvValidationException e) {
-            e.printStackTrace();
-        }
+        //Call get FM data API
         logManager.STEP("The User Trigger GetFamilyData_ConfirmedFamily Service", "");
         getFamilyData.requestServiceWithParam(emirateId);
         //statusCode 200
-      /*  Assert.assertEquals(getFamilyData.getresponse(getFamilyData).responseStatus.statusCode,200);
+        Assert.assertEquals(getFamilyData.response.getStatus(),200);
         //familybooknumber
-        Assert.assertTrue(getFamilyData.getresponse(getFamilyData).household.contains("familybooknumber"));
+        /*
+        Assert.assertTrue(getFamilyData.getresponse(getFamilyData)..contains("familybooknumber"));
         //$.Household[0].IsRemoved  false
         Assert.assertFalse(getFamilyData.getresponse(getFamilyData).household.get(0).isRemoved);
         //$.Application.HasDataIssues false
         Assert.assertFalse(getFamilyData.getresponse(getFamilyData).application.hasDataIssues);*/
         //contains 784199931703088 ?
-    }
-    //CancelApplication_Successfully
-    @Test(description = "Cancel Application_Successfully", priority = 5,
-            retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {"API"})
-    public void CancelApplication_Successfully() throws JsonProcessingException {
-        logManager.STEP("Read Test Data from Source", "");
-        //
-        String emirateId = "";
-        int count = 0;
-        CSVReader csvReader = null;
-        try {
-            csvReader = new CSVReader(new FileReader("src/main/resources/DataProvider/data.csv"));
-            String[] nextLine;
-            while ((nextLine = csvReader.readNext()) != null && count <= 108) {
-                count++;
-                emirateId = nextLine[1];
-            }
 
-        } catch (IOException | CsvValidationException e) {
-            e.printStackTrace();
-        }
-
+        //Cancel API
         logManager.STEP("Cancel Application_Successfully", "");
         cancelApp.requestServiceWithParam(emirateId);
         cancelApp.getresponse(cancelApp);

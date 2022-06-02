@@ -42,7 +42,7 @@ public class AddFamilyMember extends Base {
         int count=0;
         CSVReader csvReader= null;
         try {
-             csvReader = new CSVReader(new FileReader("src/main/resources/DataProvider/data.csv"));
+            csvReader = new CSVReader(new FileReader("src/main/resources/DataProvider/data.csv"));
             String [] nextLine;
             while((nextLine= csvReader.readNext())!=null&& count<=0){
                 count++;
@@ -61,6 +61,7 @@ public class AddFamilyMember extends Base {
 
         logManager.STEP("Add new member","");
         addMember.requestServiceWithParam(emirateId);
+        addMember.response.getStatus();
         addMember.getResponse(addMember);
         addMember.getResponse(addMember);
 
@@ -72,5 +73,3 @@ public class AddFamilyMember extends Base {
 
     }
 }
-
-

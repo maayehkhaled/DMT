@@ -4,7 +4,9 @@ import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.qpros.pages.web.SSA.commonSSA.Steps;
 import com.ssa.core.common.locators.urls;
+import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
@@ -39,7 +41,7 @@ public class COCPage extends Base {
      */
     public void navigateToCoc(){
         logManager.STEP("Navigate to COC", "Navigate to https://uat.ssa.gov.ae/DCDBusinessParameters/CoC.aspx");
-       ActionsHelper.driverWait(3000);
+        ActionsHelper.driverWait(3000);
         driver.get().navigate().to(urls.cocPage);
     }
 
@@ -247,12 +249,6 @@ public class COCPage extends Base {
         Assert.assertTrue(paymentSpecialistPage.checkPaymentExistence(refCode));
         agentPage.logOut();
 
-
-
     }
-
-
-
-
 
 }
