@@ -32,14 +32,14 @@ public class EnforcementCase extends Base {
         enforcementPage.openEnforcementCase();
     }
 
-    @Test(description = "Add new Enforcement case source", priority = 1,
+    @Test(description = "Add new Enforcement case source", priority = 2,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void addEnforcementCase() {
         startPage();
         enforcementPage.createEnforcementCase();
     }
 
-    @Test(description = "Edit Enforcement case ", priority = 2,
+    @Test(description = "Edit Enforcement case ", priority = 3,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void editEnforcementCase() {
         startPage();
@@ -47,7 +47,7 @@ public class EnforcementCase extends Base {
         enforcementPage.editEnforcementCase();
     }
 
-    @Test(description = "Add Action", priority = 3,
+    @Test(description = "Add Action", priority =4,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void addAction() {
         startPage();
@@ -55,7 +55,7 @@ public class EnforcementCase extends Base {
         enforcementPage.addAction();
     }
 
-    @Test(description = "Edit Action", priority = 4,
+    @Test(description = "Edit Action", priority = 5,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void editAction() {
         startPage();
@@ -63,7 +63,7 @@ public class EnforcementCase extends Base {
         enforcementPage.editAction();
     }
 
-    @Test(description = "Delete Action", priority = 5, dependsOnMethods = {"addAction"} , alwaysRun=true,
+    @Test(description = "Delete Action", priority = 1, dependsOnMethods = {"addAction"} , alwaysRun=true,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void deleteAction() {
         startPage();
@@ -80,7 +80,7 @@ public class EnforcementCase extends Base {
         enforcementPage.addLogs();
     }
 
-    @Test(description = "Delete Logs", priority = 7,dependsOnMethods = {"addLogs"},
+    @Test(description = "Delete Logs", priority = 7,dependsOnMethods = {"addLogs"}, alwaysRun=true,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void deleteLogs() {
         startPage();

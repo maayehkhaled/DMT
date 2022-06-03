@@ -76,7 +76,8 @@ public class EnforcementCasePage extends Base {
     private By deletedRecord=By.xpath("//td[contains(@id,'ctl04_wtActionTableRow1')]");
     private By actionTable=By.xpath("//table[contains(@id,'wtActionTable')]");
     //Add Logs Locators
-    private By addLogLink=By.xpath("//a[contains(@id,'AddLog')]");
+    //private By addLogLink=By.xpath("//a[contains(@id,'AddLog')]");
+    private By addLogLink=By.xpath("//input[@value='إضافة سجل']");
     private By logTypeDDL=By.xpath("//select[contains(@id,'LogType')]");
     private By logDescriptionText=By.xpath("//textarea[contains(@id,'LogDescription')]");
     private By actionNumber=By.xpath("//select[contains(@id,'ActionId')]");

@@ -44,7 +44,7 @@ public class ExceptionalCasePage extends Base{
     PaymentSpecialistPage paymentSpecialistPage = new PaymentSpecialistPage(driver.get());
     DeleteEmirateId deleteId = new DeleteEmirateId();
 
-    private By exceptionalCaseLink= By.xpath("//a[contains(@id,'wt160')]");
+    private By exceptionalCaseLink= By.xpath("//a[text()='حالة استثنائية']");
     private By addNewEntity=By.xpath("//input[contains(@id,'openPopup')]");
     private By referralEntityNameTextbox=By.xpath("//input[contains(@id,'ReferralEntityName')]");
     private By saveReferralNameBtn=By.xpath("//input[contains(@id,'SaveBtn')]");

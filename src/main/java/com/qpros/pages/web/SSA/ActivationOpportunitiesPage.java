@@ -53,12 +53,8 @@ public class ActivationOpportunitiesPage extends Base {
     private By eidLink=By.xpath("//a[contains(@id,'Expandview')]");
     private By tamkeenBtn=By.xpath("//div[contains(@id,'wt133_block_wtImageWrapper')]");
     private By termsLink=By.xpath("//a[contains(@id,'ViewTermsAndConditions')]");
-    //combine
-    //private By viewBtn=By.xpath("//div[@class='PH Tabs__content active']//span[@class='ListRecords']/span[1]//span[@class='fa fa-fw fa-angle-down']");
     private By viewBtn=By.xpath("//span[contains(text(),'مقبول - تم استلام المستند')]/following::div[4]");
-    //
-    //private By editFirstTimeBtn=By.xpath("//a[contains(@id,'ctl00_WebPatterns_wt138_block_wtTitle_wtOpportunityActions21')]");
-    //private By editFirstTimeBtn=By.xpath("//span[contains(text(),'موصى به')]/following::div[2]");
+
     private By editFirstTimeBtn;
     private By scrollUpToTable=By.xpath("//a[.='شروط ومعايير برامج التمكين']");
     private By editSecondTimeBtn=By.xpath("//a[contains(@id,'wtOpportunityActions18')]");
@@ -66,13 +62,10 @@ public class ActivationOpportunitiesPage extends Base {
     private By communicationDDL=By.xpath("//select[contains(@id,'DDSourceofCommunication')]");
     private By commentTextarea=By.xpath("//textarea[contains(@id,'Comment')]");
     private By smsTextarea=By.xpath("//textarea[contains(@id,'Sms')]");
-    //private By saveBtn=By.xpath("//input[contains(@id,'Save')]");
-    private By saveBtn2 =By.xpath("//a[contains(@id,'ctl48_WebPatterns_wt139_block_wtTitle')]");
     private By editPartnerDDL=By.xpath("//select[contains(@id,'FeedbackCategory')]");
     private By partnerComment=By.xpath("//textarea[contains(@id,'FeedbackTextArea')]");
     private By viewDetailsBtn=By.xpath("//div[contains(@id,'ctl38_WebPatterns_wt133_block_wtSectionExpandableArea')]/div/div[2]/span");
     private By noAnswerMsg=By.xpath("//textarea[contains(@id,'wttxt_Sms')]");
-    //private By suggestedTask=By.xpath("//span[contains(text(),'موصى به')]");
     private By suggestedTask=By.xpath("//*[contains(text(),'موصى به')]");
     private By rowsCount=By.xpath("//div[contains(@class,'flexline')]");
     private By opportunityNameTextBox=By.xpath("//input[contains(@id,'OpportunityName')]");
@@ -91,10 +84,7 @@ public class ActivationOpportunitiesPage extends Base {
         ActionsHelper.selectOption(partnerDDL, StaticValues.partner);
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(opportunityNameTextbox,opportunityName);
-        /*String opportunityName=opportunityNameTextBox.toString();
-        System.out.println(opportunityName);*/
         ActionsHelper.driverWait(2000);
-        //get opportunity name test and save it in the file FileUtils
 
         FileUtils.createFile("OpportunityFile.txt", opportunityName);
 
@@ -105,7 +95,6 @@ public class ActivationOpportunitiesPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(programCapacityTextbox,"200");
         ActionsHelper.driverWait(2000);
-        //opportunityName=driver.get().findElement(opportunityNameTextbox).getText();
         System.out.println(opportunityName);
         ActionsHelper.selectOption(genderDDL,StaticValues.IELTS);
         ActionsHelper.driverWait(2000);
@@ -113,13 +102,11 @@ public class ActivationOpportunitiesPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(maxAgeTextbox, StaticValues.maxAge);
         ActionsHelper.driverWait(2000);
-        ActionsHelper.actionClickStepClick("*Click on Save ",saveBtn);
-        //ActionsHelper.retryClick(saveBtn,30);
+        ActionsHelper.actionClickStepClick("Click on Save ",saveBtn);
         ActionsHelper.driverWait(4000);
         logManager.INFO("Opportunity created successfully",false);
         ActionsHelper.sendKeysWithClear(EIDTextbox,TestData.opportunityEID + Keys.ENTER+ TestData.secondOpportunityEID);
         ActionsHelper.driverWait(2000);
-        //ActionsHelper.actionClickStepClick("*Enter the 1st & 2nd EID",addMemberBtn);
         ActionsHelper.retryClick(addMemberBtn,30);
         ActionsHelper.driverWait(10000);
     }
@@ -132,19 +119,13 @@ public class ActivationOpportunitiesPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(searchBtn,30);
         ActionsHelper.driverWait(4000);
-        /*ActionsHelper.scrollTo(footer);
-        ActionsHelper.driverWait(2000);
-        ActionsHelper.retryClick(thirdPage,30);
-        ActionsHelper.driverWait(2000);*/
         ActionsHelper.scrollTo(footer);
         logManager.INFO("Created opportunity",false);
     }
 
     public void openCreatedOpportunity(){
-        //driver.get().navigate().to("https://uat.ssa.gov.ae/DCD_Activation_AgentFrontEndN/ExpandedFamilyMemberViewPage.aspx?ApplicationStatus=2&ApplicationID=1397&NameInArabic=%d8%b5%d8%a7%d9%84%d8%ad+%d8%b3%d9%8a%d9%81+%d8%ad%d9%85%d8%af+%d8%b9%d9%84%d9%89+%d8%a7%d9%84%d8%b3%d9%86%d8%a7%d9%86%d9%89&ActivityId=0&IndividualIsActive=True&EmiratesId=784197821469414&(Not.Licensed.For.Production)=");
         logManager.STEP("Open the first created opportunity","");
         ActionsHelper.driverWait(4000);
-        //ActionsHelper.actionClickStepClick("Click on ملف الأسرة",familyFile);
         ActionsHelper.retryClick(familyFile,30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(eidTextBox,TestData.opportunityEID + Keys.ENTER);
@@ -163,7 +144,6 @@ public class ActivationOpportunitiesPage extends Base {
         logManager.STEP("Open the second created opportunity","");
         ActionsHelper.driverWait(4000);
         ActionsHelper.retryClick(familyFile,30);
-        //ActionsHelper.actionClickStepClick("Click on ملف الأسرة",familyFile);
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(eidTextBox,TestData.secondOpportunityEID + Keys.ENTER);
         ActionsHelper.driverWait(2000);
@@ -174,8 +154,6 @@ public class ActivationOpportunitiesPage extends Base {
         ActionsHelper.retryClick(tamkeenBtn,30);
         ActionsHelper.driverWait(4000);
         ActionsHelper.scrollupTo(driver.get().findElement(termsLink));
-        ActionsHelper.driverWait(2000);
-
         ActionsHelper.driverWait(2000);
         agentPage.logOut2();
         ActionsHelper.driverWait(2000);
@@ -195,7 +173,6 @@ public class ActivationOpportunitiesPage extends Base {
         WebElement editOpportunity=driver.get().findElement(By.cssSelector("span:nth-of-type(" + listTableElements.size() + ") .flexline .ThemeGrid_Width1"));
         WebElement viewOpportunity=driver.get().findElement(By.cssSelector("span:nth-of-type(" + listTableElements.size() + ") .Heading2>.fa"));
         editOpportunity.click();
-
         ActionsHelper.driverWait(2000);
         driver.get().switchTo().frame(0);
         ActionsHelper.selectOption(opportunityStatusDDL, StaticValues.acceptOppStatus);
@@ -206,21 +183,20 @@ public class ActivationOpportunitiesPage extends Base {
         ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(smsTextarea, "Automation MSG..");
         ActionsHelper.driverWait(2000);
+        logManager.INFO("Click Save",false);
         ActionsHelper.retryClick(saveBtn, 30);
-        ActionsHelper.driverWait(8000);
+        ActionsHelper.driverWait(5000);
         ActionsHelper.retryClick(viewOpportunity, 30);
-
-        ActionsHelper.driverWait(3000);
+        ActionsHelper.driverWait(2000);
+        logManager.INFO("Open After Edit",false);
     }
 
     public void secondTimeEdit(){
         logManager.STEP("Second Edit For The Opportunity","The user click edit for the second time to complete editing");
-        //ActionsHelper.retryClick(editSecondTimeBtn,30);
         ActionsHelper.scrollTo(scrollUpToTable);
         List<WebElement> listTableElements = driver.get().findElements(rowsCount); //rows K
         WebElement editOpportunity=driver.get().findElement(By.cssSelector("span:nth-of-type(" + listTableElements.size() + ") .flexline .ThemeGrid_Width1"));
         editOpportunity.click();
-
         ActionsHelper.driverWait(2000);
         driver.get().switchTo().frame(0);
         ActionsHelper.scrollTo(editPartnerDDL);
@@ -230,7 +206,10 @@ public class ActivationOpportunitiesPage extends Base {
         ActionsHelper.driverWait(4000);
         ActionsHelper.scrollTo(saveBtn);
         ActionsHelper.driverWait(2000);
+        logManager.INFO("Click Save",false);
         ActionsHelper.retryClick(saveBtn,30);
+        ActionsHelper.driverWait(2000);
+        logManager.INFO("Open After Edit",false);
         ActionsHelper.driverWait(4000);
     }
 
@@ -239,9 +218,7 @@ public class ActivationOpportunitiesPage extends Base {
         ActionsHelper.scrollTo(scrollUpToTable);
         List<WebElement> listTableElements = driver.get().findElements(rowsCount); //rows K
         By editOpportunity=By.cssSelector("span:nth-of-type(" + listTableElements.size() + ") .flexline .ThemeGrid_Width1");
-        //editOpportunity.click();
         ActionsHelper.actionClickStepClick("Click edit button",editOpportunity);
-        //ActionsHelper.retryClick(editSecondTimeBtn,30);
         ActionsHelper.driverWait(2000);
         driver.get().switchTo().frame(0);
         ActionsHelper.selectOption(opportunityStatusDDL,StaticValues.noAnswerOppStatus);

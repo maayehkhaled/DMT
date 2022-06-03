@@ -20,6 +20,7 @@ public class ListOfBeneficiariesPage extends Base {
     private By oppName=By.xpath("//div[@id='InternalPortalTheme_wt35_block_wtMainContent_OutSystemsUIWeb_wt234_block_wtContent_WebPatterns_wt55_block_wtColumn1_wtStatus13']/span/span/span");    //span[@title='اختر اسم']
     private By eidLink=By.xpath("//a[contains(@id,'ExpandedFamilyMemberViewPage')]");
     private By sspLink=By.cssSelector("a[tabindex='58']");
+    ////span[text()='رقم الطلب']
     private By searchBtn=By.xpath("//input[@value='بحث']");
     private By countPersons=By.xpath("//a[contains(@id,'wtisCalculate55')]");
     private By countPersonsWFiles=By.xpath("//a[contains(@id,'wtisCalculate66')]");
@@ -29,10 +30,11 @@ public class ListOfBeneficiariesPage extends Base {
     private By countOffers=By.xpath("//a[contains(@id,'wtisCalculate11')]");
 
     public void countAll(){
-        ActionsHelper.scrollTo(countPersons);
+        ActionsHelper.scrollupTo(driver.get().findElement(sspLink));
         ActionsHelper.driverWait(6000);
         ActionsHelper.clickAction(By.xpath("//span[text()='حساب أرقام كافة البطاقات']"));
         ActionsHelper.driverWait(20000);
+
         logManager.INFO("All calculations",false);
         ActionsHelper.driverWait(10000);
     }
