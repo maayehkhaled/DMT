@@ -4,7 +4,6 @@ import com.qpros.common.web.Base;
 import com.qpros.helpers.ActionsHelper;
 import com.qpros.pages.web.SSA.commonSSA.Steps;
 import com.ssa.core.common.locators.urls;
-import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
