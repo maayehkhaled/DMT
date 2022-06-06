@@ -103,19 +103,20 @@ public class PEPPage extends Base {
 
     public void editJobStatus(){
     logManager.STEP("Edit Job Status الحالة الوظيفية","The user Edit all enabled info in Job Status section");
-    if(driver.get().findElement(underProcessingCheckbox).isSelected()){
-
+    if(!driver.get().findElement(underProcessingCheckbox).isSelected()){
+        ActionsHelper.retryClick(underProcessingCheckbox,30);
+        ActionsHelper.driverWait(2000);
     }
-    ActionsHelper.retryClick(underProcessingCheckbox,30);
-    ActionsHelper.driverWait(2000);
     ActionsHelper.selectOption(currentEducation,StaticValues.enforcementLogType);
     ActionsHelper.driverWait(2000);
     ActionsHelper.selectOption(graduationMonth, StaticValues.graduationMonthOption);
     ActionsHelper.driverWait(2000);
     ActionsHelper.selectOption(graduationYear,StaticValues.graduationYearOption);
     ActionsHelper.driverWait(2000);
-    ActionsHelper.retryClick(socialCareCheckBox,30);
-    ActionsHelper.driverWait(2000);
+    if(!driver.get().findElement(socialCareCheckBox).isSelected()){
+        ActionsHelper.retryClick(socialCareCheckBox,30);
+        ActionsHelper.driverWait(2000);
+    }
     ActionsHelper.selectOption(careDDL,StaticValues.enforcementLogType);
     ActionsHelper.driverWait(2000);
     }
@@ -153,6 +154,7 @@ public class PEPPage extends Base {
 
     public void addNewExperience(){
         logManager.STEP("Edit Experience Info الخبرات الوظيفية", "The user Edit all enabled info in Experience section");
+        ActionsHelper.driverWait(2000);
         ActionsHelper.retryClick(experienceRadioBtn, 30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(joblessMonthDDL, StaticValues.joblessJan);
@@ -181,8 +183,10 @@ public class PEPPage extends Base {
             ActionsHelper.retryClick(deleteBtn,30);
             ActionsHelper.driverWait(4000);
         }
+            else
         addNewExperience();
-
+        addFirstWorkExperience();
+        addSecondWorkExperience();
         //method
     }
 

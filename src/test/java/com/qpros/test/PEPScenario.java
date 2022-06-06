@@ -41,8 +41,8 @@ public class PEPScenario extends Base {
         PEP.editJobStatus();
         PEP.editQualificationInfo();
         PEP.editExperienceJobInfo();
-        PEP.addFirstWorkExperience();
-        PEP.addSecondWorkExperience();
+        /*PEP.addFirstWorkExperience();
+        PEP.addSecondWorkExperience();*/
         PEP.editMoreInfo();
         PEP.openCreatedRequest();
     }
