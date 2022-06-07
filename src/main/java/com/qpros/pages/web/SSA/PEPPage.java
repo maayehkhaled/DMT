@@ -4,7 +4,10 @@ import com.qpros.helpers.ActionsHelper;
 import com.ssa.core.common.data.StaticValues;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
 
 public class PEPPage extends Base {
     public PEPPage(WebDriver driver) {
@@ -61,10 +64,6 @@ public class PEPPage extends Base {
     private By secondCountryDDL=By.xpath("//select[contains(@id,'ctl02_wtddl_SSA_PreAssessmentForm_PreviousExperience_Count')]");
     private By saveJobExperience=By.xpath("//a[@class='SaveRowAction']");
     private By moreInfoTextarea=By.xpath("//textarea[contains(@id,'Input')]");
-    //delete this first
-    private By deleteFirstExperience=By.xpath("//span[contains(@id,'ctl00_wtSSA_PreAssessmentForm_PreviousExperience_TypeOfExp-container')]");
-    private By deleteBtn=By.xpath("//a[@class='DeleteRowAction']");
-    private By deleteSecondExperience=By.xpath("//span[contains(@id,'ctl02_wtSSA_PreAssessmentForm_PreviousExperience_TypeOfExp-container')]");
 
     //More Info
     private By lengthTextbox=By.cssSelector("[placeholder='ادخل الطول بالسنتيمتر']");
@@ -80,6 +79,7 @@ public class PEPPage extends Base {
     private By arabicLang=By.xpath("//input[@value='25']");
     private By athyobLang=By.xpath("//input[@value='59']");
     private By aramLang=By.xpath("//input[@value='56']");
+    private By experienceWebTable=By.xpath("//table[contains(@id,'wtSSAPreAssessmentFormPreviousExperienceTable')]/tbody/tr");
 
     public void openJobInfo() {
         logManager.STEP("Open job information المعلومات المهنية", "The user will open job information section for specific user");
@@ -140,7 +140,6 @@ public class PEPPage extends Base {
 
     public void editQualificationInfo(){
         logManager.STEP("Edit Qualification Info بيانات المؤهلات المنجزة","The user will choose Master Degree from Qualification section");
-        //ActionsHelper.retryClick(editEducationBtn,30);
         //to cancel previous edu
         if((driver.get().findElement(deleteCurrentEducation)).isEnabled()){
             ActionsHelper.retryClick(deleteCurrentEducation,30);
@@ -168,30 +167,22 @@ public class PEPPage extends Base {
         ActionsHelper.retryClick(ministryApproval, 30);
         ActionsHelper.driverWait(2000);
     }
-
-    public void editExperienceJobInfo() {
-        //if(driver.get().findElement(experienceRadioBtn).isSelected()){
-        if(driver.get().findElement(deleteFirstExperience).isDisplayed()) {
-            ActionsHelper.retryClick(deleteFirstExperience, 30);
-            ActionsHelper.driverWait(2000);
-            ActionsHelper.retryClick(deleteBtn, 30);
-            ActionsHelper.driverWait(4000);
+    public void experienceJobTable() {
+        List<WebElement> experienceTable = driver.get().findElements(experienceWebTable);
+        if(experienceTable.size()<2){
+            addFirstWorkExperience();
+            addSecondWorkExperience();
         }
-            else if(driver.get().findElement(deleteSecondExperience).isDisplayed()){
-            ActionsHelper.retryClick(deleteSecondExperience,30);
-            ActionsHelper.driverWait(2000);
-            ActionsHelper.retryClick(deleteBtn,30);
-            ActionsHelper.driverWait(4000);
+        else if(experienceTable.size()==2){
+            addSecondWorkExperience();
         }
-            else
-        addNewExperience();
-        addFirstWorkExperience();
-        addSecondWorkExperience();
-        //method
+        else
+            System.out.println("2 work experience");
     }
 
     public void addFirstWorkExperience(){
         logManager.STEP("Add First Experience Info", "The user add first work experience");
+        ActionsHelper.driverWait(3000);
         ActionsHelper.retryClick(addWorkExperienceLink, 30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(workExperienceTypeDDL, StaticValues.masterDegree);
@@ -200,8 +191,8 @@ public class PEPPage extends Base {
         ActionsHelper.driverWait(3000);
         ActionsHelper.sendKeys(workLocation, "Q-Pros");
         ActionsHelper.driverWait(4000);
-        /*ActionsHelper.sendKeysWithClear(yearsOfExperience, StaticValues.graduationMonthOption);
-        ActionsHelper.driverWait(3000);*/
+        ActionsHelper.sendKeysWithClear(yearsOfExperience, StaticValues.graduationMonthOption);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.sendKeysWithClear(monthsOfExperience, StaticValues.masterDegree);
         ActionsHelper.driverWait(3000);
         ActionsHelper.selectOption(countryDDL, StaticValues.countryPalestine);
@@ -211,6 +202,7 @@ public class PEPPage extends Base {
     }
     public void addSecondWorkExperience(){
         logManager.STEP("Add Second Experience Info", "The user add second work experience");
+        ActionsHelper.driverWait(3000);
         ActionsHelper.retryClick(addWorkExperienceLink, 30);
         ActionsHelper.driverWait(2000);
         ActionsHelper.selectOption(secondWorkExperienceTypeDDL, StaticValues.masterDegree);
