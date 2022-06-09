@@ -19,7 +19,7 @@ public class ListOfBeneficiariesPage extends Base {
     private By moreFilter=By.xpath("//input[contains(@id,'MoreFilter')]");
     private By oppName=By.xpath("//div[@id='InternalPortalTheme_wt35_block_wtMainContent_OutSystemsUIWeb_wt234_block_wtContent_WebPatterns_wt55_block_wtColumn1_wtStatus13']/span/span/span");    //span[@title='اختر اسم']
     private By eidLink=By.xpath("//a[contains(@id,'ExpandedFamilyMemberViewPage')]");
-    private By sspLink=By.cssSelector("a[tabindex='58']");
+    private By sspLink=By.xpath("//a[contains(@id,'wt179')]");
     ////span[text()='رقم الطلب']
     private By searchBtn=By.xpath("//input[@value='بحث']");
     private By countPersons=By.xpath("//a[contains(@id,'wtisCalculate55')]");
@@ -31,12 +31,11 @@ public class ListOfBeneficiariesPage extends Base {
 
     public void countAll(){
         ActionsHelper.scrollupTo(driver.get().findElement(sspLink));
-        ActionsHelper.driverWait(6000);
+        ActionsHelper.driverWait(3000);
         ActionsHelper.clickAction(By.xpath("//span[text()='حساب أرقام كافة البطاقات']"));
-        ActionsHelper.driverWait(20000);
+        ActionsHelper.driverWait(2000);
 
         logManager.INFO("All calculations",false);
-        ActionsHelper.driverWait(10000);
     }
 
     public void openBeneficiariesList(){
@@ -49,10 +48,10 @@ public class ListOfBeneficiariesPage extends Base {
     public void searchBeneficiaryEID() {
         logManager.STEP("Search Beneficiary EID", "The user searches for specific Beneficiary EID");
         ActionsHelper.sendKeys(eidTextbox, TestData.beneficiaryEID+Keys.ENTER);
-        ActionsHelper.driverWait(6000);
+        ActionsHelper.driverWait(2000);
         ActionsHelper.scrollTo(eidLink);
         logManager.INFO("Scroll to Beneficiary EID",Boolean.FALSE);
-        ActionsHelper.driverWait(4000);
+        ActionsHelper.driverWait(1000);
     }
     public void searchBeneficiarySSP() {
         logManager.STEP("Search Beneficiary SSP", "The user searches for specific Beneficiary SSP");

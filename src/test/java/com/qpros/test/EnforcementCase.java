@@ -18,7 +18,7 @@ public class EnforcementCase extends Base {
         QuantaTestManager.startTestSuite(getClass().getSimpleName());
     }
 
-    @BeforeMethod(enabled = true)
+    @BeforeMethod(enabled = false)
     public synchronized void setTestSuite() throws IOException {
         this.setUpBrowser();
     }

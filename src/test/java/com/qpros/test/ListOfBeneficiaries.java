@@ -5,10 +5,7 @@ import com.qpros.pages.web.SSA.LoginPage;
 import com.qpros.pages.web.SSA.UserType;
 import com.qpros.reporting.QuantaTestManager;
 import com.ssa.core.common.locators.urls;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.IOException;
 
@@ -19,7 +16,7 @@ public class ListOfBeneficiaries extends Base {
         QuantaTestManager.startTestSuite(getClass().getSimpleName());
     }
 
-    @BeforeMethod(enabled = true)
+    @BeforeClass(enabled = true)
     public synchronized void setTestSuite() throws IOException {
         this.setUpBrowser();
     }
@@ -45,8 +42,16 @@ public class ListOfBeneficiaries extends Base {
     @Test(description = "Count Beneficiaries List", priority = 2,
             retryAnalyzer = com.qpros.helpers.RetryAnalyzer.class, groups = {""})
     public void countBeneficiariesList() {
-        startMethod();
         beneficiaryList.openBeneficiariesList();
         beneficiaryList.countAll();
+    }
+    @AfterClass
+    public synchronized void stopDriver() {
+        try {
+            System.out.println(Thread.currentThread().getId()+ "closed driver");
+            driver.get().quit();
+        } catch (Throwable e) {
+            e.getStackTrace();
+        }
     }
 }

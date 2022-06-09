@@ -19,6 +19,7 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.rauschig.jarchivelib.ArchiveFormat;
 import org.rauschig.jarchivelib.ArchiverFactory;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
 
@@ -36,7 +37,7 @@ public class Base {
 
 
 
-    @BeforeTest(enabled = true) public synchronized void setUpBrowser() throws IOException {
+    @BeforeTest(enabled = false) public synchronized void setUpBrowser() throws IOException {
         String OsType = OsValidator.getDeviceOs();
         DriverType browser = getBrowser();
         initiateDriver(OsType, browser);
@@ -183,7 +184,7 @@ public class Base {
         return capabilities;
     }
 
-    @AfterMethod(enabled = true) public synchronized void stopDriver() {
+    @AfterClass(enabled = true) public synchronized void stopDriver() {
         try {
             System.out.println(Thread.currentThread().getId()+ "killed");
             driver.get().quit();
