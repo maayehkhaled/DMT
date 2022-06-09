@@ -50,7 +50,7 @@ public class ApproveApplicationModule extends Base {
         logManager.STEP("VE from 12x12 API", "The System Verify the User Eligibility by calling 12X12 API");
         logManager.INFO("Verify Eligibility Service Call", false);
         verifyEligibilityService.requestService();
-
+        ActionsHelper.driverWait(120000);
         //if the emirates id is eligable for a service then request the service else finish scenario
         QuantaTestManager.getTest().log(Status.INFO, MarkupHelper.createCodeBlock(verifyEligibilityService.response.getBody()));
         if (verifyEligibilityService.getresponse(verifyEligibilityService).application.isEligible) {
@@ -75,12 +75,13 @@ public class ApproveApplicationModule extends Base {
             auditorsManagementPage.selectSpecialist(UserType.Specialist2.getUserName(), refCode);
             agentPage.logOut();
             //login with specialist 2
+            //ActionsHelper.driverWait(120000);
             loginPage.loginWithUser(UserType.Specialist2);
 
 
-            ActionsHelper.driverWait(8000);
+            ActionsHelper.driverWait(5000);
             String seniorSpecialist = agentPage.specialistApproval(refCode, incOrDecApp);
-            ActionsHelper.driverWait(8000);
+            ActionsHelper.driverWait(5000);
             System.out.println("Senior Specialist : " + seniorSpecialist);
             agentPage.logOut();
             //login with senior specialist
@@ -106,13 +107,24 @@ public class ApproveApplicationModule extends Base {
                 agentPage.logOut();
             } else {
                 System.out.println("this is comettee nammeeee here plz " + committeeName);
-                committeeName = committeeName.replace("\n", "");
-                if (committeeName.contains(UserType.Committee100.getUserName())) {
+                //committeeName = committeeName.replace("\n", "");
+                ActionsHelper.driverWait(2000);
+                loginPage.loginWithUser(UserType.valueOf(committeeName));
+                /*
+                if (committeeName.contains("Commit")) {
                     loginPage.loginWithUser(UserType.Committee100);
                 } else {
                     loginPage.loginWithUser(UserType.Committee1);
-
+                    //loginPage.loginWithUser(UserType.valueOf(committeeName));
                 }
+                */
+               /* if (committeeName.contains(UserType.Committee100.getUserName())) {
+                    loginPage.loginWithUser(UserType.Committee100);
+                } else {
+                    loginPage.loginWithUser(UserType.Committee1);
+                    //loginPage.loginWithUser(UserType.valueOf(committeeName));
+                }*/
+
                 ActionsHelper.driverWait(2000);
 
                 agentPage.committeeSpecialistApproval(refCode);
@@ -239,12 +251,14 @@ public class ApproveApplicationModule extends Base {
         } else {
             System.out.println("this is comettee nammeeee here plz " +committeeName);
             committeeName = committeeName.replace("\n", "");
+            loginPage.loginWithUser(UserType.valueOf(committeeName));
+            /*
             if (committeeName.contains(UserType.Committee100.getUserName())) {
                 loginPage.loginWithUser(UserType.Committee100);
             } else {
                 loginPage.loginWithUser(UserType.Committee1);
             }
-
+*/
             agentPage.committeeSpecialistApproval(refCode);
             //driver.get().navigate().to("https://uat.ssa.gov.ae/DCDAgentFrontEnd/TasksList.aspx");
             agentPage.logOut();
@@ -266,6 +280,9 @@ public class ApproveApplicationModule extends Base {
 
 
     }
+
+
+
     public void afterBCOCRejectProcess() throws InterruptedException, AWTException {
         homePage.navigateToLogin();
 

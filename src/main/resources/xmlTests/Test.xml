@@ -49,12 +49,6 @@
         </classes>
     </test>-->
 
-    <test name="Enforcement Scenario">
-        <classes>
-            <class name="com.qpros.test.EnforcementCase"></class>
-            <class name="com.qpros.test.ActivationOpportunities"></class>
-        </classes>
-    </test>
 
 
     <test name="List Of Beneficiaries Scenario">

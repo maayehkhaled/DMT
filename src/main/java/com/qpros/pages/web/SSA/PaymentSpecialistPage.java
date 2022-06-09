@@ -14,9 +14,9 @@ public class PaymentSpecialistPage extends Base {
 
     public String paymentSchedulesUrl = urls.paymentSchedule;
 
-    private By searchRef = By.id("DCDTheme_wt78_block_wtFilters_wt46");
+    private By searchRef = By.cssSelector("[placeholder='رقم الطلب']");
 //block_wtFilters
-    private By searchButton = By.id("DCDTheme_wt78_block_wtFilters_wt173");
+    private By searchButton = By.xpath("//input[@value='بحث']");
 
     private By firstResult = By.cssSelector("tbody > tr:nth-of-type(1) > td:nth-of-type(1)");
 
@@ -50,8 +50,8 @@ public class PaymentSpecialistPage extends Base {
         ActionsHelper.driverWait(6000);
         ActionsHelper.actionClickStepClick("Expand results", expandResults);
         ActionsHelper.driverWait(5000);
-        ActionsHelper.actionClickStepClick("Input SSP " + refNo, searchRef);
-        ActionsHelper.driverWait(4000);
+        //ActionsHelper.actionClickStepClick("Input SSP " + refNo, searchRef);
+        //ActionsHelper.driverWait(4000);
         ActionsHelper.sendKeys(searchRef,refNo);
         ActionsHelper.driverWait(4000);
         ActionsHelper.actionClickStepClick("Click search", searchButton);
