@@ -41,5 +41,6 @@ public interface TestData {
     String pepUserEID="784197821469414";
 
     String opportunityEID="784198110924952"; //"784201782027029";
+    String beneficiaryEID="784201782027029";
     String secondOpportunityEID="784197906576489";
 }

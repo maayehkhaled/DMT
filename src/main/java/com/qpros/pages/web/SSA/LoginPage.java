@@ -34,16 +34,16 @@ public class LoginPage extends Base {
     }
 
     public void loginWithUser(UserType usertype) {
-        ActionsHelper.driverWait(3000);
+        //ActionsHelper.driverWait(3000);
         logManager.STEP("Input username", "Inputs the username: " + usertype.getUserName());
         ActionsHelper.waitForExpectedElement(usernameField, 30);
         ActionsHelper.retryClick(usernameField, 30);
         ActionsHelper.sendKeys(usernameField, usertype.getUserName());
-        ActionsHelper.driverWait(2000);
+        //ActionsHelper.driverWait(2000);
         logManager.STEP("Input password", "Inputs the password: " + usertype.getPassword());
         ActionsHelper.waitForExpectedElement(passwordField);
         ActionsHelper.retryClick(passwordField, 30);
-        ActionsHelper.driverWait(2000);
+        //ActionsHelper.driverWait(2000);
         ActionsHelper.sendKeys(passwordField, usertype.getPassword());
         ActionsHelper.driverWait(1000);
         ActionsHelper.actionClickStepClick("Click the login button", loginButton);

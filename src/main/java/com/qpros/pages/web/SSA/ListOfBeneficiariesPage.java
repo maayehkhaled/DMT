@@ -48,7 +48,7 @@ public class ListOfBeneficiariesPage extends Base {
 
     public void searchBeneficiaryEID() {
         logManager.STEP("Search Beneficiary EID", "The user searches for specific Beneficiary EID");
-        ActionsHelper.sendKeys(eidTextbox, TestData.opportunityEID+Keys.ENTER);
+        ActionsHelper.sendKeys(eidTextbox, TestData.beneficiaryEID+Keys.ENTER);
         ActionsHelper.driverWait(6000);
         ActionsHelper.scrollTo(eidLink);
         logManager.INFO("Scroll to Beneficiary EID",Boolean.FALSE);
