@@ -37,15 +37,15 @@ public class Base {
 
 
 
-    @BeforeTest(enabled = false) public synchronized void setUpBrowser() throws IOException {
+    @BeforeTest(enabled = false) public synchronized void setUpBrowser(Boolean isHeadLess) throws IOException {
         String OsType = OsValidator.getDeviceOs();
         DriverType browser = getBrowser();
-        initiateDriver(OsType, browser);
+        initiateDriver(OsType, browser,isHeadLess);
         driver.get().navigate().to(ReadWriteHelper.ReadData("BaseURL"));
     }
 
 
-    public synchronized WebDriver initiateDriver(String deviceOsType, DriverType driverType) throws IOException {
+    public synchronized WebDriver initiateDriver(String deviceOsType, DriverType driverType,Boolean isHeadless) throws IOException {
 
         switch (driverType) {
             case FIREFOX:
@@ -71,7 +71,7 @@ public class Base {
                     options.addArguments("--allow-running-insecure-content");
                     options.addArguments("--ignore-ssl-errors=yes");
                     options.addArguments("--ignore-certificate-errors");
-                    if (ReadWriteHelper.ReadData("headless").equalsIgnoreCase("true")) {
+                    if (ReadWriteHelper.ReadData("headless").equalsIgnoreCase("true") || isHeadless) {
                         options.addArguments("--disable-gpu");
                         options.addArguments("--headless");
                         options.addArguments("window-size=1920x1080");
@@ -94,7 +94,7 @@ public class Base {
 
                     }
                     WebDriverInstaller.WebDriverSetup.downloadAndExtractWebDriver(DriverType.CHROME,deviceOsType, ArchiverFactory.createArchiver(ArchiveFormat.ZIP));
-                    initiateDriver(deviceOsType,getBrowser());
+                    initiateDriver(deviceOsType,getBrowser(),isHeadless);
                 } catch (Throwable e) {
                     e.printStackTrace(System.out);
                     //Assert.fail("Please check Browser is exist Browser Unable to start");

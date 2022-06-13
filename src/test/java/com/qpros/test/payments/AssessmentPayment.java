@@ -34,7 +34,7 @@ public class AssessmentPayment extends Base {
 
     @BeforeMethod(enabled = true)
     public synchronized void setTestSuite() throws IOException {
-        this.setUpBrowser();
+        this.setUpBrowser(true);
     }
 
 

@@ -9,53 +9,136 @@
         <listener class-name="com.qpros.common.LogManager"/>
     </listeners>
 
-<!--    <test name="approve/Payment Scenario">-->
-<!--        <classes>-->
-
-<!--            <class name="com.qpros.test.ApproveApplication"></class>-->
-<!--            <class name="com.qpros.test.RejectApplication"></class>-->
-<!--            <class name="com.qpros.test.ReassessmentApprove"></class>-->
-<!--            <class name="com.qpros.test.AcocTrigger"></class>-->
-<!--            <class name="com.qpros.test.payments.AssessmentPayment"><methods><exclude name="newSchedulesNewCard"></exclude> <exclude-->
-<!--                    name="updatePaymentsInstructions"></exclude><exclude name="blockCard"></exclude></methods> </class>-->
-<!--            <class name="com.qpros.test.AddPartner"></class>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--
-    <test name="SSA 1st assessment Run">
+    <test name="Agent Approval Process">
         <classes>
-            <class name="com.qpros.test.ApproveApplication"/>
-            <class name="com.qpros.test.RejectApplication"/>
+            <class name="com.qpros.test.agent.AppealApprove"/>
+            <class name="com.qpros.test.agent.AppealReject"/>
+            <class name="com.qpros.test.agent.ApproveApplication"/>
+            <class name="com.qpros.test.agent.ReassessmentApprove"/>
+            <class name="com.qpros.test.agent.ReassessmentDecreaseApprove"/>
+            <class name="com.qpros.test.agent.ReassessmentIncreaseApprove"/>
+            <class name="com.qpros.test.agent.ReassessmentReject"/>
+            <class name="com.qpros.test.agent.RejectApplication"/>
         </classes>
     </test>
 
-    <test name="SSA Reassessment Run">
+    <test name="ACOC Approval Process">
         <classes>
-            <class name="com.qpros.test.ReassessmentIncreaseApprove"/>
-            <class name="com.qpros.test.ReassessmentDecreaseApprove"/>
-            <class name="com.qpros.test.ReassessmentApprove"/>
-            <class name="com.qpros.test.ReassessmentReject"/>
+            <class name="com.qpros.test.acoc.ACOCApprove"/>
+            <class name="com.qpros.test.acoc.AcocTrigger"/>
         </classes>
     </test>
 
-    <test name="Exceptional Case Scenario">
-    <classes>
-        <class name="com.qpros.test.ExceptionalCase"/>
-    </classes>
-    </test>
-    <test name="PEP Scenario">
+    <test name="Activation Process">
         <classes>
-            <class name="com.qpros.test.PEPScenario"></class>
+            <class name="com.qpros.test.activation.ActivationOpportunities"/>
+            <class name="com.qpros.test.activation.AddPartner"/>
+            <class name="com.qpros.test.activation.CaseSource"/>
+            <class name="com.qpros.test.activation.EnforcementCase"/>
+            <class name="com.qpros.test.activation.ExceptionalCase"/>
+            <class name="com.qpros.test.activation.ListOfBeneficiaries"/>
+            <class name="com.qpros.test.activation.ManageOffersHousehold"/>
+            <class name="com.qpros.test.activation.ManageOffersManagement"/>
+            <class name="com.qpros.test.activation.PEPScenario"/>
         </classes>
-    </test>-->
-
-
-
-    <test name="List Of Beneficiaries Scenario">
-        <classes>
-            <class name="com.qpros.test.ListOfBeneficiaries"></class>
-        </classes>
-
     </test>
+
+
+    <test name="RMI Process">
+        <classes>
+            <class name="com.qpros.test.rmi.RMIAppeal"/>
+            <class name="com.qpros.test.rmi.RMIBCOC"/>
+            <class name="com.qpros.test.rmi.RMIFirstAssessment"/>
+            <class name="com.qpros.test.rmi.RMIReassessment"/>
+        </classes>
+    </test>
+    <test name="BCOC Approval Process">
+        <classes>
+            <class name="com.qpros.test.bcoc.BCOCApprove"/>
+            <class name="com.qpros.test.bcoc.BCOCReject"/>
+        </classes>
+    </test>
+
+    <test name="approve/Payment Scenario">
+        <classes>
+
+            <class name="com.qpros.test.agent.ApproveApplication"/>
+            <class name="com.qpros.test.agent.RejectApplication"/>
+            <class name="com.qpros.test.agent.ReassessmentApprove"/>
+            <class name="com.qpros.test.acoc.AcocTrigger"/>
+            <class name="com.qpros.test.payments.AssessmentPayment">
+                <methods>
+                    <exclude name="newSchedulesNewCard"/>
+                    <exclude
+                            name="updatePaymentsInstructions"/>
+                    <exclude name="blockCard"/>
+                </methods>
+            </class>
+            <class name="com.qpros.test.activation.AddPartner"/>
+        </classes>
+    </test>
+
+    <test name="API Services">
+        <classes>
+            <class name="com.qpros.test.services.AddFamilyMember"/>
+            <class name="com.qpros.test.services.AddFamilyMemberAlreadyInTheApplication"/>
+            <class name="com.qpros.test.services.AddFamilyMemberNonUaeNational"/>
+            <class name="com.qpros.test.services.AddNewMember_ConfirmFamilyAddition"/>
+            <class name="com.qpros.test.services.AddNewMember_DeathConfirmed"/>
+            <class name="com.qpros.test.services.AddNewMember_NoProofFound"/>
+            <class name="com.qpros.test.services.AddNewMember_WrongInputData"/>
+            <class name="com.qpros.test.services.AddNewPremiseAlreadyUse"/>
+            <class name="com.qpros.test.services.AddNewPremiseApplicationNotFound"/>
+            <class name="com.qpros.test.services.AddNewPremiseConfirmedBillData"/>
+            <class name="com.qpros.test.services.AddNewPremiseNotFound"/>
+            <class name="com.qpros.test.services.CancelApplication_Failure"/>
+            <class name="com.qpros.test.services.GetActivationInformation_ActivationInformationSent"/>
+            <class name="com.qpros.test.services.GetActivationInformation_ApplicationNotFound_Hoh"/>
+            <class name="com.qpros.test.services.GetApplicationStatusApplicationApprovedHoh"/>
+            <class name="com.qpros.test.services.GetApplicationStatusApplicationApprovedNeedMoreInformation"/>
+            <class name="com.qpros.test.services.GetApplicationStatusApplicationCanceled"/>
+            <class name="com.qpros.test.services.GetApplicationStatusApplicationClosed"/>
+            <class name="com.qpros.test.services.GetApplicationStatusApplicationConditionallyApproved"/>
+            <class name="com.qpros.test.services.GetApplicationStatusApplicationDrafted"/>
+            <class name="com.qpros.test.services.GetApplicationStatusApplicationNotFound"/>
+            <class name="com.qpros.test.services.GetApplicationStatusApplicationRejected"/>
+            <class name="com.qpros.test.services.GetBankStatementsNeeds_ApplicationNotFound"/>
+            <class name="com.qpros.test.services.GetBankStatementsNeeds_DoesntNeed"/>
+            <class name="com.qpros.test.services.GetBankStatementsNeeds_NeedsBankStatement"/>
+            <class name="com.qpros.test.services.GetBillDataApplicationNotFound"/>
+            <class name="com.qpros.test.services.GetBillDataBillsNotFound"/>
+            <class name="com.qpros.test.services.GetBillDataConfirmedBill"/>
+            <class name="com.qpros.test.services.GetFamilyDataModelConfirmed"/>
+            <class name="com.qpros.test.services.GetWealthItems_SendFinancialAssets"/>
+            <class name="com.qpros.test.services.GetWealthItemsApplicationNotFound"/>
+            <class name="com.qpros.test.services.GetWealthItemsSendBusniessLicenses"/>
+            <class name="com.qpros.test.services.GetWealthItemsSendProperties"/>
+            <class name="com.qpros.test.services.GetWealthNoWealthData"/>
+            <class name="com.qpros.test.services.Lookups"/>
+            <class name="com.qpros.test.services.MicsSingleApiCalls"/>
+            <class name="com.qpros.test.services.RemoveFamilyAddition"/>
+            <class name="com.qpros.test.services.RemoveFBMember_ConfirmedMarriage_UndoSingleAddition"/>
+            <class name="com.qpros.test.services.RemoveFBMember_IndividualNotFound"/>
+            <class name="com.qpros.test.services.RemoveFBMember_IssuesProvingRemovalReason"/>
+            <class name="com.qpros.test.services.RemoveFBMemberApplicationNotFound"/>
+            <class name="com.qpros.test.services.RemoveFBMemberUnconifrmedMarriage"/>
+            <class name="com.qpros.test.services.SubmitApplicationClass"/>
+            <class name="com.qpros.test.services.UpdateActivationInformation_ActivationInformationSaved"/>
+            <class name="com.qpros.test.services.UpdateActivationInformation_ApplicationNotFound"/>
+            <class name="com.qpros.test.services.UpdateContactDetails_UpdatedSuccessfully"/>
+            <class name="com.qpros.test.services.UpdateContactDetailsInvalidFormat"/>
+            <class name="com.qpros.test.services.UpdateLivingOnAppNotFound"/>
+            <class name="com.qpros.test.services.UpdateLivingOnHohAway"/>
+            <class name="com.qpros.test.services.UpdateLivingOnSuccessfully"/>
+            <class name="com.qpros.test.services.UpdateSelfDeclaredBankStatements_ApplicationNotFound"/>
+            <class name="com.qpros.test.services.UpdateWealthIncome_NotFound"/>
+            <class name="com.qpros.test.services.UpdateWealthIncome_UpdateSuccessfully"/>
+            <class name="com.qpros.test.services.UpdateWealthIncomeNoEligible"/>
+            <class name="com.qpros.test.services.VerfiyEligibilitySingleCalls"/>
+
+        </classes>
+    </test>
+
+
 </suite>
 

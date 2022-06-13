@@ -24,8 +24,8 @@ public class QuantaManager extends Base {
         StateHelper.setStepState("reportName", reportFileName);
         QuantaHtmlReporter htmlReporter= new QuantaHtmlReporter(path + reportFileName);
         htmlReporter.config().setReportName("QPros-Test");
-        htmlReporter.setAnalysisStrategy(AnalysisStrategy.TEST);
-        htmlReporter.config().setTheme( Theme.STANDARD);
+        htmlReporter.setAnalysisStrategy(AnalysisStrategy.SUITE);
+        htmlReporter.config().setTheme( Theme.DARK);
         htmlReporter.config().setEncoding("utf-8");
         extent = new QuantaReports();
         extent.setSystemInfo("Operating System",System.getProperty("os.name"));
@@ -33,7 +33,7 @@ public class QuantaManager extends Base {
         extent.setSystemInfo("Operating system architecture",System.getProperty("os.arch"));
         extent.setSystemInfo("Run User",System.getProperty("user.name"));
         extent.setSystemInfo("Java runtime",System.getProperty("java.runtime.version"));
-        extent.setAnalysisStrategy(AnalysisStrategy.TEST);
+        extent.setAnalysisStrategy(AnalysisStrategy.SUITE);
         extent.attachReporter(htmlReporter);
 
         return extent;
