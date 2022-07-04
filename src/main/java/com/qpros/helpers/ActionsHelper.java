@@ -7,7 +7,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.json.JsonException;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -15,9 +14,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 
 public class ActionsHelper extends Base {
@@ -750,6 +753,67 @@ public class ActionsHelper extends Base {
         }
     }
 
+    public static void storeCookiesInfo(){
+
+        File file = new File("src/main/resources/Cookies.data");
+        try
+        {
+            // Delete old file if exists
+            file.delete();
+            file.createNewFile();
+            FileWriter fileWrite = new FileWriter(file);
+            BufferedWriter Bwrite = new BufferedWriter(fileWrite);
+
+            // loop for getting the cookie information
+            for(Cookie ck : driver.get().manage().getCookies())
+            {
+                Bwrite.write((ck.getName()+";"+ck.getValue()+";"+ck.getDomain()+";"+ck.getPath()+";"+ck.getExpiry()+";"+ck.isSecure()));
+                Bwrite.newLine();
+            }
+            Bwrite.close();
+            fileWrite.close();
+
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public static void readSavedCookiesData(){
+        try{
+
+            File file = new File("src/main/resources/Cookies.data");
+            FileReader fileReader = new FileReader(file);
+            BufferedReader Buffreader = new BufferedReader(fileReader);
+            String strline;
+            while((strline=Buffreader.readLine())!=null){
+                StringTokenizer token = new StringTokenizer(strline,";");
+                while(token.hasMoreTokens()){
+                    String name = token.nextToken();
+                    String value = token.nextToken();
+                    String domain = token.nextToken();
+                    String path = token.nextToken();
+                    Date expiry = null;
+
+                    String val;
+                    if(!(val=token.nextToken()).equals("null"))
+                    {
+                        SimpleDateFormat format= new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                        expiry = format.parse(val);
+                    }
+                    boolean isSecure = Boolean.parseBoolean(token.nextToken());
+                    Cookie ck = new Cookie(name,value,domain,path,expiry,isSecure);
+                    System.out.println(ck);
+                    driver.get().manage().deleteAllCookies();
+                    driver.get().manage().addCookie(ck); // This will add the stored cookie to your current session
+                }
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
     public void clickAction(By by, String textMessage) {
 
         JavascriptExecutor jse = (JavascriptExecutor) driver;

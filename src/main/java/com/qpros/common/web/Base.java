@@ -4,6 +4,7 @@ package com.qpros.common.web;
 import com.qpros.common.DriverType;
 import com.qpros.common.LogManager;
 import com.qpros.common.OsValidator;
+import com.qpros.helpers.ActionsHelper;
 import com.qpros.helpers.ReadWriteHelper;
 import com.qpros.helpers.WebDriverInstaller;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -23,8 +24,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -32,27 +32,45 @@ import java.util.Map;
 
 public class Base {
 
-    public static ThreadLocal<WebDriver> driver= new ThreadLocal<>();
+    public static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     public LogManager logManager = new LogManager(getClass().getSimpleName());
 
 
-
-    @BeforeTest(enabled = false) public synchronized void setUpBrowser(Boolean isHeadLess) throws IOException {
+    @BeforeTest(enabled = false)
+    public synchronized void setUpBrowser(Boolean isHeadLess) throws IOException {
         String OsType = OsValidator.getDeviceOs();
         DriverType browser = getBrowser();
-        initiateDriver(OsType, browser,isHeadLess);
+        initiateDriver(OsType, browser, isHeadLess);
+//        if (!fileIsEmpty()) {
+//            ActionsHelper.readSavedCookiesData();
+//        }
         driver.get().navigate().to(ReadWriteHelper.ReadData("BaseURL"));
     }
 
+    public boolean fileIsEmpty() {
+        boolean result = false;
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader("src/main/resources/Cookies.data"));
 
-    public synchronized WebDriver initiateDriver(String deviceOsType, DriverType driverType,Boolean isHeadless) throws IOException {
+            if (br.readLine() == null) {
+                result = true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public synchronized WebDriver initiateDriver(String deviceOsType, DriverType driverType, Boolean isHeadless) throws IOException {
 
         switch (driverType) {
             case FIREFOX:
                 try {
 
                     setFireFoxBrowser(deviceOsType);
-                    driver.set( new FirefoxDriver());
+                    driver.set(new FirefoxDriver());
                 } catch (Throwable e) {
                     e.printStackTrace(System.out);
                     Assert.fail("Please check Browser is exist Browser Unable to start");
@@ -66,7 +84,8 @@ public class Base {
                     prefs.put("profile.default_content_setting_values.notifications", 2);
                     //Create chrome options to set this prefs
                     ChromeOptions options = new ChromeOptions();
-                    options.setExperimentalOption("prefs", prefs);
+                    //options.setExperimentalOption("prefs", prefs);
+                    options.setExperimentalOption("debuggerAddress", "127.0.0.1:9222");
                     options.addArguments("--disable-web-security");
                     options.addArguments("--allow-running-insecure-content");
                     options.addArguments("--ignore-ssl-errors=yes");
@@ -81,20 +100,20 @@ public class Base {
 
 
                 } catch (IllegalStateException | SessionNotCreatedException ex) {
-
-                    Runtime.getRuntime().exec("chromedriver.exe -v");
                     try {
+                        Runtime.getRuntime().exec("chromedriver.exe -v");
+
                         if (deviceOsType.equalsIgnoreCase("windows")) {
                             Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
                             new File("src/main/resources/browserDrivers/chromedriver/chromedriver.exe").delete();
-                        }else{
+                        } else {
                             new File("src/main/resources/browserDrivers/chromedriver/chromedriver").delete();
                         }
                     } catch (Exception exception) {
 
                     }
-                    WebDriverInstaller.WebDriverSetup.downloadAndExtractWebDriver(DriverType.CHROME,deviceOsType, ArchiverFactory.createArchiver(ArchiveFormat.ZIP));
-                    initiateDriver(deviceOsType,getBrowser(),isHeadless);
+                    WebDriverInstaller.WebDriverSetup.downloadAndExtractWebDriver(DriverType.CHROME, deviceOsType, ArchiverFactory.createArchiver(ArchiveFormat.ZIP));
+                    initiateDriver(deviceOsType, getBrowser(), isHeadless);
                 } catch (Throwable e) {
                     e.printStackTrace(System.out);
                     //Assert.fail("Please check Browser is exist Browser Unable to start");
@@ -103,7 +122,7 @@ public class Base {
             case INTERNETEXPLORER: {
                 try {
                     System.setProperty(ReadWriteHelper.ReadData("IEDriverPath"), ReadWriteHelper.ReadData("IEBrowserPathWindows"));
-                    driver.set( new InternetExplorerDriver());
+                    driver.set(new InternetExplorerDriver());
                 } catch (Throwable e) {
                     e.printStackTrace(System.out);
                     Assert.fail("Please check Browser is exist Browser Unable to start");
@@ -114,7 +133,7 @@ public class Base {
                 try {
                     System.setProperty(ReadWriteHelper.ReadData("SafariDriverPath"), ReadWriteHelper.ReadData("SafariBrowserPath"));
 
-                    driver.set( new SafariDriver());
+                    driver.set(new SafariDriver());
                 } catch (Throwable e) {
                     e.printStackTrace(System.out);
                     Assert.fail("Please check Browser is exist Browser Unable to start");
@@ -169,7 +188,7 @@ public class Base {
     public void setAppiumDriver() {
         DesiredCapabilities capabilities = getAppiumDesiredCapabilities();
         try {
-            driver.set( new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities));
+            driver.set(new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities));
         } catch (MalformedURLException e) {
             e.getMessage();
         }
@@ -184,9 +203,10 @@ public class Base {
         return capabilities;
     }
 
-    @AfterClass(enabled = true) public synchronized void stopDriver() {
+    @AfterClass(enabled = false)
+    public synchronized void stopDriver() {
         try {
-            System.out.println(Thread.currentThread().getId()+ "killed");
+            System.out.println(Thread.currentThread().getId() + "killed");
             driver.get().quit();
         } catch (Throwable e) {
             e.getStackTrace();
